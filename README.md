@@ -137,3 +137,66 @@ The current Finance MVP architecture diagram is documented in:
 
 ```text
 docs/finance-mvp-status.md
+## Operations Module MVP
+
+The BusinessOS Operations Module is active as the second core MVP block.
+
+It converts operational work into trackable tasks with owners, priorities, deadlines, statuses, justifications, escalations, KPIs, and an operations brief.
+
+### Operations Architecture
+
+```text
+app/operations/
+  __init__.py
+  schema.py
+  tasks.py
+  task_status.py
+  task_views.py
+  escalation_rules.py
+  operations_brief.py
+```
+
+### Operations Database Table
+
+```text
+operations_tasks
+```
+
+Current fields:
+
+```text
+id
+created_at
+title
+description
+owner_role
+priority
+deadline_date
+status
+status_justification
+source_module
+source_reference_id
+```
+
+### Operations CLI Commands
+
+```bash
+python cli.py ops-tasks
+python cli.py ops-escalations
+python cli.py ops-brief
+```
+
+### Current Operations Capabilities
+
+- Create operations tasks.
+- Track owners.
+- Track priorities.
+- Track deadlines.
+- Track status.
+- Store status justification.
+- List active operations tasks.
+- Generate operations KPIs.
+- Evaluate escalation rules.
+- Generate operations brief.
+- Write audit logs for operations events.
+- Validate operations commands through smoke test.

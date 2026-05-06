@@ -14,6 +14,7 @@ from app.db.schema import (
     create_transactions_table,
 )
 from app.ingest.csv_loader import insert_transactions, load_csv
+from app.operations.schema import create_operations_tasks_table
 from app.reports.executive_brief import print_daily_executive_brief
 from app.reports.report_export import export_daily_brief_report
 from app.reports.report_history import print_report_history
@@ -34,7 +35,7 @@ def main():
         create_transactions_table(conn)
         create_audit_logs_table(conn)
         create_recommended_actions_table(conn)
-
+        create_operations_tasks_table(conn)
         write_audit_log(
             conn,
             "application_started",
@@ -128,3 +129,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

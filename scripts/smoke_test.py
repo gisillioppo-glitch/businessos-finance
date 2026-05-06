@@ -6,6 +6,9 @@ COMMANDS = [
     ["python", "cli.py", "health"],
     ["python", "cli.py", "actions"],
     ["python", "cli.py", "reports"],
+    ["python", "cli.py", "ops-tasks"],
+    ["python", "cli.py", "ops-escalations"],
+    ["python", "cli.py", "ops-brief"],
     ["python", "cli.py", "run"],
 ]
 
@@ -34,7 +37,7 @@ def run_command(command):
 
 
 def main():
-    print("BusinessOS Finance Smoke Test")
+    print("BusinessOS Smoke Test")
 
     all_passed = True
 
