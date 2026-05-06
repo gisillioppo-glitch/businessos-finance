@@ -1,0 +1,54 @@
+import subprocess
+import sys
+
+
+COMMANDS = [
+    ["python", "cli.py", "health"],
+    ["python", "cli.py", "actions"],
+    ["python", "cli.py", "reports"],
+    ["python", "cli.py", "run"],
+]
+
+
+def run_command(command):
+    print(f"Running: {' '.join(command)}")
+
+    result = subprocess.run(
+        command,
+        capture_output=True,
+        text=True,
+    )
+
+    if result.stdout:
+        print(result.stdout)
+
+    if result.stderr:
+        print(result.stderr)
+
+    if result.returncode != 0:
+        print(f"[FAILED] {' '.join(command)}")
+        return False
+
+    print(f"[PASSED] {' '.join(command)}")
+    return True
+
+
+def main():
+    print("BusinessOS Finance Smoke Test")
+
+    all_passed = True
+
+    for command in COMMANDS:
+        if not run_command(command):
+            all_passed = False
+            break
+
+    if not all_passed:
+        print("Smoke test failed.")
+        sys.exit(1)
+
+    print("Smoke test completed successfully.")
+
+
+if __name__ == "__main__":
+    main()

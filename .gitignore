@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+
+# Local database
+finance.db
+
+# Installer files
+*.exe
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/

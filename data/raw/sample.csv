@@ -1,0 +1,5 @@
+date,type,category,amount,description
+2026-05-01,expense,marketing,200,ads campaign
+2026-05-02,expense,operations,50,office supplies
+2026-05-03,expense,marketing,500,ads spike
+2026-05-03,income,sales,1000,client payment
