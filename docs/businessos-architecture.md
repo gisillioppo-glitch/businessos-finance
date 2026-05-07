@@ -4,10 +4,11 @@ Date: 2026-05-06
 
 ## Current Architecture Status
 
-BusinessOS currently includes two active MVP modules:
+BusinessOS currently includes three active MVP modules:
 
 - Finance Module MVP v1.0
-- Operations Module MVP v1.0 in progress
+- Operations Module MVP v1.0
+- Governance Layer MVP in progress
 
 The system runs as a local modular Python backend with SQLite storage, CLI commands, audit logs, reports, health checks, and smoke tests.
 

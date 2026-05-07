@@ -213,3 +213,36 @@ Expected duplicate-safe output:
 ```
 
 This connects Finance intelligence to Operations execution.
+## Governance Layer MVP
+
+The BusinessOS Governance Layer is active as the third core MVP block.
+
+Governance reads audit logs, evaluates control signals, detects missing justification or critical events, and generates a governance brief.
+
+### Governance Architecture
+
+```text
+app/governance/
+  __init__.py
+  findings.py
+  governance_brief.py
+```
+
+### Governance CLI Commands
+
+```bash
+python cli.py gov-findings
+python cli.py gov-brief
+```
+
+### Current Governance Capabilities
+
+- Read recent audit logs.
+- Detect critical or error audit events.
+- Detect status updates missing justification.
+- Generate governance findings.
+- Generate governance brief.
+- Report audit trail health.
+- Recommend next best governance move.
+- Write governance audit events.
+- Validate governance commands through smoke test.

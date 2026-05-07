@@ -6,6 +6,8 @@ from app.actions.action_views import (
     print_recommended_actions_list,
 )
 from app.db.connection import create_connection
+from app.governance.findings import evaluate_governance_findings
+from app.governance.governance_brief import print_governance_brief
 from app.operations.escalation_rules import evaluate_operations_escalation_rules
 from app.operations.operations_brief import print_operations_brief
 from app.operations.task_views import (
@@ -86,9 +88,36 @@ def run_ops_brief():
         conn.close()
 
 
+def run_gov_findings():
+    conn = create_connection()
+
+    try:
+        evaluate_governance_findings(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_gov_brief():
+    conn = create_connection()
+
+    try:
+        findings = evaluate_governance_findings(conn)
+        print_governance_brief(conn, findings)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description="BusinessOS Finance Module CLI"
+        description="BusinessOS CLI"
     )
 
     parser.add_argument(
@@ -101,6 +130,8 @@ def main():
             "ops-tasks",
             "ops-escalations",
             "ops-brief",
+            "gov-findings",
+            "gov-brief",
         ],
         help="Command to execute.",
     )
@@ -121,6 +152,10 @@ def main():
         run_ops_escalations()
     elif args.command == "ops-brief":
         run_ops_brief()
+    elif args.command == "gov-findings":
+        run_gov_findings()
+    elif args.command == "gov-brief":
+        run_gov_brief()
 
 
 if __name__ == "__main__":

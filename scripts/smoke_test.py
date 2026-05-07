@@ -9,6 +9,8 @@ COMMANDS = [
     ["python", "cli.py", "ops-tasks"],
     ["python", "cli.py", "ops-escalations"],
     ["python", "cli.py", "ops-brief"],
+    ["python", "cli.py", "gov-findings"],
+    ["python", "cli.py", "gov-brief"],
     ["python", "cli.py", "run"],
 ]
 
