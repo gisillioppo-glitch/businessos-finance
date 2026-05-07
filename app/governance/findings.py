@@ -92,3 +92,38 @@ def evaluate_governance_findings(conn):
     )
 
     return findings
+def print_governance_kpis(conn, findings=None):
+    if findings is None:
+        findings = evaluate_governance_findings(conn)
+
+    high_findings = 0
+    medium_findings = 0
+
+    for finding in findings:
+        if finding["severity"] == "high":
+            high_findings += 1
+        elif finding["severity"] == "medium":
+            medium_findings += 1
+
+    summary = {
+        "total_findings": len(findings),
+        "high_findings": high_findings,
+        "medium_findings": medium_findings,
+        "audit_trail_health": "healthy" if len(findings) == 0 else "needs_review",
+    }
+
+    print("Governance KPIs:")
+    print(f"Total findings: {summary['total_findings']}")
+    print(f"High findings: {summary['high_findings']}")
+    print(f"Medium findings: {summary['medium_findings']}")
+    print(f"Audit trail health: {summary['audit_trail_health']}")
+
+    write_audit_log(
+        conn,
+        "governance_kpis_viewed",
+        "info",
+        "Governance KPIs viewed.",
+        summary,
+    )
+
+    return summary

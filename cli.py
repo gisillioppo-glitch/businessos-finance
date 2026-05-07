@@ -6,8 +6,12 @@ from app.actions.action_views import (
     print_recommended_actions_list,
 )
 from app.db.connection import create_connection
-from app.governance.findings import evaluate_governance_findings
+from app.governance.findings import (
+    evaluate_governance_findings,
+    print_governance_kpis,
+)
 from app.governance.governance_brief import print_governance_brief
+from app.governance.governance_report import export_governance_report
 from app.operations.escalation_rules import evaluate_operations_escalation_rules
 from app.operations.operations_brief import print_operations_brief
 from app.operations.task_views import (
@@ -101,12 +105,40 @@ def run_gov_findings():
         conn.close()
 
 
+def run_gov_kpis():
+    conn = create_connection()
+
+    try:
+        print_governance_kpis(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
 def run_gov_brief():
     conn = create_connection()
 
     try:
         findings = evaluate_governance_findings(conn)
         print_governance_brief(conn, findings)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_gov_report():
+    conn = create_connection()
+
+    try:
+        findings = evaluate_governance_findings(conn)
+        governance_brief = print_governance_brief(conn, findings)
+        export_governance_report(conn, governance_brief)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -131,7 +163,9 @@ def main():
             "ops-escalations",
             "ops-brief",
             "gov-findings",
+            "gov-kpis",
             "gov-brief",
+            "gov-report",
         ],
         help="Command to execute.",
     )
@@ -154,8 +188,12 @@ def main():
         run_ops_brief()
     elif args.command == "gov-findings":
         run_gov_findings()
+    elif args.command == "gov-kpis":
+        run_gov_kpis()
     elif args.command == "gov-brief":
         run_gov_brief()
+    elif args.command == "gov-report":
+        run_gov_report()
 
 
 if __name__ == "__main__":

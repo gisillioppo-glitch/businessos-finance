@@ -14,3 +14,30 @@ The Governance module lives in:
 
 ```text
 app/governance
+## Governance KPIs And Reports
+
+Governance now includes KPI and report export capabilities.
+
+Additional CLI commands:
+
+```bash
+python cli.py gov-kpis
+python cli.py gov-report
+```
+
+Governance KPIs include:
+
+- Total findings.
+- High findings.
+- Medium findings.
+- Audit trail health.
+
+Governance report export creates:
+
+```text
+reports/governance_brief_YYYY-MM-DD.md
+```
+
+## v1.0 Closure Status
+
+Governance MVP v1.0 is ready for closure after final smoke test, commit, and tag.

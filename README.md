@@ -246,3 +246,25 @@ python cli.py gov-brief
 - Recommend next best governance move.
 - Write governance audit events.
 - Validate governance commands through smoke test.
+## Governance Reports
+
+Governance can export a Markdown governance brief report.
+
+Command:
+
+```bash
+python cli.py gov-report
+```
+
+Output example:
+
+```text
+reports/governance_brief_YYYY-MM-DD.md
+```
+
+The report includes:
+
+- Governance findings detected.
+- Highest governance risk.
+- Audit trail health.
+- Next best governance move.

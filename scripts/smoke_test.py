@@ -10,7 +10,9 @@ COMMANDS = [
     ["python", "cli.py", "ops-escalations"],
     ["python", "cli.py", "ops-brief"],
     ["python", "cli.py", "gov-findings"],
+    ["python", "cli.py", "gov-kpis"],
     ["python", "cli.py", "gov-brief"],
+    ["python", "cli.py", "gov-report"],
     ["python", "cli.py", "run"],
 ]
 
