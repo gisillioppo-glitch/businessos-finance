@@ -171,4 +171,35 @@ Operations is the second module and acts as the bridge toward:
 - Operative Support System.
 - Protected Incident Mode.
 - Cross-module workflows.
+## Support / Incident Module
+
+Support handles:
+
+- Support incidents.
+- Incident severity.
+- Incident owners.
+- Incident status workflow.
+- Status justification.
+- Incident KPIs.
+- Support brief.
+- Support report export.
+
+## Support CLI Commands
+
+```bash
+python cli.py support-incidents
+python cli.py support-brief
+python cli.py support-report
+```
+
+## Current Operating Cycle
+
+BusinessOS now supports the following operating cycle:
+
+```text
+Finance intelligence
+→ Operations execution
+→ Governance oversight
+→ Support incident management
+```
 

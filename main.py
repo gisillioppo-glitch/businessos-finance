@@ -77,6 +77,7 @@ def main():
         cash_flow_summary = generate_cash_flow_summary(conn)
         risks = evaluate_financial_risk_rules(conn, cash_flow_summary)
         actions = generate_recommended_actions(conn, risks)
+
         if actions:
             operations_task = create_operations_task(
                 conn,
@@ -99,7 +100,6 @@ def main():
                     f"[SKIPPED] Duplicate operations task already exists "
                     f"(Status: {operations_task['status']}): {operations_task['title']}"
                 )
-
 
         if DEMO_MODE:
             demo_update_first_open_action(conn)
@@ -156,4 +156,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    

@@ -268,3 +268,45 @@ The report includes:
 - Highest governance risk.
 - Audit trail health.
 - Next best governance move.
+## Support / Incident Module MVP
+
+The BusinessOS Support / Incident Module is active as the fourth core MVP block.
+
+Support manages incidents generated from governance, operations, or other modules. It tracks severity, owner, status, justification, KPIs, briefs, and report exports.
+
+### Support Architecture
+
+```text
+app/support/
+  __init__.py
+  schema.py
+  incidents.py
+  incident_status.py
+  incident_views.py
+  support_brief.py
+  support_report.py
+```
+
+### Support CLI Commands
+
+```bash
+python cli.py support-incidents
+python cli.py support-brief
+python cli.py support-report
+```
+
+### Current Support Capabilities
+
+- Create support incidents.
+- Deduplicate active support incidents.
+- Track severity.
+- Track owner role.
+- Track status.
+- Store status justification.
+- Update incident status with justification.
+- List active support incidents.
+- Generate support incident KPIs.
+- Generate support brief.
+- Export support brief report.
+- Write support audit events.
+- Validate support commands through smoke test.
