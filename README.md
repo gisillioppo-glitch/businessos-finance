@@ -200,3 +200,16 @@ python cli.py ops-brief
 - Generate operations brief.
 - Write audit logs for operations events.
 - Validate operations commands through smoke test.
+## Finance To Operations Handoff
+
+Finance recommended actions now create an Operations follow-up task.
+
+The handoff is deduplicated, so repeated runs do not create duplicate active Operations tasks.
+
+Expected duplicate-safe output:
+
+```text
+[SKIPPED] Duplicate operations task already exists
+```
+
+This connects Finance intelligence to Operations execution.

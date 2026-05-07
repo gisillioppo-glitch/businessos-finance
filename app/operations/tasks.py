@@ -1,8 +1,6 @@
 import uuid
 from datetime import datetime
-
 from app.audit.audit_log import write_audit_log
-
 
 def create_operations_task(
     conn,
@@ -18,6 +16,54 @@ def create_operations_task(
 
     if priority not in valid_priorities:
         raise ValueError(f"Invalid task priority: {priority}")
+
+    existing = conn.execute(
+        """
+        SELECT id, status
+        FROM operations_tasks
+        WHERE title = ?
+          AND source_module IS ?
+          AND source_reference_id IS ?
+          AND status IN ('open', 'in_progress', 'blocked')
+        ORDER BY created_at DESC
+        LIMIT 1
+        """,
+        (
+            title,
+            source_module,
+            source_reference_id,
+        ),
+    ).fetchone()
+
+    if existing:
+        task_id, status = existing
+
+        write_audit_log(
+            conn,
+            "operations_task_duplicate_skipped",
+            "info",
+            "Duplicate operations task skipped.",
+            {
+                "existing_task_id": task_id,
+                "existing_status": status,
+                "title": title,
+                "source_module": source_module,
+                "source_reference_id": source_reference_id,
+            },
+        )
+
+        return {
+            "id": task_id,
+            "title": title,
+            "description": description,
+            "owner_role": owner_role,
+            "priority": priority,
+            "deadline_date": deadline_date,
+            "status": status,
+            "source_module": source_module,
+            "source_reference_id": source_reference_id,
+            "was_created": False,
+        }
 
     task_id = str(uuid.uuid4())
 
@@ -80,5 +126,6 @@ def create_operations_task(
         "status": "open",
         "source_module": source_module,
         "source_reference_id": source_reference_id,
+        "was_created": True,
     }
 

@@ -15,6 +15,7 @@ from app.db.schema import (
 )
 from app.ingest.csv_loader import insert_transactions, load_csv
 from app.operations.schema import create_operations_tasks_table
+from app.operations.tasks import create_operations_task
 from app.reports.executive_brief import print_daily_executive_brief
 from app.reports.report_export import export_daily_brief_report
 from app.reports.report_history import print_report_history
@@ -72,7 +73,30 @@ def main():
 
         cash_flow_summary = generate_cash_flow_summary(conn)
         risks = evaluate_financial_risk_rules(conn, cash_flow_summary)
-        generate_recommended_actions(conn, risks)
+        actions = generate_recommended_actions(conn, risks)
+        if actions:
+            operations_task = create_operations_task(
+                conn,
+                "Review finance recommended actions",
+                "Review active finance recommended actions and confirm owner progress.",
+                "Operations Manager",
+                "medium",
+                None,
+                "finance",
+                "recommended_actions",
+            )
+
+            if operations_task["was_created"]:
+                print(
+                    f"Operations Task Created: {operations_task['title']} "
+                    f"(Status: {operations_task['status']})"
+                )
+            else:
+                print(
+                    f"[SKIPPED] Duplicate operations task already exists "
+                    f"(Status: {operations_task['status']}): {operations_task['title']}"
+                )
+
 
         if DEMO_MODE:
             demo_update_first_open_action(conn)
