@@ -13,6 +13,8 @@ COMMANDS = [
     ["python", "cli.py", "gov-kpis"],
     ["python", "cli.py", "gov-brief"],
     ["python", "cli.py", "gov-report"],
+    ["python", "cli.py", "support-incidents"],
+    ["python", "cli.py", "support-brief"],
     ["python", "cli.py", "run"],
 ]
 

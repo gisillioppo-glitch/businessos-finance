@@ -22,6 +22,7 @@ from app.reports.report_history import print_report_history
 from app.rules.anomaly_rules import detect_expense_anomalies
 from app.rules.cash_flow import generate_cash_flow_summary
 from app.rules.financial_risk_rules import evaluate_financial_risk_rules
+from app.support.schema import create_support_incidents_table
 
 CSV_PATH = "data/raw/sample.csv"
 DEMO_MODE = False
@@ -37,6 +38,8 @@ def main():
         create_audit_logs_table(conn)
         create_recommended_actions_table(conn)
         create_operations_tasks_table(conn)
+        create_support_incidents_table(conn)
+
         write_audit_log(
             conn,
             "application_started",

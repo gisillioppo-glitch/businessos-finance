@@ -19,6 +19,11 @@ from app.operations.task_views import (
     print_operations_tasks_list,
 )
 from app.reports.report_history import print_report_history
+from app.support.incident_views import (
+    print_support_incident_summary_kpis,
+    print_support_incidents_list,
+)
+from app.support.support_brief import print_support_brief
 from main import main as run_main
 from scripts.health_check import main as run_health_check
 
@@ -147,6 +152,34 @@ def run_gov_report():
         conn.close()
 
 
+def run_support_incidents():
+    conn = create_connection()
+
+    try:
+        print_support_incidents_list(conn)
+        print_support_incident_summary_kpis(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_support_brief():
+    conn = create_connection()
+
+    try:
+        incident_kpis = print_support_incident_summary_kpis(conn)
+        print_support_brief(conn, incident_kpis)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="BusinessOS CLI"
@@ -166,6 +199,8 @@ def main():
             "gov-kpis",
             "gov-brief",
             "gov-report",
+            "support-incidents",
+            "support-brief",
         ],
         help="Command to execute.",
     )
@@ -194,6 +229,10 @@ def main():
         run_gov_brief()
     elif args.command == "gov-report":
         run_gov_report()
+    elif args.command == "support-incidents":
+        run_support_incidents()
+    elif args.command == "support-brief":
+        run_support_brief()
 
 
 if __name__ == "__main__":
