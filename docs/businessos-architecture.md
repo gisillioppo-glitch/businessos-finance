@@ -203,3 +203,31 @@ Finance intelligence
 → Support incident management
 ```
 
+## Command Center / Executive Dashboard
+
+Command Center handles:
+
+- Cross-module summary.
+- Overall system health.
+- Highest system risk.
+- Next best executive move.
+- Executive Markdown report export.
+
+## Command Center CLI Commands
+
+```bash
+python cli.py command-center
+python cli.py command-report
+```
+
+## Unified BusinessOS Loop
+
+BusinessOS now supports the following unified loop:
+
+```text
+Finance intelligence
+→ Operations execution
+→ Governance oversight
+→ Support incident management
+→ Command Center synthesis
+```

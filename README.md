@@ -310,3 +310,49 @@ python cli.py support-report
 - Export support brief report.
 - Write support audit events.
 - Validate support commands through smoke test.
+## Command Center / Executive Dashboard MVP
+
+The BusinessOS Command Center is active as the unified executive view across Finance, Operations, Governance, and Support.
+
+It summarizes module health, identifies the highest system risk, recommends the next best executive move, and exports a Markdown executive report.
+
+### Command Center Architecture
+
+```text
+app/command_center/
+  __init__.py
+  command_center_summary.py
+  command_center_brief.py
+  command_center_report.py
+```
+
+### Command Center CLI Commands
+
+```bash
+python cli.py command-center
+python cli.py command-report
+```
+
+### Current Command Center Capabilities
+
+- Read cross-module data from SQLite.
+- Summarize Finance state.
+- Summarize Operations state.
+- Summarize Governance state.
+- Summarize Support state.
+- Calculate overall system health.
+- Identify highest system risk.
+- Generate next best executive move.
+- Export Command Center Markdown report.
+- Write Command Center audit events.
+- Validate Command Center through smoke test.
+
+### Current Operating Cycle
+
+```text
+Finance intelligence
+→ Operations execution
+→ Governance oversight
+→ Support incident management
+→ Command Center synthesis
+```

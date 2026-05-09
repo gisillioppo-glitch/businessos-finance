@@ -5,6 +5,9 @@ from app.actions.action_views import (
     print_action_summary_kpis,
     print_recommended_actions_list,
 )
+from app.command_center.command_center_brief import print_command_center_brief
+from app.command_center.command_center_report import export_command_center_report
+from app.command_center.command_center_summary import generate_command_center_summary
 from app.db.connection import create_connection
 from app.governance.findings import (
     evaluate_governance_findings,
@@ -196,6 +199,35 @@ def run_support_report():
         conn.close()
 
 
+def run_command_center():
+    conn = create_connection()
+
+    try:
+        summary = generate_command_center_summary(conn)
+        print_command_center_brief(conn, summary)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_command_report():
+    conn = create_connection()
+
+    try:
+        summary = generate_command_center_summary(conn)
+        command_brief = print_command_center_brief(conn, summary)
+        export_command_center_report(conn, command_brief)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="BusinessOS CLI"
@@ -218,6 +250,8 @@ def main():
             "support-incidents",
             "support-brief",
             "support-report",
+            "command-center",
+            "command-report",
         ],
         help="Command to execute.",
     )
@@ -252,6 +286,10 @@ def main():
         run_support_brief()
     elif args.command == "support-report":
         run_support_report()
+    elif args.command == "command-center":
+        run_command_center()
+    elif args.command == "command-report":
+        run_command_report()
 
 
 if __name__ == "__main__":
