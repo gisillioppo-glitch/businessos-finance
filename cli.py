@@ -5,6 +5,13 @@ from app.actions.action_views import (
     print_action_summary_kpis,
     print_recommended_actions_list,
 )
+from app.approvals.approval_brief import print_approval_brief
+from app.approvals.approval_views import (
+    print_approval_request_summary_kpis,
+    print_approval_requests_list,
+)
+from app.approvals.requests import ensure_default_approval_requests
+from app.approvals.schema import create_approval_requests_table
 from app.assistance.assistance_brief import print_assistance_brief
 from app.assistance.request_views import (
     print_assistance_request_summary_kpis,
@@ -319,6 +326,37 @@ def run_assistance_status():
     finally:
         conn.close()
 
+def run_approvals():
+    conn = create_connection()
+
+    try:
+        create_approval_requests_table(conn)
+        ensure_default_approval_requests(conn)
+        print_approval_requests_list(conn)
+        print_approval_request_summary_kpis(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_approval_brief():
+    conn = create_connection()
+
+    try:
+        create_approval_requests_table(conn)
+        ensure_default_approval_requests(conn)
+        approval_kpis = print_approval_request_summary_kpis(conn)
+        print_approval_brief(conn, approval_kpis)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
 def main():
     parser = argparse.ArgumentParser(
         description="BusinessOS CLI"
@@ -348,6 +386,8 @@ def main():
             "assistance",
             "assistance-brief",
             "assistance-status",
+            "approvals",
+            "approval-brief",
         ],
         help="Command to execute.",
     )
@@ -396,10 +436,16 @@ def main():
         run_assistance_brief()
     elif args.command == "assistance-status":
         run_assistance_status()
+    elif args.command == "approvals":
+        run_approvals()
+    elif args.command == "approval-brief":
+        run_approval_brief()
 
 
 if __name__ == "__main__":
     main()
+
+
 
 
 

@@ -684,3 +684,38 @@ Run locally:
 ```bash
 streamlit run app/dashboard/main.py
 ```
+
+## Approval Layer MVP
+
+The BusinessOS Approval Layer is the first institutional decision-control layer.
+
+It captures sensitive requests that require explicit approval before dependent actions proceed.
+
+### Approval Architecture
+
+```text
+app/approvals/
+  __init__.py
+  schema.py
+  requests.py
+  approval_views.py
+  approval_brief.py
+```
+
+### Approval CLI Commands
+
+```bash
+python cli.py approvals
+python cli.py approval-brief
+```
+
+### Current Approval Capabilities
+
+- Create and seed approval requests.
+- Deduplicate pending approvals by source.
+- Track approval type, priority, requester, approver role, status, and source module.
+- Generate Approval Request List output.
+- Generate Approval Summary KPIs.
+- Generate Approval Brief and next best approval move.
+- Write audit logs for approval events.
+- Validate Approval Layer through smoke test.
