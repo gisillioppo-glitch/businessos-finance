@@ -17,6 +17,7 @@ from app.alerts.executive_alerts import (
     print_executive_alerts_brief,
 )
 from app.alerts.executive_alerts_report import export_executive_alerts_report
+from app.alerts.alert_status import demo_acknowledge_first_open_executive_alert
 from app.assistance.assistance_brief import print_assistance_brief
 from app.assistance.request_views import (
     print_assistance_request_summary_kpis,
@@ -419,6 +420,18 @@ def run_executive_alerts_brief():
     finally:
         conn.close()
 
+
+def run_executive_alert_status():
+    conn = create_connection()
+
+    try:
+        demo_acknowledge_first_open_executive_alert(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
 def run_executive_alerts_report():
     conn = create_connection()
 
@@ -468,6 +481,7 @@ def main():
             "executive-alerts",
             "executive-alerts-brief",
             "executive-alerts-report",
+            "executive-alert-status",
         ],
         help="Command to execute.",
     )
@@ -530,10 +544,13 @@ def main():
         run_executive_alerts_brief()
     elif args.command == "executive-alerts-report":
         run_executive_alerts_report()
+    elif args.command == "executive-alert-status":
+        run_executive_alert_status()
 
 
 if __name__ == "__main__":
     main()
+
 
 
 

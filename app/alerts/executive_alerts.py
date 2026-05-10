@@ -1,3 +1,6 @@
+import hashlib
+
+from app.alerts.schema import ACTIVE_EXECUTIVE_ALERT_STATUSES, create_executive_alert_statuses_table
 from app.audit.audit_log import write_audit_log
 from app.governance.sensitivity_rules import get_governance_sensitivity_findings
 
@@ -10,18 +13,76 @@ SEVERITY_ORDER = {
     "info": 4,
 }
 
+STATUS_ORDER = {
+    "open": 0,
+    "acknowledged": 1,
+    "in_review": 2,
+    "resolved": 3,
+    "dismissed": 4,
+}
+
+
+def _build_alert_key(source_module, title):
+    raw_key = f"{source_module}:{title}".lower().encode("utf-8")
+    return hashlib.sha256(raw_key).hexdigest()[:16]
+
+
+def _load_alert_statuses(conn):
+    create_executive_alert_statuses_table(conn)
+
+    rows = conn.execute(
+        """
+        SELECT alert_key, status, status_justification, owner_role, updated_at
+        FROM executive_alert_statuses
+        """
+    ).fetchall()
+
+    return {
+        alert_key: {
+            "status": status,
+            "status_justification": status_justification,
+            "stored_owner_role": owner_role,
+            "status_updated_at": updated_at,
+        }
+        for alert_key, status, status_justification, owner_role, updated_at in rows
+    }
+
 
 def _add_alert(alerts, title, message, severity, source_module, owner_role, recommended_action):
+    alert_key = _build_alert_key(source_module, title)
+
     alerts.append(
         {
+            "alert_key": alert_key,
             "title": title,
             "message": message,
             "severity": severity,
             "source_module": source_module,
             "owner_role": owner_role,
             "recommended_action": recommended_action,
+            "status": "open",
+            "status_justification": None,
+            "status_updated_at": None,
         }
     )
+
+
+def _apply_statuses(alerts, alert_statuses):
+    hydrated_alerts = []
+
+    for alert in alerts:
+        stored_status = alert_statuses.get(alert["alert_key"])
+
+        if stored_status:
+            alert["status"] = stored_status["status"]
+            alert["status_justification"] = stored_status["status_justification"]
+            alert["status_updated_at"] = stored_status["status_updated_at"]
+            alert["owner_role"] = stored_status["stored_owner_role"] or alert["owner_role"]
+
+        if alert["status"] in ACTIVE_EXECUTIVE_ALERT_STATUSES:
+            hydrated_alerts.append(alert)
+
+    return hydrated_alerts
 
 
 def _sort_alerts(alerts):
@@ -29,6 +90,7 @@ def _sort_alerts(alerts):
         alerts,
         key=lambda alert: (
             SEVERITY_ORDER.get(alert["severity"], 9),
+            STATUS_ORDER.get(alert["status"], 9),
             alert["source_module"],
             alert["title"],
         ),
@@ -37,6 +99,7 @@ def _sort_alerts(alerts):
 
 def get_executive_alerts(conn):
     alerts = []
+    alert_statuses = _load_alert_statuses(conn)
 
     for finding in get_governance_sensitivity_findings(conn):
         _add_alert(
@@ -109,7 +172,7 @@ def get_executive_alerts(conn):
             "Confirm resolution path and communicate expected next step.",
         )
 
-    return _sort_alerts(alerts)
+    return _sort_alerts(_apply_statuses(alerts, alert_statuses))
 
 
 def print_executive_alerts(conn):
@@ -131,6 +194,7 @@ def print_executive_alerts(conn):
     for alert in alerts:
         print(
             f"[{alert['severity'].upper()}] "
+            f"Status: {alert['status']} | "
             f"Source: {alert['source_module']} | "
             f"Owner: {alert['owner_role']} | "
             f"Alert: {alert['title']} | "
@@ -155,6 +219,9 @@ def print_executive_alerts_brief(conn, alerts=None):
     critical_alerts = sum(1 for alert in alerts if alert["severity"] == "critical")
     high_alerts = sum(1 for alert in alerts if alert["severity"] == "high")
     medium_alerts = sum(1 for alert in alerts if alert["severity"] == "medium")
+    open_alerts = sum(1 for alert in alerts if alert["status"] == "open")
+    acknowledged_alerts = sum(1 for alert in alerts if alert["status"] == "acknowledged")
+    in_review_alerts = sum(1 for alert in alerts if alert["status"] == "in_review")
 
     if critical_alerts > 0:
         highest_alert_risk = "critical"
@@ -174,6 +241,9 @@ def print_executive_alerts_brief(conn, alerts=None):
         "critical_alerts": critical_alerts,
         "high_alerts": high_alerts,
         "medium_alerts": medium_alerts,
+        "open_alerts": open_alerts,
+        "acknowledged_alerts": acknowledged_alerts,
+        "in_review_alerts": in_review_alerts,
         "highest_alert_risk": highest_alert_risk,
         "next_best_move": next_best_move,
     }
@@ -183,6 +253,9 @@ def print_executive_alerts_brief(conn, alerts=None):
     print(f"Critical alerts: {brief['critical_alerts']}")
     print(f"High alerts: {brief['high_alerts']}")
     print(f"Medium alerts: {brief['medium_alerts']}")
+    print(f"Open alerts: {brief['open_alerts']}")
+    print(f"Acknowledged alerts: {brief['acknowledged_alerts']}")
+    print(f"In-review alerts: {brief['in_review_alerts']}")
     print(f"Highest alert risk: {brief['highest_alert_risk']}")
     print(f"Next best alert move: {brief['next_best_move']}")
 

@@ -810,3 +810,25 @@ Current capabilities:
 - Include a Markdown table of active alerts.
 - Write audit log on export.
 - Validate report export through smoke test.
+
+## Executive Alert Status MVP v0.1
+
+BusinessOS Executive Alerts now support controlled status tracking.
+
+### Executive Alert Status CLI Command
+
+```bash
+python cli.py executive-alert-status
+```
+
+Current capabilities:
+
+- Create and maintain `executive_alert_statuses`.
+- Generate stable alert keys for derived executive alerts.
+- Track `open`, `acknowledged`, `in_review`, `resolved`, and `dismissed` alert states.
+- Store owner role and status justification.
+- Write audit logs for alert status updates.
+- Show status in Executive Alerts CLI output.
+- Show open, acknowledged, and in-review alert KPIs in the private dashboard.
+- Include status in Executive Alerts reports.
+- Validate alert status through smoke test.

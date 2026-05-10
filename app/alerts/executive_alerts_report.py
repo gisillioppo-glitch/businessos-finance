@@ -18,14 +18,15 @@ def _format_alert_rows(alerts):
         return "No active executive alerts detected."
 
     rows = [
-        "| Severity | Source | Owner | Alert | Recommended Action |",
-        "| --- | --- | --- | --- | --- |",
+        "| Severity | Status | Source | Owner | Alert | Recommended Action |",
+        "| --- | --- | --- | --- | --- | --- |",
     ]
 
     for alert in alerts:
         rows.append(
             "| "
             f"{alert['severity']} | "
+            f"{alert['status']} | "
             f"{alert['source_module']} | "
             f"{alert['owner_role']} | "
             f"{alert['title']} | "
@@ -55,6 +56,9 @@ Total alerts: {alert_brief['total_alerts']}
 Critical alerts: {alert_brief['critical_alerts']}  
 High alerts: {alert_brief['high_alerts']}  
 Medium alerts: {alert_brief['medium_alerts']}  
+Open alerts: {alert_brief['open_alerts']}  
+Acknowledged alerts: {alert_brief['acknowledged_alerts']}  
+In-review alerts: {alert_brief['in_review_alerts']}  
 Highest alert risk: {alert_brief['highest_alert_risk']}  
 
 ## Next Best Alert Move
@@ -80,3 +84,5 @@ Highest alert risk: {alert_brief['highest_alert_risk']}
     )
 
     return report_path
+
+

@@ -521,6 +521,9 @@ def load_dashboard_data():
     medium_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "medium")
     critical_executive_alerts = sum(1 for alert in executive_alerts if alert["severity"] == "critical")
     high_executive_alerts = sum(1 for alert in executive_alerts if alert["severity"] == "high")
+    open_executive_alerts = sum(1 for alert in executive_alerts if alert["status"] == "open")
+    acknowledged_executive_alerts = sum(1 for alert in executive_alerts if alert["status"] == "acknowledged")
+    in_review_executive_alerts = sum(1 for alert in executive_alerts if alert["status"] == "in_review")
 
     if high_sensitivity_findings > 0:
         highest_sensitivity_risk = "High"
@@ -571,6 +574,9 @@ def load_dashboard_data():
         "executive_alert_count": len(executive_alerts),
         "critical_executive_alerts": critical_executive_alerts,
         "high_executive_alerts": high_executive_alerts,
+        "open_executive_alerts": open_executive_alerts,
+        "acknowledged_executive_alerts": acknowledged_executive_alerts,
+        "in_review_executive_alerts": in_review_executive_alerts,
         "cash_flow_series": load_cash_flow_series(),
     }
 
@@ -769,7 +775,7 @@ def render_dashboard(data):
             for alert in data["executive_alerts"][:4]:
                 render_status_row(
                     alert["title"],
-                    f"{alert['source_module']} | {alert['owner_role']}",
+                    f"{alert['source_module']} | {alert['owner_role']} | {alert['status']}",
                     alert["severity"],
                 )
         else:
@@ -808,7 +814,7 @@ def render_module_page(page, data):
                 for alert in data["executive_alerts"][:10]:
                     render_status_row(
                         alert["title"],
-                        f"{alert['source_module']} | {alert['owner_role']} | {alert['recommended_action']}",
+                        f"{alert['source_module']} | {alert['owner_role']} | {alert['status']} | {alert['recommended_action']}",
                         alert["severity"],
                     )
             else:
@@ -1007,6 +1013,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
