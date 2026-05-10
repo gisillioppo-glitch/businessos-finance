@@ -6,6 +6,7 @@ COMMANDS = [
     ["python", "cli.py", "health"],
     ["python", "cli.py", "actions"],
     ["python", "cli.py", "reports"],
+    ["python", "cli.py", "notifications"],
     ["python", "cli.py", "ops-tasks"],
     ["python", "cli.py", "ops-escalations"],
     ["python", "cli.py", "ops-brief"],
@@ -85,6 +86,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

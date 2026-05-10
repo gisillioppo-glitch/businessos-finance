@@ -974,3 +974,22 @@ Current capabilities:
 - Exports `reports/daily_close_distribution_YYYY-MM-DD.md`.
 - Keeps real email sending out of MVP code until protected SMTP/API credentials are ready.
 - Validates the command through smoke test.
+
+## Notification Outbox MVP v0.1
+
+BusinessOS now has a safe internal notification queue for prepared executive and manager messages.
+
+CLI command:
+
+```bash
+python cli.py notifications
+```
+
+Current capabilities:
+
+- Queue Daily Close Distribution messages for CEO and department owners.
+- Store recipient, subject, body, source, channel, and status.
+- Track queued, sent, dismissed, and failed notification counts.
+- Prevent duplicate daily close notifications for the same recipient/source/date.
+- Keep real email sending out of MVP code until protected delivery credentials are ready.
+- Validate notification outbox through smoke test.

@@ -29,8 +29,8 @@ Subject: BusinessOS Daily Close - 2026-05-10
 
 BusinessOS completed the executive daily close for 2026-05-10.
 
-Evidence available: 6  
-Evidence missing: 0  
+Evidence available: 6
+Evidence missing: 0
 Total evidence items: 6
 
 Recommended review:
@@ -52,8 +52,8 @@ Subject: BusinessOS Daily Close - 2026-05-10
 
 BusinessOS completed the executive daily close for 2026-05-10.
 
-Evidence available: 6  
-Evidence missing: 0  
+Evidence available: 6
+Evidence missing: 0
 Total evidence items: 6
 
 Recommended review:
@@ -72,8 +72,8 @@ Subject: BusinessOS Daily Close - 2026-05-10
 
 BusinessOS completed the executive daily close for 2026-05-10.
 
-Evidence available: 6  
-Evidence missing: 0  
+Evidence available: 6
+Evidence missing: 0
 Total evidence items: 6
 
 Recommended review:
@@ -92,8 +92,8 @@ Subject: BusinessOS Daily Close - 2026-05-10
 
 BusinessOS completed the executive daily close for 2026-05-10.
 
-Evidence available: 6  
-Evidence missing: 0  
+Evidence available: 6
+Evidence missing: 0
 Total evidence items: 6
 
 Recommended review:

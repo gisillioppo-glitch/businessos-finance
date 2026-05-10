@@ -55,6 +55,10 @@ from app.governance.sensitivity_rules import (
     evaluate_governance_sensitivity_rules,
     print_governance_sensitivity_brief,
 )
+from app.notifications.outbox import (
+    print_notification_outbox,
+    print_notification_summary,
+)
 from app.operations.escalation_rules import evaluate_operations_escalation_rules
 from app.people.people_brief import print_people_brief
 from app.people.people_views import (
@@ -105,6 +109,19 @@ def run_reports():
     finally:
         conn.close()
 
+
+def run_notifications():
+    conn = create_connection()
+
+    try:
+        print_notification_outbox(conn)
+        print_notification_summary(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
 
 def run_ops_tasks():
     conn = create_connection()
@@ -607,6 +624,7 @@ def main():
             "health",
             "actions",
             "reports",
+            "notifications",
             "ops-tasks",
             "ops-escalations",
             "ops-brief",
@@ -654,6 +672,8 @@ def main():
         run_actions()
     elif args.command == "reports":
         run_reports()
+    elif args.command == "notifications":
+        run_notifications()
     elif args.command == "ops-tasks":
         run_ops_tasks()
     elif args.command == "ops-escalations":
@@ -724,6 +744,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 
