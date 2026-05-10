@@ -993,3 +993,24 @@ Current capabilities:
 - Prevent duplicate daily close notifications for the same recipient/source/date.
 - Keep real email sending out of MVP code until protected delivery credentials are ready.
 - Validate notification outbox through smoke test.
+
+## Notification Status MVP v0.2
+
+BusinessOS now tracks the lifecycle of notification outbox messages.
+
+CLI commands:
+
+```bash
+python cli.py notification-sent
+python cli.py notification-dismiss
+python cli.py notification-fail
+python cli.py notifications
+```
+
+Current capabilities:
+
+- Move queued notifications into sent, dismissed, or failed states.
+- Record sent timestamp for sent notifications.
+- Keep notification outcomes auditable.
+- Validate notification lifecycle through smoke test.
+- Preserve the safety boundary: no external email is sent yet.

@@ -254,3 +254,4 @@ def print_notification_summary(conn):
     print(f"Failed notifications: {summary['failed']}")
 
     return summary
+

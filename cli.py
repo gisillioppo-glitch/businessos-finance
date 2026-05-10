@@ -59,6 +59,11 @@ from app.notifications.outbox import (
     print_notification_outbox,
     print_notification_summary,
 )
+from app.notifications.status import (
+    demo_dismiss_first_queued_notification,
+    demo_fail_first_queued_notification,
+    demo_mark_first_queued_notification_sent,
+)
 from app.operations.escalation_rules import evaluate_operations_escalation_rules
 from app.people.people_brief import print_people_brief
 from app.people.people_views import (
@@ -116,6 +121,44 @@ def run_notifications():
     try:
         print_notification_outbox(conn)
         print_notification_summary(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+def run_notification_sent():
+    conn = create_connection()
+
+    try:
+        demo_mark_first_queued_notification_sent(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_notification_dismiss():
+    conn = create_connection()
+
+    try:
+        demo_dismiss_first_queued_notification(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_notification_fail():
+    conn = create_connection()
+
+    try:
+        demo_fail_first_queued_notification(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -625,6 +668,9 @@ def main():
             "actions",
             "reports",
             "notifications",
+            "notification-sent",
+            "notification-dismiss",
+            "notification-fail",
             "ops-tasks",
             "ops-escalations",
             "ops-brief",
@@ -674,6 +720,12 @@ def main():
         run_reports()
     elif args.command == "notifications":
         run_notifications()
+    elif args.command == "notification-sent":
+        run_notification_sent()
+    elif args.command == "notification-dismiss":
+        run_notification_dismiss()
+    elif args.command == "notification-fail":
+        run_notification_fail()
     elif args.command == "ops-tasks":
         run_ops_tasks()
     elif args.command == "ops-escalations":
@@ -744,6 +796,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
 
 
 
