@@ -350,6 +350,31 @@ def load_dashboard_data():
         """
     )
 
+    active_assistance_requests = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM assistance_requests
+        WHERE status IN ('open', 'triaged', 'waiting_approval', 'in_progress')
+        """
+    )
+
+    high_assistance_requests = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM assistance_requests
+        WHERE status IN ('open', 'triaged', 'waiting_approval', 'in_progress')
+          AND severity IN ('critical', 'high')
+        """
+    )
+
+    waiting_approval_requests = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM assistance_requests
+        WHERE status = 'waiting_approval'
+        """
+    )
+
     governance_findings = get_scalar(
         """
         SELECT COUNT(*)
@@ -366,12 +391,12 @@ def load_dashboard_data():
         """
     )
 
-    if error_events > 0 or overdue_operations_tasks > 0:
+    if error_events > 0 or overdue_operations_tasks > 0 or high_assistance_requests > 0:
         overall_health = "Needs Attention"
         highest_risk = "High"
-        next_move = "Resolve overdue operations work and keep support investigation moving."
+        next_move = "Resolve overdue operations work and triage high-severity assistance requests."
         health_class = "red"
-    elif active_support_incidents > 0 or active_operations_tasks > 0 or active_finance_actions > 0:
+    elif active_support_incidents > 0 or active_operations_tasks > 0 or active_finance_actions > 0 or active_assistance_requests > 0:
         overall_health = "Watch"
         highest_risk = "Medium"
         next_move = "Review active actions, incidents, and operations tasks before expanding workload."
@@ -424,6 +449,24 @@ def load_dashboard_data():
         """
     )
 
+    assistance_requests = get_rows(
+        """
+        SELECT title, request_type, severity, status, owner_role
+        FROM assistance_requests
+        WHERE status IN ('open', 'triaged', 'waiting_approval', 'in_progress')
+        ORDER BY
+            CASE severity
+                WHEN 'critical' THEN 1
+                WHEN 'high' THEN 2
+                WHEN 'medium' THEN 3
+                WHEN 'low' THEN 4
+                ELSE 5
+            END,
+            created_at DESC
+        LIMIT 5
+        """
+    )
+
     return {
         "transactions_count": transactions_count,
         "total_income": total_income,
@@ -435,6 +478,9 @@ def load_dashboard_data():
         "overdue_operations_tasks": overdue_operations_tasks,
         "active_support_incidents": active_support_incidents,
         "critical_support_incidents": critical_support_incidents,
+        "active_assistance_requests": active_assistance_requests,
+        "high_assistance_requests": high_assistance_requests,
+        "waiting_approval_requests": waiting_approval_requests,
         "governance_findings": governance_findings,
         "error_events": error_events,
         "overall_health": overall_health,
@@ -444,6 +490,7 @@ def load_dashboard_data():
         "recent_incidents": recent_incidents,
         "active_tasks": active_tasks,
         "recommended_actions": recommended_actions,
+        "assistance_requests": assistance_requests,
         "cash_flow_series": load_cash_flow_series(),
     }
 
@@ -567,7 +614,7 @@ def render_dashboard(data):
         <div class="bos-topbar">
             <div>
                 <div class="bos-title">BusinessOS Command Center</div>
-                <div class="bos-subtitle">Unified executive intelligence across Finance, Operations, Governance, and Support.</div>
+                <div class="bos-subtitle">Unified executive intelligence across Finance, Operations, Governance, Support, and Assistance.</div>
             </div>
             <div class="bos-chip">System Health: {data['overall_health']}</div>
         </div>
@@ -601,6 +648,10 @@ def render_dashboard(data):
         render_brief_item(
             f"{data['active_support_incidents']} support incident(s) active",
             "Support investigation is part of current system risk",
+        )
+        render_brief_item(
+            f"{data['active_assistance_requests']} assistance request(s) active",
+            "Internal users are asking BusinessOS for help, decisions, or routing",
         )
         render_panel_end()
 
@@ -684,6 +735,46 @@ def render_module_page(page, data):
         with c2:
             render_metric_card("Critical/High Incidents", data["critical_support_incidents"], "Escalation-sensitive queue", "gold")
 
+    elif page == "Assistance":
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            render_metric_card("Active Requests", data["active_assistance_requests"], "Open, triaged, approval, or in progress", "gold")
+        with c2:
+            render_metric_card("High-Severity Requests", data["high_assistance_requests"], "Requires owner attention", "red")
+        with c3:
+            render_metric_card("Waiting Approval", data["waiting_approval_requests"], "Blocked on approval", "gold")
+
+        left, right = st.columns([1.4, 1])
+
+        with left:
+            render_panel_start("Active Assistance Requests")
+            if data["assistance_requests"]:
+                for request in data["assistance_requests"]:
+                    render_status_row(
+                        request["title"],
+                        f"{request['owner_role']} | {request['request_type']} | {request['status']}",
+                        request["severity"],
+                    )
+            else:
+                render_status_row("No active assistance requests", "Internal request queue is clear", "healthy")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Assistance Brief")
+            render_brief_item(
+                f"{data['active_assistance_requests']} active assistance request(s)",
+                "Internal work is now visible as request flow",
+            )
+            render_brief_item(
+                f"{data['high_assistance_requests']} high-severity request(s)",
+                "Prioritize owner assignment and triage",
+            )
+            render_brief_item(
+                f"{data['waiting_approval_requests']} waiting for approval",
+                "Governance-sensitive requests should not bypass review",
+            )
+            render_panel_end()
+
 
 def main():
     st.set_page_config(
@@ -707,3 +798,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

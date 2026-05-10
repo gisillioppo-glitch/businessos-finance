@@ -648,3 +648,22 @@ Current behavior:
 - Stores a justification.
 - Writes an audit log.
 - Passes through the smoke test.
+
+## Dashboard Assistance Page v0.1
+
+The private BusinessOS dashboard now includes an Assistance page.
+
+Current visual capabilities:
+
+- Assistance navigation entry.
+- Active request KPIs.
+- High-severity assistance request count.
+- Waiting approval count.
+- Active assistance request list with owner, type, status, and severity.
+- Assistance Brief panel for executive review.
+
+Run locally:
+
+```bash
+streamlit run app/dashboard/main.py
+```
