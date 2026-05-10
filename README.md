@@ -915,3 +915,22 @@ Current capabilities:
 - Include Command Center, Executive Alerts, Approval Decisions, Governance, Support, and Daily Finance evidence.
 - Write audit logs when the evidence index is viewed/exported.
 - Validate evidence indexing through smoke test.
+
+## Executive Daily Close MVP v0.1
+
+BusinessOS can now run a one-command executive daily close.
+
+### Executive Daily Close CLI Command
+
+```bash
+python cli.py daily-close
+```
+
+Current capabilities:
+
+- Generate the daily finance brief.
+- Generate Governance, Support, Command Center, Approval Decision, and Executive Alerts reports.
+- Generate the Executive Evidence Index after reports are refreshed.
+- Export `reports/daily_close_YYYY-MM-DD.md`.
+- Write audit logs for the daily close report.
+- Validate the close flow through smoke test.

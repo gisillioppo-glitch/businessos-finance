@@ -39,7 +39,11 @@ from app.command_center.command_center_brief import print_command_center_brief
 from app.command_center.command_center_report import export_command_center_report
 from app.command_center.command_center_summary import generate_command_center_summary
 from app.db.connection import create_connection
-from app.evidence.evidence_index import export_executive_evidence_index
+from app.evidence.daily_close import export_daily_close_report
+from app.evidence.evidence_index import (
+    export_executive_evidence_index,
+    get_executive_evidence_index,
+)
 from app.governance.findings import (
     evaluate_governance_findings,
     print_governance_kpis,
@@ -449,6 +453,45 @@ def run_approval_reject():
     finally:
         conn.close()
 
+def run_daily_close():
+    print("Executive Daily Close started.")
+
+    close_steps = []
+
+    run_main()
+    close_steps.append({"name": "Daily Finance Brief", "status": "completed", "detail": "Finance run and daily brief generated."})
+
+    run_gov_report()
+    close_steps.append({"name": "Governance Brief", "status": "completed", "detail": "Governance report generated."})
+
+    run_support_report()
+    close_steps.append({"name": "Support Brief", "status": "completed", "detail": "Support report generated."})
+
+    run_command_report()
+    close_steps.append({"name": "Command Center", "status": "completed", "detail": "Command Center report generated."})
+
+    run_approval_report()
+    close_steps.append({"name": "Approval Decisions", "status": "completed", "detail": "Approval decision report generated."})
+
+    run_executive_alerts_report()
+    close_steps.append({"name": "Executive Alerts", "status": "completed", "detail": "Executive Alerts report generated."})
+
+    conn = create_connection()
+
+    try:
+        export_executive_evidence_index(conn)
+        evidence_index = get_executive_evidence_index()
+        close_steps.append({"name": "Evidence Index", "status": "completed", "detail": "Executive evidence index generated."})
+        export_daily_close_report(conn, close_steps, evidence_index)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+    print("Executive Daily Close completed.")
+
 def run_evidence_index():
     conn = create_connection()
 
@@ -574,6 +617,7 @@ def main():
             "approval-approve",
             "approval-reject",
             "evidence-index",
+            "daily-close",
             "executive-alerts",
             "executive-alerts-brief",
             "executive-alerts-report",
@@ -644,6 +688,8 @@ def main():
         run_approval_reject()
     elif args.command == "evidence-index":
         run_evidence_index()
+    elif args.command == "daily-close":
+        run_daily_close()
     elif args.command == "executive-alerts":
         run_executive_alerts()
     elif args.command == "executive-alerts-brief":
@@ -660,6 +706,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
 
 
 
