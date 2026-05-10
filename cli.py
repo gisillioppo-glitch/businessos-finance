@@ -6,6 +6,7 @@ from app.actions.action_views import (
     print_recommended_actions_list,
 )
 from app.approvals.approval_brief import print_approval_brief
+from app.approvals.approval_report import export_approval_report
 from app.approvals.approval_views import (
     print_approval_request_summary_kpis,
     print_approval_requests_list,
@@ -402,6 +403,22 @@ def run_approval_brief():
         conn.close()
 
 
+def run_approval_report():
+    conn = create_connection()
+
+    try:
+        create_approval_requests_table(conn)
+        ensure_default_approval_requests(conn)
+        approval_kpis = print_approval_request_summary_kpis(conn)
+        approval_brief = print_approval_brief(conn, approval_kpis)
+        export_approval_report(conn, approval_kpis, approval_brief)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
 def run_approval_approve():
     conn = create_connection()
 
@@ -540,6 +557,7 @@ def main():
             "assistance-status",
             "approvals",
             "approval-brief",
+            "approval-report",
             "approval-approve",
             "approval-reject",
             "executive-alerts",
@@ -604,6 +622,8 @@ def main():
         run_approvals()
     elif args.command == "approval-brief":
         run_approval_brief()
+    elif args.command == "approval-report":
+        run_approval_report()
     elif args.command == "approval-approve":
         run_approval_approve()
     elif args.command == "approval-reject":
@@ -624,6 +644,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

@@ -877,3 +877,22 @@ Current capabilities:
 - Show pending, approved, rejected, and high-priority approval counts in the private dashboard.
 - Add a dedicated private dashboard Approvals page.
 - Validate approval decisions through smoke test.
+
+## Approval Decision Report MVP v0.3
+
+BusinessOS can now export approval decisions as a Markdown governance record.
+
+### Approval Decision Report CLI Command
+
+```bash
+python cli.py approval-report
+```
+
+Current capabilities:
+
+- Export approval decision summary to `reports/approval_decisions_YYYY-MM-DD.md`.
+- Include pending, approved, rejected, cancelled, priority, and type KPIs.
+- Include highest approval risk and next best approval move.
+- Include approval rows with approver, requester, source, status, and justification.
+- Write audit log on report export.
+- Validate export through smoke test.
