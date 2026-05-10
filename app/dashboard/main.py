@@ -1,3 +1,4 @@
+import re
 import sqlite3
 import sys
 from pathlib import Path
@@ -294,6 +295,99 @@ def load_cash_flow_series():
     frame["date"] = pd.to_datetime(frame["date"])
     return frame
 
+
+
+def get_latest_report_path(prefix):
+    reports_path = ROOT_DIR / "reports"
+
+    if not reports_path.exists():
+        return None
+
+    matches = sorted(reports_path.glob(f"{prefix}_*.md"), reverse=True)
+    return matches[0] if matches else None
+
+
+def extract_metric_from_markdown(content, label, default=0):
+    pattern = rf"{re.escape(label)}:\s*(\d+)"
+    match = re.search(pattern, content)
+    return int(match.group(1)) if match else default
+
+
+def load_daily_close_status():
+    report_path = get_latest_report_path("daily_close")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "completed_steps": 0,
+            "total_steps": 0,
+            "evidence_available": 0,
+            "evidence_missing": 0,
+            "steps": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    steps = []
+
+    for line in content.splitlines():
+        if not line.startswith("|") or line.startswith("| ---") or line.startswith("| Step"):
+            continue
+
+        parts = [part.strip() for part in line.strip("|").split("|")]
+        if len(parts) == 3:
+            steps.append(
+                {
+                    "name": parts[0],
+                    "status": parts[1],
+                    "detail": parts[2],
+                }
+            )
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "completed_steps": extract_metric_from_markdown(content, "Completed close steps"),
+        "total_steps": extract_metric_from_markdown(content, "Total close steps"),
+        "evidence_available": extract_metric_from_markdown(content, "Evidence available"),
+        "evidence_missing": extract_metric_from_markdown(content, "Evidence missing"),
+        "steps": steps,
+    }
+
+
+def load_evidence_index_status():
+    report_path = get_latest_report_path("executive_evidence_index")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "items": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    items = []
+
+    for line in content.splitlines():
+        if not line.startswith("|") or line.startswith("| ---") or line.startswith("| Evidence"):
+            continue
+
+        parts = [part.strip() for part in line.strip("|").split("|")]
+        if len(parts) == 4:
+            items.append(
+                {
+                    "label": parts[0],
+                    "status": parts[1],
+                    "report_path": parts[2],
+                    "purpose": parts[3],
+                }
+            )
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "items": items,
+    }
 
 def load_dashboard_data():
     transactions_count = get_scalar("SELECT COUNT(*) FROM transactions")
@@ -593,6 +687,9 @@ def load_dashboard_data():
         highest_sensitivity_risk = "Low"
         sensitivity_next_move = "Maintain current governance sensitivity controls."
 
+    daily_close_status = load_daily_close_status()
+    evidence_index_status = load_evidence_index_status()
+
     return {
         "transactions_count": transactions_count,
         "total_income": total_income,
@@ -642,6 +739,8 @@ def load_dashboard_data():
         "in_review_executive_alerts": in_review_executive_alerts,
         "resolved_executive_alerts": resolved_executive_alerts,
         "cash_flow_series": load_cash_flow_series(),
+        "daily_close_status": daily_close_status,
+        "evidence_index_status": evidence_index_status,
     }
 
 
@@ -691,6 +790,12 @@ def render_status_row(title, subtitle, status):
     status_class = str(status).lower().replace("_", "-")
     if status_class == "critical":
         status_class = "high"
+    elif status_class in ("completed", "available", "green"):
+        status_class = "healthy"
+    elif status_class in ("missing", "failed", "blocked", "overdue"):
+        status_class = "high"
+    elif status_class in ("pending", "in-progress", "waiting-approval", "waiting"):
+        status_class = "medium"
 
     st.markdown(
         f"""
@@ -764,7 +869,7 @@ def render_dashboard(data):
         <div class="bos-topbar">
             <div>
                 <div class="bos-title">BusinessOS Command Center</div>
-                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, Approvals, and People.</div>
+                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, Approvals, Daily Close, and People.</div>
             </div>
             <div class="bos-chip">System Health: {data['overall_health']}</div>
         </div>
@@ -1015,6 +1120,61 @@ def render_module_page(page, data):
                 "Rejected items were stopped or returned for a better path",
             )
             render_panel_end()
+    elif page == "Daily Close":
+        daily_close = data["daily_close_status"]
+        evidence_index = data["evidence_index_status"]
+        completed_steps = daily_close["completed_steps"]
+        total_steps = daily_close["total_steps"]
+        step_caption = "Latest executive close report" if daily_close["exists"] else "No daily close report found"
+
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            render_metric_card("Close Steps", f"{completed_steps}/{total_steps}", step_caption, "green" if completed_steps == total_steps and total_steps > 0 else "gold")
+        with c2:
+            render_metric_card("Evidence Available", daily_close["evidence_available"], "Reports found for today's evidence index", "green")
+        with c3:
+            render_metric_card("Evidence Missing", daily_close["evidence_missing"], "Missing evidence items requiring follow-up", "red" if daily_close["evidence_missing"] else "green")
+        with c4:
+            render_metric_card("Evidence Items", len(evidence_index["items"]), "Indexed executive proof points", "green" if evidence_index["items"] else "gold")
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Daily Close Steps")
+            if daily_close["steps"]:
+                for step in daily_close["steps"]:
+                    render_status_row(step["name"], step["detail"], step["status"])
+            else:
+                render_status_row("No daily close report", "Run python cli.py daily-close to generate today's executive close", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Close Brief")
+            render_brief_item(
+                daily_close["report_path"] or "Daily close report not generated",
+                "Latest executive close artifact",
+            )
+            render_brief_item(
+                evidence_index["report_path"] or "Evidence index not generated",
+                "Latest evidence index artifact",
+            )
+            render_brief_item(
+                f"{daily_close['evidence_missing']} missing evidence item(s)",
+                "Missing evidence should be resolved before treating the day as fully closed",
+            )
+            render_panel_end()
+
+        render_panel_start("Evidence Register")
+        if evidence_index["items"]:
+            for item in evidence_index["items"]:
+                render_status_row(
+                    item["label"],
+                    f"{item['report_path']} | {item['purpose']}",
+                    item["status"],
+                )
+        else:
+            render_status_row("No evidence index items", "Run python cli.py evidence-index or python cli.py daily-close", "medium")
+        render_panel_end()
     elif page == "People":
         c1, c2, c3, c4 = st.columns(4)
         with c1:
@@ -1121,6 +1281,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
 
 
 

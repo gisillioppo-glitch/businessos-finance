@@ -934,3 +934,22 @@ Current capabilities:
 - Export `reports/daily_close_YYYY-MM-DD.md`.
 - Write audit logs for the daily close report.
 - Validate the close flow through smoke test.
+
+## Dashboard Daily Close Page v0.1
+
+The private BusinessOS dashboard now includes a Daily Close page.
+
+Current visual capabilities:
+
+- Show completed close steps versus total close steps.
+- Show available and missing evidence counts.
+- Show latest daily close and evidence index report paths.
+- List close step statuses from the latest daily close report.
+- List evidence register items from the latest executive evidence index.
+- Include Daily Close in role-based dashboard navigation.
+
+Run locally:
+
+```bash
+streamlit run app/dashboard/main.py
+```
