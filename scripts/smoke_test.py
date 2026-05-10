@@ -4,6 +4,7 @@ import sys
 
 COMMANDS = [
     ["python", "cli.py", "health"],
+    ["python", "cli.py", "system-check"],
     ["python", "cli.py", "actions"],
     ["python", "cli.py", "reports"],
     ["python", "cli.py", "notifications"],
@@ -90,6 +91,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

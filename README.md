@@ -1014,3 +1014,24 @@ Current capabilities:
 - Keep notification outcomes auditable.
 - Validate notification lifecycle through smoke test.
 - Preserve the safety boundary: no external email is sent yet.
+
+## System Integrity Check MVP v0.1
+
+BusinessOS now includes a structural self-check command.
+
+CLI command:
+
+```bash
+python cli.py system-check
+```
+
+Current capabilities:
+
+- Validate required app modules.
+- Validate required database tables.
+- Validate latest critical reports.
+- Validate notification status integrity.
+- Validate `.gitignore` protection for local DB, env, virtual environment, and Streamlit secrets.
+- Validate that sensitive files are not present in the public website surface.
+- Export `reports/system_integrity_YYYY-MM-DD.md`.
+- Validate system-check through smoke test.

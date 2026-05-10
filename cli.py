@@ -78,6 +78,7 @@ from app.operations.task_views import (
     print_operations_tasks_list,
 )
 from app.reports.report_history import print_report_history
+from app.system.integrity_check import export_system_integrity_report
 from app.support.incident_views import (
     print_support_incident_summary_kpis,
     print_support_incidents_list,
@@ -87,6 +88,18 @@ from app.support.support_report import export_support_report
 from main import main as run_main
 from scripts.health_check import main as run_health_check
 
+
+def run_system_check():
+    conn = create_connection()
+
+    try:
+        export_system_integrity_report(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
 
 def run_actions():
     conn = create_connection()
@@ -665,6 +678,7 @@ def main():
         choices=[
             "run",
             "health",
+            "system-check",
             "actions",
             "reports",
             "notifications",
@@ -714,6 +728,8 @@ def main():
         run_main()
     elif args.command == "health":
         run_health_check()
+    elif args.command == "system-check":
+        run_system_check()
     elif args.command == "actions":
         run_actions()
     elif args.command == "reports":
@@ -796,6 +812,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 
