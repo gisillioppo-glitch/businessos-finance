@@ -540,3 +540,23 @@ Activation options:
 - Future BusinessOS backend endpoint.
 
 The public form remains separate from the private dashboard and does not expose internal runtime data.
+
+## Repository Split & IP Protection MVP
+
+BusinessOS now separates public presentation from private product runtime.
+
+Public landing repository:
+
+```text
+https://github.com/gisillioppo-glitch/businessos-landing
+```
+
+Private product repository:
+
+```text
+https://github.com/gisillioppo-glitch/businessos-finance
+```
+
+The public repo contains only static landing files. The private repo contains the BusinessOS runtime, dashboard, modules, security layer, and internal documentation.
+
+The GitHub Pages workflow was removed from this private repo so public deployment happens from `businessos-landing` only.
