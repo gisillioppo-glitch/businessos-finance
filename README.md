@@ -455,3 +455,37 @@ Open locally:
 ```text
 public/index.html
 ```
+
+## Deployment Readiness MVP
+
+The BusinessOS Deployment Readiness MVP defines the publication boundary between the public landing website and the private operating system runtime.
+
+Public surface:
+
+```text
+public/
+```
+
+Private surface:
+
+```text
+app/
+finance.db
+.env
+.streamlit/secrets.toml
+reports/
+data/
+```
+
+Before publishing anything externally, run:
+
+```bash
+python scripts/deployment_check.py
+python scripts/smoke_test.py
+```
+
+Rules:
+
+- Publish the landing website first.
+- Keep the dashboard private until stronger authentication and deployment controls are ready.
+- Never publish `finance.db`, `.env`, Streamlit secrets, or private module logic as a public website.
