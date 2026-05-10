@@ -832,3 +832,25 @@ Current capabilities:
 - Show open, acknowledged, and in-review alert KPIs in the private dashboard.
 - Include status in Executive Alerts reports.
 - Validate alert status through smoke test.
+
+## Executive Alert Resolution MVP v0.2
+
+BusinessOS Executive Alerts now support a basic resolution lifecycle.
+
+### Executive Alert Resolution CLI Commands
+
+```bash
+python cli.py executive-alert-status
+python cli.py executive-alert-review
+python cli.py executive-alert-resolve
+```
+
+Current capabilities:
+
+- Move executive alerts from `open` to `acknowledged`.
+- Move acknowledged alerts to `in_review`.
+- Resolve in-review alerts with justification.
+- Keep resolved alerts out of the active queue.
+- Track resolved alert count in the private dashboard.
+- Include status-aware alert queue in Executive Alerts reports.
+- Validate the resolution lifecycle through smoke test.

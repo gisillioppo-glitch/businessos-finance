@@ -10,6 +10,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from app.alerts.alert_status import get_executive_alert_status_summary  # noqa: E402
 from app.alerts.executive_alerts import get_executive_alerts  # noqa: E402
 from app.governance.sensitivity_rules import get_governance_sensitivity_findings  # noqa: E402
 from app.security.access_control import (  # noqa: E402
@@ -516,6 +517,7 @@ def load_dashboard_data():
     with sqlite3.connect(DB_PATH) as conn:
         sensitivity_findings = get_governance_sensitivity_findings(conn)
         executive_alerts = get_executive_alerts(conn)
+        executive_alert_status_summary = get_executive_alert_status_summary(conn)
 
     high_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "high")
     medium_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "medium")
@@ -524,6 +526,7 @@ def load_dashboard_data():
     open_executive_alerts = sum(1 for alert in executive_alerts if alert["status"] == "open")
     acknowledged_executive_alerts = sum(1 for alert in executive_alerts if alert["status"] == "acknowledged")
     in_review_executive_alerts = sum(1 for alert in executive_alerts if alert["status"] == "in_review")
+    resolved_executive_alerts = executive_alert_status_summary["resolved"]
 
     if high_sensitivity_findings > 0:
         highest_sensitivity_risk = "High"
@@ -577,6 +580,7 @@ def load_dashboard_data():
         "open_executive_alerts": open_executive_alerts,
         "acknowledged_executive_alerts": acknowledged_executive_alerts,
         "in_review_executive_alerts": in_review_executive_alerts,
+        "resolved_executive_alerts": resolved_executive_alerts,
         "cash_flow_series": load_cash_flow_series(),
     }
 
@@ -798,13 +802,17 @@ def render_module_page(page, data):
     )
 
     if page == "Alerts":
-        c1, c2, c3 = st.columns(3)
+        c1, c2, c3, c4, c5 = st.columns(5)
         with c1:
             render_metric_card("Executive Alerts", data["executive_alert_count"], "Active cross-module alerts", "gold")
         with c2:
-            render_metric_card("Critical Alerts", data["critical_executive_alerts"], "Immediate executive stop signals", "red")
+            render_metric_card("Open", data["open_executive_alerts"], "Awaiting owner acknowledgement", "red")
         with c3:
-            render_metric_card("High Alerts", data["high_executive_alerts"], "Needs owner action today", "red")
+            render_metric_card("Acknowledged", data["acknowledged_executive_alerts"], "Owner has seen the alert", "gold")
+        with c4:
+            render_metric_card("In Review", data["in_review_executive_alerts"], "Resolution is being reviewed", "gold")
+        with c5:
+            render_metric_card("Resolved", data["resolved_executive_alerts"], "Closed with justification", "green")
 
         left, right = st.columns([1.55, 1])
 
@@ -1013,6 +1021,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 

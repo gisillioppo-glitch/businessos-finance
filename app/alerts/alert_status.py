@@ -112,3 +112,102 @@ def demo_acknowledge_first_open_executive_alert(conn):
     )
 
     return result
+
+def demo_review_first_acknowledged_executive_alert(conn):
+    from app.alerts.executive_alerts import get_executive_alerts
+
+    alerts = get_executive_alerts(conn)
+    acknowledged_alerts = [alert for alert in alerts if alert["status"] == "acknowledged"]
+
+    if not acknowledged_alerts:
+        print("Executive Alert Review Update: No acknowledged executive alerts found.")
+        write_audit_log(
+            conn,
+            "executive_alert_review_demo",
+            "info",
+            "No acknowledged executive alerts found for review demo.",
+            {},
+        )
+        return None
+
+    alert = acknowledged_alerts[0]
+
+    result = update_executive_alert_status(
+        conn,
+        alert["alert_key"],
+        "in_review",
+        "Demo mode moved the first acknowledged executive alert into review.",
+        alert["owner_role"],
+    )
+
+    print(
+        "Executive Alert Review Update: "
+        f"{alert['title']} changed from "
+        f"{result['old_status']} to {result['new_status']}."
+    )
+
+    return result
+
+
+def demo_resolve_first_in_review_executive_alert(conn):
+    from app.alerts.executive_alerts import get_executive_alerts
+
+    alerts = get_executive_alerts(conn)
+    in_review_alerts = [alert for alert in alerts if alert["status"] == "in_review"]
+
+    if not in_review_alerts:
+        print("Executive Alert Resolution Update: No in-review executive alerts found.")
+        write_audit_log(
+            conn,
+            "executive_alert_resolution_demo",
+            "info",
+            "No in-review executive alerts found for resolution demo.",
+            {},
+        )
+        return None
+
+    alert = in_review_alerts[0]
+
+    result = update_executive_alert_status(
+        conn,
+        alert["alert_key"],
+        "resolved",
+        "Demo mode resolved the first in-review executive alert after owner follow-up.",
+        alert["owner_role"],
+    )
+
+    print(
+        "Executive Alert Resolution Update: "
+        f"{alert['title']} changed from "
+        f"{result['old_status']} to {result['new_status']}."
+    )
+
+    return result
+
+
+def get_executive_alert_status_summary(conn):
+    from app.alerts.schema import create_executive_alert_statuses_table
+
+    create_executive_alert_statuses_table(conn)
+
+    rows = conn.execute(
+        """
+        SELECT status, COUNT(*) AS count
+        FROM executive_alert_statuses
+        GROUP BY status
+        """
+    ).fetchall()
+
+    summary = {
+        "open": 0,
+        "acknowledged": 0,
+        "in_review": 0,
+        "resolved": 0,
+        "dismissed": 0,
+    }
+
+    for status, count in rows:
+        if status in summary:
+            summary[status] = count
+
+    return summary
