@@ -595,3 +595,38 @@ python cli.py people-brief
 - Generate People Brief and next best people move.
 - Write audit logs for people events.
 - Validate People Layer through smoke test.
+
+## Assistance Layer MVP
+
+The BusinessOS Assistance Layer is the first internal request and escalation system.
+
+It lets institutional users create structured help, approval, incident, access, and decision requests that can be routed to owners and reviewed by the operating system.
+
+### Assistance Architecture
+
+```text
+app/assistance/
+  __init__.py
+  schema.py
+  requests.py
+  request_views.py
+  assistance_brief.py
+```
+
+### Assistance CLI Commands
+
+```bash
+python cli.py assistance
+python cli.py assistance-brief
+```
+
+### Current Assistance Capabilities
+
+- Create and seed assistance requests.
+- Deduplicate active requests by source.
+- Track request type, severity, requester, owner, status, and source module.
+- Generate Assistance Request List output.
+- Generate Assistance Summary KPIs.
+- Generate Assistance Brief and next best assistance move.
+- Write audit logs for assistance events.
+- Validate Assistance Layer through smoke test.
