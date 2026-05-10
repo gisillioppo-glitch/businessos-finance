@@ -40,6 +40,7 @@ from app.command_center.command_center_report import export_command_center_repor
 from app.command_center.command_center_summary import generate_command_center_summary
 from app.db.connection import create_connection
 from app.evidence.daily_close import export_daily_close_report
+from app.evidence.daily_close_distribution import export_daily_close_distribution
 from app.evidence.evidence_index import (
     export_executive_evidence_index,
     get_executive_evidence_index,
@@ -483,6 +484,7 @@ def run_daily_close():
         evidence_index = get_executive_evidence_index()
         close_steps.append({"name": "Evidence Index", "status": "completed", "detail": "Executive evidence index generated."})
         export_daily_close_report(conn, close_steps, evidence_index)
+        export_daily_close_distribution(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -497,6 +499,19 @@ def run_evidence_index():
 
     try:
         export_executive_evidence_index(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_daily_close_distribution():
+    conn = create_connection()
+
+    try:
+        export_daily_close_distribution(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -618,6 +633,7 @@ def main():
             "approval-reject",
             "evidence-index",
             "daily-close",
+            "daily-close-distribution",
             "executive-alerts",
             "executive-alerts-brief",
             "executive-alerts-report",
@@ -690,6 +706,8 @@ def main():
         run_evidence_index()
     elif args.command == "daily-close":
         run_daily_close()
+    elif args.command == "daily-close-distribution":
+        run_daily_close_distribution()
     elif args.command == "executive-alerts":
         run_executive_alerts()
     elif args.command == "executive-alerts-brief":
@@ -706,6 +724,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

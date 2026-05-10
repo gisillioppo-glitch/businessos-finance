@@ -953,3 +953,24 @@ Run locally:
 ```bash
 streamlit run app/dashboard/main.py
 ```
+
+## Daily Close Distribution MVP v0.1
+
+BusinessOS can now prepare an email-ready daily close distribution package for leadership and department owners.
+
+CLI commands:
+
+```bash
+python cli.py daily-close
+python cli.py daily-close-distribution
+```
+
+Current capabilities:
+
+- Automatically prepares daily close distribution after the executive daily close.
+- Builds recipient packages from active BusinessOS users.
+- Routes the full evidence package to the Executive Owner / CEO.
+- Routes scoped evidence packages to Finance, Operations, and Support managers.
+- Exports `reports/daily_close_distribution_YYYY-MM-DD.md`.
+- Keeps real email sending out of MVP code until protected SMTP/API credentials are ready.
+- Validates the command through smoke test.
