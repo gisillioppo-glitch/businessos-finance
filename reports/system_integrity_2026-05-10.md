@@ -63,4 +63,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | warning | M README.md; M app/system/integrity_check.py; M cli.py; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/scheduler/; ?? docs/scheduled-daily-close-mvp-v0.1-status.md |
+| Git working tree | warning | M README.md; M app/dashboard/main.py; M app/security/access_control.py; M reports/system_integrity_2026-05-10.md; ?? docs/dashboard-system-integrity-page-v0.1-status.md |

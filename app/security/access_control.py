@@ -18,6 +18,7 @@ ALLOWED_ROLES = {
         "Approvals",
         "Daily Close",
         "Notifications",
+        "System Integrity",
         "People",
     ],
     "executive": [
@@ -32,6 +33,7 @@ ALLOWED_ROLES = {
         "Approvals",
         "Daily Close",
         "Notifications",
+        "System Integrity",
         "People",
     ],
     "viewer": [
@@ -46,6 +48,7 @@ ALLOWED_ROLES = {
         "Approvals",
         "Daily Close",
         "Notifications",
+        "System Integrity",
         "People",
     ],
 }

@@ -390,6 +390,56 @@ def load_evidence_index_status():
         "items": items,
     }
 
+
+def load_system_integrity_status():
+    report_path = get_latest_report_path("system_integrity")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "overall_status": "missing",
+            "total_checks": 0,
+            "passed_checks": 0,
+            "warning_checks": 0,
+            "failed_checks": 0,
+            "checks": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    checks = []
+
+    for line in content.splitlines():
+        if not line.startswith("|") or line.startswith("| ---") or line.startswith("| Check"):
+            continue
+
+        parts = [part.strip() for part in line.strip("|").split("|")]
+        if len(parts) == 3:
+            checks.append(
+                {
+                    "name": parts[0],
+                    "status": parts[1],
+                    "detail": parts[2],
+                }
+            )
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "overall_status": status_match.group(1) if status_match else "unknown",
+        "total_checks": extract_metric_from_markdown(content, "Total checks"),
+        "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
+        "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
+        "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "checks": checks,
+    }
+
+
 def load_dashboard_data():
     transactions_count = get_scalar("SELECT COUNT(*) FROM transactions")
     total_income = get_scalar("SELECT COALESCE(SUM(amount), 0) FROM transactions WHERE type = 'income'")
@@ -692,6 +742,7 @@ def load_dashboard_data():
 
     daily_close_status = load_daily_close_status()
     evidence_index_status = load_evidence_index_status()
+    system_integrity_status = load_system_integrity_status()
 
     return {
         "transactions_count": transactions_count,
@@ -746,6 +797,7 @@ def load_dashboard_data():
         "evidence_index_status": evidence_index_status,
         "notification_summary": notification_summary,
         "notification_outbox": notification_outbox,
+        "system_integrity_status": system_integrity_status,
     }
 
 
@@ -1248,6 +1300,74 @@ def render_module_page(page, data):
             render_brief_item(
                 f"{notification_summary['failed']} failed notification(s)",
                 "Failed items should be reviewed before delivery automation expands",
+            )
+            render_panel_end()
+    elif page == "System Integrity":
+        system_integrity = data["system_integrity_status"]
+        overall_status = system_integrity["overall_status"]
+        overall_class = {
+            "passed": "green",
+            "warning": "gold",
+            "failed": "red",
+        }.get(overall_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Overall", overall_status.title(), "Latest system-check result", overall_class)
+        with c2:
+            render_metric_card("Total", system_integrity["total_checks"], "Checks evaluated", "")
+        with c3:
+            render_metric_card("Passed", system_integrity["passed_checks"], "Healthy controls", "green")
+        with c4:
+            render_metric_card("Warnings", system_integrity["warning_checks"], "Needs review", "gold" if system_integrity["warning_checks"] else "green")
+        with c5:
+            render_metric_card("Failed", system_integrity["failed_checks"], "Critical failures", "red" if system_integrity["failed_checks"] else "green")
+
+        status_filter = st.selectbox(
+            "Check status filter",
+            ["all", "passed", "warning", "failed"],
+            index=0,
+        )
+        filtered_checks = [
+            check
+            for check in system_integrity["checks"]
+            if status_filter == "all" or check["status"] == status_filter
+        ]
+
+        status_styles = {
+            "passed": "healthy",
+            "warning": "medium",
+            "failed": "high",
+        }
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Integrity Checks")
+            if filtered_checks:
+                for check in filtered_checks:
+                    render_status_row(
+                        check["name"],
+                        check["detail"],
+                        status_styles.get(check["status"], check["status"]),
+                    )
+            else:
+                render_status_row("No checks found", "No integrity checks match this filter", "healthy")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Integrity Brief")
+            render_brief_item(
+                system_integrity["report_path"] or "System integrity report not generated",
+                "Latest exported system-check artifact",
+            )
+            render_brief_item(
+                f"{system_integrity['passed_checks']} of {system_integrity['total_checks']} checks passing",
+                "System integrity coverage across modules, tables, reports, and security boundaries",
+            )
+            render_brief_item(
+                f"{system_integrity['warning_checks']} warning(s) and {system_integrity['failed_checks']} failed check(s)",
+                "Warnings are expected during active uncommitted work; failures require immediate review",
             )
             render_panel_end()
     elif page == "People":

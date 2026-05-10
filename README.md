@@ -1055,3 +1055,15 @@ Current capabilities:
 - Validate that sensitive files are not present in the public website surface.
 - Export `reports/system_integrity_YYYY-MM-DD.md`.
 - Validate system-check through smoke test.
+
+## Dashboard System Integrity Page v0.1
+
+The private BusinessOS dashboard now includes a System Integrity page.
+
+Current visual capabilities:
+
+- Show latest system-check overall status.
+- Show total, passed, warning, and failed check counts.
+- List individual integrity checks with status and detail.
+- Filter checks by status.
+- Keep the dashboard page read-only; refresh the artifact with `python cli.py system-check`.
