@@ -630,3 +630,21 @@ python cli.py assistance-brief
 - Generate Assistance Brief and next best assistance move.
 - Write audit logs for assistance events.
 - Validate Assistance Layer through smoke test.
+
+## Assistance Status v0.2
+
+BusinessOS Assistance requests now support controlled status updates with audit logging and justification.
+
+### Assistance Status CLI Command
+
+```bash
+python cli.py assistance-status
+```
+
+Current behavior:
+
+- Finds the first open assistance request.
+- Moves it to `triaged`.
+- Stores a justification.
+- Writes an audit log.
+- Passes through the smoke test.

@@ -11,6 +11,7 @@ from app.assistance.request_views import (
     print_assistance_requests_list,
 )
 from app.assistance.requests import ensure_default_assistance_requests
+from app.assistance.request_status import demo_triage_first_open_assistance_request
 from app.assistance.schema import create_assistance_requests_table
 from app.command_center.command_center_brief import print_command_center_brief
 from app.command_center.command_center_report import export_command_center_report
@@ -304,6 +305,20 @@ def run_assistance_brief():
     finally:
         conn.close()
 
+def run_assistance_status():
+    conn = create_connection()
+
+    try:
+        create_assistance_requests_table(conn)
+        ensure_default_assistance_requests(conn)
+        demo_triage_first_open_assistance_request(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
 def main():
     parser = argparse.ArgumentParser(
         description="BusinessOS CLI"
@@ -332,6 +347,7 @@ def main():
             "people-brief",
             "assistance",
             "assistance-brief",
+            "assistance-status",
         ],
         help="Command to execute.",
     )
@@ -378,10 +394,13 @@ def main():
         run_assistance()
     elif args.command == "assistance-brief":
         run_assistance_brief()
+    elif args.command == "assistance-status":
+        run_assistance_status()
 
 
 if __name__ == "__main__":
     main()
+
 
 
 
