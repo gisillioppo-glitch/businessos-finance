@@ -39,6 +39,7 @@ from app.command_center.command_center_brief import print_command_center_brief
 from app.command_center.command_center_report import export_command_center_report
 from app.command_center.command_center_summary import generate_command_center_summary
 from app.db.connection import create_connection
+from app.evidence.evidence_index import export_executive_evidence_index
 from app.governance.findings import (
     evaluate_governance_findings,
     print_governance_kpis,
@@ -448,6 +449,18 @@ def run_approval_reject():
     finally:
         conn.close()
 
+def run_evidence_index():
+    conn = create_connection()
+
+    try:
+        export_executive_evidence_index(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
 def run_executive_alerts():
     conn = create_connection()
 
@@ -560,6 +573,7 @@ def main():
             "approval-report",
             "approval-approve",
             "approval-reject",
+            "evidence-index",
             "executive-alerts",
             "executive-alerts-brief",
             "executive-alerts-report",
@@ -628,6 +642,8 @@ def main():
         run_approval_approve()
     elif args.command == "approval-reject":
         run_approval_reject()
+    elif args.command == "evidence-index":
+        run_evidence_index()
     elif args.command == "executive-alerts":
         run_executive_alerts()
     elif args.command == "executive-alerts-brief":
@@ -644,6 +660,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 

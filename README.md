@@ -896,3 +896,22 @@ Current capabilities:
 - Include approval rows with approver, requester, source, status, and justification.
 - Write audit log on report export.
 - Validate export through smoke test.
+
+## Executive Evidence Index MVP v0.1
+
+BusinessOS can now generate an executive evidence index for the operating day.
+
+### Executive Evidence Index CLI Command
+
+```bash
+python cli.py evidence-index
+```
+
+Current capabilities:
+
+- Track expected daily evidence reports.
+- Show available and missing evidence items.
+- Export `reports/executive_evidence_index_YYYY-MM-DD.md`.
+- Include Command Center, Executive Alerts, Approval Decisions, Governance, Support, and Daily Finance evidence.
+- Write audit logs when the evidence index is viewed/exported.
+- Validate evidence indexing through smoke test.
