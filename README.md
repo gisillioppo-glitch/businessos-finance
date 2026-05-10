@@ -435,3 +435,23 @@ Run locally:
 ```bash
 streamlit run app/dashboard/main.py
 ```
+
+## Landing Website MVP
+
+The BusinessOS Landing Website MVP is a public static product presentation page.
+
+Files:
+
+```text
+public/index.html
+public/styles.css
+public/assets/dashboard-preview.png
+```
+
+The landing page is separate from the private dashboard. It does not connect to `finance.db`, import private modules, or expose internal logic.
+
+Open locally:
+
+```text
+public/index.html
+```
