@@ -995,6 +995,18 @@ Current capabilities:
 - Record scheduler outcomes in the database and audit log.
 - Keep external delivery and operating system scheduler setup outside this MVP.
 
+## Dashboard Scheduled Close Page v0.1
+
+The private BusinessOS dashboard now includes a Scheduled Close page.
+
+Current visual capabilities:
+
+- Show schedule enabled status and configured local run time.
+- Show whether today's daily close report already exists.
+- Show last scheduler status and next action.
+- Display last run date, start timestamp, completion timestamp, and latest scheduler message.
+- Keep the dashboard page read-only; execution remains in CLI or an external scheduler.
+
 ## Notification Outbox MVP v0.1
 
 BusinessOS now has a safe internal notification queue for prepared executive and manager messages.

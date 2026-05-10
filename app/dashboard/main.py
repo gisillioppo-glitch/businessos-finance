@@ -1,6 +1,7 @@
 import re
 import sqlite3
 import sys
+from datetime import date, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -440,6 +441,96 @@ def load_system_integrity_status():
     }
 
 
+def load_scheduled_daily_close_status():
+    today = date.today().isoformat()
+    current_time_local = datetime.now().strftime("%H:%M")
+    today_report_path = ROOT_DIR / "reports" / f"daily_close_{today}.md"
+    today_report_exists = today_report_path.exists()
+
+    default_status = {
+        "exists": False,
+        "schedule_name": "executive_daily_close",
+        "enabled": False,
+        "run_time_local": "18:00",
+        "last_run_date": None,
+        "last_started_at": None,
+        "last_completed_at": None,
+        "last_status": "missing",
+        "last_message": "Scheduled daily close table has not been initialized.",
+        "today": today,
+        "current_time_local": current_time_local,
+        "today_report_exists": today_report_exists,
+        "today_report_path": str(today_report_path.relative_to(ROOT_DIR)),
+        "next_action": "missing_schedule",
+    }
+
+    with sqlite3.connect(DB_PATH) as conn:
+        table_exists = conn.execute(
+            """
+            SELECT name
+            FROM sqlite_master
+            WHERE type = 'table'
+              AND name = 'scheduled_daily_close'
+            LIMIT 1
+            """
+        ).fetchone()
+
+        if not table_exists:
+            return default_status
+
+        row = conn.execute(
+            """
+            SELECT
+                schedule_name,
+                enabled,
+                run_time_local,
+                last_run_date,
+                last_started_at,
+                last_completed_at,
+                last_status,
+                last_message
+            FROM scheduled_daily_close
+            WHERE schedule_name = 'executive_daily_close'
+            LIMIT 1
+            """
+        ).fetchone()
+
+    if not row:
+        return default_status
+
+    enabled = bool(row[1])
+    run_time_local = row[2]
+    last_run_date = row[3]
+
+    if not enabled:
+        next_action = "disabled"
+    elif last_run_date == today:
+        next_action = "already_recorded_today"
+    elif today_report_exists:
+        next_action = "close_already_available"
+    elif current_time_local < run_time_local:
+        next_action = "waiting_for_run_time"
+    else:
+        next_action = "due"
+
+    return {
+        "exists": True,
+        "schedule_name": row[0],
+        "enabled": enabled,
+        "run_time_local": run_time_local,
+        "last_run_date": last_run_date,
+        "last_started_at": row[4],
+        "last_completed_at": row[5],
+        "last_status": row[6],
+        "last_message": row[7],
+        "today": today,
+        "current_time_local": current_time_local,
+        "today_report_exists": today_report_exists,
+        "today_report_path": str(today_report_path.relative_to(ROOT_DIR)),
+        "next_action": next_action,
+    }
+
+
 def load_dashboard_data():
     transactions_count = get_scalar("SELECT COUNT(*) FROM transactions")
     total_income = get_scalar("SELECT COALESCE(SUM(amount), 0) FROM transactions WHERE type = 'income'")
@@ -743,6 +834,7 @@ def load_dashboard_data():
     daily_close_status = load_daily_close_status()
     evidence_index_status = load_evidence_index_status()
     system_integrity_status = load_system_integrity_status()
+    scheduled_daily_close_status = load_scheduled_daily_close_status()
 
     return {
         "transactions_count": transactions_count,
@@ -798,6 +890,7 @@ def load_dashboard_data():
         "notification_summary": notification_summary,
         "notification_outbox": notification_outbox,
         "system_integrity_status": system_integrity_status,
+        "scheduled_daily_close_status": scheduled_daily_close_status,
     }
 
 
@@ -1232,6 +1325,79 @@ def render_module_page(page, data):
         else:
             render_status_row("No evidence index items", "Run python cli.py evidence-index or python cli.py daily-close", "medium")
         render_panel_end()
+    elif page == "Scheduled Close":
+        schedule = data["scheduled_daily_close_status"]
+        enabled_label = "Enabled" if schedule["enabled"] else "Disabled"
+        report_label = "Available" if schedule["today_report_exists"] else "Missing"
+        next_action = schedule["next_action"].replace("_", " ").title()
+        last_status = (schedule["last_status"] or "unknown").replace("_", " ").title()
+
+        next_action_class = {
+            "due": "red",
+            "waiting_for_run_time": "gold",
+            "already_recorded_today": "green",
+            "close_already_available": "green",
+            "disabled": "red",
+            "missing_schedule": "red",
+        }.get(schedule["next_action"], "gold")
+
+        last_status_class = {
+            "completed": "green",
+            "skipped_existing_close": "green",
+            "ready": "gold",
+            "running": "gold",
+            "failed": "red",
+            "missing": "red",
+        }.get(schedule["last_status"], "gold")
+        last_status_badge = {
+            "completed": "healthy",
+            "skipped_existing_close": "healthy",
+            "ready": "medium",
+            "running": "medium",
+            "failed": "high",
+            "missing": "high",
+        }.get(schedule["last_status"], "medium")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Schedule", enabled_label, schedule["schedule_name"], "green" if schedule["enabled"] else "red")
+        with c2:
+            render_metric_card("Run Time", schedule["run_time_local"], "Local time gate", "")
+        with c3:
+            render_metric_card("Today Close", report_label, schedule["today_report_path"], "green" if schedule["today_report_exists"] else "gold")
+        with c4:
+            render_metric_card("Last Status", last_status, schedule["last_run_date"] or "No recorded run", last_status_class)
+        with c5:
+            render_metric_card("Next Action", next_action, f"Current local time {schedule['current_time_local']}", next_action_class)
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("Schedule State")
+            render_status_row("Schedule name", schedule["schedule_name"], "healthy" if schedule["exists"] else "high")
+            render_status_row("Today", f"{schedule['today']} | current local time {schedule['current_time_local']}", "healthy")
+            render_status_row("Run time gate", schedule["run_time_local"], "medium")
+            render_status_row("Today close report", schedule["today_report_path"], "healthy" if schedule["today_report_exists"] else "medium")
+            render_status_row("Last run date", schedule["last_run_date"] or "No run recorded", last_status_badge)
+            render_status_row("Last started", schedule["last_started_at"] or "No start recorded", last_status_badge)
+            render_status_row("Last completed", schedule["last_completed_at"] or "No completion recorded", last_status_badge)
+            render_panel_end()
+
+        with right:
+            render_panel_start("Scheduled Close Brief")
+            render_brief_item(
+                schedule["last_message"] or "No scheduler message recorded",
+                "Latest scheduler outcome",
+            )
+            render_brief_item(
+                "python cli.py daily-close-schedule",
+                "Use CLI to inspect schedule status",
+            )
+            render_brief_item(
+                "python cli.py scheduled-daily-close",
+                "Use CLI or an external scheduler to run the gated close",
+            )
+            render_panel_end()
     elif page == "Notifications":
         notification_summary = data["notification_summary"]
         notifications = data["notification_outbox"]
