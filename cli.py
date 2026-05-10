@@ -30,6 +30,10 @@ from app.governance.findings import (
 )
 from app.governance.governance_brief import print_governance_brief
 from app.governance.governance_report import export_governance_report
+from app.governance.sensitivity_rules import (
+    evaluate_governance_sensitivity_rules,
+    print_governance_sensitivity_brief,
+)
 from app.operations.escalation_rules import evaluate_operations_escalation_rules
 from app.people.people_brief import print_people_brief
 from app.people.people_views import (
@@ -177,6 +181,32 @@ def run_gov_report():
     finally:
         conn.close()
 
+
+def run_gov_sensitivity():
+    conn = create_connection()
+
+    try:
+        evaluate_governance_sensitivity_rules(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_gov_sensitivity_brief():
+    conn = create_connection()
+
+    try:
+        findings = evaluate_governance_sensitivity_rules(conn)
+        print_governance_sensitivity_brief(conn, findings)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
 
 def run_support_incidents():
     conn = create_connection()
@@ -376,6 +406,8 @@ def main():
             "gov-kpis",
             "gov-brief",
             "gov-report",
+            "gov-sensitivity",
+            "gov-sensitivity-brief",
             "support-incidents",
             "support-brief",
             "support-report",
@@ -416,6 +448,10 @@ def main():
         run_gov_brief()
     elif args.command == "gov-report":
         run_gov_report()
+    elif args.command == "gov-sensitivity":
+        run_gov_sensitivity()
+    elif args.command == "gov-sensitivity-brief":
+        run_gov_sensitivity_brief()
     elif args.command == "support-incidents":
         run_support_incidents()
     elif args.command == "support-brief":
@@ -444,6 +480,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 

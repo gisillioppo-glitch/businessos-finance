@@ -719,3 +719,27 @@ python cli.py approval-brief
 - Generate Approval Brief and next best approval move.
 - Write audit logs for approval events.
 - Validate Approval Layer through smoke test.
+
+## Governance Sensitivity Rules v0.1
+
+BusinessOS now includes a rule-based governance sensitivity layer.
+
+It defines which institutional signals should be treated as sensitive and reviewed before action proceeds.
+
+### Sensitivity CLI Commands
+
+```bash
+python cli.py gov-sensitivity
+python cli.py gov-sensitivity-brief
+```
+
+Current sensitivity categories:
+
+- Pending decision/access/budget/policy/incident approvals.
+- High or critical approvals.
+- Sensitive assistance requests.
+- Privileged admin/executive users.
+- Overdue operations tasks.
+- High or critical support incidents.
+- Critical/error audit events.
+- Sensitive status updates missing justification.

@@ -13,6 +13,8 @@ COMMANDS = [
     ["python", "cli.py", "gov-kpis"],
     ["python", "cli.py", "gov-brief"],
     ["python", "cli.py", "gov-report"],
+    ["python", "cli.py", "gov-sensitivity"],
+    ["python", "cli.py", "gov-sensitivity-brief"],
     ["python", "cli.py", "support-incidents"],
     ["python", "cli.py", "support-brief"],
     ["python", "cli.py", "support-report"],
@@ -71,6 +73,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
