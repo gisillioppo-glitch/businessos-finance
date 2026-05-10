@@ -14,6 +14,7 @@ if str(ROOT_DIR) not in sys.path:
 from app.alerts.alert_status import get_executive_alert_status_summary  # noqa: E402
 from app.alerts.executive_alerts import get_executive_alerts  # noqa: E402
 from app.governance.sensitivity_rules import get_governance_sensitivity_findings  # noqa: E402
+from app.notifications.outbox import get_notification_outbox, get_notification_summary  # noqa: E402
 from app.security.access_control import (  # noqa: E402
     get_allowed_pages,
     get_default_role,
@@ -667,6 +668,8 @@ def load_dashboard_data():
         sensitivity_findings = get_governance_sensitivity_findings(conn)
         executive_alerts = get_executive_alerts(conn)
         executive_alert_status_summary = get_executive_alert_status_summary(conn)
+        notification_summary = get_notification_summary(conn)
+        notification_outbox = get_notification_outbox(conn, limit=50)
 
     high_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "high")
     medium_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "medium")
@@ -741,6 +744,8 @@ def load_dashboard_data():
         "cash_flow_series": load_cash_flow_series(),
         "daily_close_status": daily_close_status,
         "evidence_index_status": evidence_index_status,
+        "notification_summary": notification_summary,
+        "notification_outbox": notification_outbox,
     }
 
 
@@ -1175,6 +1180,76 @@ def render_module_page(page, data):
         else:
             render_status_row("No evidence index items", "Run python cli.py evidence-index or python cli.py daily-close", "medium")
         render_panel_end()
+    elif page == "Notifications":
+        notification_summary = data["notification_summary"]
+        notifications = data["notification_outbox"]
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Total", notification_summary["total"], "Internal delivery records", "")
+        with c2:
+            render_metric_card("Queued", notification_summary["queued"], "Ready for protected delivery", "gold")
+        with c3:
+            render_metric_card("Sent", notification_summary["sent"], "Marked as delivered", "green")
+        with c4:
+            render_metric_card("Dismissed", notification_summary["dismissed"], "Closed without delivery", "gold")
+        with c5:
+            render_metric_card("Failed", notification_summary["failed"], "Needs delivery review", "red")
+
+        status_filter = st.selectbox(
+            "Status filter",
+            ["all", "queued", "sent", "dismissed", "failed"],
+            index=0,
+        )
+        filtered_notifications = [
+            notification
+            for notification in notifications
+            if status_filter == "all" or notification["status"] == status_filter
+        ]
+
+        status_styles = {
+            "queued": "medium",
+            "sent": "healthy",
+            "dismissed": "low",
+            "failed": "high",
+        }
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Notification Outbox")
+            if filtered_notifications:
+                for notification in filtered_notifications:
+                    detail = (
+                        f"{notification['channel']} | "
+                        f"{notification['recipient_name']} <{notification['recipient_email']}> | "
+                        f"{notification['recipient_role']} | "
+                        f"{notification['source_module']}:{notification['source_reference_id']}"
+                    )
+                    render_status_row(
+                        notification["subject"],
+                        detail,
+                        status_styles.get(notification["status"], notification["status"]),
+                    )
+            else:
+                render_status_row("No notifications found", "Notification outbox has no records for this status", "healthy")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Notification Brief")
+            render_brief_item(
+                f"{notification_summary['queued']} queued notification(s)",
+                "Queued items are ready for the future secure delivery adapter",
+            )
+            render_brief_item(
+                f"{notification_summary['sent']} sent notification(s)",
+                "Sent items have been marked by the protected status workflow",
+            )
+            render_brief_item(
+                f"{notification_summary['failed']} failed notification(s)",
+                "Failed items should be reviewed before delivery automation expands",
+            )
+            render_panel_end()
     elif page == "People":
         c1, c2, c3, c4 = st.columns(4)
         with c1:

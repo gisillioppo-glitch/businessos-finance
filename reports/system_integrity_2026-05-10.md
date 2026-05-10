@@ -61,4 +61,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | warning | M README.md; M cli.py; M scripts/smoke_test.py; ?? app/system/; ?? docs/system-integrity-check-mvp-v0.1-status.md; ?? reports/system_integrity_2026-05-10.md |
+| Git working tree | warning | M app/dashboard/main.py; M app/security/access_control.py; ?? docs/dashboard-notification-outbox-page-v0.1-status.md |

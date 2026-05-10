@@ -17,6 +17,7 @@ ALLOWED_ROLES = {
         "Assistance",
         "Approvals",
         "Daily Close",
+        "Notifications",
         "People",
     ],
     "executive": [
@@ -30,6 +31,7 @@ ALLOWED_ROLES = {
         "Assistance",
         "Approvals",
         "Daily Close",
+        "Notifications",
         "People",
     ],
     "viewer": [
@@ -43,6 +45,7 @@ ALLOWED_ROLES = {
         "Assistance",
         "Approvals",
         "Daily Close",
+        "Notifications",
         "People",
     ],
 }
