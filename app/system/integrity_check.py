@@ -25,6 +25,7 @@ REQUIRED_MODULES = [
     "notifications",
     "operations",
     "people",
+    "readiness",
     "reports",
     "rules",
     "scheduler",

@@ -1079,3 +1079,19 @@ Current visual capabilities:
 - List individual integrity checks with status and detail.
 - Filter checks by status.
 - Keep the dashboard page read-only; refresh the artifact with `python cli.py system-check`.
+
+## Release Readiness MVP v0.1
+
+BusinessOS can now generate a private demo readiness report.
+
+CLI command:
+
+```bash
+python cli.py release-readiness
+```
+
+Current capabilities:
+
+- Check system integrity, deployment boundary, dashboard response, landing files, lead intake markers, sensitive file protections, daily close, notifications, scheduled close, dashboard readiness pages, and Git working tree.
+- Export `reports/release_readiness_YYYY-MM-DD.md`.
+- Report `ready`, `ready_with_warnings`, or `blocked` for controlled demo readiness.

@@ -78,6 +78,7 @@ from app.operations.task_views import (
     print_operations_tasks_list,
 )
 from app.reports.report_history import print_report_history
+from app.readiness.release_readiness import print_release_readiness
 from app.scheduler.scheduled_daily_close import (
     print_scheduled_daily_close_status,
     run_scheduled_daily_close,
@@ -124,6 +125,19 @@ def run_reports():
 
     try:
         print_report_history(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_release_readiness():
+    conn = create_connection()
+
+    try:
+        print_release_readiness(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -712,6 +726,7 @@ def main():
             "system-check",
             "actions",
             "reports",
+            "release-readiness",
             "notifications",
             "notification-sent",
             "notification-dismiss",
@@ -767,6 +782,8 @@ def main():
         run_actions()
     elif args.command == "reports":
         run_reports()
+    elif args.command == "release-readiness":
+        run_release_readiness()
     elif args.command == "notifications":
         run_notifications()
     elif args.command == "notification-sent":

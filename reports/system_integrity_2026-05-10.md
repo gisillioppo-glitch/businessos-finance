@@ -5,8 +5,8 @@ Date: 2026-05-10
 ## Integrity Summary
 
 Overall status: warning  
-Total checks: 50
-Passed checks: 49
+Total checks: 51
+Passed checks: 50
 Warning checks: 1  
 Failed checks: 0  
 
@@ -30,6 +30,7 @@ Failed checks: 0
 | Module: notifications | passed | app\notifications |
 | Module: operations | passed | app\operations |
 | Module: people | passed | app\people |
+| Module: readiness | passed | app\readiness |
 | Module: reports | passed | app\reports |
 | Module: rules | passed | app\rules |
 | Module: scheduler | passed | app\scheduler |
@@ -63,4 +64,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | warning | M README.md; M app/dashboard/main.py; M app/security/access_control.py; M reports/system_integrity_2026-05-10.md; ?? docs/dashboard-scheduled-close-page-v0.1-status.md |
+| Git working tree | warning | M README.md; M app/system/integrity_check.py; M cli.py; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/readiness/; ?? docs/release-readiness-mvp-v0.1-status.md; ?? reports/release_readiness_2026-05-10.md |
