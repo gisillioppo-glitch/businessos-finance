@@ -10,6 +10,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from app.governance.sensitivity_rules import get_governance_sensitivity_findings  # noqa: E402
 from app.security.access_control import (  # noqa: E402
     get_allowed_pages,
     get_default_role,
@@ -511,6 +512,22 @@ def load_dashboard_data():
         """
     )
 
+    with sqlite3.connect(DB_PATH) as conn:
+        sensitivity_findings = get_governance_sensitivity_findings(conn)
+
+    high_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "high")
+    medium_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "medium")
+
+    if high_sensitivity_findings > 0:
+        highest_sensitivity_risk = "High"
+        sensitivity_next_move = "Review high-sensitivity findings and confirm approvals before execution."
+    elif medium_sensitivity_findings > 0:
+        highest_sensitivity_risk = "Medium"
+        sensitivity_next_move = "Review medium-sensitivity findings and confirm ownership."
+    else:
+        highest_sensitivity_risk = "Low"
+        sensitivity_next_move = "Maintain current governance sensitivity controls."
+
     return {
         "transactions_count": transactions_count,
         "total_income": total_income,
@@ -540,6 +557,12 @@ def load_dashboard_data():
         "recommended_actions": recommended_actions,
         "assistance_requests": assistance_requests,
         "people_users": people_users,
+        "sensitivity_findings": sensitivity_findings,
+        "sensitive_findings": len(sensitivity_findings),
+        "high_sensitivity_findings": high_sensitivity_findings,
+        "medium_sensitivity_findings": medium_sensitivity_findings,
+        "highest_sensitivity_risk": highest_sensitivity_risk,
+        "sensitivity_next_move": sensitivity_next_move,
         "cash_flow_series": load_cash_flow_series(),
     }
 
@@ -663,7 +686,7 @@ def render_dashboard(data):
         <div class="bos-topbar">
             <div>
                 <div class="bos-title">BusinessOS Command Center</div>
-                <div class="bos-subtitle">Unified executive intelligence across Finance, Operations, Governance, Support, Assistance, and People.</div>
+                <div class="bos-subtitle">Unified executive intelligence across Finance, Operations, Governance, Sensitivity, Support, Assistance, and People.</div>
             </div>
             <div class="bos-chip">System Health: {data['overall_health']}</div>
         </div>
@@ -866,6 +889,47 @@ def render_module_page(page, data):
             )
             render_panel_end()
 
+    elif page == "Sensitivity":
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            render_metric_card("Sensitive Findings", data["sensitive_findings"], "Signals requiring institutional control", "gold")
+        with c2:
+            render_metric_card("High Sensitivity", data["high_sensitivity_findings"], "Needs executive attention", "red")
+        with c3:
+            render_metric_card("Medium Sensitivity", data["medium_sensitivity_findings"], "Needs owner review", "gold")
+        with c4:
+            render_metric_card("Highest Risk", data["highest_sensitivity_risk"], "Governance sensitivity level", "red" if data["highest_sensitivity_risk"] == "High" else "gold")
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("Sensitivity Findings")
+            if data["sensitivity_findings"]:
+                for finding in data["sensitivity_findings"][:8]:
+                    render_status_row(
+                        finding["message"],
+                        f"{finding['source']} | {finding['finding_type']}",
+                        finding["severity"],
+                    )
+            else:
+                render_status_row("No sensitive findings", "Governance sensitivity controls are clear", "healthy")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Sensitivity Brief")
+            render_brief_item(
+                f"{data['sensitive_findings']} sensitive finding(s)",
+                "BusinessOS is actively classifying institutional sensitivity",
+            )
+            render_brief_item(
+                f"{data['high_sensitivity_findings']} high-sensitivity finding(s)",
+                "High findings should be reviewed before dependent actions proceed",
+            )
+            render_brief_item(
+                data["sensitivity_next_move"],
+                "Recommended governance sensitivity move",
+            )
+            render_panel_end()
 
 def main():
     st.set_page_config(
@@ -889,5 +953,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 

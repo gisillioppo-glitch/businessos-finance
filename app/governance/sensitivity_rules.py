@@ -22,7 +22,7 @@ def _add_finding(findings, finding_type, severity, source, message, metadata):
     )
 
 
-def evaluate_governance_sensitivity_rules(conn):
+def get_governance_sensitivity_findings(conn):
     findings = []
 
     approval_rows = conn.execute(
@@ -203,6 +203,12 @@ def evaluate_governance_sensitivity_rules(conn):
                 },
             )
 
+    return findings
+
+
+def evaluate_governance_sensitivity_rules(conn):
+    findings = get_governance_sensitivity_findings(conn)
+
     if not findings:
         print("Governance Sensitivity Rules: No sensitive governance signals detected.")
         write_audit_log(
@@ -290,3 +296,4 @@ def print_governance_sensitivity_brief(conn, findings=None):
     )
 
     return brief
+

@@ -743,3 +743,22 @@ Current sensitivity categories:
 - High or critical support incidents.
 - Critical/error audit events.
 - Sensitive status updates missing justification.
+
+## Dashboard Governance Sensitivity Page v0.1
+
+The private BusinessOS dashboard now includes a Sensitivity page.
+
+Current visual capabilities:
+
+- Sensitivity navigation entry.
+- Sensitive findings count.
+- High and medium sensitivity finding counts.
+- Highest sensitivity risk.
+- Sensitivity Findings list with source, finding type, and severity.
+- Sensitivity Brief panel for executive review.
+
+Run locally:
+
+```bash
+streamlit run app/dashboard/main.py
+```
