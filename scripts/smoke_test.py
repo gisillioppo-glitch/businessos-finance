@@ -18,6 +18,8 @@ COMMANDS = [
     ["python", "cli.py", "support-report"],
     ["python", "cli.py", "command-center"],
     ["python", "cli.py", "command-report"],
+    ["python", "cli.py", "people"],
+    ["python", "cli.py", "people-brief"],
     ["python", "cli.py", "run"],
 ]
 
@@ -64,3 +66,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

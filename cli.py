@@ -16,6 +16,13 @@ from app.governance.findings import (
 from app.governance.governance_brief import print_governance_brief
 from app.governance.governance_report import export_governance_report
 from app.operations.escalation_rules import evaluate_operations_escalation_rules
+from app.people.people_brief import print_people_brief
+from app.people.people_views import (
+    print_people_list,
+    print_people_summary_kpis,
+)
+from app.people.schema import create_business_users_table
+from app.people.users import ensure_default_business_users
 from app.operations.operations_brief import print_operations_brief
 from app.operations.task_views import (
     print_operations_task_summary_kpis,
@@ -228,6 +235,37 @@ def run_command_report():
         conn.close()
 
 
+def run_people():
+    conn = create_connection()
+
+    try:
+        create_business_users_table(conn)
+        ensure_default_business_users(conn)
+        print_people_list(conn)
+        print_people_summary_kpis(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_people_brief():
+    conn = create_connection()
+
+    try:
+        create_business_users_table(conn)
+        ensure_default_business_users(conn)
+        people_kpis = print_people_summary_kpis(conn)
+        print_people_brief(conn, people_kpis)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
 def main():
     parser = argparse.ArgumentParser(
         description="BusinessOS CLI"
@@ -252,6 +290,8 @@ def main():
             "support-report",
             "command-center",
             "command-report",
+            "people",
+            "people-brief",
         ],
         help="Command to execute.",
     )
@@ -290,7 +330,13 @@ def main():
         run_command_center()
     elif args.command == "command-report":
         run_command_report()
+    elif args.command == "people":
+        run_people()
+    elif args.command == "people-brief":
+        run_people_brief()
 
 
 if __name__ == "__main__":
     main()
+
+

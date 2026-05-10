@@ -560,3 +560,38 @@ https://github.com/gisillioppo-glitch/businessos-finance
 The public repo contains only static landing files. The private repo contains the BusinessOS runtime, dashboard, modules, security layer, and internal documentation.
 
 The GitHub Pages workflow was removed from this private repo so public deployment happens from `businessos-landing` only.
+
+## People Layer MVP
+
+The BusinessOS People Layer is the first internal user operating layer.
+
+It tracks institutional users, departments, roles, statuses, access levels, people KPIs, and a People Brief for executive oversight.
+
+### People Architecture
+
+```text
+app/people/
+  __init__.py
+  schema.py
+  users.py
+  people_views.py
+  people_brief.py
+```
+
+### People CLI Commands
+
+```bash
+python cli.py people
+python cli.py people-brief
+```
+
+### Current People Capabilities
+
+- Create and seed business users.
+- Deduplicate users by email.
+- Track role, department, status, and access level.
+- Generate People Directory output.
+- Generate People Summary KPIs.
+- Generate People Brief and next best people move.
+- Write audit logs for people events.
+- Validate People Layer through smoke test.
