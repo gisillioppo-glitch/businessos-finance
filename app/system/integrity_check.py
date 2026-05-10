@@ -4,6 +4,7 @@ from datetime import date
 from pathlib import Path
 
 from app.audit.audit_log import write_audit_log
+from app.scheduler.scheduled_daily_close import create_scheduled_daily_close_table
 
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -26,6 +27,7 @@ REQUIRED_MODULES = [
     "people",
     "reports",
     "rules",
+    "scheduler",
     "security",
     "support",
 ]
@@ -40,6 +42,7 @@ REQUIRED_TABLES = [
     "assistance_requests",
     "approval_requests",
     "notification_outbox",
+    "scheduled_daily_close",
 ]
 
 REQUIRED_REPORT_PREFIXES = [
@@ -140,6 +143,8 @@ def _run_git_status():
 
 
 def generate_system_integrity_check(conn):
+    create_scheduled_daily_close_table(conn)
+
     checks = []
 
     checks.append(_check("Repository root", (ROOT_DIR / "cli.py").exists(), str(ROOT_DIR)))

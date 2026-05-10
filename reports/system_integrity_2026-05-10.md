@@ -5,8 +5,8 @@ Date: 2026-05-10
 ## Integrity Summary
 
 Overall status: warning  
-Total checks: 48  
-Passed checks: 47  
+Total checks: 50
+Passed checks: 49
 Warning checks: 1  
 Failed checks: 0  
 
@@ -32,6 +32,7 @@ Failed checks: 0
 | Module: people | passed | app\people |
 | Module: reports | passed | app\reports |
 | Module: rules | passed | app\rules |
+| Module: scheduler | passed | app\scheduler |
 | Module: security | passed | app\security |
 | Module: support | passed | app\support |
 | Database table: audit_logs | passed | present |
@@ -43,6 +44,7 @@ Failed checks: 0
 | Database table: assistance_requests | passed | present |
 | Database table: approval_requests | passed | present |
 | Database table: notification_outbox | passed | present |
+| Database table: scheduled_daily_close | passed | present |
 | Latest report: daily_brief | passed | reports\daily_brief_2026-05-10.md |
 | Latest report: governance_brief | passed | reports\governance_brief_2026-05-10.md |
 | Latest report: support_brief | passed | reports\support_brief_2026-05-10.md |
@@ -61,4 +63,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | warning | M app/dashboard/main.py; M app/security/access_control.py; ?? docs/dashboard-notification-outbox-page-v0.1-status.md |
+| Git working tree | warning | M README.md; M app/system/integrity_check.py; M cli.py; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/scheduler/; ?? docs/scheduled-daily-close-mvp-v0.1-status.md |

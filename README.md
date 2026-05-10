@@ -975,6 +975,26 @@ Current capabilities:
 - Keeps real email sending out of MVP code until protected SMTP/API credentials are ready.
 - Validates the command through smoke test.
 
+## Scheduled Daily Close MVP v0.1
+
+BusinessOS can now expose a controlled daily close runner for external schedulers.
+
+CLI commands:
+
+```bash
+python cli.py daily-close-schedule
+python cli.py scheduled-daily-close
+```
+
+Current capabilities:
+
+- Initialize a default `executive_daily_close` schedule.
+- Show schedule status, today's close report status, and next action.
+- Run the daily close only when due.
+- Skip safely if today's close report already exists.
+- Record scheduler outcomes in the database and audit log.
+- Keep external delivery and operating system scheduler setup outside this MVP.
+
 ## Notification Outbox MVP v0.1
 
 BusinessOS now has a safe internal notification queue for prepared executive and manager messages.

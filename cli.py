@@ -78,6 +78,10 @@ from app.operations.task_views import (
     print_operations_tasks_list,
 )
 from app.reports.report_history import print_report_history
+from app.scheduler.scheduled_daily_close import (
+    print_scheduled_daily_close_status,
+    run_scheduled_daily_close,
+)
 from app.system.integrity_check import export_system_integrity_report
 from app.support.incident_views import (
     print_support_incident_summary_kpis,
@@ -592,6 +596,33 @@ def run_daily_close_distribution():
     finally:
         conn.close()
 
+
+def run_daily_close_schedule():
+    conn = create_connection()
+
+    try:
+        print_scheduled_daily_close_status(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_scheduled_daily_close_command():
+    conn = create_connection()
+
+    try:
+        run_scheduled_daily_close(conn, run_daily_close)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
 def run_executive_alerts():
     conn = create_connection()
 
@@ -712,6 +743,8 @@ def main():
             "evidence-index",
             "daily-close",
             "daily-close-distribution",
+            "daily-close-schedule",
+            "scheduled-daily-close",
             "executive-alerts",
             "executive-alerts-brief",
             "executive-alerts-report",
@@ -796,6 +829,10 @@ def main():
         run_daily_close()
     elif args.command == "daily-close-distribution":
         run_daily_close_distribution()
+    elif args.command == "daily-close-schedule":
+        run_daily_close_schedule()
+    elif args.command == "scheduled-daily-close":
+        run_scheduled_daily_close_command()
     elif args.command == "executive-alerts":
         run_executive_alerts()
     elif args.command == "executive-alerts-brief":

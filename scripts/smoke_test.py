@@ -41,6 +41,8 @@ COMMANDS = [
     ["python", "cli.py", "executive-alert-resolve"],
     ["python", "cli.py", "daily-close"],
     ["python", "cli.py", "daily-close-distribution"],
+    ["python", "cli.py", "daily-close-schedule"],
+    ["python", "cli.py", "scheduled-daily-close"],
     ["python", "cli.py", "notification-sent"],
     ["python", "cli.py", "notification-dismiss"],
     ["python", "cli.py", "notification-fail"],
