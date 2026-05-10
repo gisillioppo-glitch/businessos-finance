@@ -356,3 +356,60 @@ Finance intelligence
 → Support incident management
 → Command Center synthesis
 ```
+
+## Dashboard MVP
+
+The BusinessOS Dashboard MVP provides the first visual Command Center through Streamlit.
+
+Run locally:
+
+```bash
+streamlit run app/dashboard/main.py
+```
+
+Local URL:
+
+```text
+http://localhost:8501
+```
+
+### Dashboard Security
+
+The dashboard now requires local sign-in before showing BusinessOS data.
+
+Local MVP credentials:
+
+```text
+Username: admin
+Password: businessos-local
+```
+
+Before any external deployment, replace the local password with a private environment variable:
+
+```text
+BUSINESSOS_ADMIN_PASSWORD
+```
+
+Do not commit `.env`, Streamlit secrets, or local database files.
+
+## Security Foundation MVP
+
+The BusinessOS Security Foundation MVP is the first protection layer for the visual dashboard.
+
+### Security Architecture
+
+```text
+app/security/
+  __init__.py
+  config.py
+  access_control.py
+```
+
+### Current Security Capabilities
+
+- Protect Streamlit dashboard with login.
+- Track local session state.
+- Assign a basic role context.
+- Keep local secrets out of Git.
+- Provide `.env.example` for safe configuration.
+- Document remaining requirements before public deployment.

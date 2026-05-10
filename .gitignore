@@ -18,3 +18,7 @@ finance.db
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Local secrets
+.env
+.streamlit/secrets.toml
