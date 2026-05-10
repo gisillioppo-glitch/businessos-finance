@@ -20,9 +20,9 @@
       <a href="#system">System</a>
       <a href="#modules">Modules</a>
       <a href="#security">Security</a>
-      <a href="#demo">Demo</a>
+      <a href="#request-demo">Demo</a>
     </nav>
-    <a class="header-cta" href="mailto:hello@businessos.local?subject=BusinessOS demo request">Request Demo</a>
+    <a class="header-cta" href="#request-demo">Request Demo</a>
   </header>
 
   <main id="top">
@@ -35,7 +35,7 @@
           governance, support, and next-best-move recommendations in one protected view.
         </p>
         <div class="hero-actions">
-          <a class="primary-button" href="mailto:hello@businessos.local?subject=BusinessOS demo request">Request Demo</a>
+          <a class="primary-button" href="#request-demo">Request Demo</a>
           <a class="secondary-button" href="#demo">View Product</a>
         </div>
         <div class="trust-row" aria-label="BusinessOS proof points">
@@ -145,10 +145,108 @@
       </div>
     </section>
 
-    <section class="cta-section">
-      <p class="eyebrow">Executive intelligence is now visible</p>
-      <h2>Give institutional leaders one place to understand what needs attention.</h2>
-      <a class="primary-button" href="mailto:hello@businessos.local?subject=BusinessOS demo request">Request Demo</a>
+    <section class="lead-section" id="request-demo">
+      <div class="lead-copy">
+        <p class="eyebrow">Request demo</p>
+        <h2>Start the BusinessOS conversation.</h2>
+        <p>
+          Share a few details and the BusinessOS team can follow up with the recommended next step,
+          product context, and the safest path for a private demo.
+        </p>
+        <div class="lead-process">
+          <div>
+            <strong>1. Intake</strong>
+            <span>Capture role, organization, and primary need.</span>
+          </div>
+          <div>
+            <strong>2. Review</strong>
+            <span>Classify the request and prepare relevant product context.</span>
+          </div>
+          <div>
+            <strong>3. Follow-up</strong>
+            <span>Send demo information and recommended next steps.</span>
+          </div>
+        </div>
+      </div>
+
+      <form class="lead-form" id="demo-request-form" action="https://formspree.io/f/REPLACE_WITH_FORM_ID" method="POST" data-endpoint-status="pending">
+        <input type="hidden" name="source" value="BusinessOS public landing">
+        <input type="hidden" name="request_type" value="demo_request">
+        <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-row two-columns">
+          <label>
+            Full name
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+          <label>
+            Work email
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+        </div>
+
+        <div class="form-row two-columns">
+          <label>
+            Organization
+            <input type="text" name="organization" autocomplete="organization" required>
+          </label>
+          <label>
+            Role
+            <select name="role" required>
+              <option value="">Select role</option>
+              <option>Owner / CEO</option>
+              <option>Director / Executive</option>
+              <option>Operations</option>
+              <option>Finance</option>
+              <option>Governance / Compliance</option>
+              <option>Support / Service</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-row two-columns">
+          <label>
+            Organization size
+            <select name="organization_size" required>
+              <option value="">Select size</option>
+              <option>1-10 people</option>
+              <option>11-50 people</option>
+              <option>51-200 people</option>
+              <option>201-1000 people</option>
+              <option>1000+ people</option>
+            </select>
+          </label>
+          <label>
+            Primary interest
+            <select name="primary_interest" required>
+              <option value="">Select interest</option>
+              <option>Executive dashboard</option>
+              <option>Finance intelligence</option>
+              <option>Operations tracking</option>
+              <option>Governance controls</option>
+              <option>Support / incident management</option>
+              <option>Full BusinessOS platform</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          What should BusinessOS help you improve first?
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+
+        <label class="consent-row">
+          <input type="checkbox" name="consent" value="yes" required>
+          <span>I agree to be contacted about a BusinessOS demo request.</span>
+        </label>
+
+        <button class="primary-button form-button" type="submit">Submit Demo Request</button>
+        <p class="form-status" id="form-status" role="status"></p>
+        <p class="form-note">
+          MVP note: connect this form to Formspree, Tally, Netlify Forms, or a future BusinessOS backend endpoint to activate automated email delivery.
+        </p>
+      </form>
     </section>
   </main>
 
@@ -156,5 +254,7 @@
     <span>BusinessOS</span>
     <span>Private command center for institutional intelligence.</span>
   </footer>
+
+  <script src="lead-intake.js"></script>
 </body>
 </html>

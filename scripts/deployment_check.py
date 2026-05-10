@@ -8,6 +8,7 @@ PUBLIC_REQUIRED_FILES = [
     "public/index.html",
     "public/styles.css",
     "public/assets/dashboard-preview.png",
+    "public/lead-intake.js",
 ]
 
 PRIVATE_BLOCKED_FILES = [
@@ -30,6 +31,12 @@ FORBIDDEN_PUBLIC_REFERENCES = [
     "BUSINESSOS_ADMIN_PASSWORD",
     ".env",
     "secrets.toml",
+]
+
+REQUIRED_PUBLIC_MARKERS = [
+    "demo-request-form",
+    "lead-intake.js",
+    "request-demo",
 ]
 
 
@@ -91,6 +98,19 @@ def check_public_surface(errors):
                 )
 
 
+def check_lead_intake_surface(errors):
+    index_path = ROOT_DIR / "public/index.html"
+
+    if not index_path.exists():
+        return
+
+    index_text = read_text(index_path)
+
+    for marker in REQUIRED_PUBLIC_MARKERS:
+        if marker not in index_text:
+            errors.append(f"Missing lead intake marker in public/index.html: {marker}")
+
+
 def main():
     errors = []
 
@@ -98,6 +118,7 @@ def main():
     check_private_files_not_present(errors)
     check_gitignore(errors)
     check_public_surface(errors)
+    check_lead_intake_surface(errors)
 
     if errors:
         print("Deployment readiness check failed:")

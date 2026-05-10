@@ -519,3 +519,24 @@ Expected public URL pattern:
 ```text
 https://gisillioppo-glitch.github.io/businessos-finance/
 ```
+
+## Lead Intake & Demo Request MVP
+
+The BusinessOS Lead Intake & Demo Request MVP adds a structured demo request form to the public landing website.
+
+Current status:
+
+- Form UI is live on the landing page.
+- Request Demo buttons now point to the form.
+- Fields capture lead qualification details.
+- Honeypot anti-spam field is included.
+- Automatic email delivery requires connecting a real form endpoint.
+
+Activation options:
+
+- Formspree endpoint.
+- Tally or Typeform.
+- Netlify Forms.
+- Future BusinessOS backend endpoint.
+
+The public form remains separate from the private dashboard and does not expose internal runtime data.
