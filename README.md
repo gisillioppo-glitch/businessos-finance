@@ -413,3 +413,25 @@ app/security/
 - Keep local secrets out of Git.
 - Provide `.env.example` for safe configuration.
 - Document remaining requirements before public deployment.
+
+## Dashboard UI Upgrade v0.2
+
+The Dashboard UI Upgrade v0.2 applies the first premium visual pass to the Streamlit Command Center.
+
+Current visual capabilities:
+
+- Dark executive interface.
+- BusinessOS red accent system.
+- Sidebar navigation.
+- Protected login flow.
+- Executive metric cards.
+- Cash flow overview chart.
+- Executive brief panel.
+- Operations, incidents, and alerts panels.
+- Module pages for Finance, Operations, Governance, and Support.
+
+Run locally:
+
+```bash
+streamlit run app/dashboard/main.py
+```
