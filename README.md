@@ -854,3 +854,26 @@ Current capabilities:
 - Track resolved alert count in the private dashboard.
 - Include status-aware alert queue in Executive Alerts reports.
 - Validate the resolution lifecycle through smoke test.
+
+## Approval Decision MVP v0.2
+
+BusinessOS approvals now support executive decision outcomes.
+
+### Approval Decision CLI Commands
+
+```bash
+python cli.py approvals
+python cli.py approval-brief
+python cli.py approval-approve
+python cli.py approval-reject
+```
+
+Current capabilities:
+
+- Move pending approvals to `approved` with justification.
+- Move pending approvals to `rejected` with justification.
+- Write audit logs for approval decision updates.
+- Prevent closed default approvals from being recreated as pending duplicates.
+- Show pending, approved, rejected, and high-priority approval counts in the private dashboard.
+- Add a dedicated private dashboard Approvals page.
+- Validate approval decisions through smoke test.

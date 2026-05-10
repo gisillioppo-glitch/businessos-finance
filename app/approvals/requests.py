@@ -36,7 +36,6 @@ def create_approval_request(
         WHERE title = ?
           AND source_module IS ?
           AND source_reference_id IS ?
-          AND status = 'pending'
         ORDER BY created_at DESC
         LIMIT 1
         """,
@@ -185,3 +184,4 @@ def ensure_default_approval_requests(conn):
         results.append(create_approval_request(conn, **approval))
 
     return results
+

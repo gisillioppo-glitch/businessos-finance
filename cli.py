@@ -11,6 +11,10 @@ from app.approvals.approval_views import (
     print_approval_requests_list,
 )
 from app.approvals.requests import ensure_default_approval_requests
+from app.approvals.approval_status import (
+    demo_approve_first_pending_approval_request,
+    demo_reject_first_pending_approval_request,
+)
 from app.approvals.schema import create_approval_requests_table
 from app.alerts.executive_alerts import (
     print_executive_alerts,
@@ -398,6 +402,35 @@ def run_approval_brief():
         conn.close()
 
 
+def run_approval_approve():
+    conn = create_connection()
+
+    try:
+        create_approval_requests_table(conn)
+        ensure_default_approval_requests(conn)
+        demo_approve_first_pending_approval_request(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_approval_reject():
+    conn = create_connection()
+
+    try:
+        create_approval_requests_table(conn)
+        ensure_default_approval_requests(conn)
+        demo_reject_first_pending_approval_request(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
 def run_executive_alerts():
     conn = create_connection()
 
@@ -507,6 +540,8 @@ def main():
             "assistance-status",
             "approvals",
             "approval-brief",
+            "approval-approve",
+            "approval-reject",
             "executive-alerts",
             "executive-alerts-brief",
             "executive-alerts-report",
@@ -569,6 +604,10 @@ def main():
         run_approvals()
     elif args.command == "approval-brief":
         run_approval_brief()
+    elif args.command == "approval-approve":
+        run_approval_approve()
+    elif args.command == "approval-reject":
+        run_approval_reject()
     elif args.command == "executive-alerts":
         run_executive_alerts()
     elif args.command == "executive-alerts-brief":
@@ -585,6 +624,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
 
 
 

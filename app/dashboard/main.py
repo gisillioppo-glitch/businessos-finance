@@ -378,6 +378,38 @@ def load_dashboard_data():
         """
     )
 
+    pending_approval_requests = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM approval_requests
+        WHERE status = 'pending'
+        """
+    )
+
+    approved_approval_requests = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM approval_requests
+        WHERE status = 'approved'
+        """
+    )
+
+    rejected_approval_requests = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM approval_requests
+        WHERE status = 'rejected'
+        """
+    )
+
+    high_pending_approval_requests = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM approval_requests
+        WHERE status = 'pending'
+          AND priority IN ('critical', 'high')
+        """
+    )
     total_people = get_scalar("SELECT COUNT(*) FROM business_users")
 
     active_people = get_scalar(
@@ -496,6 +528,29 @@ def load_dashboard_data():
         """
     )
 
+    approval_requests = get_rows(
+        """
+        SELECT title, approval_type, priority, status, approver_role, status_justification
+        FROM approval_requests
+        ORDER BY
+            CASE status
+                WHEN 'pending' THEN 1
+                WHEN 'approved' THEN 2
+                WHEN 'rejected' THEN 3
+                WHEN 'cancelled' THEN 4
+                ELSE 5
+            END,
+            CASE priority
+                WHEN 'critical' THEN 1
+                WHEN 'high' THEN 2
+                WHEN 'medium' THEN 3
+                WHEN 'low' THEN 4
+                ELSE 5
+            END,
+            created_at DESC
+        LIMIT 8
+        """
+    )
     people_users = get_rows(
         """
         SELECT full_name, email, role, department, status, access_level
@@ -552,6 +607,10 @@ def load_dashboard_data():
         "active_assistance_requests": active_assistance_requests,
         "high_assistance_requests": high_assistance_requests,
         "waiting_approval_requests": waiting_approval_requests,
+        "pending_approval_requests": pending_approval_requests,
+        "approved_approval_requests": approved_approval_requests,
+        "rejected_approval_requests": rejected_approval_requests,
+        "high_pending_approval_requests": high_pending_approval_requests,
         "total_people": total_people,
         "active_people": active_people,
         "admin_people": admin_people,
@@ -566,6 +625,7 @@ def load_dashboard_data():
         "active_tasks": active_tasks,
         "recommended_actions": recommended_actions,
         "assistance_requests": assistance_requests,
+        "approval_requests": approval_requests,
         "people_users": people_users,
         "sensitivity_findings": sensitivity_findings,
         "sensitive_findings": len(sensitivity_findings),
@@ -704,7 +764,7 @@ def render_dashboard(data):
         <div class="bos-topbar">
             <div>
                 <div class="bos-title">BusinessOS Command Center</div>
-                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, and People.</div>
+                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, Approvals, and People.</div>
             </div>
             <div class="bos-chip">System Health: {data['overall_health']}</div>
         </div>
@@ -915,6 +975,46 @@ def render_module_page(page, data):
             )
             render_panel_end()
 
+    elif page == "Approvals":
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            render_metric_card("Pending", data["pending_approval_requests"], "Awaiting executive decision", "red")
+        with c2:
+            render_metric_card("Approved", data["approved_approval_requests"], "Confirmed with justification", "green")
+        with c3:
+            render_metric_card("Rejected", data["rejected_approval_requests"], "Stopped or sent back", "gold")
+        with c4:
+            render_metric_card("High Priority", data["high_pending_approval_requests"], "Pending high/critical approvals", "red")
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("Approval Decision Queue")
+            if data["approval_requests"]:
+                for approval in data["approval_requests"]:
+                    detail = f"{approval['approver_role']} | {approval['approval_type']} | {approval['status']}"
+                    if approval["status_justification"]:
+                        detail = f"{detail} | {approval['status_justification']}"
+                    render_status_row(approval["title"], detail, approval["priority"])
+            else:
+                render_status_row("No approval requests", "Approval queue is clear", "healthy")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Approval Brief")
+            render_brief_item(
+                f"{data['pending_approval_requests']} pending approval(s)",
+                "Pending approvals are the current executive decision queue",
+            )
+            render_brief_item(
+                f"{data['approved_approval_requests']} approved approval(s)",
+                "Approved items have moved through controlled review",
+            )
+            render_brief_item(
+                f"{data['rejected_approval_requests']} rejected approval(s)",
+                "Rejected items were stopped or returned for a better path",
+            )
+            render_panel_end()
     elif page == "People":
         c1, c2, c3, c4 = st.columns(4)
         with c1:
@@ -1021,6 +1121,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

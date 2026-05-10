@@ -15,6 +15,7 @@ ALLOWED_ROLES = {
         "Sensitivity",
         "Support",
         "Assistance",
+        "Approvals",
         "People",
     ],
     "executive": [
@@ -26,6 +27,7 @@ ALLOWED_ROLES = {
         "Sensitivity",
         "Support",
         "Assistance",
+        "Approvals",
         "People",
     ],
     "viewer": [
@@ -37,6 +39,7 @@ ALLOWED_ROLES = {
         "Sensitivity",
         "Support",
         "Assistance",
+        "Approvals",
         "People",
     ],
 }
@@ -57,6 +60,8 @@ def get_default_role(username):
 
 def get_allowed_pages(role):
     return ALLOWED_ROLES.get(role, ALLOWED_ROLES["viewer"])
+
+
 
 
 
