@@ -375,6 +375,32 @@ def load_dashboard_data():
         """
     )
 
+    total_people = get_scalar("SELECT COUNT(*) FROM business_users")
+
+    active_people = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM business_users
+        WHERE status = 'active'
+        """
+    )
+
+    admin_people = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM business_users
+        WHERE access_level = 'admin'
+        """
+    )
+
+    manager_people = get_scalar(
+        """
+        SELECT COUNT(*)
+        FROM business_users
+        WHERE access_level = 'manager'
+        """
+    )
+
     governance_findings = get_scalar(
         """
         SELECT COUNT(*)
@@ -467,6 +493,24 @@ def load_dashboard_data():
         """
     )
 
+    people_users = get_rows(
+        """
+        SELECT full_name, email, role, department, status, access_level
+        FROM business_users
+        ORDER BY
+            CASE access_level
+                WHEN 'admin' THEN 1
+                WHEN 'executive' THEN 2
+                WHEN 'manager' THEN 3
+                WHEN 'operator' THEN 4
+                ELSE 5
+            END,
+            department,
+            full_name
+        LIMIT 8
+        """
+    )
+
     return {
         "transactions_count": transactions_count,
         "total_income": total_income,
@@ -481,6 +525,10 @@ def load_dashboard_data():
         "active_assistance_requests": active_assistance_requests,
         "high_assistance_requests": high_assistance_requests,
         "waiting_approval_requests": waiting_approval_requests,
+        "total_people": total_people,
+        "active_people": active_people,
+        "admin_people": admin_people,
+        "manager_people": manager_people,
         "governance_findings": governance_findings,
         "error_events": error_events,
         "overall_health": overall_health,
@@ -491,6 +539,7 @@ def load_dashboard_data():
         "active_tasks": active_tasks,
         "recommended_actions": recommended_actions,
         "assistance_requests": assistance_requests,
+        "people_users": people_users,
         "cash_flow_series": load_cash_flow_series(),
     }
 
@@ -614,7 +663,7 @@ def render_dashboard(data):
         <div class="bos-topbar">
             <div>
                 <div class="bos-title">BusinessOS Command Center</div>
-                <div class="bos-subtitle">Unified executive intelligence across Finance, Operations, Governance, Support, and Assistance.</div>
+                <div class="bos-subtitle">Unified executive intelligence across Finance, Operations, Governance, Support, Assistance, and People.</div>
             </div>
             <div class="bos-chip">System Health: {data['overall_health']}</div>
         </div>
@@ -775,6 +824,48 @@ def render_module_page(page, data):
             )
             render_panel_end()
 
+    elif page == "People":
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            render_metric_card("Total Users", data["total_people"], "Registered internal users", "")
+        with c2:
+            render_metric_card("Active Users", data["active_people"], "Currently enabled", "green")
+        with c3:
+            render_metric_card("Admin Users", data["admin_people"], "Maximum access level", "red")
+        with c4:
+            render_metric_card("Managers", data["manager_people"], "Department leadership", "gold")
+
+        left, right = st.columns([1.5, 1])
+
+        with left:
+            render_panel_start("People Directory")
+            if data["people_users"]:
+                for user in data["people_users"]:
+                    render_status_row(
+                        user["full_name"],
+                        f"{user['department']} | {user['role']} | {user['email']}",
+                        user["access_level"],
+                    )
+            else:
+                render_status_row("No users found", "People directory has not been initialized", "healthy")
+            render_panel_end()
+
+        with right:
+            render_panel_start("People Brief")
+            render_brief_item(
+                f"{data['active_people']} active user(s)",
+                "BusinessOS has an initialized internal user layer",
+            )
+            render_brief_item(
+                f"{data['admin_people']} admin user(s)",
+                "Admin coverage protects institutional control",
+            )
+            render_brief_item(
+                f"{data['manager_people']} manager user(s)",
+                "Managers are ready for routing, approvals, and ownership",
+            )
+            render_panel_end()
+
 
 def main():
     st.set_page_config(
@@ -798,4 +889,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

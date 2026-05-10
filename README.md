@@ -667,3 +667,20 @@ Run locally:
 ```bash
 streamlit run app/dashboard/main.py
 ```
+
+## Dashboard People Page v0.1
+
+The private BusinessOS dashboard now includes a People page.
+
+Current visual capabilities:
+
+- People navigation entry.
+- Total users, active users, admin users, and manager users.
+- People Directory with user, email, role, department, status, and access level.
+- People Brief panel for executive review.
+
+Run locally:
+
+```bash
+streamlit run app/dashboard/main.py
+```
