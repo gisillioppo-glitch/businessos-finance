@@ -762,3 +762,32 @@ Run locally:
 ```bash
 streamlit run app/dashboard/main.py
 ```
+
+## Executive Alerts MVP v0.1
+
+BusinessOS now includes an Executive Alerts layer.
+
+It consolidates cross-module signals into one executive alert queue for leadership review.
+
+### Executive Alerts CLI Commands
+
+```bash
+python cli.py executive-alerts
+python cli.py executive-alerts-brief
+```
+
+Current capabilities:
+
+- Generate executive alerts from governance sensitivity findings.
+- Include active finance recommendations.
+- Include active support incidents.
+- Rank alerts by severity.
+- Display alerts on the private dashboard home page.
+- Add a dedicated private dashboard Alerts page.
+- Validate Executive Alerts through smoke test.
+
+Run locally:
+
+```bash
+streamlit run app/dashboard/main.py
+```

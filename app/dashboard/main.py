@@ -10,6 +10,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from app.alerts.executive_alerts import get_executive_alerts  # noqa: E402
 from app.governance.sensitivity_rules import get_governance_sensitivity_findings  # noqa: E402
 from app.security.access_control import (  # noqa: E402
     get_allowed_pages,
@@ -514,9 +515,12 @@ def load_dashboard_data():
 
     with sqlite3.connect(DB_PATH) as conn:
         sensitivity_findings = get_governance_sensitivity_findings(conn)
+        executive_alerts = get_executive_alerts(conn)
 
     high_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "high")
     medium_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "medium")
+    critical_executive_alerts = sum(1 for alert in executive_alerts if alert["severity"] == "critical")
+    high_executive_alerts = sum(1 for alert in executive_alerts if alert["severity"] == "high")
 
     if high_sensitivity_findings > 0:
         highest_sensitivity_risk = "High"
@@ -563,6 +567,10 @@ def load_dashboard_data():
         "medium_sensitivity_findings": medium_sensitivity_findings,
         "highest_sensitivity_risk": highest_sensitivity_risk,
         "sensitivity_next_move": sensitivity_next_move,
+        "executive_alerts": executive_alerts,
+        "executive_alert_count": len(executive_alerts),
+        "critical_executive_alerts": critical_executive_alerts,
+        "high_executive_alerts": high_executive_alerts,
         "cash_flow_series": load_cash_flow_series(),
     }
 
@@ -686,7 +694,7 @@ def render_dashboard(data):
         <div class="bos-topbar">
             <div>
                 <div class="bos-title">BusinessOS Command Center</div>
-                <div class="bos-subtitle">Unified executive intelligence across Finance, Operations, Governance, Sensitivity, Support, Assistance, and People.</div>
+                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, and People.</div>
             </div>
             <div class="bos-chip">System Health: {data['overall_health']}</div>
         </div>
@@ -756,10 +764,16 @@ def render_dashboard(data):
         render_panel_end()
 
     with alert_col:
-        render_panel_start("Alerts")
-        render_status_row("Expense concentration", "Marketing expenses require review", "high")
-        render_status_row("Operations follow-up", "One task is overdue", "high" if data["overdue_operations_tasks"] else "low")
-        render_status_row("Governance posture", "Audit trail health remains healthy", "low")
+        render_panel_start("Executive Alerts")
+        if data["executive_alerts"]:
+            for alert in data["executive_alerts"][:4]:
+                render_status_row(
+                    alert["title"],
+                    f"{alert['source_module']} | {alert['owner_role']}",
+                    alert["severity"],
+                )
+        else:
+            render_status_row("No executive alerts", "System is clear for regular operating rhythm", "healthy")
         render_panel_end()
 
 
@@ -777,7 +791,47 @@ def render_module_page(page, data):
         unsafe_allow_html=True,
     )
 
-    if page == "Finance":
+    if page == "Alerts":
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            render_metric_card("Executive Alerts", data["executive_alert_count"], "Active cross-module alerts", "gold")
+        with c2:
+            render_metric_card("Critical Alerts", data["critical_executive_alerts"], "Immediate executive stop signals", "red")
+        with c3:
+            render_metric_card("High Alerts", data["high_executive_alerts"], "Needs owner action today", "red")
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("Executive Alert Queue")
+            if data["executive_alerts"]:
+                for alert in data["executive_alerts"][:10]:
+                    render_status_row(
+                        alert["title"],
+                        f"{alert['source_module']} | {alert['owner_role']} | {alert['recommended_action']}",
+                        alert["severity"],
+                    )
+            else:
+                render_status_row("No executive alerts", "System is clear for regular operating rhythm", "healthy")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Alert Brief")
+            render_brief_item(
+                f"{data['executive_alert_count']} active executive alert(s)",
+                "Cross-module signals are now consolidated into one executive queue",
+            )
+            render_brief_item(
+                f"{data['high_executive_alerts']} high alert(s)",
+                "High alerts should receive same-day owner follow-up",
+            )
+            render_brief_item(
+                data["sensitivity_next_move"],
+                "Governance sensitivity is feeding the alert layer",
+            )
+            render_panel_end()
+
+    elif page == "Finance":
         c1, c2, c3 = st.columns(3)
         with c1:
             render_metric_card("Transactions", data["transactions_count"], "Loaded records", "")
@@ -953,6 +1007,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
 
 
 

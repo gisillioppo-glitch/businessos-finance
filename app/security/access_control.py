@@ -8,6 +8,7 @@ from app.security.config import settings
 ALLOWED_ROLES = {
     "admin": [
         "Dashboard",
+        "Alerts",
         "Finance",
         "Operations",
         "Governance",
@@ -18,6 +19,7 @@ ALLOWED_ROLES = {
     ],
     "executive": [
         "Dashboard",
+        "Alerts",
         "Finance",
         "Operations",
         "Governance",
@@ -28,6 +30,7 @@ ALLOWED_ROLES = {
     ],
     "viewer": [
         "Dashboard",
+        "Alerts",
         "Finance",
         "Operations",
         "Governance",
@@ -54,6 +57,8 @@ def get_default_role(username):
 
 def get_allowed_pages(role):
     return ALLOWED_ROLES.get(role, ALLOWED_ROLES["viewer"])
+
+
 
 
 
