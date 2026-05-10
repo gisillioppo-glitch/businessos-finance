@@ -16,6 +16,7 @@ from app.alerts.executive_alerts import (
     print_executive_alerts,
     print_executive_alerts_brief,
 )
+from app.alerts.executive_alerts_report import export_executive_alerts_report
 from app.assistance.assistance_brief import print_assistance_brief
 from app.assistance.request_views import (
     print_assistance_request_summary_kpis,
@@ -417,6 +418,20 @@ def run_executive_alerts_brief():
 
     finally:
         conn.close()
+
+def run_executive_alerts_report():
+    conn = create_connection()
+
+    try:
+        alerts = print_executive_alerts(conn)
+        alert_brief = print_executive_alerts_brief(conn, alerts)
+        export_executive_alerts_report(conn, alerts, alert_brief)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
 def main():
     parser = argparse.ArgumentParser(
         description="BusinessOS CLI"
@@ -452,6 +467,7 @@ def main():
             "approval-brief",
             "executive-alerts",
             "executive-alerts-brief",
+            "executive-alerts-report",
         ],
         help="Command to execute.",
     )
@@ -512,10 +528,15 @@ def main():
         run_executive_alerts()
     elif args.command == "executive-alerts-brief":
         run_executive_alerts_brief()
+    elif args.command == "executive-alerts-report":
+        run_executive_alerts_report()
 
 
 if __name__ == "__main__":
     main()
+
+
+
 
 
 

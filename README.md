@@ -791,3 +791,22 @@ Run locally:
 ```bash
 streamlit run app/dashboard/main.py
 ```
+
+## Executive Alerts Report MVP v0.1
+
+BusinessOS can now export the Executive Alerts queue as a Markdown report.
+
+### Executive Alerts Report CLI Command
+
+```bash
+python cli.py executive-alerts-report
+```
+
+Current capabilities:
+
+- Export alert summary to `reports/executive_alerts_YYYY-MM-DD.md`.
+- Include total, critical, high, and medium alert counts.
+- Include highest alert risk and next best alert move.
+- Include a Markdown table of active alerts.
+- Write audit log on export.
+- Validate report export through smoke test.

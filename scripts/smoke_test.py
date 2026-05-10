@@ -29,6 +29,7 @@ COMMANDS = [
     ["python", "cli.py", "approval-brief"],
     ["python", "cli.py", "executive-alerts"],
     ["python", "cli.py", "executive-alerts-brief"],
+    ["python", "cli.py", "executive-alerts-report"],
     ["python", "cli.py", "run"],
 ]
 
@@ -75,6 +76,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
