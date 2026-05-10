@@ -489,3 +489,33 @@ Rules:
 - Publish the landing website first.
 - Keep the dashboard private until stronger authentication and deployment controls are ready.
 - Never publish `finance.db`, `.env`, Streamlit secrets, or private module logic as a public website.
+
+## Landing Publish MVP
+
+The BusinessOS Landing Publish MVP prepares the public landing website for GitHub Pages.
+
+Deployment workflow:
+
+```text
+.github/workflows/pages.yml
+```
+
+The workflow publishes only:
+
+```text
+public/
+```
+
+It runs the deployment readiness check before publishing.
+
+GitHub Pages setting required:
+
+```text
+Repository → Settings → Pages → Build and deployment → Source → GitHub Actions
+```
+
+Expected public URL pattern:
+
+```text
+https://gisillioppo-glitch.github.io/businessos-finance/
+```
