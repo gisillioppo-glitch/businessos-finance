@@ -42,6 +42,7 @@ from app.db.connection import create_connection
 from app.demo.private_demo_package import print_private_demo_package
 from app.demo.private_demo_script import print_private_demo_script
 from app.demo.private_demo_dry_run import print_private_demo_dry_run
+from app.demo.private_pilot_intake import print_private_pilot_intake
 from app.evidence.daily_close import export_daily_close_report
 from app.evidence.daily_close_distribution import export_daily_close_distribution
 from app.evidence.evidence_index import (
@@ -181,6 +182,18 @@ def run_private_demo_dry_run():
 
     try:
         print_private_demo_dry_run(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+def run_private_pilot_intake():
+    conn = create_connection()
+
+    try:
+        print_private_pilot_intake(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -798,6 +811,7 @@ def main():
             "private-demo-package",
             "private-demo-script",
             "private-demo-dry-run",
+            "private-pilot-intake",
             "notifications",
             "notification-delivery-approval",
             "secure-email-delivery",
@@ -863,6 +877,8 @@ def main():
         run_private_demo_script()
     elif args.command == "private-demo-dry-run":
         run_private_demo_dry_run()
+    elif args.command == "private-pilot-intake":
+        run_private_pilot_intake()
     elif args.command == "notifications":
         run_notifications()
     elif args.command == "notification-delivery-approval":

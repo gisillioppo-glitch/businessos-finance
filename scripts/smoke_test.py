@@ -11,6 +11,7 @@ COMMANDS = [
     ["python", "cli.py", "private-demo-package"],
     ["python", "cli.py", "private-demo-script"],
     ["python", "cli.py", "private-demo-dry-run"],
+    ["python", "cli.py", "private-pilot-intake"],
     ["python", "cli.py", "notifications"],
     ["python", "cli.py", "notification-delivery-approval"],
     ["python", "cli.py", "secure-email-delivery"],

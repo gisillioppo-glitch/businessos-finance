@@ -1220,3 +1220,15 @@ Generate the backing artifact with:
 ```bash
 python cli.py private-demo-dry-run
 ```
+
+## Private Pilot Intake MVP v0.1
+
+BusinessOS includes a private pilot intake artifact for moving from demo to controlled pilot.
+
+Run:
+
+```bash
+python cli.py private-pilot-intake
+```
+
+The intake uses release readiness and private demo dry run status to recommend a starting pilot module, list diagnostic questions, define pilot boundaries, and export `reports/private_pilot_intake_YYYY-MM-DD.md`.
