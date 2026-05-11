@@ -1413,3 +1413,15 @@ python cli.py pilot-day-3-evidence-review
 ```
 
 The review reads Day 1, Day 2, tracker, and exit decision artifacts, evaluates required evidence and warning context, and exports `reports/pilot_day_3_evidence_review_YYYY-MM-DD.md`. It is advisory only; Day 3 may prepare an expansion review, but it does not approve expansion or change delivery controls.
+
+## Pilot Day 4 Owner Confirmation MVP v0.1
+
+BusinessOS can now generate a Day 4 owner confirmation packet for controlled private pilots.
+
+Run:
+
+```bash
+python cli.py pilot-day-4-owner-confirmation
+```
+
+The packet reads Day 3 evidence review, keeps expansion marked as `not_approved`, keeps delivery approval-gated, and creates an executive owner checklist for accepting warning context before continuing the narrow pilot rhythm.

@@ -10,8 +10,8 @@ BusinessOS is a private institutional AI operating system that connects Finance,
 
 Overall status: ready_with_warnings
 Total checks: 13
-Passed checks: 12
-Warning checks: 1
+Passed checks: 11
+Warning checks: 2
 Failed checks: 0
 
 ## Demo Commands
@@ -31,6 +31,7 @@ Failed checks: 0
 | Pilot Day 1 package | `python cli.py pilot-day-1-package` |
 | Pilot Day 2 rhythm | `python cli.py pilot-day-2-rhythm` |
 | Pilot Day 3 evidence review | `python cli.py pilot-day-3-evidence-review` |
+| Pilot Day 4 owner confirmation | `python cli.py pilot-day-4-owner-confirmation` |
 | Full smoke test | `python scripts/smoke_test.py` |
 
 ## Dashboard Pages To Show
