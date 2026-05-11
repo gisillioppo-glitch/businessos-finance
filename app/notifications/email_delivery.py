@@ -105,6 +105,88 @@ def _delivery_mode():
     return "smtp"
 
 
+def get_secure_email_delivery_status(conn):
+    return {
+        "delivery_mode": _delivery_mode(),
+        "delivery_enabled": settings.email_delivery_enabled,
+        "dry_run": settings.email_delivery_dry_run,
+        "smtp_configured": settings.email_delivery_configured,
+        "smtp_host_configured": bool(settings.smtp_host),
+        "smtp_from_email_configured": bool(settings.smtp_from_email),
+        "queued_email_notifications": _get_queued_email_count(conn),
+        "ready_to_deliver": len(_get_ready_notifications(conn)),
+    }
+
+
+def get_latest_secure_email_delivery_report():
+    if not REPORTS_DIR.exists():
+        return None
+
+    reports = sorted(
+        REPORTS_DIR.glob("secure_email_delivery_*.md"),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
+
+    return reports[0] if reports else None
+
+
+def parse_secure_email_delivery_report(report_path=None):
+    if report_path is None:
+        report_path = get_latest_secure_email_delivery_report()
+
+    if not report_path or not report_path.exists():
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "delivery_mode": "missing",
+            "queued_email_notifications": 0,
+            "ready_to_deliver": 0,
+            "sent": 0,
+            "failed": 0,
+            "blocked_or_skipped": 0,
+            "results": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+
+    def metric(label, default="0"):
+        for line in content.splitlines():
+            if line.startswith(f"{label}:"):
+                return line.split(":", 1)[1].strip()
+        return default
+
+    results = []
+    for line in content.splitlines():
+        if not line.startswith("|") or line.startswith("| ---") or line.startswith("| Recipient"):
+            continue
+
+        parts = [part.strip() for part in line.strip("|").split("|")]
+        if len(parts) == 4:
+            results.append(
+                {
+                    "recipient_email": parts[0],
+                    "delivery_status": parts[1],
+                    "subject": parts[2],
+                    "message": parts[3],
+                }
+            )
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": metric("Date", None),
+        "delivery_mode": metric("Delivery mode", "unknown"),
+        "queued_email_notifications": int(metric("Queued email notifications")),
+        "ready_to_deliver": int(metric("Ready to deliver")),
+        "sent": int(metric("Sent")),
+        "failed": int(metric("Failed")),
+        "blocked_or_skipped": int(metric("Blocked or skipped")),
+        "results": results,
+    }
+
+
 def run_secure_email_delivery(conn):
     ready_notifications = _get_ready_notifications(conn)
     queued_email_count = _get_queued_email_count(conn)

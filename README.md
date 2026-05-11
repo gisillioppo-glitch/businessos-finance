@@ -1128,6 +1128,17 @@ Current visual capabilities:
 - List notification subject, recipient, notification status, approver, and approval state.
 - Keep the dashboard page read-only; refresh approval artifacts with `python cli.py notification-delivery-approval`.
 
+## Dashboard Secure Email Page v0.1
+
+The private BusinessOS dashboard now includes a Secure Email page.
+
+Current visual capabilities:
+
+- Show secure email adapter mode, dry-run status, SMTP configuration status, ready-to-deliver count, and latest failures.
+- Show latest secure email delivery report path and delivery outcomes.
+- List latest delivery result rows when available.
+- Keep the dashboard page read-only; run delivery only through `python cli.py secure-email-delivery`.
+
 ## Release Readiness MVP v0.1
 
 BusinessOS can now generate a private demo readiness report.

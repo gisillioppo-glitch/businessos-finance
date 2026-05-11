@@ -42,6 +42,7 @@ Failed checks: 0
 - Daily Close
 - Notifications
 - Delivery Approval
+- Secure Email
 - Scheduled Close
 - System Integrity
 - People

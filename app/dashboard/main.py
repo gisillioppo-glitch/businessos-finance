@@ -19,6 +19,10 @@ from app.notifications.delivery_approval import (  # noqa: E402
     get_notification_delivery_approval_rows,
     get_notification_delivery_approval_summary,
 )
+from app.notifications.email_delivery import (  # noqa: E402
+    get_secure_email_delivery_status,
+    parse_secure_email_delivery_report,
+)
 from app.notifications.outbox import get_notification_outbox, get_notification_summary  # noqa: E402
 from app.security.access_control import (  # noqa: E402
     get_allowed_pages,
@@ -817,6 +821,8 @@ def load_dashboard_data():
         notification_outbox = get_notification_outbox(conn, limit=50)
         delivery_approval_summary = get_notification_delivery_approval_summary(conn)
         delivery_approval_rows = get_notification_delivery_approval_rows(conn)
+        secure_email_status = get_secure_email_delivery_status(conn)
+        secure_email_report = parse_secure_email_delivery_report()
 
     high_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "high")
     medium_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "medium")
@@ -897,6 +903,8 @@ def load_dashboard_data():
         "notification_outbox": notification_outbox,
         "delivery_approval_summary": delivery_approval_summary,
         "delivery_approval_rows": delivery_approval_rows,
+        "secure_email_status": secure_email_status,
+        "secure_email_report": secure_email_report,
         "system_integrity_status": system_integrity_status,
         "scheduled_daily_close_status": scheduled_daily_close_status,
     }
@@ -1029,7 +1037,7 @@ def render_dashboard(data):
         <div class="bos-topbar">
             <div>
                 <div class="bos-title">BusinessOS Command Center</div>
-                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, Approvals, Daily Close, Notifications, Delivery Approval, and People.</div>
+                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, Approvals, Daily Close, Notifications, Delivery Approval, Secure Email, and People.</div>
             </div>
             <div class="bos-chip">System Health: {data['overall_health']}</div>
         </div>
@@ -1539,6 +1547,64 @@ def render_module_page(page, data):
             render_brief_item(
                 "python cli.py notification-delivery-approval",
                 "Use CLI to refresh delivery approval requests and report",
+            )
+            render_panel_end()
+    elif page == "Secure Email":
+        email_status = data["secure_email_status"]
+        email_report = data["secure_email_report"]
+
+        mode = email_status["delivery_mode"]
+        mode_class = {
+            "disabled": "gold",
+            "dry_run": "gold",
+            "configuration_error": "red",
+            "smtp": "green",
+        }.get(mode, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Mode", mode.replace("_", " ").title(), "Current adapter mode", mode_class)
+        with c2:
+            render_metric_card("Dry Run", "Yes" if email_status["dry_run"] else "No", "External delivery guard", "gold" if email_status["dry_run"] else "green")
+        with c3:
+            render_metric_card("Configured", "Yes" if email_status["smtp_configured"] else "No", "SMTP credentials present", "green" if email_status["smtp_configured"] else "gold")
+        with c4:
+            render_metric_card("Ready", email_status["ready_to_deliver"], "Approved queued email notifications", "green" if email_status["ready_to_deliver"] else "gold")
+        with c5:
+            render_metric_card("Failed", email_report["failed"], "Latest delivery report failures", "red" if email_report["failed"] else "green")
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Latest Secure Email Results")
+            if email_report["results"]:
+                for result in email_report["results"]:
+                    render_status_row(
+                        result["subject"],
+                        f"{result['recipient_email']} | {result['message']}",
+                        result["delivery_status"],
+                    )
+            else:
+                render_status_row(
+                    "No delivery results",
+                    email_report["report_path"] or "Run python cli.py secure-email-delivery to export a report",
+                    "healthy" if email_report["exists"] else "medium",
+                )
+            render_panel_end()
+
+        with right:
+            render_panel_start("Secure Email Brief")
+            render_brief_item(
+                email_report["report_path"] or "Secure email report not generated",
+                "Latest secure email delivery artifact",
+            )
+            render_brief_item(
+                f"{email_report['sent']} sent, {email_report['blocked_or_skipped']} blocked/skipped",
+                "Latest delivery run outcome",
+            )
+            render_brief_item(
+                "python cli.py secure-email-delivery",
+                "Use CLI to run the adapter; dashboard remains read-only",
             )
             render_panel_end()
     elif page == "System Integrity":
