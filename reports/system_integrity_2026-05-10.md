@@ -4,11 +4,11 @@ Date: 2026-05-10
 
 ## Integrity Summary
 
-Overall status: warning  
-Total checks: 51
-Passed checks: 50
-Warning checks: 1  
-Failed checks: 0  
+Overall status: warning
+Total checks: 53
+Passed checks: 52
+Warning checks: 1
+Failed checks: 0
 
 ## Checks
 
@@ -25,6 +25,7 @@ Failed checks: 0
 | Module: command_center | passed | app\command_center |
 | Module: dashboard | passed | app\dashboard |
 | Module: db | passed | app\db |
+| Module: demo | passed | app\demo |
 | Module: evidence | passed | app\evidence |
 | Module: governance | passed | app\governance |
 | Module: notifications | passed | app\notifications |
@@ -55,6 +56,7 @@ Failed checks: 0
 | Latest report: executive_evidence_index | passed | reports\executive_evidence_index_2026-05-10.md |
 | Latest report: daily_close | passed | reports\daily_close_2026-05-10.md |
 | Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-10.md |
+| Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-10.md |
 | Gitignore protects: finance.db | passed | protected |
 | Gitignore protects: .env | passed | protected |
 | Gitignore protects: .venv/ | passed | protected |
@@ -64,4 +66,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | warning | M README.md; M app/system/integrity_check.py; M cli.py; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/readiness/; ?? docs/release-readiness-mvp-v0.1-status.md; ?? reports/release_readiness_2026-05-10.md |
+| Git working tree | warning | M README.md; M app/system/integrity_check.py; M cli.py; M reports/release_readiness_2026-05-10.md; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/demo/; ?? docs/private-demo-package-mvp-v0.1-status.md; ?? reports/private_demo_package_2026-05-10.md |

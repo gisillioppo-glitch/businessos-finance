@@ -39,6 +39,7 @@ from app.command_center.command_center_brief import print_command_center_brief
 from app.command_center.command_center_report import export_command_center_report
 from app.command_center.command_center_summary import generate_command_center_summary
 from app.db.connection import create_connection
+from app.demo.private_demo_package import print_private_demo_package
 from app.evidence.daily_close import export_daily_close_report
 from app.evidence.daily_close_distribution import export_daily_close_distribution
 from app.evidence.evidence_index import (
@@ -138,6 +139,19 @@ def run_release_readiness():
 
     try:
         print_release_readiness(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_private_demo_package():
+    conn = create_connection()
+
+    try:
+        print_private_demo_package(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -727,6 +741,7 @@ def main():
             "actions",
             "reports",
             "release-readiness",
+            "private-demo-package",
             "notifications",
             "notification-sent",
             "notification-dismiss",
@@ -784,6 +799,8 @@ def main():
         run_reports()
     elif args.command == "release-readiness":
         run_release_readiness()
+    elif args.command == "private-demo-package":
+        run_private_demo_package()
     elif args.command == "notifications":
         run_notifications()
     elif args.command == "notification-sent":

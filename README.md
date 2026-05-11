@@ -1095,3 +1095,20 @@ Current capabilities:
 - Check system integrity, deployment boundary, dashboard response, landing files, lead intake markers, sensitive file protections, daily close, notifications, scheduled close, dashboard readiness pages, and Git working tree.
 - Export `reports/release_readiness_YYYY-MM-DD.md`.
 - Report `ready`, `ready_with_warnings`, or `blocked` for controlled demo readiness.
+
+## Private Demo Package MVP v0.1
+
+BusinessOS can now generate a controlled private demo package.
+
+CLI command:
+
+```bash
+python cli.py private-demo-package
+```
+
+Current capabilities:
+
+- Export `reports/private_demo_package_YYYY-MM-DD.md`.
+- Include system summary, release readiness status, demo commands, dashboard pages, recommended demo flow, known risks, and pre-demo checklist.
+- Define what is safe to show and what should remain private.
+- Keep local artifacts such as `BussinessOS Avance.pdf` outside the package.

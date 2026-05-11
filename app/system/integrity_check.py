@@ -20,6 +20,7 @@ REQUIRED_MODULES = [
     "command_center",
     "dashboard",
     "db",
+    "demo",
     "evidence",
     "governance",
     "notifications",
@@ -56,6 +57,7 @@ REQUIRED_REPORT_PREFIXES = [
     "executive_evidence_index",
     "daily_close",
     "daily_close_distribution",
+    "private_demo_package",
 ]
 
 VALID_NOTIFICATION_STATUSES = {"queued", "sent", "dismissed", "failed"}
@@ -309,11 +311,11 @@ Date: {result['date']}
 
 ## Integrity Summary
 
-Overall status: {result['overall_status']}  
-Total checks: {result['total_checks']}  
-Passed checks: {result['passed_checks']}  
-Warning checks: {result['warning_checks']}  
-Failed checks: {result['failed_checks']}  
+Overall status: {result['overall_status']}
+Total checks: {result['total_checks']}
+Passed checks: {result['passed_checks']}
+Warning checks: {result['warning_checks']}
+Failed checks: {result['failed_checks']}
 
 ## Checks
 

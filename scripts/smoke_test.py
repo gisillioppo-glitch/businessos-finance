@@ -8,6 +8,7 @@ COMMANDS = [
     ["python", "cli.py", "actions"],
     ["python", "cli.py", "reports"],
     ["python", "cli.py", "release-readiness"],
+    ["python", "cli.py", "private-demo-package"],
     ["python", "cli.py", "notifications"],
     ["python", "cli.py", "ops-tasks"],
     ["python", "cli.py", "ops-escalations"],
