@@ -62,6 +62,7 @@ Failed checks: 0
 - Scheduled Close
 - System Integrity
 - Demo Readiness
+- Pilot Plan
 - People
 
 ## Do Not Show

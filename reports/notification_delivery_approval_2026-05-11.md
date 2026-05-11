@@ -4,23 +4,23 @@ Date: 2026-05-11
 
 ## Delivery Approval Summary
 
-Queued notifications: 4
-Pending delivery approvals: 2
-Approved delivery approvals: 1
-Rejected delivery approvals: 1
+Queued notifications: 3
+Pending delivery approvals: 0
+Approved delivery approvals: 2
+Rejected delivery approvals: 2
 Cancelled delivery approvals: 0
 Ready to deliver: 1
-Blocked notifications: 3
+Blocked notifications: 2
 Approval requests created this run: 0
 
 ## Delivery Approval Queue
 
 | Recipient | Notification status | Approval status | Approver | Subject |
 | --- | --- | --- | --- | --- |
-| Support Manager <support.manager@businessos.local> | queued | pending | Executive Owner | BusinessOS Daily Close - 2026-05-11 |
-| Operations Manager <operations.manager@businessos.local> | queued | pending | Executive Owner | BusinessOS Daily Close - 2026-05-11 |
+| Support Manager <support.manager@businessos.local> | queued | rejected | Executive Owner | BusinessOS Daily Close - 2026-05-11 |
+| Operations Manager <operations.manager@businessos.local> | queued | approved | Executive Owner | BusinessOS Daily Close - 2026-05-11 |
 | Finance Manager <finance.manager@businessos.local> | queued | rejected | Executive Owner | BusinessOS Daily Close - 2026-05-11 |
-| Executive Owner <owner@businessos.local> | queued | approved | Executive Owner | BusinessOS Daily Close - 2026-05-11 |
+| Executive Owner <owner@businessos.local> | sent | approved | Executive Owner | BusinessOS Daily Close - 2026-05-11 |
 
 ## Safety Boundary
 

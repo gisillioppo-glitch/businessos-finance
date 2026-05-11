@@ -38,6 +38,7 @@ DASHBOARD_PAGES = [
     "Scheduled Close",
     "System Integrity",
     "Demo Readiness",
+    "Pilot Plan",
     "People",
 ]
 

@@ -1244,3 +1244,24 @@ python cli.py private-pilot-plan
 ```
 
 The plan defines pilot owner, primary workflow, 14-day timeline, daily operating rhythm, success criteria, exit decisions, and protected boundaries. It exports `reports/private_pilot_plan_YYYY-MM-DD.md`.
+
+## Dashboard Pilot Plan Page v0.1
+
+The private dashboard now includes a read-only `Pilot Plan` page.
+
+It reads the latest `reports/private_pilot_plan_YYYY-MM-DD.md` artifact and shows:
+
+- pilot plan status
+- pilot owner and primary workflow
+- 14-day timeline
+- daily operating rhythm
+- pilot roles
+- success criteria
+- exit decisions
+- protected boundaries
+
+Generate the backing artifact with:
+
+```bash
+python cli.py private-pilot-plan
+```

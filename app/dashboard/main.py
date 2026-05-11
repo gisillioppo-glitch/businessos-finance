@@ -538,6 +538,115 @@ def load_private_demo_dry_run_status():
         "dashboard_pages": dashboard_pages,
     }
 
+
+def load_private_pilot_plan_status():
+    report_path = get_latest_report_path("private_pilot_plan")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "plan_status": "missing",
+            "intake_status": "missing",
+            "pilot_length": 0,
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "recommended_module": "Not selected",
+            "first_action": "Run python cli.py private-pilot-plan.",
+            "roles": [],
+            "timeline": [],
+            "daily_rhythm": [],
+            "success_criteria": [],
+            "exit_decisions": [],
+            "boundaries": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    roles = []
+    timeline = []
+    daily_rhythm = []
+    success_criteria = []
+    exit_decisions = []
+    boundaries = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Pilot Roles":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Role"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 3:
+                roles.append(
+                    {
+                        "role": parts[0],
+                        "type": parts[1],
+                        "responsibility": parts[2],
+                    }
+                )
+
+        elif section == "14-Day Pilot Timeline":
+            if not stripped.startswith("|") or stripped.startswith("| ---"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 4 and parts[0] != "Days":
+                timeline.append(
+                    {
+                        "days": parts[0],
+                        "phase": parts[1],
+                        "objective": parts[2],
+                        "evidence": parts[3],
+                    }
+                )
+
+        elif section == "Daily Operating Rhythm" and stripped.startswith("- "):
+            daily_rhythm.append(stripped[2:])
+
+        elif section == "Success Criteria" and stripped.startswith("- "):
+            success_criteria.append(stripped[2:])
+
+        elif section == "Exit Decisions" and stripped.startswith("- "):
+            exit_decisions.append(stripped[2:])
+
+        elif section == "Pilot Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    plan_status_match = re.search(r"Plan status:\s*([a-z_]+)", content)
+    intake_status_match = re.search(r"Intake status:\s*([a-z_]+)", content)
+    pilot_length_match = re.search(r"Pilot length:\s*(\d+)\s*days", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    recommended_module_match = re.search(r"Recommended module:\s*(.+)", content)
+    first_action_match = re.search(r"First action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "plan_status": plan_status_match.group(1) if plan_status_match else "unknown",
+        "intake_status": intake_status_match.group(1) if intake_status_match else "unknown",
+        "pilot_length": int(pilot_length_match.group(1)) if pilot_length_match else 0,
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "recommended_module": recommended_module_match.group(1).strip() if recommended_module_match else "Not selected",
+        "first_action": first_action_match.group(1).strip() if first_action_match else "No first action recorded",
+        "roles": roles,
+        "timeline": timeline,
+        "daily_rhythm": daily_rhythm,
+        "success_criteria": success_criteria,
+        "exit_decisions": exit_decisions,
+        "boundaries": boundaries,
+    }
+
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -937,6 +1046,7 @@ def load_dashboard_data():
     system_integrity_status = load_system_integrity_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
+    private_pilot_plan_status = load_private_pilot_plan_status()
 
     return {
         "transactions_count": transactions_count,
@@ -998,6 +1108,7 @@ def load_dashboard_data():
         "system_integrity_status": system_integrity_status,
         "scheduled_daily_close_status": scheduled_daily_close_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
+        "private_pilot_plan_status": private_pilot_plan_status,
     }
 
 
@@ -1766,6 +1877,107 @@ def render_module_page(page, data):
                 "Warnings are expected during active uncommitted work; failures require immediate review",
             )
             render_panel_end()
+    elif page == "Pilot Plan":
+        pilot = data["private_pilot_plan_status"]
+        plan_status = pilot["plan_status"]
+        plan_class = {
+            "pilot_plan_ready": "green",
+            "pilot_plan_ready_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(plan_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Plan Status", plan_status.replace("_", " ").title(), "Latest private pilot plan", plan_class)
+        with c2:
+            render_metric_card("Length", f"{pilot['pilot_length']} days", "Controlled pilot window", "")
+        with c3:
+            render_metric_card("Owner", pilot["pilot_owner"], "Maximum authority owner", "gold")
+        with c4:
+            render_metric_card("Workflow", pilot["primary_workflow"], "Primary pilot workflow", "green" if pilot["primary_workflow"] != "No pilot yet" else "red")
+        with c5:
+            render_metric_card("Phases", len(pilot["timeline"]), "Pilot timeline phases", "")
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("14-Day Pilot Timeline")
+            if pilot["timeline"]:
+                for phase in pilot["timeline"]:
+                    detail = f"{phase['objective']} Evidence: {phase['evidence']}"
+                    render_status_row(
+                        f"{phase['days']} | {phase['phase']}",
+                        detail,
+                        "healthy",
+                    )
+            else:
+                render_status_row("No pilot timeline found", "Run python cli.py private-pilot-plan", "medium")
+            render_panel_end()
+
+            render_panel_start("Daily Operating Rhythm")
+            if pilot["daily_rhythm"]:
+                for index, item in enumerate(pilot["daily_rhythm"], start=1):
+                    render_status_row(f"Daily step {index}", item, "healthy")
+            else:
+                render_status_row("No daily rhythm found", "Generate the pilot plan artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Pilot Evidence")
+            render_brief_item(
+                pilot["report_path"] or "Private pilot plan report not generated",
+                "Latest private pilot plan artifact",
+            )
+            render_brief_item(
+                pilot["intake_status"].replace("_", " ").title(),
+                "Source intake status",
+            )
+            render_brief_item(
+                pilot["recommended_module"],
+                "Recommended starting module",
+            )
+            render_brief_item(
+                pilot["first_action"],
+                "Immediate next action before pilot kickoff",
+            )
+            render_panel_end()
+
+            render_panel_start("Pilot Roles")
+            if pilot["roles"]:
+                for role in pilot["roles"]:
+                    render_status_row(
+                        role["role"],
+                        f"{role['type']} | {role['responsibility']}",
+                        "healthy",
+                    )
+            else:
+                render_status_row("No pilot roles found", "Run python cli.py private-pilot-plan", "medium")
+            render_panel_end()
+
+            render_panel_start("Exit Decisions")
+            if pilot["exit_decisions"]:
+                for decision in pilot["exit_decisions"]:
+                    render_status_row(decision, "Allowed pilot outcome", "medium")
+            else:
+                render_status_row("No exit decisions found", "Generate the pilot plan artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Success Criteria")
+        if pilot["success_criteria"]:
+            for criterion in pilot["success_criteria"]:
+                render_status_row(criterion, "Pilot success evidence", "healthy")
+        else:
+            render_status_row("No success criteria found", "Generate the pilot plan artifact", "medium")
+        render_panel_end()
+
+        render_panel_start("Pilot Boundaries")
+        if pilot["boundaries"]:
+            for boundary in pilot["boundaries"]:
+                render_status_row(boundary, "Protected pilot boundary", "medium")
+        else:
+            render_status_row("No pilot boundaries found", "Generate the pilot plan artifact", "medium")
+        render_panel_end()
     elif page == "Demo Readiness":
         demo = data["private_demo_dry_run_status"]
         overall_status = demo["overall_status"]

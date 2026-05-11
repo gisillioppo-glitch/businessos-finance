@@ -4,9 +4,9 @@ Date: 2026-05-11
 
 ## Approval Summary
 
-Pending approvals: 2  
-Approved approvals: 2  
-Rejected approvals: 2  
+Pending approvals: 0  
+Approved approvals: 3  
+Rejected approvals: 3  
 Cancelled approvals: 0  
 Critical approvals: 0  
 High approvals: 2  
@@ -27,9 +27,9 @@ Review high-priority approvals and confirm executive decision.
 
 | Priority | Status | Type | Approver | Requester | Source | Approval | Justification |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| medium | pending | policy | Executive Owner | BusinessOS System | notifications | Approve notification delivery to Support Manager | n/a |
-| medium | pending | policy | Executive Owner | BusinessOS System | notifications | Approve notification delivery to Operations Manager | n/a |
 | high | approved | policy | Executive Owner | BusinessOS System | notifications | Approve notification delivery to Executive Owner | Demo mode approved the first pending approval request after executive review. |
 | high | approved | decision | Executive Owner | Operations Manager | assistance | Approve overdue operations intervention | Demo mode approved the first pending approval request after executive review. |
+| medium | approved | policy | Executive Owner | BusinessOS System | notifications | Approve notification delivery to Operations Manager | Demo mode approved the first pending approval request after executive review. |
+| medium | rejected | policy | Executive Owner | BusinessOS System | notifications | Approve notification delivery to Support Manager | Demo mode rejected the first pending approval request pending a better resolution path. |
 | medium | rejected | policy | Executive Owner | BusinessOS System | notifications | Approve notification delivery to Finance Manager | Demo mode rejected the first pending approval request pending a better resolution path. |
 | medium | rejected | incident | Executive Owner | Support Manager | assistance | Approve support resolution path | Demo mode rejected the first pending approval request pending a better resolution path. |

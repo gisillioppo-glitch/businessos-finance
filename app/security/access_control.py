@@ -23,6 +23,7 @@ ALLOWED_ROLES = {
         "Secure Email",
         "System Integrity",
         "Demo Readiness",
+        "Pilot Plan",
         "People",
     ],
     "executive": [
@@ -42,6 +43,7 @@ ALLOWED_ROLES = {
         "Secure Email",
         "System Integrity",
         "Demo Readiness",
+        "Pilot Plan",
         "People",
     ],
     "viewer": [
@@ -61,6 +63,7 @@ ALLOWED_ROLES = {
         "Secure Email",
         "System Integrity",
         "Demo Readiness",
+        "Pilot Plan",
         "People",
     ],
 }

@@ -55,6 +55,7 @@ Release readiness source: ready_with_warnings
 - Scheduled Close
 - System Integrity
 - Demo Readiness
+- Pilot Plan
 - People
 
 ## Operator Note

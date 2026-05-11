@@ -5,7 +5,7 @@ Date: 2026-05-11
 ## Delivery Summary
 
 Delivery mode: disabled
-Queued email notifications: 4
+Queued email notifications: 3
 Ready to deliver: 1
 Sent: 0
 Failed: 0
@@ -15,7 +15,7 @@ Blocked or skipped: 1
 
 | Recipient | Status | Subject | Message |
 | --- | --- | --- | --- |
-| owner@businessos.local | disabled | BusinessOS Daily Close - 2026-05-11 | Email delivery disabled by BUSINESSOS_EMAIL_DELIVERY_ENABLED. |
+| operations.manager@businessos.local | disabled | BusinessOS Daily Close - 2026-05-11 | Email delivery disabled by BUSINESSOS_EMAIL_DELIVERY_ENABLED. |
 
 ## Safety Boundary
 
