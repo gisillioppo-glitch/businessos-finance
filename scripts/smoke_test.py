@@ -10,6 +10,7 @@ COMMANDS = [
     ["python", "cli.py", "release-readiness"],
     ["python", "cli.py", "private-demo-package"],
     ["python", "cli.py", "private-demo-script"],
+    ["python", "cli.py", "private-demo-dry-run"],
     ["python", "cli.py", "notifications"],
     ["python", "cli.py", "notification-delivery-approval"],
     ["python", "cli.py", "secure-email-delivery"],

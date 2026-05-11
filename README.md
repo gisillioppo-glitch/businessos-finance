@@ -1190,3 +1190,15 @@ Current capabilities:
 - Define what not to show during a controlled private demo.
 - Include known risks and closing discovery questions.
 - Validate the script through smoke test.
+
+## Private Demo Dry Run MVP v0.1
+
+BusinessOS now includes a controlled pre-demo rehearsal gate for private product presentations.
+
+Run:
+
+```bash
+python cli.py private-demo-dry-run
+```
+
+The dry run validates release readiness, demo package, demo script, required dashboard pages, and private safety boundaries before a presentation. It exports `reports/private_demo_dry_run_YYYY-MM-DD.md` and keeps the demo inside the protected BusinessOS boundary.
