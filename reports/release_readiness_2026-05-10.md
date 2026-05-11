@@ -26,4 +26,4 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 4 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: skipped_existing_close |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Git working tree | warning | warning | M README.md; M app/dashboard/main.py; M app/demo/private_demo_package.py; M app/readiness/release_readiness.py; M app/security/access_control.py; M reports/private_demo_package_2026-05-10.md; M reports/release_readiness_2026-05-10.md; M reports/system_integrity_2026-05-10.md; ?? docs/dashboard-delivery-approval-page-v0.1-status.md |
+| Git working tree | warning | warning | M .env.example; M README.md; M app/demo/private_demo_package.py; M app/security/config.py; M app/system/integrity_check.py; M cli.py; M reports/private_demo_package_2026-05-10.md; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/notifications/email_delivery.py; ?? docs/secure-email-delivery-adapter-v0.1-status.md; ?? reports/secure_email_delivery_2026-05-10.md |

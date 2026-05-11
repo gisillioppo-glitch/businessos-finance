@@ -1065,6 +1065,25 @@ Current capabilities:
 - Block `notification-sent` unless the matching delivery approval is approved.
 - Keep real email delivery out of scope until protected SMTP/API credentials are ready.
 
+## Secure Email Delivery Adapter v0.1
+
+BusinessOS can now run a protected email delivery adapter.
+
+CLI command:
+
+```bash
+python cli.py secure-email-delivery
+```
+
+Current capabilities:
+
+- Read SMTP configuration from environment variables.
+- Default to disabled and dry-run mode.
+- Only process queued email notifications with approved delivery approvals.
+- Export `reports/secure_email_delivery_YYYY-MM-DD.md`.
+- Mark notifications sent or failed only after an enabled SMTP attempt.
+- Keep credentials out of code, reports, and Git.
+
 ## System Integrity Check MVP v0.1
 
 BusinessOS now includes a structural self-check command.

@@ -15,6 +15,7 @@ DEMO_COMMANDS = [
     ("Executive daily close", "python cli.py daily-close"),
     ("Notification outbox", "python cli.py notifications"),
     ("Notification delivery approval", "python cli.py notification-delivery-approval"),
+    ("Secure email delivery", "python cli.py secure-email-delivery"),
     ("Scheduled close status", "python cli.py daily-close-schedule"),
     ("Private dashboard", "streamlit run app/dashboard/main.py"),
     ("Full smoke test", "python scripts/smoke_test.py"),
@@ -53,6 +54,7 @@ SHOW_ITEMS = [
     "Daily Close, Evidence Index, and Daily Close Distribution reports.",
     "Notification Outbox status counts and read-only dashboard view.",
     "Notification Delivery Approval report before any external delivery adapter.",
+    "Secure Email Delivery report in disabled or dry-run mode unless credentials are explicitly enabled.",
     "Scheduled Close status and last scheduler result.",
     "System Integrity and Release Readiness reports.",
 ]
@@ -67,7 +69,7 @@ DO_NOT_SHOW_ITEMS = [
 
 KNOWN_RISKS = [
     "Dashboard authentication is still local MVP auth; use private environment configuration before external access.",
-    "Secure Email Delivery Adapter is not implemented yet, so notifications remain queued/status-tracked and approval-gated only.",
+    "Secure Email Delivery Adapter defaults to disabled/dry-run and requires explicit environment configuration before real sending.",
     "Release Readiness may show a Git working tree warning while an active development block is uncommitted.",
     "Lead intake requires a real external form endpoint before production capture.",
     "The private dashboard is not a public production deployment target.",
