@@ -1378,3 +1378,26 @@ python cli.py pilot-day-2-rhythm
 ```
 
 The rhythm reads the Day 1 package, pilot tracker, and exit decision, then recommends whether to continue, continue narrowly with warnings, or pause until required evidence is resolved. It exports `reports/pilot_day_2_rhythm_YYYY-MM-DD.md`.
+
+## Dashboard Pilot Day 2 Page v0.1
+
+The private dashboard now includes a read-only `Pilot Day 2` page.
+
+It reads the latest `reports/pilot_day_2_rhythm_YYYY-MM-DD.md` artifact and shows:
+
+- Day 2 status
+- continuation decision
+- pilot owner and primary workflow
+- available and missing evidence counts
+- Day 2 operating rhythm
+- Day 2 command runbook
+- expected evidence
+- executive review checks
+- continuation boundaries
+- next action and operator note
+
+Generate the backing artifact with:
+
+```bash
+python cli.py pilot-day-2-rhythm
+```

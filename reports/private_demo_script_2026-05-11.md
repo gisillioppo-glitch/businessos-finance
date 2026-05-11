@@ -66,6 +66,7 @@ Failed checks: 0
 - Pilot Tracker
 - Pilot Exit
 - Pilot Day 1
+- Pilot Day 2
 - People
 
 ## Do Not Show

@@ -291,7 +291,7 @@ def generate_release_readiness():
     )
 
     access_control_text = _read_text("app/security/access_control.py")
-    required_pages = ["Notifications", "Delivery Approval", "Secure Email", "Scheduled Close", "System Integrity", "Demo Readiness", "Pilot Plan", "Pilot Tracker", "Pilot Exit", "Pilot Day 1"]
+    required_pages = ["Notifications", "Delivery Approval", "Secure Email", "Scheduled Close", "System Integrity", "Demo Readiness", "Pilot Plan", "Pilot Tracker", "Pilot Exit", "Pilot Day 1", "Pilot Day 2"]
     missing_pages = [page for page in required_pages if page not in access_control_text]
     checks.append(
         _check(
@@ -412,4 +412,5 @@ def print_release_readiness(conn=None):
 
     print(f"Release readiness report exported: {Path(report_path).relative_to(ROOT_DIR)}")
     return result
+
 

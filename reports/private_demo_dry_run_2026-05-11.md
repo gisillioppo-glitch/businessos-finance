@@ -59,6 +59,7 @@ Release readiness source: ready_with_warnings
 - Pilot Tracker
 - Pilot Exit
 - Pilot Day 1
+- Pilot Day 2
 - People
 
 ## Operator Note

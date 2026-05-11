@@ -949,6 +949,113 @@ def load_pilot_day_1_package_status():
         "close_criteria": close_criteria,
         "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
     }
+def load_pilot_day_2_rhythm_status():
+    report_path = get_latest_report_path("pilot_day_2_rhythm")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "day_2_status": "missing",
+            "continuation_decision": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "day_1_status": "missing",
+            "tracker_status": "missing",
+            "exit_decision_status": "missing",
+            "recommended_exit_decision": "missing",
+            "highest_exit_risk": "unknown",
+            "available_evidence": 0,
+            "missing_required_evidence": 0,
+            "missing_optional_evidence": 0,
+            "next_action": "Run python cli.py pilot-day-2-rhythm.",
+            "commands": [],
+            "rhythm": [],
+            "expected_evidence": [],
+            "review_checks": [],
+            "boundaries": [],
+            "operator_note": "No Pilot Day 2 rhythm generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    commands = []
+    rhythm = []
+    expected_evidence = []
+    review_checks = []
+    boundaries = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Day 2 Command Runbook":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Day 2 Operating Rhythm" and stripped.startswith("- "):
+            rhythm.append(stripped[2:])
+
+        elif section == "Expected Evidence" and stripped.startswith("- "):
+            expected_evidence.append(stripped[2:])
+
+        elif section == "Executive Review Checks" and stripped.startswith("- "):
+            review_checks.append(stripped[2:])
+
+        elif section == "Day 2 Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    day_2_status_match = re.search(r"Day 2 status:\s*([a-z_]+)", content)
+    continuation_decision_match = re.search(r"Continuation decision:\s*([a-z_]+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    day_1_status_match = re.search(r"Day 1 status:\s*([a-z_]+)", content)
+    tracker_status_match = re.search(r"Tracker status:\s*([a-z_]+)", content)
+    exit_decision_status_match = re.search(r"Exit decision status:\s*([a-z_]+)", content)
+    recommended_exit_decision_match = re.search(r"Recommended exit decision:\s*([a-z_]+)", content)
+    highest_exit_risk_match = re.search(r"Highest exit risk:\s*(.+)", content)
+    available_evidence_match = re.search(r"Available evidence:\s*(\d+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    missing_optional_match = re.search(r"Missing optional evidence:\s*(\d+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "day_2_status": day_2_status_match.group(1) if day_2_status_match else "unknown",
+        "continuation_decision": continuation_decision_match.group(1) if continuation_decision_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "day_1_status": day_1_status_match.group(1) if day_1_status_match else "unknown",
+        "tracker_status": tracker_status_match.group(1) if tracker_status_match else "unknown",
+        "exit_decision_status": exit_decision_status_match.group(1) if exit_decision_status_match else "unknown",
+        "recommended_exit_decision": recommended_exit_decision_match.group(1) if recommended_exit_decision_match else "unknown",
+        "highest_exit_risk": highest_exit_risk_match.group(1).strip() if highest_exit_risk_match else "unknown",
+        "available_evidence": int(available_evidence_match.group(1)) if available_evidence_match else 0,
+        "missing_required_evidence": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "missing_optional_evidence": int(missing_optional_match.group(1)) if missing_optional_match else 0,
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "commands": commands,
+        "rhythm": rhythm,
+        "expected_evidence": expected_evidence,
+        "review_checks": review_checks,
+        "boundaries": boundaries,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -1352,6 +1459,7 @@ def load_dashboard_data():
     private_pilot_tracker_status = load_private_pilot_tracker_status()
     private_pilot_exit_decision_status = load_private_pilot_exit_decision_status()
     pilot_day_1_package_status = load_pilot_day_1_package_status()
+    pilot_day_2_rhythm_status = load_pilot_day_2_rhythm_status()
 
     return {
         "transactions_count": transactions_count,
@@ -1417,6 +1525,7 @@ def load_dashboard_data():
         "private_pilot_tracker_status": private_pilot_tracker_status,
         "private_pilot_exit_decision_status": private_pilot_exit_decision_status,
         "pilot_day_1_package_status": pilot_day_1_package_status,
+        "pilot_day_2_rhythm_status": pilot_day_2_rhythm_status,
     }
 
 
@@ -2564,6 +2673,96 @@ def render_module_page(page, data):
         render_panel_start("Operator Note")
         render_brief_item(day_1["operator_note"], "Read-only guidance for controlled Day 1 operation")
         render_panel_end()
+    elif page == "Pilot Day 2":
+        day_2 = data["pilot_day_2_rhythm_status"]
+        day_2_status = day_2["day_2_status"]
+        day_2_class = {
+            "continue": "green",
+            "continue_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(day_2_status, "gold")
+        risk_class = {
+            "low": "green",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(day_2["highest_exit_risk"].lower(), "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Day 2 Status", day_2_status.replace("_", " ").title(), "Latest Day 2 rhythm", day_2_class)
+        with c2:
+            render_metric_card("Decision", day_2["continuation_decision"].replace("_", " ").title(), "Continuation guidance", day_2_class)
+        with c3:
+            render_metric_card("Evidence", day_2["available_evidence"], "Available pilot artifacts", "green" if day_2["available_evidence"] else "red")
+        with c4:
+            render_metric_card("Missing Required", day_2["missing_required_evidence"], "Blocks continuation if above zero", "red" if day_2["missing_required_evidence"] else "green")
+        with c5:
+            render_metric_card("Exit Risk", day_2["highest_exit_risk"].title(), "Before Day 3", risk_class)
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Day 2 Operating Rhythm")
+            if day_2["rhythm"]:
+                for index, item in enumerate(day_2["rhythm"], start=1):
+                    render_status_row(f"Rhythm {index}", item, "healthy")
+            else:
+                render_status_row("No operating rhythm found", "Run python cli.py pilot-day-2-rhythm", "medium")
+            render_panel_end()
+
+            render_panel_start("Day 2 Command Runbook")
+            if day_2["commands"]:
+                for item in day_2["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No command runbook found", "Run python cli.py pilot-day-2-rhythm", "medium")
+            render_panel_end()
+
+            render_panel_start("Expected Evidence")
+            if day_2["expected_evidence"]:
+                for evidence in day_2["expected_evidence"]:
+                    render_status_row(evidence, "Expected Day 2 artifact", "healthy")
+            else:
+                render_status_row("No evidence list found", "Generate the Day 2 rhythm artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Day 2 Summary")
+            render_brief_item(
+                day_2["report_path"] or "Pilot Day 2 rhythm not generated",
+                "Latest Day 2 rhythm artifact",
+            )
+            render_brief_item(day_2["pilot_owner"], "Pilot owner")
+            render_brief_item(day_2["primary_workflow"], "Primary workflow")
+            render_brief_item(day_2["day_1_status"].replace("_", " ").title(), "Source Day 1 status")
+            render_brief_item(day_2["tracker_status"].replace("_", " ").title(), "Source tracker status")
+            render_panel_end()
+
+            render_panel_start("Next Action")
+            render_status_row(day_2["next_action"], "Before Day 3 planning", "medium" if day_2_status == "continue_with_warnings" else day_2_status)
+            render_panel_end()
+
+            render_panel_start("Executive Review Checks")
+            if day_2["review_checks"]:
+                for item in day_2["review_checks"]:
+                    render_status_row(item, "Executive review checkpoint", "medium")
+            else:
+                render_status_row("No review checks found", "Generate the Day 2 rhythm artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Day 2 Boundaries")
+            if day_2["boundaries"]:
+                for boundary in day_2["boundaries"]:
+                    render_status_row(boundary, "Protected continuation boundary", "medium")
+            else:
+                render_status_row("No boundaries found", "Generate the Day 2 rhythm artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(day_2["operator_note"], "Read-only guidance for repeatable pilot operation")
+        render_panel_end()
     elif page == "Demo Readiness":
         demo = data["private_demo_dry_run_status"]
         overall_status = demo["overall_status"]
@@ -2760,6 +2959,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
