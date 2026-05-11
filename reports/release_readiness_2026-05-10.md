@@ -6,8 +6,8 @@ Date: 2026-05-10
 
 Overall status: ready_with_warnings
 Total checks: 13
-Passed checks: 11
-Warning checks: 2
+Passed checks: 12
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -16,7 +16,7 @@ Failed checks: 0
 | --- | --- | --- | --- |
 | System check | passed | critical | reports\system_integrity_2026-05-10.md \| failed checks: 0 |
 | Deployment boundary check | passed | critical | Public/private boundary passed |
-| Dashboard local response | warning | warning | http://localhost:8501 not reachable: [WinError 10061] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión |
+| Dashboard local response | passed | warning | http://localhost:8501 returned 200 |
 | Landing public files | passed | critical | present |
 | Lead intake surface | passed | critical | ready |
 | Sensitive file protections | passed | critical | protected |
@@ -26,4 +26,4 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 4 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: skipped_existing_close |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Git working tree | warning | warning | M README.md; M app/demo/private_demo_package.py; M app/notifications/status.py; M app/system/integrity_check.py; M cli.py; M reports/private_demo_package_2026-05-10.md; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/notifications/delivery_approval.py; ?? docs/notification-delivery-approval-mvp-v0.1-status.md; ?? reports/notification_delivery_approval_2026-05-10.md |
+| Git working tree | warning | warning | M README.md; M app/dashboard/main.py; M app/demo/private_demo_package.py; M app/readiness/release_readiness.py; M app/security/access_control.py; M reports/private_demo_package_2026-05-10.md; M reports/release_readiness_2026-05-10.md; M reports/system_integrity_2026-05-10.md; ?? docs/dashboard-delivery-approval-page-v0.1-status.md |

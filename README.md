@@ -1098,6 +1098,17 @@ Current visual capabilities:
 - Filter checks by status.
 - Keep the dashboard page read-only; refresh the artifact with `python cli.py system-check`.
 
+## Dashboard Delivery Approval Page v0.1
+
+The private BusinessOS dashboard now includes a Delivery Approval page.
+
+Current visual capabilities:
+
+- Show queued notifications, pending delivery approvals, approved delivery approvals, ready-to-deliver count, and blocked notification count.
+- Filter delivery approval rows by approval status.
+- List notification subject, recipient, notification status, approver, and approval state.
+- Keep the dashboard page read-only; refresh approval artifacts with `python cli.py notification-delivery-approval`.
+
 ## Release Readiness MVP v0.1
 
 BusinessOS can now generate a private demo readiness report.

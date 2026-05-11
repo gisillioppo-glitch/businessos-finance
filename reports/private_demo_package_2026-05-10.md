@@ -10,8 +10,8 @@ BusinessOS is a private institutional AI operating system that connects Finance,
 
 Overall status: ready_with_warnings
 Total checks: 13
-Passed checks: 11
-Warning checks: 2
+Passed checks: 12
+Warning checks: 1
 Failed checks: 0
 
 ## Demo Commands
@@ -40,6 +40,7 @@ Failed checks: 0
 - Approvals
 - Daily Close
 - Notifications
+- Delivery Approval
 - Scheduled Close
 - System Integrity
 - People

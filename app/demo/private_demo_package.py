@@ -32,6 +32,7 @@ DASHBOARD_PAGES = [
     "Approvals",
     "Daily Close",
     "Notifications",
+    "Delivery Approval",
     "Scheduled Close",
     "System Integrity",
     "People",

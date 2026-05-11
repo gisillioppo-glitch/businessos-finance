@@ -15,6 +15,10 @@ if str(ROOT_DIR) not in sys.path:
 from app.alerts.alert_status import get_executive_alert_status_summary  # noqa: E402
 from app.alerts.executive_alerts import get_executive_alerts  # noqa: E402
 from app.governance.sensitivity_rules import get_governance_sensitivity_findings  # noqa: E402
+from app.notifications.delivery_approval import (  # noqa: E402
+    get_notification_delivery_approval_rows,
+    get_notification_delivery_approval_summary,
+)
 from app.notifications.outbox import get_notification_outbox, get_notification_summary  # noqa: E402
 from app.security.access_control import (  # noqa: E402
     get_allowed_pages,
@@ -811,6 +815,8 @@ def load_dashboard_data():
         executive_alert_status_summary = get_executive_alert_status_summary(conn)
         notification_summary = get_notification_summary(conn)
         notification_outbox = get_notification_outbox(conn, limit=50)
+        delivery_approval_summary = get_notification_delivery_approval_summary(conn)
+        delivery_approval_rows = get_notification_delivery_approval_rows(conn)
 
     high_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "high")
     medium_sensitivity_findings = sum(1 for finding in sensitivity_findings if finding["severity"] == "medium")
@@ -889,6 +895,8 @@ def load_dashboard_data():
         "evidence_index_status": evidence_index_status,
         "notification_summary": notification_summary,
         "notification_outbox": notification_outbox,
+        "delivery_approval_summary": delivery_approval_summary,
+        "delivery_approval_rows": delivery_approval_rows,
         "system_integrity_status": system_integrity_status,
         "scheduled_daily_close_status": scheduled_daily_close_status,
     }
@@ -940,12 +948,14 @@ def render_status_row(title, subtitle, status):
     status_class = str(status).lower().replace("_", "-")
     if status_class == "critical":
         status_class = "high"
-    elif status_class in ("completed", "available", "green"):
+    elif status_class in ("approved", "completed", "available", "sent", "green"):
         status_class = "healthy"
-    elif status_class in ("missing", "failed", "blocked", "overdue"):
+    elif status_class in ("missing", "failed", "blocked", "overdue", "rejected"):
         status_class = "high"
     elif status_class in ("pending", "in-progress", "waiting-approval", "waiting"):
         status_class = "medium"
+    elif status_class in ("cancelled", "dismissed"):
+        status_class = "low"
 
     st.markdown(
         f"""
@@ -1019,7 +1029,7 @@ def render_dashboard(data):
         <div class="bos-topbar">
             <div>
                 <div class="bos-title">BusinessOS Command Center</div>
-                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, Approvals, Daily Close, and People.</div>
+                <div class="bos-subtitle">Unified executive intelligence across Alerts, Finance, Operations, Governance, Sensitivity, Support, Assistance, Approvals, Daily Close, Notifications, Delivery Approval, and People.</div>
             </div>
             <div class="bos-chip">System Health: {data['overall_health']}</div>
         </div>
@@ -1457,7 +1467,7 @@ def render_module_page(page, data):
             render_panel_start("Notification Brief")
             render_brief_item(
                 f"{notification_summary['queued']} queued notification(s)",
-                "Queued items are ready for the future secure delivery adapter",
+                "Queued items require delivery approval before protected sending",
             )
             render_brief_item(
                 f"{notification_summary['sent']} sent notification(s)",
@@ -1466,6 +1476,69 @@ def render_module_page(page, data):
             render_brief_item(
                 f"{notification_summary['failed']} failed notification(s)",
                 "Failed items should be reviewed before delivery automation expands",
+            )
+            render_panel_end()
+    elif page == "Delivery Approval":
+        delivery_summary = data["delivery_approval_summary"]
+        delivery_rows = data["delivery_approval_rows"]
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Queued", delivery_summary["queued_notifications"], "Notification records awaiting delivery", "gold")
+        with c2:
+            render_metric_card("Pending", delivery_summary["pending_delivery_approvals"], "Delivery approvals waiting", "red" if delivery_summary["pending_delivery_approvals"] else "green")
+        with c3:
+            render_metric_card("Approved", delivery_summary["approved_delivery_approvals"], "Approved delivery gates", "green")
+        with c4:
+            render_metric_card("Ready", delivery_summary["ready_to_deliver"], "Queued and approved", "green" if delivery_summary["ready_to_deliver"] else "gold")
+        with c5:
+            render_metric_card("Blocked", delivery_summary["blocked_notifications"], "Queued without approval", "red" if delivery_summary["blocked_notifications"] else "green")
+
+        approval_filter = st.selectbox(
+            "Approval status filter",
+            ["all", "missing", "pending", "approved", "rejected", "cancelled"],
+            index=0,
+        )
+        filtered_rows = [
+            row
+            for row in delivery_rows
+            if approval_filter == "all" or row["approval_status"] == approval_filter
+        ]
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Delivery Approval Queue")
+            if filtered_rows:
+                for row in filtered_rows:
+                    detail = (
+                        f"{row['notification_status']} | "
+                        f"{row['recipient_name']} <{row['recipient_email']}> | "
+                        f"{row['recipient_role']} | "
+                        f"Approver: {row['approver_role']}"
+                    )
+                    render_status_row(
+                        row["subject"],
+                        detail,
+                        row["approval_status"],
+                    )
+            else:
+                render_status_row("No delivery approvals found", "No records match this approval status", "healthy")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Delivery Approval Brief")
+            render_brief_item(
+                f"{delivery_summary['blocked_notifications']} blocked notification(s)",
+                "Blocked items cannot be marked sent until approval is approved",
+            )
+            render_brief_item(
+                f"{delivery_summary['ready_to_deliver']} ready notification(s)",
+                "Ready items have queued notification status and approved delivery approval",
+            )
+            render_brief_item(
+                "python cli.py notification-delivery-approval",
+                "Use CLI to refresh delivery approval requests and report",
             )
             render_panel_end()
     elif page == "System Integrity":
