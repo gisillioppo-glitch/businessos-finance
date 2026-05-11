@@ -37,6 +37,7 @@ DASHBOARD_PAGES = [
     "Secure Email",
     "Scheduled Close",
     "System Integrity",
+    "Demo Readiness",
     "People",
 ]
 

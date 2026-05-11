@@ -1202,3 +1202,21 @@ python cli.py private-demo-dry-run
 ```
 
 The dry run validates release readiness, demo package, demo script, required dashboard pages, and private safety boundaries before a presentation. It exports `reports/private_demo_dry_run_YYYY-MM-DD.md` and keeps the demo inside the protected BusinessOS boundary.
+
+## Dashboard Demo Readiness Page v0.1
+
+The private Streamlit dashboard now includes a read-only `Demo Readiness` page.
+
+It reads the latest `reports/private_demo_dry_run_YYYY-MM-DD.md` artifact and shows:
+
+- private demo status
+- passed, warning, and failed checks
+- generated demo package and script paths
+- operator run sequence
+- available demo pages
+
+Generate the backing artifact with:
+
+```bash
+python cli.py private-demo-dry-run
+```

@@ -449,6 +449,95 @@ def load_system_integrity_status():
     }
 
 
+
+def load_private_demo_dry_run_status():
+    report_path = get_latest_report_path("private_demo_dry_run")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "overall_status": "missing",
+            "total_checks": 0,
+            "passed_checks": 0,
+            "warning_checks": 0,
+            "failed_checks": 0,
+            "release_readiness_source": "missing",
+            "package_path": None,
+            "script_path": None,
+            "checks": [],
+            "run_sequence": [],
+            "dashboard_pages": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    checks = []
+    run_sequence = []
+    dashboard_pages = []
+    section = None
+    package_path = None
+    script_path = None
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if stripped.startswith("- Private demo package:"):
+            package_path = stripped.split(":", 1)[1].strip()
+            continue
+
+        if stripped.startswith("- Private demo script:"):
+            script_path = stripped.split(":", 1)[1].strip()
+            continue
+
+        if section == "Checks":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Check"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 4:
+                checks.append(
+                    {
+                        "name": parts[0],
+                        "status": parts[1],
+                        "severity": parts[2],
+                        "detail": parts[3],
+                    }
+                )
+
+        elif section == "Demo Run Sequence":
+            match = re.match(r"\d+\.\s+(.*)", stripped)
+            if match:
+                run_sequence.append(match.group(1))
+
+        elif section == "Dashboard Pages Available" and stripped.startswith("- "):
+            dashboard_pages.append(stripped[2:])
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+    readiness_match = re.search(r"Release readiness source:\s*([a-z_]+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "overall_status": status_match.group(1) if status_match else "unknown",
+        "total_checks": extract_metric_from_markdown(content, "Total checks"),
+        "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
+        "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
+        "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "release_readiness_source": readiness_match.group(1) if readiness_match else "unknown",
+        "package_path": package_path,
+        "script_path": script_path,
+        "checks": checks,
+        "run_sequence": run_sequence,
+        "dashboard_pages": dashboard_pages,
+    }
+
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -847,6 +936,7 @@ def load_dashboard_data():
     evidence_index_status = load_evidence_index_status()
     system_integrity_status = load_system_integrity_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
+    private_demo_dry_run_status = load_private_demo_dry_run_status()
 
     return {
         "transactions_count": transactions_count,
@@ -907,6 +997,7 @@ def load_dashboard_data():
         "secure_email_report": secure_email_report,
         "system_integrity_status": system_integrity_status,
         "scheduled_daily_close_status": scheduled_daily_close_status,
+        "private_demo_dry_run_status": private_demo_dry_run_status,
     }
 
 
@@ -1674,6 +1765,96 @@ def render_module_page(page, data):
                 f"{system_integrity['warning_checks']} warning(s) and {system_integrity['failed_checks']} failed check(s)",
                 "Warnings are expected during active uncommitted work; failures require immediate review",
             )
+            render_panel_end()
+    elif page == "Demo Readiness":
+        demo = data["private_demo_dry_run_status"]
+        overall_status = demo["overall_status"]
+        overall_class = {
+            "ready_for_private_demo": "green",
+            "ready_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(overall_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Demo Status", overall_status.replace("_", " ").title(), "Latest private demo dry run", overall_class)
+        with c2:
+            render_metric_card("Passed", demo["passed_checks"], "Dry-run controls passing", "green")
+        with c3:
+            render_metric_card("Warnings", demo["warning_checks"], "Name before demo", "gold" if demo["warning_checks"] else "green")
+        with c4:
+            render_metric_card("Failed", demo["failed_checks"], "Blocks presentation", "red" if demo["failed_checks"] else "green")
+        with c5:
+            render_metric_card("Segments", len(demo["run_sequence"]), "Operator run sequence", "")
+
+        status_filter = st.selectbox(
+            "Demo check status filter",
+            ["all", "passed", "warning", "failed"],
+            index=0,
+        )
+        filtered_checks = [
+            check
+            for check in demo["checks"]
+            if status_filter == "all" or check["status"] == status_filter
+        ]
+
+        status_styles = {
+            "passed": "healthy",
+            "warning": "medium",
+            "failed": "high",
+        }
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Private Demo Checks")
+            if filtered_checks:
+                for check in filtered_checks:
+                    detail = f"{check['severity']} | {check['detail']}"
+                    render_status_row(
+                        check["name"],
+                        detail,
+                        status_styles.get(check["status"], check["status"]),
+                    )
+            else:
+                render_status_row("No demo checks found", "Run python cli.py private-demo-dry-run", "medium")
+            render_panel_end()
+
+            render_panel_start("Demo Run Sequence")
+            if demo["run_sequence"]:
+                for index, step in enumerate(demo["run_sequence"], start=1):
+                    render_status_row(f"Step {index}", step, "healthy")
+            else:
+                render_status_row("No run sequence found", "Generate the private demo dry-run report", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Demo Evidence")
+            render_brief_item(
+                demo["report_path"] or "Private demo dry-run report not generated",
+                "Latest dry-run evidence artifact",
+            )
+            render_brief_item(
+                demo["package_path"] or "Private demo package not generated",
+                "Package with demo scope, commands, and boundaries",
+            )
+            render_brief_item(
+                demo["script_path"] or "Private demo script not generated",
+                "Operator script and presentation arc",
+            )
+            render_brief_item(
+                demo["release_readiness_source"].replace("_", " ").title(),
+                "Release readiness source used by the dry run",
+            )
+            render_panel_end()
+
+            render_panel_start("Available Demo Pages")
+            if demo["dashboard_pages"]:
+                for page_name in demo["dashboard_pages"]:
+                    render_status_row(page_name, "Available in private demo scope", "healthy")
+            else:
+                render_status_row("No pages found", "Run python cli.py private-demo-dry-run", "medium")
             render_panel_end()
     elif page == "People":
         c1, c2, c3, c4 = st.columns(4)

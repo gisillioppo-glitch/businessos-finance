@@ -45,6 +45,7 @@ Failed checks: 0
 - Secure Email
 - Scheduled Close
 - System Integrity
+- Demo Readiness
 - People
 
 ## Recommended Demo Flow

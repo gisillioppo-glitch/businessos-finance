@@ -54,6 +54,7 @@ Release readiness source: ready_with_warnings
 - Secure Email
 - Scheduled Close
 - System Integrity
+- Demo Readiness
 - People
 
 ## Operator Note

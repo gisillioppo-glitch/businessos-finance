@@ -22,6 +22,7 @@ ALLOWED_ROLES = {
         "Delivery Approval",
         "Secure Email",
         "System Integrity",
+        "Demo Readiness",
         "People",
     ],
     "executive": [
@@ -40,6 +41,7 @@ ALLOWED_ROLES = {
         "Delivery Approval",
         "Secure Email",
         "System Integrity",
+        "Demo Readiness",
         "People",
     ],
     "viewer": [
@@ -58,6 +60,7 @@ ALLOWED_ROLES = {
         "Delivery Approval",
         "Secure Email",
         "System Integrity",
+        "Demo Readiness",
         "People",
     ],
 }
