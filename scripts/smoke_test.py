@@ -14,6 +14,7 @@ COMMANDS = [
     ["python", "cli.py", "private-pilot-intake"],
     ["python", "cli.py", "private-pilot-plan"],
     ["python", "cli.py", "private-pilot-tracker"],
+    ["python", "cli.py", "private-pilot-exit-decision"],
     ["python", "cli.py", "notifications"],
     ["python", "cli.py", "notification-delivery-approval"],
     ["python", "cli.py", "secure-email-delivery"],

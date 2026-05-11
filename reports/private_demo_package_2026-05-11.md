@@ -27,6 +27,7 @@ Failed checks: 0
 | Scheduled close status | `python cli.py daily-close-schedule` |
 | Private dashboard | `streamlit run app/dashboard/main.py` |
 | Private pilot tracker | `python cli.py private-pilot-tracker` |
+| Private pilot exit decision | `python cli.py private-pilot-exit-decision` |
 | Full smoke test | `python scripts/smoke_test.py` |
 
 ## Dashboard Pages To Show
