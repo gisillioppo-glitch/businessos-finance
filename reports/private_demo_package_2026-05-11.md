@@ -29,6 +29,7 @@ Failed checks: 0
 | Private pilot tracker | `python cli.py private-pilot-tracker` |
 | Private pilot exit decision | `python cli.py private-pilot-exit-decision` |
 | Pilot Day 1 package | `python cli.py pilot-day-1-package` |
+| Pilot Day 2 rhythm | `python cli.py pilot-day-2-rhythm` |
 | Full smoke test | `python scripts/smoke_test.py` |
 
 ## Dashboard Pages To Show

@@ -1366,3 +1366,15 @@ Generate the backing artifact with:
 ```bash
 python cli.py pilot-day-1-package
 ```
+
+## Pilot Day 2 Operating Rhythm MVP v0.1
+
+BusinessOS can now generate a Day 2 operating rhythm artifact for continuing a controlled private pilot after Day 1.
+
+Run:
+
+```bash
+python cli.py pilot-day-2-rhythm
+```
+
+The rhythm reads the Day 1 package, pilot tracker, and exit decision, then recommends whether to continue, continue narrowly with warnings, or pause until required evidence is resolved. It exports `reports/pilot_day_2_rhythm_YYYY-MM-DD.md`.

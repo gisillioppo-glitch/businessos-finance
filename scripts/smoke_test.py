@@ -16,6 +16,7 @@ COMMANDS = [
     ["python", "cli.py", "private-pilot-tracker"],
     ["python", "cli.py", "private-pilot-exit-decision"],
     ["python", "cli.py", "pilot-day-1-package"],
+    ["python", "cli.py", "pilot-day-2-rhythm"],
     ["python", "cli.py", "notifications"],
     ["python", "cli.py", "notification-delivery-approval"],
     ["python", "cli.py", "secure-email-delivery"],
@@ -106,6 +107,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
