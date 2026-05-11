@@ -44,6 +44,7 @@ DASHBOARD_PAGES = [
     "Pilot Plan",
     "Pilot Tracker",
     "Pilot Exit",
+    "Pilot Day 1",
     "People",
 ]
 
@@ -258,5 +259,6 @@ def print_private_demo_package(conn=None):
     print(f"Private demo package exported: {Path(report_path).relative_to(ROOT_DIR)}")
 
     return package
+
 
 

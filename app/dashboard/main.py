@@ -845,6 +845,110 @@ def load_private_pilot_exit_decision_status():
         "exit_options": exit_options,
         "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
     }
+def load_pilot_day_1_package_status():
+    report_path = get_latest_report_path("pilot_day_1_package")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "day_1_status": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "plan_status": "missing",
+            "tracker_status": "missing",
+            "exit_decision_status": "missing",
+            "recommended_exit_decision": "missing",
+            "highest_exit_risk": "unknown",
+            "available_evidence": 0,
+            "missing_required_evidence": 0,
+            "missing_optional_evidence": 0,
+            "next_action": "Run python cli.py pilot-day-1-package.",
+            "commands": [],
+            "expected_evidence": [],
+            "owner_review": [],
+            "risks": [],
+            "close_criteria": [],
+            "operator_note": "No Pilot Day 1 package generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    commands = []
+    expected_evidence = []
+    owner_review = []
+    risks = []
+    close_criteria = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Day 1 Command Runbook":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Expected Evidence" and stripped.startswith("- "):
+            expected_evidence.append(stripped[2:])
+
+        elif section == "Executive Owner Review" and stripped.startswith("- "):
+            owner_review.append(stripped[2:])
+
+        elif section == "Day 1 Risks and Boundaries" and stripped.startswith("- "):
+            risks.append(stripped[2:])
+
+        elif section == "Day 1 Close Criteria" and stripped.startswith("- "):
+            close_criteria.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    day_1_status_match = re.search(r"Day 1 status:\s*([a-z_]+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    plan_status_match = re.search(r"Plan status:\s*([a-z_]+)", content)
+    tracker_status_match = re.search(r"Tracker status:\s*([a-z_]+)", content)
+    exit_decision_status_match = re.search(r"Exit decision status:\s*([a-z_]+)", content)
+    recommended_exit_decision_match = re.search(r"Recommended exit decision:\s*([a-z_]+)", content)
+    highest_exit_risk_match = re.search(r"Highest exit risk:\s*(.+)", content)
+    available_evidence_match = re.search(r"Available evidence:\s*(\d+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    missing_optional_match = re.search(r"Missing optional evidence:\s*(\d+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "day_1_status": day_1_status_match.group(1) if day_1_status_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "plan_status": plan_status_match.group(1) if plan_status_match else "unknown",
+        "tracker_status": tracker_status_match.group(1) if tracker_status_match else "unknown",
+        "exit_decision_status": exit_decision_status_match.group(1) if exit_decision_status_match else "unknown",
+        "recommended_exit_decision": recommended_exit_decision_match.group(1) if recommended_exit_decision_match else "unknown",
+        "highest_exit_risk": highest_exit_risk_match.group(1).strip() if highest_exit_risk_match else "unknown",
+        "available_evidence": int(available_evidence_match.group(1)) if available_evidence_match else 0,
+        "missing_required_evidence": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "missing_optional_evidence": int(missing_optional_match.group(1)) if missing_optional_match else 0,
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "commands": commands,
+        "expected_evidence": expected_evidence,
+        "owner_review": owner_review,
+        "risks": risks,
+        "close_criteria": close_criteria,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -1247,6 +1351,7 @@ def load_dashboard_data():
     private_pilot_plan_status = load_private_pilot_plan_status()
     private_pilot_tracker_status = load_private_pilot_tracker_status()
     private_pilot_exit_decision_status = load_private_pilot_exit_decision_status()
+    pilot_day_1_package_status = load_pilot_day_1_package_status()
 
     return {
         "transactions_count": transactions_count,
@@ -1311,6 +1416,7 @@ def load_dashboard_data():
         "private_pilot_plan_status": private_pilot_plan_status,
         "private_pilot_tracker_status": private_pilot_tracker_status,
         "private_pilot_exit_decision_status": private_pilot_exit_decision_status,
+        "pilot_day_1_package_status": pilot_day_1_package_status,
     }
 
 
@@ -2368,6 +2474,96 @@ def render_module_page(page, data):
                 "Decision support only; no automatic execution",
             )
             render_panel_end()
+    elif page == "Pilot Day 1":
+        day_1 = data["pilot_day_1_package_status"]
+        day_1_status = day_1["day_1_status"]
+        day_1_class = {
+            "ready": "green",
+            "ready_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(day_1_status, "gold")
+        risk_class = {
+            "low": "green",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(day_1["highest_exit_risk"].lower(), "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Day 1 Status", day_1_status.replace("_", " ").title(), "Latest Day 1 package", day_1_class)
+        with c2:
+            render_metric_card("Workflow", day_1["primary_workflow"], "Primary pilot workflow", "green" if day_1["primary_workflow"] != "Not selected" else "red")
+        with c3:
+            render_metric_card("Evidence", day_1["available_evidence"], "Available pilot artifacts", "green" if day_1["available_evidence"] else "red")
+        with c4:
+            render_metric_card("Missing Required", day_1["missing_required_evidence"], "Blocks Day 1 if above zero", "red" if day_1["missing_required_evidence"] else "green")
+        with c5:
+            render_metric_card("Exit Risk", day_1["highest_exit_risk"].title(), "Before expansion", risk_class)
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Day 1 Command Runbook")
+            if day_1["commands"]:
+                for item in day_1["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No command runbook found", "Run python cli.py pilot-day-1-package", "medium")
+            render_panel_end()
+
+            render_panel_start("Expected Evidence")
+            if day_1["expected_evidence"]:
+                for evidence in day_1["expected_evidence"]:
+                    render_status_row(evidence, "Expected Day 1 artifact", "healthy")
+            else:
+                render_status_row("No evidence list found", "Generate the Day 1 package artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Close Criteria")
+            if day_1["close_criteria"]:
+                for criterion in day_1["close_criteria"]:
+                    render_status_row(criterion, "Required before closing Day 1", "healthy")
+            else:
+                render_status_row("No close criteria found", "Generate the Day 1 package artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Day 1 Summary")
+            render_brief_item(
+                day_1["report_path"] or "Pilot Day 1 package not generated",
+                "Latest Day 1 package artifact",
+            )
+            render_brief_item(day_1["pilot_owner"], "Pilot owner")
+            render_brief_item(day_1["plan_status"].replace("_", " ").title(), "Linked plan status")
+            render_brief_item(day_1["tracker_status"].replace("_", " ").title(), "Linked tracker status")
+            render_brief_item(day_1["recommended_exit_decision"].replace("_", " ").title(), "Advisory exit decision")
+            render_panel_end()
+
+            render_panel_start("Next Action")
+            render_status_row(day_1["next_action"], "Executive owner confirms before scope expansion", "medium" if day_1_status == "ready_with_warnings" else day_1_status)
+            render_panel_end()
+
+            render_panel_start("Executive Owner Review")
+            if day_1["owner_review"]:
+                for item in day_1["owner_review"]:
+                    render_status_row(item, "Owner review checkpoint", "medium")
+            else:
+                render_status_row("No owner review checklist found", "Generate the Day 1 package artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Risks and Boundaries")
+            if day_1["risks"]:
+                for risk in day_1["risks"]:
+                    render_status_row(risk, "Protected Day 1 boundary", "medium")
+            else:
+                render_status_row("No risk boundaries found", "Generate the Day 1 package artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(day_1["operator_note"], "Read-only guidance for controlled Day 1 operation")
+        render_panel_end()
     elif page == "Demo Readiness":
         demo = data["private_demo_dry_run_status"]
         overall_status = demo["overall_status"]
@@ -2564,6 +2760,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

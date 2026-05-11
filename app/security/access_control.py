@@ -26,6 +26,7 @@ ALLOWED_ROLES = {
         "Pilot Plan",
         "Pilot Tracker",
         "Pilot Exit",
+        "Pilot Day 1",
         "People",
     ],
     "executive": [
@@ -48,6 +49,7 @@ ALLOWED_ROLES = {
         "Pilot Plan",
         "Pilot Tracker",
         "Pilot Exit",
+        "Pilot Day 1",
         "People",
     ],
     "viewer": [
@@ -70,6 +72,7 @@ ALLOWED_ROLES = {
         "Pilot Plan",
         "Pilot Tracker",
         "Pilot Exit",
+        "Pilot Day 1",
         "People",
     ],
 }
@@ -90,6 +93,7 @@ def get_default_role(username):
 
 def get_allowed_pages(role):
     return ALLOWED_ROLES.get(role, ALLOWED_ROLES["viewer"])
+
 
 
 

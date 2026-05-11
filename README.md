@@ -1344,3 +1344,25 @@ python cli.py pilot-day-1-package
 ```
 
 The package combines the pilot plan, tracker, and exit decision into a Day 1 runbook with commands, expected evidence, owner review, risks/boundaries, close criteria, and next action. It exports `reports/pilot_day_1_package_YYYY-MM-DD.md`.
+
+## Dashboard Pilot Day 1 Page v0.1
+
+The private dashboard now includes a read-only `Pilot Day 1` page.
+
+It reads the latest `reports/pilot_day_1_package_YYYY-MM-DD.md` artifact and shows:
+
+- Day 1 status
+- pilot owner and primary workflow
+- available and missing evidence counts
+- recommended exit decision and exit risk
+- Day 1 command runbook
+- expected evidence
+- executive owner review checklist
+- Day 1 close criteria
+- risks, boundaries, and operator note
+
+Generate the backing artifact with:
+
+```bash
+python cli.py pilot-day-1-package
+```

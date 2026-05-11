@@ -52,6 +52,7 @@ Failed checks: 0
 - Pilot Plan
 - Pilot Tracker
 - Pilot Exit
+- Pilot Day 1
 - People
 
 ## Recommended Demo Flow
