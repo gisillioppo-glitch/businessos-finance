@@ -1232,3 +1232,15 @@ python cli.py private-pilot-intake
 ```
 
 The intake uses release readiness and private demo dry run status to recommend a starting pilot module, list diagnostic questions, define pilot boundaries, and export `reports/private_pilot_intake_YYYY-MM-DD.md`.
+
+## Private Pilot Plan MVP v0.1
+
+BusinessOS can now turn private pilot intake into a 14-day pilot plan.
+
+Run:
+
+```bash
+python cli.py private-pilot-plan
+```
+
+The plan defines pilot owner, primary workflow, 14-day timeline, daily operating rhythm, success criteria, exit decisions, and protected boundaries. It exports `reports/private_pilot_plan_YYYY-MM-DD.md`.
