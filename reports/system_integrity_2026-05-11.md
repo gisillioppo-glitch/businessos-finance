@@ -4,10 +4,10 @@ Date: 2026-05-11
 
 ## Integrity Summary
 
-Overall status: warning
+Overall status: passed
 Total checks: 55
-Passed checks: 54
-Warning checks: 1
+Passed checks: 55
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -68,4 +68,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | warning | M README.md; M app/demo/private_demo_package.py; M cli.py; M reports/private_demo_package_2026-05-11.md; M scripts/smoke_test.py; ?? app/demo/pilot_day_5_narrow_continuation.py; ?? docs/pilot-day-5-narrow-continuation-mvp-v0.1-status.md; ?? reports/pilot_day_5_narrow_continuation_2026-05-11.md |
+| Git working tree | passed | clean except known local artifacts |
