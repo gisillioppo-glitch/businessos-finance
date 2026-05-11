@@ -20,6 +20,7 @@ COMMANDS = [
     ["python", "cli.py", "pilot-day-3-evidence-review"],
     ["python", "cli.py", "pilot-day-4-owner-confirmation"],
     ["python", "cli.py", "pilot-day-5-narrow-continuation"],
+    ["python", "cli.py", "pilot-expansion-review-prep"],
     ["python", "cli.py", "notifications"],
     ["python", "cli.py", "notification-delivery-approval"],
     ["python", "cli.py", "secure-email-delivery"],

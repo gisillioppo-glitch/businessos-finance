@@ -33,6 +33,7 @@ Failed checks: 0
 | Pilot Day 3 evidence review | `python cli.py pilot-day-3-evidence-review` |
 | Pilot Day 4 owner confirmation | `python cli.py pilot-day-4-owner-confirmation` |
 | Pilot Day 5 narrow continuation | `python cli.py pilot-day-5-narrow-continuation` |
+| Pilot expansion review prep | `python cli.py pilot-expansion-review-prep` |
 | Full smoke test | `python scripts/smoke_test.py` |
 
 ## Dashboard Pages To Show

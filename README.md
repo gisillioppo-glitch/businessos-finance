@@ -1437,3 +1437,15 @@ python cli.py pilot-day-5-narrow-continuation
 ```
 
 The plan reads Day 4 owner confirmation, keeps the pilot constrained to one workflow, keeps expansion marked as `not_approved`, and defines the Day 5 rhythm and evidence to observe before any future expansion review.
+
+## Pilot Expansion Review Preparation MVP v0.1
+
+BusinessOS can now generate an expansion review preparation package without approving expansion.
+
+Run:
+
+```bash
+python cli.py pilot-expansion-review-prep
+```
+
+The package reads Day 5 narrow continuation, keeps expansion marked as `not_approved`, evaluates required preparation conditions, and exports `reports/pilot_expansion_review_prep_YYYY-MM-DD.md`. It is preparation only; it does not add workflows, enable delivery, or approve expansion.
