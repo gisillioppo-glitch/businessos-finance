@@ -5,8 +5,8 @@ Date: 2026-05-10
 ## Integrity Summary
 
 Overall status: warning
-Total checks: 53
-Passed checks: 52
+Total checks: 54
+Passed checks: 53
 Warning checks: 1
 Failed checks: 0
 
@@ -57,6 +57,7 @@ Failed checks: 0
 | Latest report: daily_close | passed | reports\daily_close_2026-05-10.md |
 | Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-10.md |
 | Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-10.md |
+| Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-10.md |
 | Gitignore protects: finance.db | passed | protected |
 | Gitignore protects: .env | passed | protected |
 | Gitignore protects: .venv/ | passed | protected |
@@ -66,4 +67,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | warning | M README.md; M app/system/integrity_check.py; M cli.py; M reports/release_readiness_2026-05-10.md; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/demo/; ?? docs/private-demo-package-mvp-v0.1-status.md; ?? reports/private_demo_package_2026-05-10.md |
+| Git working tree | warning | M README.md; M app/demo/private_demo_package.py; M app/notifications/status.py; M app/system/integrity_check.py; M cli.py; M reports/private_demo_package_2026-05-10.md; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/notifications/delivery_approval.py; ?? docs/notification-delivery-approval-mvp-v0.1-status.md; ?? reports/notification_delivery_approval_2026-05-10.md |

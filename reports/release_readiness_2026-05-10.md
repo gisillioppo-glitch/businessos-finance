@@ -26,4 +26,4 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 4 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: skipped_existing_close |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Git working tree | warning | warning | M README.md; M app/system/integrity_check.py; M cli.py; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/demo/; ?? docs/private-demo-package-mvp-v0.1-status.md; ?? reports/private_demo_package_2026-05-10.md |
+| Git working tree | warning | warning | M README.md; M app/demo/private_demo_package.py; M app/notifications/status.py; M app/system/integrity_check.py; M cli.py; M reports/private_demo_package_2026-05-10.md; M reports/system_integrity_2026-05-10.md; M scripts/smoke_test.py; ?? app/notifications/delivery_approval.py; ?? docs/notification-delivery-approval-mvp-v0.1-status.md; ?? reports/notification_delivery_approval_2026-05-10.md |

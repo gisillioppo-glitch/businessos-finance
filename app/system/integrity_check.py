@@ -58,6 +58,7 @@ REQUIRED_REPORT_PREFIXES = [
     "daily_close",
     "daily_close_distribution",
     "private_demo_package",
+    "notification_delivery_approval",
 ]
 
 VALID_NOTIFICATION_STATUSES = {"queued", "sent", "dismissed", "failed"}

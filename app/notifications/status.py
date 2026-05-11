@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from app.audit.audit_log import write_audit_log
+from app.notifications.delivery_approval import get_notification_delivery_approval_status
 from app.notifications.schema import create_notification_outbox_table
 
 
@@ -27,6 +28,34 @@ def update_notification_status(conn, notification_id, new_status):
         return None
 
     _, old_status, recipient_email, subject = existing
+
+    if new_status == "sent":
+        approval = get_notification_delivery_approval_status(conn, notification_id)
+        if approval["status"] != "approved":
+            write_audit_log(
+                conn,
+                "notification_delivery_blocked_pending_approval",
+                "warning",
+                "Notification delivery blocked because approval is not approved.",
+                {
+                    "notification_id": notification_id,
+                    "recipient_email": recipient_email,
+                    "subject": subject,
+                    "approval_status": approval["status"],
+                    "approval_id": approval["approval_id"],
+                },
+            )
+
+            return {
+                "id": notification_id,
+                "recipient_email": recipient_email,
+                "subject": subject,
+                "old_status": old_status,
+                "new_status": old_status,
+                "blocked": True,
+                "approval_status": approval["status"],
+            }
+
     now = datetime.now().isoformat()
     sent_at = now if new_status == "sent" else None
 
@@ -62,6 +91,7 @@ def update_notification_status(conn, notification_id, new_status):
         "subject": subject,
         "old_status": old_status,
         "new_status": new_status,
+        "blocked": False,
     }
 
 
@@ -84,6 +114,15 @@ def _update_first_notification_by_status(conn, current_status, new_status):
         return None
 
     result = update_notification_status(conn, existing[0], new_status)
+
+    if result and result.get("blocked"):
+        print(
+            "Notification Delivery Blocked: "
+            f"{result['subject']} for {result['recipient_email']} "
+            f"requires approved delivery approval. "
+            f"Current approval status: {result['approval_status']}."
+        )
+        return result
 
     print(
         "Notification Status Update: "

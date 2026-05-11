@@ -1047,6 +1047,24 @@ Current capabilities:
 - Validate notification lifecycle through smoke test.
 - Preserve the safety boundary: no external email is sent yet.
 
+## Notification Delivery Approval MVP v0.1
+
+BusinessOS now requires governance approval before queued notifications can be marked as sent.
+
+CLI command:
+
+```bash
+python cli.py notification-delivery-approval
+```
+
+Current capabilities:
+
+- Create approval requests for queued notification outbox items.
+- Deduplicate delivery approvals by notification ID.
+- Export `reports/notification_delivery_approval_YYYY-MM-DD.md`.
+- Block `notification-sent` unless the matching delivery approval is approved.
+- Keep real email delivery out of scope until protected SMTP/API credentials are ready.
+
 ## System Integrity Check MVP v0.1
 
 BusinessOS now includes a structural self-check command.

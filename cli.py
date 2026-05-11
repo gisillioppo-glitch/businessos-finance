@@ -60,6 +60,7 @@ from app.notifications.outbox import (
     print_notification_outbox,
     print_notification_summary,
 )
+from app.notifications.delivery_approval import print_notification_delivery_approval
 from app.notifications.status import (
     demo_dismiss_first_queued_notification,
     demo_fail_first_queued_notification,
@@ -166,6 +167,19 @@ def run_notifications():
     try:
         print_notification_outbox(conn)
         print_notification_summary(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_notification_delivery_approval():
+    conn = create_connection()
+
+    try:
+        print_notification_delivery_approval(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -743,6 +757,7 @@ def main():
             "release-readiness",
             "private-demo-package",
             "notifications",
+            "notification-delivery-approval",
             "notification-sent",
             "notification-dismiss",
             "notification-fail",
@@ -803,6 +818,8 @@ def main():
         run_private_demo_package()
     elif args.command == "notifications":
         run_notifications()
+    elif args.command == "notification-delivery-approval":
+        run_notification_delivery_approval()
     elif args.command == "notification-sent":
         run_notification_sent()
     elif args.command == "notification-dismiss":

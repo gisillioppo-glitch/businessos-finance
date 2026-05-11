@@ -22,6 +22,7 @@ Failed checks: 0
 | System integrity check | `python cli.py system-check` |
 | Executive daily close | `python cli.py daily-close` |
 | Notification outbox | `python cli.py notifications` |
+| Notification delivery approval | `python cli.py notification-delivery-approval` |
 | Scheduled close status | `python cli.py daily-close-schedule` |
 | Private dashboard | `streamlit run app/dashboard/main.py` |
 | Full smoke test | `python scripts/smoke_test.py` |
@@ -58,6 +59,7 @@ Failed checks: 0
 - Command Center report and highest-risk summary.
 - Daily Close, Evidence Index, and Daily Close Distribution reports.
 - Notification Outbox status counts and read-only dashboard view.
+- Notification Delivery Approval report before any external delivery adapter.
 - Scheduled Close status and last scheduler result.
 - System Integrity and Release Readiness reports.
 
@@ -72,7 +74,7 @@ Failed checks: 0
 ## Known Risks
 
 - Dashboard authentication is still local MVP auth; use private environment configuration before external access.
-- Secure Email Delivery Adapter is not implemented yet, so notifications remain queued/status-tracked only.
+- Secure Email Delivery Adapter is not implemented yet, so notifications remain queued/status-tracked and approval-gated only.
 - Release Readiness may show a Git working tree warning while an active development block is uncommitted.
 - Lead intake requires a real external form endpoint before production capture.
 - The private dashboard is not a public production deployment target.
