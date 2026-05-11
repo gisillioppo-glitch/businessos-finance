@@ -22,6 +22,7 @@ DEMO_COMMANDS = [
     ("Private pilot exit decision", "python cli.py private-pilot-exit-decision"),
     ("Pilot Day 1 package", "python cli.py pilot-day-1-package"),
     ("Pilot Day 2 rhythm", "python cli.py pilot-day-2-rhythm"),
+    ("Pilot Day 3 evidence review", "python cli.py pilot-day-3-evidence-review"),
     ("Full smoke test", "python scripts/smoke_test.py"),
 ]
 
@@ -261,8 +262,4 @@ def print_private_demo_package(conn=None):
     print(f"Private demo package exported: {Path(report_path).relative_to(ROOT_DIR)}")
 
     return package
-
-
-
-
 

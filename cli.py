@@ -48,6 +48,7 @@ from app.demo.private_pilot_tracker import print_private_pilot_tracker
 from app.demo.private_pilot_exit_decision import print_private_pilot_exit_decision
 from app.demo.pilot_day_1_package import print_pilot_day_1_package
 from app.demo.pilot_day_2_rhythm import print_pilot_day_2_rhythm
+from app.demo.pilot_day_3_evidence_review import print_pilot_day_3_evidence_review
 from app.evidence.daily_close import export_daily_close_report
 from app.evidence.daily_close_distribution import export_daily_close_distribution
 from app.evidence.evidence_index import (
@@ -261,6 +262,19 @@ def run_pilot_day_2_rhythm():
 
     try:
         print_pilot_day_2_rhythm(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_pilot_day_3_evidence_review():
+    conn = create_connection()
+
+    try:
+        print_pilot_day_3_evidence_review(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -883,6 +897,7 @@ def main():
             "private-pilot-exit-decision",
             "pilot-day-1-package",
             "pilot-day-2-rhythm",
+            "pilot-day-3-evidence-review",
             "notifications",
             "notification-delivery-approval",
             "secure-email-delivery",
@@ -960,6 +975,8 @@ def main():
         run_pilot_day_1_package()
     elif args.command == "pilot-day-2-rhythm":
         run_pilot_day_2_rhythm()
+    elif args.command == "pilot-day-3-evidence-review":
+        run_pilot_day_3_evidence_review()
     elif args.command == "notifications":
         run_notifications()
     elif args.command == "notification-delivery-approval":
@@ -1046,48 +1063,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

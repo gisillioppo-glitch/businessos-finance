@@ -1401,3 +1401,15 @@ Generate the backing artifact with:
 ```bash
 python cli.py pilot-day-2-rhythm
 ```
+
+## Pilot Day 3 Evidence Review MVP v0.1
+
+BusinessOS can now generate a Day 3 evidence review artifact for deciding whether a private pilot should continue narrowly, pause for evidence, or prepare expansion review.
+
+Run:
+
+```bash
+python cli.py pilot-day-3-evidence-review
+```
+
+The review reads Day 1, Day 2, tracker, and exit decision artifacts, evaluates required evidence and warning context, and exports `reports/pilot_day_3_evidence_review_YYYY-MM-DD.md`. It is advisory only; Day 3 may prepare an expansion review, but it does not approve expansion or change delivery controls.
