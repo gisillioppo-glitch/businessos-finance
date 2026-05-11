@@ -647,6 +647,92 @@ def load_private_pilot_plan_status():
         "boundaries": boundaries,
     }
 
+def load_private_pilot_tracker_status():
+    report_path = get_latest_report_path("private_pilot_tracker")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "tracker_status": "missing",
+            "plan_status": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "pilot_length": 0,
+            "available_evidence": 0,
+            "missing_required": 0,
+            "missing_optional": 0,
+            "next_action": "Run python cli.py private-pilot-tracker.",
+            "daily_steps": [],
+            "evidence_rows": [],
+            "operator_note": "No tracker artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    daily_steps = []
+    evidence_rows = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Daily Operator Steps" and stripped.startswith("- "):
+            daily_steps.append(stripped[2:])
+
+        elif section == "Evidence Checklist":
+            if not stripped.startswith("|") or stripped.startswith("| ---"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 6 and parts[0] != "Evidence":
+                evidence_rows.append(
+                    {
+                        "evidence": parts[0],
+                        "status": parts[1],
+                        "required": parts[2],
+                        "owner": parts[3],
+                        "latest_report": parts[4],
+                        "purpose": parts[5],
+                    }
+                )
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    tracker_status_match = re.search(r"Tracker status:\s*([a-z_]+)", content)
+    plan_status_match = re.search(r"Plan status:\s*([a-z_]+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    pilot_length_match = re.search(r"Pilot length:\s*(\d+)\s*days", content)
+    available_evidence_match = re.search(r"Available evidence:\s*(\d+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    missing_optional_match = re.search(r"Missing optional evidence:\s*(\d+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "tracker_status": tracker_status_match.group(1) if tracker_status_match else "unknown",
+        "plan_status": plan_status_match.group(1) if plan_status_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "pilot_length": int(pilot_length_match.group(1)) if pilot_length_match else 0,
+        "available_evidence": int(available_evidence_match.group(1)) if available_evidence_match else 0,
+        "missing_required": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "missing_optional": int(missing_optional_match.group(1)) if missing_optional_match else 0,
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "daily_steps": daily_steps,
+        "evidence_rows": evidence_rows,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -1047,6 +1133,7 @@ def load_dashboard_data():
     scheduled_daily_close_status = load_scheduled_daily_close_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
     private_pilot_plan_status = load_private_pilot_plan_status()
+    private_pilot_tracker_status = load_private_pilot_tracker_status()
 
     return {
         "transactions_count": transactions_count,
@@ -1109,6 +1196,7 @@ def load_dashboard_data():
         "scheduled_daily_close_status": scheduled_daily_close_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
         "private_pilot_plan_status": private_pilot_plan_status,
+        "private_pilot_tracker_status": private_pilot_tracker_status,
     }
 
 
@@ -1978,6 +2066,87 @@ def render_module_page(page, data):
         else:
             render_status_row("No pilot boundaries found", "Generate the pilot plan artifact", "medium")
         render_panel_end()
+    elif page == "Pilot Tracker":
+        tracker = data["private_pilot_tracker_status"]
+        tracker_status = tracker["tracker_status"]
+        tracker_class = {
+            "on_track": "green",
+            "needs_attention": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(tracker_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Tracker Status", tracker_status.replace("_", " ").title(), "Latest pilot daily tracker", tracker_class)
+        with c2:
+            render_metric_card("Evidence", tracker["available_evidence"], "Available tracker artifacts", "green" if tracker["available_evidence"] else "red")
+        with c3:
+            render_metric_card("Missing Required", tracker["missing_required"], "Blocks pilot if above zero", "red" if tracker["missing_required"] else "green")
+        with c4:
+            render_metric_card("Missing Optional", tracker["missing_optional"], "Needs attention if above zero", "gold" if tracker["missing_optional"] else "green")
+        with c5:
+            render_metric_card("Length", f"{tracker['pilot_length']} days", "Controlled pilot window", "")
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Evidence Checklist")
+            if tracker["evidence_rows"]:
+                for item in tracker["evidence_rows"]:
+                    status = "healthy" if item["status"] == "available" else "high"
+                    required_label = "required" if item["required"] == "yes" else "optional"
+                    render_status_row(
+                        f"{item['evidence']} | {item['status'].title()}",
+                        f"{required_label.title()} | {item['owner']} | {item['latest_report']}",
+                        status,
+                    )
+            else:
+                render_status_row("No tracker evidence found", "Run python cli.py private-pilot-tracker", "medium")
+            render_panel_end()
+
+            render_panel_start("Daily Operator Steps")
+            if tracker["daily_steps"]:
+                for index, step in enumerate(tracker["daily_steps"], start=1):
+                    render_status_row(f"Step {index}", step, "healthy")
+            else:
+                render_status_row("No daily tracker steps found", "Generate the tracker artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Pilot Tracker Summary")
+            render_brief_item(
+                tracker["report_path"] or "Private pilot tracker report not generated",
+                "Latest tracker artifact",
+            )
+            render_brief_item(
+                tracker["plan_status"].replace("_", " ").title(),
+                "Linked pilot plan status",
+            )
+            render_brief_item(
+                tracker["pilot_owner"],
+                "Pilot owner",
+            )
+            render_brief_item(
+                tracker["primary_workflow"],
+                "Primary pilot workflow",
+            )
+            render_panel_end()
+
+            render_panel_start("Next Action")
+            render_status_row(
+                tracker["next_action"],
+                "Operator action before continuing the pilot rhythm",
+                "medium" if tracker_status == "needs_attention" else tracker_status,
+            )
+            render_panel_end()
+
+            render_panel_start("Operator Note")
+            render_brief_item(
+                tracker["operator_note"],
+                "Read-only guidance from the tracker report",
+            )
+            render_panel_end()
     elif page == "Demo Readiness":
         demo = data["private_demo_dry_run_status"]
         overall_status = demo["overall_status"]

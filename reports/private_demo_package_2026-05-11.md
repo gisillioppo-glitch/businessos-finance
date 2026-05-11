@@ -48,6 +48,7 @@ Failed checks: 0
 - System Integrity
 - Demo Readiness
 - Pilot Plan
+- Pilot Tracker
 - People
 
 ## Recommended Demo Flow

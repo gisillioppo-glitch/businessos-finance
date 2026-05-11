@@ -40,6 +40,7 @@ DASHBOARD_PAGES = [
     "System Integrity",
     "Demo Readiness",
     "Pilot Plan",
+    "Pilot Tracker",
     "People",
 ]
 

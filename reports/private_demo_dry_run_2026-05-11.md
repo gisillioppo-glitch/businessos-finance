@@ -56,6 +56,7 @@ Release readiness source: ready_with_warnings
 - System Integrity
 - Demo Readiness
 - Pilot Plan
+- Pilot Tracker
 - People
 
 ## Operator Note

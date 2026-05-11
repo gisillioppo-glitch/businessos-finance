@@ -24,6 +24,7 @@ ALLOWED_ROLES = {
         "System Integrity",
         "Demo Readiness",
         "Pilot Plan",
+        "Pilot Tracker",
         "People",
     ],
     "executive": [
@@ -44,6 +45,7 @@ ALLOWED_ROLES = {
         "System Integrity",
         "Demo Readiness",
         "Pilot Plan",
+        "Pilot Tracker",
         "People",
     ],
     "viewer": [
@@ -64,6 +66,7 @@ ALLOWED_ROLES = {
         "System Integrity",
         "Demo Readiness",
         "Pilot Plan",
+        "Pilot Tracker",
         "People",
     ],
 }

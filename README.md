@@ -1277,3 +1277,24 @@ python cli.py private-pilot-tracker
 ```
 
 The tracker reads the private pilot plan and current evidence artifacts, classifies the pilot day as `on_track`, `needs_attention`, or `blocked`, lists missing required/optional evidence, and exports `reports/private_pilot_tracker_YYYY-MM-DD.md`.
+
+## Dashboard Pilot Tracker Page v0.1
+
+The private dashboard now includes a read-only `Pilot Tracker` page.
+
+It reads the latest `reports/private_pilot_tracker_YYYY-MM-DD.md` artifact and shows:
+
+- tracker status
+- available evidence
+- missing required evidence
+- missing optional evidence
+- daily operator steps
+- evidence checklist
+- pilot owner and workflow
+- next action and operator note
+
+Generate the backing artifact with:
+
+```bash
+python cli.py private-pilot-tracker
+```
