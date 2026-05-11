@@ -20,6 +20,7 @@ DEMO_COMMANDS = [
     ("Private dashboard", "streamlit run app/dashboard/main.py"),
     ("Private pilot tracker", "python cli.py private-pilot-tracker"),
     ("Private pilot exit decision", "python cli.py private-pilot-exit-decision"),
+    ("Pilot Day 1 package", "python cli.py pilot-day-1-package"),
     ("Full smoke test", "python scripts/smoke_test.py"),
 ]
 
@@ -257,3 +258,5 @@ def print_private_demo_package(conn=None):
     print(f"Private demo package exported: {Path(report_path).relative_to(ROOT_DIR)}")
 
     return package
+
+

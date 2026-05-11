@@ -28,6 +28,7 @@ Failed checks: 0
 | Private dashboard | `streamlit run app/dashboard/main.py` |
 | Private pilot tracker | `python cli.py private-pilot-tracker` |
 | Private pilot exit decision | `python cli.py private-pilot-exit-decision` |
+| Pilot Day 1 package | `python cli.py pilot-day-1-package` |
 | Full smoke test | `python scripts/smoke_test.py` |
 
 ## Dashboard Pages To Show

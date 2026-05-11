@@ -1332,3 +1332,15 @@ Generate the backing artifact with:
 ```bash
 python cli.py private-pilot-exit-decision
 ```
+
+## Pilot Day 1 Operations Package MVP v0.1
+
+BusinessOS can now generate a Day 1 operations package for starting a controlled private pilot.
+
+Run:
+
+```bash
+python cli.py pilot-day-1-package
+```
+
+The package combines the pilot plan, tracker, and exit decision into a Day 1 runbook with commands, expected evidence, owner review, risks/boundaries, close criteria, and next action. It exports `reports/pilot_day_1_package_YYYY-MM-DD.md`.
