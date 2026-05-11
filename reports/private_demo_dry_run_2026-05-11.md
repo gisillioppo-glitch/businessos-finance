@@ -57,6 +57,7 @@ Release readiness source: ready_with_warnings
 - Demo Readiness
 - Pilot Plan
 - Pilot Tracker
+- Pilot Exit
 - People
 
 ## Operator Note

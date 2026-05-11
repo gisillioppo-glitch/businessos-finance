@@ -68,4 +68,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | warning | M README.md; M app/demo/private_demo_package.py; M cli.py; M reports/private_demo_package_2026-05-11.md; M scripts/smoke_test.py; ?? app/demo/private_pilot_exit_decision.py; ?? docs/private-pilot-exit-decision-mvp-v0.1-status.md; ?? reports/private_pilot_exit_decision_2026-05-11.md |
+| Git working tree | warning | M README.md; M app/dashboard/main.py; M app/demo/private_demo_package.py; M app/readiness/release_readiness.py; M app/security/access_control.py; M reports/release_readiness_2026-05-11.md; ?? docs/dashboard-pilot-exit-page-v0.1-status.md |

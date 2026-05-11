@@ -42,6 +42,7 @@ DASHBOARD_PAGES = [
     "Demo Readiness",
     "Pilot Plan",
     "Pilot Tracker",
+    "Pilot Exit",
     "People",
 ]
 

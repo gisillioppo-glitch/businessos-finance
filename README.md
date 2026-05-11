@@ -1310,3 +1310,25 @@ python cli.py private-pilot-exit-decision
 ```
 
 The exit decision reads the private pilot tracker, recommends an outcome such as `extend_pilot`, `expand_pilot`, `convert_to_implementation`, `pause_pilot`, or `close_no_fit`, and exports `reports/private_pilot_exit_decision_YYYY-MM-DD.md`. It is advisory only; the executive owner must confirm the final decision.
+
+## Dashboard Pilot Exit Page v0.1
+
+The private dashboard now includes a read-only `Pilot Exit` page.
+
+It reads the latest `reports/private_pilot_exit_decision_YYYY-MM-DD.md` artifact and shows:
+
+- decision status
+- recommended exit decision
+- highest exit risk
+- evidence counts
+- decision rationale
+- conditions before execution
+- evidence summary
+- allowed exit options
+- operator note
+
+Generate the backing artifact with:
+
+```bash
+python cli.py private-pilot-exit-decision
+```

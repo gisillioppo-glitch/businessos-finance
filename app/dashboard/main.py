@@ -733,6 +733,118 @@ def load_private_pilot_tracker_status():
         "evidence_rows": evidence_rows,
         "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
     }
+def load_private_pilot_exit_decision_status():
+    report_path = get_latest_report_path("private_pilot_exit_decision")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "decision_status": "missing",
+            "recommended_decision": "missing",
+            "highest_exit_risk": "unknown",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "tracker_status": "missing",
+            "plan_status": "missing",
+            "available_evidence": 0,
+            "missing_required": 0,
+            "missing_optional": 0,
+            "next_action": "Run python cli.py private-pilot-exit-decision.",
+            "rationale": [],
+            "conditions": [],
+            "evidence_rows": [],
+            "exit_options": [],
+            "operator_note": "No exit decision artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    rationale = []
+    conditions = []
+    evidence_rows = []
+    exit_options = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Decision Rationale" and stripped.startswith("- "):
+            rationale.append(stripped[2:])
+
+        elif section == "Conditions Before Execution" and stripped.startswith("- "):
+            conditions.append(stripped[2:])
+
+        elif section == "Evidence Summary":
+            if not stripped.startswith("|") or stripped.startswith("| ---"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 4 and parts[0] != "Evidence":
+                evidence_rows.append(
+                    {
+                        "evidence": parts[0],
+                        "status": parts[1],
+                        "required": parts[2],
+                        "latest_report": parts[3],
+                    }
+                )
+
+        elif section == "Allowed Exit Options":
+            if not stripped.startswith("|") or stripped.startswith("| ---"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 2 and parts[0] != "Decision":
+                exit_options.append(
+                    {
+                        "decision": parts[0],
+                        "meaning": parts[1],
+                    }
+                )
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    decision_status_match = re.search(r"Decision status:\s*([a-z_]+)", content)
+    recommended_decision_match = re.search(r"Recommended decision:\s*([a-z_]+)", content)
+    highest_exit_risk_match = re.search(r"Highest exit risk:\s*(.+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    tracker_status_match = re.search(r"Tracker status:\s*([a-z_]+)", content)
+    plan_status_match = re.search(r"Plan status:\s*([a-z_]+)", content)
+    available_evidence_match = re.search(r"Available evidence:\s*(\d+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    missing_optional_match = re.search(r"Missing optional evidence:\s*(\d+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "decision_status": decision_status_match.group(1) if decision_status_match else "unknown",
+        "recommended_decision": recommended_decision_match.group(1) if recommended_decision_match else "unknown",
+        "highest_exit_risk": highest_exit_risk_match.group(1).strip() if highest_exit_risk_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "tracker_status": tracker_status_match.group(1) if tracker_status_match else "unknown",
+        "plan_status": plan_status_match.group(1) if plan_status_match else "unknown",
+        "available_evidence": int(available_evidence_match.group(1)) if available_evidence_match else 0,
+        "missing_required": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "missing_optional": int(missing_optional_match.group(1)) if missing_optional_match else 0,
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "rationale": rationale,
+        "conditions": conditions,
+        "evidence_rows": evidence_rows,
+        "exit_options": exit_options,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -1134,6 +1246,7 @@ def load_dashboard_data():
     private_demo_dry_run_status = load_private_demo_dry_run_status()
     private_pilot_plan_status = load_private_pilot_plan_status()
     private_pilot_tracker_status = load_private_pilot_tracker_status()
+    private_pilot_exit_decision_status = load_private_pilot_exit_decision_status()
 
     return {
         "transactions_count": transactions_count,
@@ -1197,6 +1310,7 @@ def load_dashboard_data():
         "private_demo_dry_run_status": private_demo_dry_run_status,
         "private_pilot_plan_status": private_pilot_plan_status,
         "private_pilot_tracker_status": private_pilot_tracker_status,
+        "private_pilot_exit_decision_status": private_pilot_exit_decision_status,
     }
 
 
@@ -2145,6 +2259,113 @@ def render_module_page(page, data):
             render_brief_item(
                 tracker["operator_note"],
                 "Read-only guidance from the tracker report",
+            )
+            render_panel_end()
+    elif page == "Pilot Exit":
+        exit_decision = data["private_pilot_exit_decision_status"]
+        decision_status = exit_decision["decision_status"]
+        decision_class = {
+            "decision_ready": "green",
+            "decision_ready_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(decision_status, "gold")
+        risk_class = {
+            "low": "green",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(exit_decision["highest_exit_risk"].lower(), "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Decision Status", decision_status.replace("_", " ").title(), "Latest pilot exit artifact", decision_class)
+        with c2:
+            render_metric_card("Recommendation", exit_decision["recommended_decision"].replace("_", " ").title(), "Advisory only", decision_class)
+        with c3:
+            render_metric_card("Exit Risk", exit_decision["highest_exit_risk"].title(), "Before final owner decision", risk_class)
+        with c4:
+            render_metric_card("Evidence", exit_decision["available_evidence"], "Available decision artifacts", "green" if exit_decision["available_evidence"] else "red")
+        with c5:
+            render_metric_card("Missing Required", exit_decision["missing_required"], "Blocks final decision if above zero", "red" if exit_decision["missing_required"] else "green")
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Decision Rationale")
+            if exit_decision["rationale"]:
+                for item in exit_decision["rationale"]:
+                    render_status_row(item, "Why BusinessOS recommends this exit decision", "medium")
+            else:
+                render_status_row("No decision rationale found", "Run python cli.py private-pilot-exit-decision", "medium")
+            render_panel_end()
+
+            render_panel_start("Conditions Before Execution")
+            if exit_decision["conditions"]:
+                for condition in exit_decision["conditions"]:
+                    render_status_row(condition, "Required before acting on the recommendation", "healthy")
+            else:
+                render_status_row("No execution conditions found", "Generate the exit decision artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Evidence Summary")
+            if exit_decision["evidence_rows"]:
+                for item in exit_decision["evidence_rows"]:
+                    status = "healthy" if item["status"] == "available" else "high"
+                    required_label = "required" if item["required"] == "yes" else "optional"
+                    render_status_row(
+                        f"{item['evidence']} | {item['status'].title()}",
+                        f"{required_label.title()} | {item['latest_report']}",
+                        status,
+                    )
+            else:
+                render_status_row("No exit evidence found", "Run python cli.py private-pilot-exit-decision", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Exit Decision Summary")
+            render_brief_item(
+                exit_decision["report_path"] or "Private pilot exit decision report not generated",
+                "Latest exit decision artifact",
+            )
+            render_brief_item(
+                exit_decision["pilot_owner"],
+                "Pilot owner",
+            )
+            render_brief_item(
+                exit_decision["primary_workflow"],
+                "Primary workflow",
+            )
+            render_brief_item(
+                exit_decision["tracker_status"].replace("_", " ").title(),
+                "Source tracker status",
+            )
+            render_panel_end()
+
+            render_panel_start("Next Action")
+            render_status_row(
+                exit_decision["next_action"],
+                "Executive owner must confirm before execution",
+                "medium" if decision_status == "decision_ready_with_warnings" else decision_status,
+            )
+            render_panel_end()
+
+            render_panel_start("Allowed Exit Options")
+            if exit_decision["exit_options"]:
+                for option in exit_decision["exit_options"]:
+                    render_status_row(
+                        option["decision"].replace("_", " ").title(),
+                        option["meaning"],
+                        "medium",
+                    )
+            else:
+                render_status_row("No exit options found", "Generate the exit decision artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Operator Note")
+            render_brief_item(
+                exit_decision["operator_note"],
+                "Decision support only; no automatic execution",
             )
             render_panel_end()
     elif page == "Demo Readiness":

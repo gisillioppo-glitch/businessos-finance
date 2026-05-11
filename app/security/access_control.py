@@ -25,6 +25,7 @@ ALLOWED_ROLES = {
         "Demo Readiness",
         "Pilot Plan",
         "Pilot Tracker",
+        "Pilot Exit",
         "People",
     ],
     "executive": [
@@ -46,6 +47,7 @@ ALLOWED_ROLES = {
         "Demo Readiness",
         "Pilot Plan",
         "Pilot Tracker",
+        "Pilot Exit",
         "People",
     ],
     "viewer": [
@@ -67,6 +69,7 @@ ALLOWED_ROLES = {
         "Demo Readiness",
         "Pilot Plan",
         "Pilot Tracker",
+        "Pilot Exit",
         "People",
     ],
 }

@@ -50,6 +50,7 @@ Failed checks: 0
 - Demo Readiness
 - Pilot Plan
 - Pilot Tracker
+- Pilot Exit
 - People
 
 ## Recommended Demo Flow
