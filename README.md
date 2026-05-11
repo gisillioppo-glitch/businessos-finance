@@ -1171,3 +1171,22 @@ Current capabilities:
 - Include system summary, release readiness status, demo commands, dashboard pages, recommended demo flow, known risks, and pre-demo checklist.
 - Define what is safe to show and what should remain private.
 - Keep local artifacts such as `BussinessOS Avance.pdf` outside the package.
+
+## Private Demo Script / Sketch MVP v0.1
+
+BusinessOS now has a guided private demo script.
+
+CLI command:
+
+```bash
+python cli.py private-demo-script
+```
+
+Current capabilities:
+
+- Export `reports/private_demo_script_YYYY-MM-DD.md`.
+- Define demo arc, timeboxes, screen order, and talk track.
+- List demo commands and dashboard pages to show.
+- Define what not to show during a controlled private demo.
+- Include known risks and closing discovery questions.
+- Validate the script through smoke test.
