@@ -1265,3 +1265,15 @@ Generate the backing artifact with:
 ```bash
 python cli.py private-pilot-plan
 ```
+
+## Private Pilot Daily Tracker MVP v0.1
+
+BusinessOS can now generate a daily pilot tracker for controlled private pilot execution.
+
+Run:
+
+```bash
+python cli.py private-pilot-tracker
+```
+
+The tracker reads the private pilot plan and current evidence artifacts, classifies the pilot day as `on_track`, `needs_attention`, or `blocked`, lists missing required/optional evidence, and exports `reports/private_pilot_tracker_YYYY-MM-DD.md`.

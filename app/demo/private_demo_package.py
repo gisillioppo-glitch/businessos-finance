@@ -18,6 +18,7 @@ DEMO_COMMANDS = [
     ("Secure email delivery", "python cli.py secure-email-delivery"),
     ("Scheduled close status", "python cli.py daily-close-schedule"),
     ("Private dashboard", "streamlit run app/dashboard/main.py"),
+    ("Private pilot tracker", "python cli.py private-pilot-tracker"),
     ("Full smoke test", "python scripts/smoke_test.py"),
 ]
 
