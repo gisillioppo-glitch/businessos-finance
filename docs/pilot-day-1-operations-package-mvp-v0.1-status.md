@@ -8,6 +8,18 @@ Closed as an MVP block once validation, commit, push, and tag are completed.
 
 The Pilot Day 1 Operations Package turns private pilot readiness into an operator-ready runbook. It connects the existing pilot plan, daily tracker, and exit decision into one Day 1 package so the executive owner can start a controlled pilot without improvising the operating rhythm.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats Day 1 pilot package pattern
+
 ## What changed
 
 - Added `app/demo/pilot_day_1_package.py`.

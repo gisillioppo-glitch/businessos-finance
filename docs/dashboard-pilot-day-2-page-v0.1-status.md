@@ -8,6 +8,18 @@ Closed as an MVP block once validation, commit, push, and tag are completed.
 
 The Dashboard Pilot Day 2 page makes the second-day pilot operating rhythm visible in the private dashboard. It helps the executive owner see whether the pilot should continue, continue narrowly with warnings, or pause before Day 3.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats Day 2 pilot rhythm pattern
+
 ## What changed
 
 - Added `Pilot Day 2` to dashboard navigation and access control.

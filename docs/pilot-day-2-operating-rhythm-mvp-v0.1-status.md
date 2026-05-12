@@ -8,6 +8,18 @@ Closed as an MVP block once validation, commit, push, and tag are completed.
 
 The Pilot Day 2 Operating Rhythm turns Day 1 pilot readiness into repeatable pilot operations. It helps the executive owner continue the pilot without expanding too early, while preserving evidence, warning context, delivery controls, and next-action discipline.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats Day 2 operating rhythm pattern
+
 ## What changed
 
 - Added `app/demo/pilot_day_2_rhythm.py`.

@@ -8,6 +8,18 @@ Closed for MVP implementation once validation, commit, push, and tag are complet
 
 This block converts the Day 3 evidence recommendation into a formal executive owner confirmation packet. It creates the governance checkpoint needed before continuing the private pilot after warnings, while keeping expansion and delivery controls locked.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats owner confirmation pattern
+
 ## What Changed
 
 - Added `app/demo/pilot_day_4_owner_confirmation.py`.

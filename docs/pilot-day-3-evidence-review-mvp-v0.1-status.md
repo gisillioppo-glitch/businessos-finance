@@ -8,6 +8,18 @@ Closed for MVP implementation once validation, commit, push, and tag are complet
 
 This block adds Day 3 evidence review for the private pilot workflow. Day 1 starts controlled operation, Day 2 proves repeatability, and Day 3 evaluates whether the evidence is strong enough to continue narrowly, pause, or prepare an expansion review.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats Day 3 evidence review pattern
+
 ## What Changed
 
 - Added `app/demo/pilot_day_3_evidence_review.py`.
