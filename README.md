@@ -1499,3 +1499,17 @@ python cli.py pilot-expansion-review-decision
 ```
 
 The dashboard page is visual only. It does not approve controlled expansion, add workflows, enable delivery, or bypass governance.
+
+## BusinessOS Runtime Stability Review v0.1
+
+BusinessOS can now generate a runtime stability review before deeper feature work.
+
+Run:
+
+```bash
+python cli.py runtime-stability
+```
+
+The review checks latest system integrity, release readiness, daily close evidence, dashboard local response, Git working tree, smoke test size, and heavy pilot command-chain risk. It exports `reports/runtime_stability_YYYY-MM-DD.md`.
+
+This block supports BusinessOS hardening as the first live OS branch. It does not optimize runtime by itself; it identifies whether the next block should split smoke testing or reduce recalculation in pilot package generation.

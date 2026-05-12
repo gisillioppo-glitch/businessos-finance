@@ -57,6 +57,7 @@ REQUIRED_REPORT_PREFIXES = [
     "executive_evidence_index",
     "daily_close",
     "daily_close_distribution",
+    "runtime_stability",
     "private_demo_package",
     "notification_delivery_approval",
     "secure_email_delivery",

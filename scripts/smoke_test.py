@@ -8,6 +8,7 @@ COMMANDS = [
     ["python", "cli.py", "actions"],
     ["python", "cli.py", "reports"],
     ["python", "cli.py", "release-readiness"],
+    ["python", "cli.py", "runtime-stability"],
     ["python", "cli.py", "private-demo-package"],
     ["python", "cli.py", "private-demo-script"],
     ["python", "cli.py", "private-demo-dry-run"],

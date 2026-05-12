@@ -100,6 +100,7 @@ from app.scheduler.scheduled_daily_close import (
     run_scheduled_daily_close,
 )
 from app.system.integrity_check import export_system_integrity_report
+from app.system.runtime_stability import print_runtime_stability_review
 from app.support.incident_views import (
     print_support_incident_summary_kpis,
     print_support_incidents_list,
@@ -279,6 +280,19 @@ def run_pilot_day_3_evidence_review():
 
     try:
         print_pilot_day_3_evidence_review(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_runtime_stability():
+    conn = create_connection()
+
+    try:
+        print_runtime_stability_review(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -941,6 +955,7 @@ def main():
             "run",
             "health",
             "system-check",
+            "runtime-stability",
             "actions",
             "reports",
             "release-readiness",
@@ -1011,6 +1026,8 @@ def main():
         run_health_check()
     elif args.command == "system-check":
         run_system_check()
+    elif args.command == "runtime-stability":
+        run_runtime_stability()
     elif args.command == "actions":
         run_actions()
     elif args.command == "reports":
