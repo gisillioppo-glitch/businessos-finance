@@ -24,6 +24,14 @@ docs/institutional-core-extraction-map-v0.1.md
 
 This map classifies current BusinessOS modules into OS Core candidates, BusinessOS-specific logic, EduOS future domain logic, and Public AI boundaries.
 
+The first operating checklist for applying that boundary is documented in:
+
+```text
+docs/os-core-boundary-checklist-v0.1.md
+```
+
+This checklist should be used before adding new features or moving logic toward OS Core, BusinessOS-specific scope, future EduOS scope, or the Public AI boundary.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
