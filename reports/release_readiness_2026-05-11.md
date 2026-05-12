@@ -6,8 +6,8 @@ Date: 2026-05-11
 
 Overall status: ready_with_warnings
 Total checks: 13
-Passed checks: 12
-Warning checks: 1
+Passed checks: 11
+Warning checks: 2
 Failed checks: 0
 
 ## Checks
@@ -26,4 +26,4 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 8 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: skipped_existing_close |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Git working tree | passed | critical | clean except known local artifacts |
+| Git working tree | warning | warning | M README.md; M app/demo/private_demo_package.py; M cli.py; M reports/private_demo_package_2026-05-11.md; M reports/system_integrity_2026-05-11.md; M scripts/smoke_test.py; ?? app/demo/pilot_expansion_review_decision.py; ?? docs/pilot-expansion-review-decision-mvp-v0.1-status.md; ?? reports/pilot_expansion_review_decision_2026-05-11.md |

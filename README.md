@@ -1449,3 +1449,15 @@ python cli.py pilot-expansion-review-prep
 ```
 
 The package reads Day 5 narrow continuation, keeps expansion marked as `not_approved`, evaluates required preparation conditions, and exports `reports/pilot_expansion_review_prep_YYYY-MM-DD.md`. It is preparation only; it does not add workflows, enable delivery, or approve expansion.
+
+## Pilot Expansion Review Decision MVP v0.1
+
+BusinessOS can now generate a decision recommendation for the pilot expansion review package.
+
+Run:
+
+```bash
+python cli.py pilot-expansion-review-decision
+```
+
+The decision reads the expansion review preparation packet, evaluates pending conditions, and exports `reports/pilot_expansion_review_decision_YYYY-MM-DD.md`. It is advisory only; it does not approve controlled expansion, add workflows, enable delivery, or bypass governance.

@@ -52,6 +52,7 @@ from app.demo.pilot_day_3_evidence_review import print_pilot_day_3_evidence_revi
 from app.demo.pilot_day_4_owner_confirmation import print_pilot_day_4_owner_confirmation
 from app.demo.pilot_day_5_narrow_continuation import print_pilot_day_5_narrow_continuation
 from app.demo.pilot_expansion_review_prep import print_pilot_expansion_review_prep
+from app.demo.pilot_expansion_review_decision import print_pilot_expansion_review_decision
 from app.evidence.daily_close import export_daily_close_report
 from app.evidence.daily_close_distribution import export_daily_close_distribution
 from app.evidence.evidence_index import (
@@ -317,6 +318,19 @@ def run_pilot_expansion_review_prep():
 
     try:
         print_pilot_expansion_review_prep(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_pilot_expansion_review_decision():
+    conn = create_connection()
+
+    try:
+        print_pilot_expansion_review_decision(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -943,6 +957,7 @@ def main():
             "pilot-day-4-owner-confirmation",
             "pilot-day-5-narrow-continuation",
             "pilot-expansion-review-prep",
+            "pilot-expansion-review-decision",
             "notifications",
             "notification-delivery-approval",
             "secure-email-delivery",
@@ -1028,6 +1043,8 @@ def main():
         run_pilot_day_5_narrow_continuation()
     elif args.command == "pilot-expansion-review-prep":
         run_pilot_expansion_review_prep()
+    elif args.command == "pilot-expansion-review-decision":
+        run_pilot_expansion_review_decision()
     elif args.command == "notifications":
         run_notifications()
     elif args.command == "notification-delivery-approval":
