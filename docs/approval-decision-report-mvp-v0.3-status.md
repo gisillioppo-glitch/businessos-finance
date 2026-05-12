@@ -4,6 +4,18 @@
 
 BusinessOS now exports approval decisions into a timestamped Markdown report. This gives leadership and governance users a durable record of what was approved, rejected, pending, and why.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS approval evidence report
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats approval decision reporting
+
 ## Why it matters
 
 Approvals are institutional decisions. Once BusinessOS can approve or reject sensitive requests, it also needs an evidence layer that can be reviewed, shared, audited, and compared over time.

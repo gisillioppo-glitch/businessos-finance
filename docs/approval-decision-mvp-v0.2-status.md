@@ -6,6 +6,18 @@ BusinessOS now supports an explicit approval decision lifecycle. The system can 
 
 This turns governance from detection-only into controlled institutional decision execution.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS approval decision context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after EduOS validates same approval decision lifecycle
+
 ## Why it matters
 
 The Governance Sensitivity and Executive Alerts layers can identify what requires control. This block adds the next institutional step: an executive can approve or reject pending decisions, and BusinessOS preserves that decision as part of the operating record.

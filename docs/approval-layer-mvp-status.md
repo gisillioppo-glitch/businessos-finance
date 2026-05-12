@@ -4,6 +4,18 @@
 
 The Approval Layer is the first institutional decision-control layer for BusinessOS. It captures sensitive requests that should not proceed without explicit approval from an authorized role.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS approval context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after EduOS validates same approval-request pattern
+
 ## Why It Matters
 
 BusinessOS is becoming an operating system, not only a reporting surface. Sensitive decisions need approval, traceability, and ownership. This block creates the foundation for executive approval, access approval, policy approval, budget approval, and incident approval workflows.

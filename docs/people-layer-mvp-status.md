@@ -4,6 +4,18 @@
 
 The People Layer is the first internal user operating layer for BusinessOS. It turns the system from module-only intelligence into an institution-aware runtime that knows who the people are, what roles they hold, and what level of access they have.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS internal identity model
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after identity and role hardening
+
 ## Why It Matters
 
 BusinessOS cannot become an institutional operating system without people, roles, permissions, and accountability. This block creates the foundation for future employee views, manager oversight, approval flows, security enforcement, and human + AI collaboration.

@@ -4,6 +4,18 @@
 
 Security Foundation MVP v0.1 is open and implemented as the first protection layer for the local BusinessOS dashboard.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS local MVP authentication
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: no
+- Audit generated: future
+- Reusable core candidate: yes
+- Extraction timing: after password hashing, managed secrets, access audit, and role hardening
+
 ## What this block adds
 
 - Local dashboard sign-in before accessing BusinessOS metrics.

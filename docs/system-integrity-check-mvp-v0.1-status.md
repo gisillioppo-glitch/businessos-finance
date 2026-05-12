@@ -6,6 +6,18 @@ The System Integrity Check MVP gives BusinessOS a self-check command for structu
 
 Instead of relying only on smoke tests, BusinessOS can now inspect whether its core modules, database tables, reports, notification states, and public/private safety boundaries are intact.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS integrity and public/private boundary checks
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats integrity check pattern
+
 ## Why It Matters
 
 As BusinessOS grows, it needs a fast way to confirm that the operating system is still healthy before adding production automations such as scheduled daily close, secure email delivery, or dashboard-driven operations.
