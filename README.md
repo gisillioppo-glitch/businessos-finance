@@ -32,6 +32,14 @@ docs/os-core-boundary-checklist-v0.1.md
 
 This checklist should be used before adding new features or moving logic toward OS Core, BusinessOS-specific scope, future EduOS scope, or the Public AI boundary.
 
+The first reusable feature boundary template is documented in:
+
+```text
+docs/feature-boundary-classification-template-v0.1.md
+```
+
+This template should be used when closing future feature blocks so each status document records its boundary, data exposure, approval behavior, evidence behavior, audit behavior, and extraction timing.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
