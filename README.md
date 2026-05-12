@@ -1513,3 +1513,27 @@ python cli.py runtime-stability
 The review checks latest system integrity, release readiness, daily close evidence, dashboard local response, Git working tree, smoke test size, and heavy pilot command-chain risk. It exports `reports/runtime_stability_YYYY-MM-DD.md`.
 
 This block supports BusinessOS hardening as the first live OS branch. It does not optimize runtime by itself; it identifies whether the next block should split smoke testing or reduce recalculation in pilot package generation.
+
+## Pilot Smoke Runtime Optimization v0.1
+
+BusinessOS smoke testing now supports runtime profiles.
+
+Run a quick daily check:
+
+```bash
+python scripts/smoke_test.py quick
+```
+
+Run the default standard check:
+
+```bash
+python scripts/smoke_test.py
+```
+
+Run the full release checkpoint:
+
+```bash
+python scripts/smoke_test.py full
+```
+
+The standard profile avoids the heavy pilot package chain during normal daily validation. The full profile still includes the complete pilot chain for deeper release or checkpoint validation.

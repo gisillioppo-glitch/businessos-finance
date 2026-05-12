@@ -1,4 +1,4 @@
-import ast
+import importlib.util
 import subprocess
 from datetime import date
 from pathlib import Path
@@ -33,9 +33,9 @@ HEAVY_RUNTIME_COMMANDS = {
 }
 
 RUNTIME_RECOMMENDATIONS = [
-    "Split smoke testing into quick, standard, and full suites.",
+    "Use the standard smoke profile for daily development checks.",
+    "Reserve the full smoke profile for release checkpoints and deep validation windows.",
     "Allow pilot package commands to reuse fresh artifacts instead of recalculating the full chain every time.",
-    "Keep full pilot-chain validation for release checkpoints, not every local smoke run.",
     "Add timing metadata to runtime reports so slow commands become visible over time.",
     "Preserve approval-gated behavior while optimizing report generation.",
 ]
@@ -109,22 +109,27 @@ def _git_status_lines():
     return [line.strip() for line in result.stdout.splitlines() if line.strip()], None
 
 
-def _smoke_commands():
+def _load_smoke_module():
     smoke_path = ROOT_DIR / "scripts" / "smoke_test.py"
     if not smoke_path.exists():
-        return []
+        return None
 
-    tree = ast.parse(smoke_path.read_text(encoding="utf-8"))
-    for node in tree.body:
-        if isinstance(node, ast.Assign):
-            targets = [target.id for target in node.targets if isinstance(target, ast.Name)]
-            if "COMMANDS" in targets:
-                return [
-                    " ".join(command)
-                    for command in ast.literal_eval(node.value)
-                ]
+    spec = importlib.util.spec_from_file_location("businessos_smoke_test", smoke_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
-    return []
+
+def _smoke_profiles():
+    module = _load_smoke_module()
+    if not module:
+        return {}
+
+    profiles = getattr(module, "PROFILES", {})
+    return {
+        profile: [f"python cli.py {command}" for command in commands]
+        for profile, commands in profiles.items()
+    }
 
 
 def _format_check_rows(checks):
@@ -221,21 +226,31 @@ def generate_runtime_stability_review():
             )
         )
 
-    smoke_commands = _smoke_commands()
+    smoke_profiles = _smoke_profiles()
+    smoke_commands = smoke_profiles.get("standard", [])
+    full_commands = smoke_profiles.get("full", [])
     heavy_commands = [command for command in smoke_commands if command in HEAVY_RUNTIME_COMMANDS]
+    full_heavy_commands = [command for command in full_commands if command in HEAVY_RUNTIME_COMMANDS]
 
     checks.append(
         _check(
-            "Smoke test size",
-            "warning" if len(smoke_commands) > 40 else "passed",
-            f"{len(smoke_commands)} command(s) in scripts/smoke_test.py",
+            "Standard smoke profile size",
+            "warning" if len(smoke_commands) > 55 else "passed",
+            f"{len(smoke_commands)} command(s) in standard profile",
         )
     )
     checks.append(
         _check(
-            "Heavy pilot command chain",
+            "Default heavy pilot command chain",
             "warning" if heavy_commands else "passed",
-            f"{len(heavy_commands)} heavy pilot command(s) detected",
+            f"{len(heavy_commands)} heavy pilot command(s) in standard profile",
+        )
+    )
+    checks.append(
+        _check(
+            "Full smoke profile reserve",
+            "passed" if full_heavy_commands else "warning",
+            f"{len(full_heavy_commands)} heavy pilot command(s) reserved for full profile",
         )
     )
 
@@ -258,8 +273,11 @@ def generate_runtime_stability_review():
         "failed_checks": len(failed_checks),
         "smoke_command_count": len(smoke_commands),
         "heavy_command_count": len(heavy_commands),
+        "full_smoke_command_count": len(full_commands),
+        "full_heavy_command_count": len(full_heavy_commands),
         "checks": checks,
         "heavy_commands": heavy_commands,
+        "full_heavy_commands": full_heavy_commands,
         "recommendations": RUNTIME_RECOMMENDATIONS,
     }
 
@@ -282,6 +300,8 @@ Warning checks: {result['warning_checks']}
 Failed checks: {result['failed_checks']}
 Smoke command count: {result['smoke_command_count']}
 Heavy pilot command count: {result['heavy_command_count']}
+Full smoke command count: {result['full_smoke_command_count']}
+Full heavy pilot command count: {result['full_heavy_command_count']}
 
 ## Checks
 
@@ -290,6 +310,10 @@ Heavy pilot command count: {result['heavy_command_count']}
 ## Heavy Pilot Commands
 
 {_format_commands(result['heavy_commands']) if result['heavy_commands'] else 'No heavy pilot commands detected.'}
+
+## Full Profile Heavy Pilot Commands
+
+{_format_commands(result['full_heavy_commands']) if result['full_heavy_commands'] else 'No full-profile heavy pilot commands detected.'}
 
 ## Recommendations
 
@@ -314,6 +338,7 @@ This review does not optimize runtime by itself. It identifies whether BusinessO
                 "warning_checks": result["warning_checks"],
                 "failed_checks": result["failed_checks"],
                 "heavy_command_count": result["heavy_command_count"],
+                "full_heavy_command_count": result["full_heavy_command_count"],
             },
         )
 
@@ -332,10 +357,11 @@ def print_runtime_stability_review(conn=None):
     print(f"Failed checks: {result['failed_checks']}")
     print(f"Smoke command count: {result['smoke_command_count']}")
     print(f"Heavy pilot command count: {result['heavy_command_count']}")
+    print(f"Full smoke command count: {result['full_smoke_command_count']}")
+    print(f"Full heavy pilot command count: {result['full_heavy_command_count']}")
 
     for check in result["checks"]:
         print(f"[{check['status'].upper()}] {check['name']} | {check['detail']}")
 
     print(f"Runtime stability review exported: {Path(report_path).relative_to(ROOT_DIR)}")
     return result
-

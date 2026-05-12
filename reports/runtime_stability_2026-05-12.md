@@ -5,12 +5,14 @@ Date: 2026-05-12
 ## Runtime Stability Summary
 
 Overall status: stable_with_runtime_optimization_needed
-Total checks: 7
-Passed checks: 5
-Warning checks: 2
+Total checks: 8
+Passed checks: 7
+Warning checks: 1
 Failed checks: 0
-Smoke command count: 65
-Heavy pilot command count: 12
+Smoke command count: 53
+Heavy pilot command count: 0
+Full smoke command count: 65
+Full heavy pilot command count: 12
 
 ## Checks
 
@@ -20,11 +22,16 @@ Heavy pilot command count: 12
 | Release readiness | passed | reports\release_readiness_2026-05-12.md | status: ready_with_warnings | failed: 0 | warnings: 1 |
 | Daily close artifact | passed | reports\daily_close_2026-05-12.md |
 | Dashboard local response | passed | http://localhost:8501 returned 200 |
-| Git working tree | passed | clean except known local artifacts |
-| Smoke test size | warning | 65 command(s) in scripts/smoke_test.py |
-| Heavy pilot command chain | warning | 12 heavy pilot command(s) detected |
+| Git working tree | warning | M README.md; M app/system/runtime_stability.py; M reports/release_readiness_2026-05-12.md; M reports/runtime_stability_2026-05-12.md; M reports/system_integrity_2026-05-12.md; M scripts/smoke_test.py; ?? docs/pilot-smoke-runtime-optimization-v0.1-status.md |
+| Standard smoke profile size | passed | 53 command(s) in standard profile |
+| Default heavy pilot command chain | passed | 0 heavy pilot command(s) in standard profile |
+| Full smoke profile reserve | passed | 12 heavy pilot command(s) reserved for full profile |
 
 ## Heavy Pilot Commands
+
+No heavy pilot commands detected.
+
+## Full Profile Heavy Pilot Commands
 
 | Command | Runtime Risk |
 | --- | --- |
@@ -43,9 +50,9 @@ Heavy pilot command count: 12
 
 ## Recommendations
 
-- Split smoke testing into quick, standard, and full suites.
+- Use the standard smoke profile for daily development checks.
+- Reserve the full smoke profile for release checkpoints and deep validation windows.
 - Allow pilot package commands to reuse fresh artifacts instead of recalculating the full chain every time.
-- Keep full pilot-chain validation for release checkpoints, not every local smoke run.
 - Add timing metadata to runtime reports so slow commands become visible over time.
 - Preserve approval-gated behavior while optimizing report generation.
 

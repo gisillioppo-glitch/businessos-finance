@@ -4,10 +4,10 @@ Date: 2026-05-12
 
 ## Integrity Summary
 
-Overall status: passed
+Overall status: warning
 Total checks: 56
-Passed checks: 56
-Warning checks: 0
+Passed checks: 55
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -69,4 +69,4 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | passed | clean except known local artifacts |
+| Git working tree | warning | M README.md; M app/system/runtime_stability.py; M reports/release_readiness_2026-05-12.md; M reports/runtime_stability_2026-05-12.md; M reports/system_integrity_2026-05-12.md; M scripts/smoke_test.py; ?? docs/pilot-smoke-runtime-optimization-v0.1-status.md |
