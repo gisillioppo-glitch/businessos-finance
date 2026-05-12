@@ -40,6 +40,14 @@ docs/feature-boundary-classification-template-v0.1.md
 
 This template should be used when closing future feature blocks so each status document records its boundary, data exposure, approval behavior, evidence behavior, audit behavior, and extraction timing.
 
+The first private dashboard boundary index is documented in:
+
+```text
+docs/dashboard-boundary-index-v0.1-status.md
+```
+
+This index classifies current private dashboard pages by OS Core candidate, BusinessOS-specific, shared candidate, and public/private exposure boundary.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
