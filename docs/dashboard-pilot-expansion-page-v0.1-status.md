@@ -10,6 +10,18 @@ Closed for MVP validation.
 
 The private dashboard now exposes the pilot expansion review decision package as a visual, read-only executive page. This keeps expansion governance visible without allowing the UI to approve expansion, add workflows, enable delivery, or bypass controls.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats controlled pilot expansion pattern
+
 ## Scope
 
 - Add `Pilot Expansion` to role-based dashboard navigation.
@@ -35,4 +47,3 @@ python -m py_compile app/dashboard/main.py app/security/access_control.py app/re
 python cli.py pilot-expansion-review-decision
 python scripts/smoke_test.py
 ```
-

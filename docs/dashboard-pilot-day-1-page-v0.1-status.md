@@ -8,6 +8,18 @@ Closed as an MVP block once validation, commit, push, and tag are completed.
 
 The Dashboard Pilot Day 1 page turns the Day 1 operations package into a visible private dashboard surface. It gives the executive owner and operator a read-only view of the first-day pilot rhythm without needing to inspect Markdown manually.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats Day 1 pilot rhythm pattern
+
 ## What changed
 
 - Added `Pilot Day 1` to dashboard navigation and access control.

@@ -4,6 +4,18 @@
 
 This block brings the private pilot plan into the private dashboard. It gives operators and executive owners a visual, read-only view of the 14-day pilot plan, roles, workflow, daily rhythm, success criteria, exit decisions, and protected boundaries.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private pilot plan pattern
+
 ## Why it matters
 
 A pilot plan should not live only in Markdown. The dashboard page makes the plan visible before and during a private pilot, keeping the team aligned around owner, scope, timeline, evidence, and safe operating limits.

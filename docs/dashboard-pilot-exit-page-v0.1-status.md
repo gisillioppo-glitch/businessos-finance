@@ -4,6 +4,18 @@
 
 This block makes the private pilot exit decision visible in the private dashboard. It gives the executive owner a read-only view of BusinessOS' recommended exit path and the evidence behind it.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private pilot exit pattern
+
 ## What Changed
 
 - Added `load_private_pilot_exit_decision_status()` to `app/dashboard/main.py`.

@@ -4,6 +4,18 @@
 
 This block makes the Private Pilot Daily Tracker visible inside the private dashboard. It gives the operator and executive owner a read-only view of whether the pilot day is on track, needs attention, or blocked.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private pilot tracker pattern
+
 ## What Changed
 
 - Added `load_private_pilot_tracker_status()` to `app/dashboard/main.py`.

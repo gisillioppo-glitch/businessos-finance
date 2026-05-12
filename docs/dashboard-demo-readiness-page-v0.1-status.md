@@ -4,6 +4,18 @@
 
 This block adds a read-only private dashboard page for demo readiness. It turns the CLI dry run into an operator-facing screen so BusinessOS can be checked visually before a private presentation.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private demo readiness candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private demo readiness pattern
+
 ## Why it matters
 
 A private demo should not depend only on terminal output. Leaders and operators need a simple readiness view that shows whether the package, script, dry run, required pages, and safety boundaries are in place before presenting the system.
