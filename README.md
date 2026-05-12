@@ -56,6 +56,14 @@ docs/dashboard-boundary-index-page-v0.1-status.md
 
 This page shows the boundary index inside the protected dashboard as a read-only governance view.
 
+The first status-document boundary coverage index is documented in:
+
+```text
+docs/boundary-classification-coverage-index-v0.1-status.md
+```
+
+This index tracks which status documents already include `Boundary Classification` and which documents still need backfill.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
