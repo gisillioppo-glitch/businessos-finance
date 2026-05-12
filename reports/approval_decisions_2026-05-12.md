@@ -4,20 +4,20 @@ Date: 2026-05-12
 
 ## Approval Summary
 
-Pending approvals: 2  
-Approved approvals: 4  
-Rejected approvals: 4  
-Cancelled approvals: 0  
-Critical approvals: 0  
-High approvals: 3  
-Medium approvals: 7  
-Low approvals: 0  
-Decision approvals: 1  
-Incident approvals: 1  
+Pending approvals: 2
+Approved approvals: 4
+Rejected approvals: 4
+Cancelled approvals: 0
+Critical approvals: 0
+High approvals: 3
+Medium approvals: 7
+Low approvals: 0
+Decision approvals: 1
+Incident approvals: 1
 
 ## Risk Summary
 
-Highest approval risk: high  
+Highest approval risk: high
 
 ## Next Best Approval Move
 
