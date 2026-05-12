@@ -4,6 +4,18 @@ BusinessOS Finance Module is a local Python MVP for financial intelligence, oper
 
 The current module loads transaction data from CSV, stores it in SQLite, evaluates financial rules, generates recommended actions, exports daily reports, and records audit logs for traceability.
 
+## OS Foundational Doctrine
+
+BusinessOS is the first live branch and reference implementation of the broader OS Software System.
+
+The official platform doctrine is documented in:
+
+```text
+docs/os-foundational-vision-architecture-doctrine-v0.1.md
+```
+
+This doctrine defines the long-term relationship between BusinessOS, EduOS, the Public AI Layer, governance, security, institutional context, and future verticals. BusinessOS should continue maturing until the OS pattern is stable enough to duplicate and adapt for EduOS and other branches.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
