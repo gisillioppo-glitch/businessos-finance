@@ -1461,3 +1461,29 @@ python cli.py pilot-expansion-review-decision
 ```
 
 The decision reads the expansion review preparation packet, evaluates pending conditions, and exports `reports/pilot_expansion_review_decision_YYYY-MM-DD.md`. It is advisory only; it does not approve controlled expansion, add workflows, enable delivery, or bypass governance.
+
+## Dashboard Pilot Expansion Page v0.1
+
+The private dashboard now includes a read-only `Pilot Expansion` page.
+
+It reads the latest `reports/pilot_expansion_review_decision_YYYY-MM-DD.md` artifact and shows:
+
+- expansion decision status
+- recommended decision
+- pending conditions and missing required evidence
+- highest exit risk
+- condition gate
+- decision rationale
+- decision commands
+- approval boundary
+- allowed decision options
+- protected expansion boundaries
+- operator note
+
+Generate the backing artifact with:
+
+```bash
+python cli.py pilot-expansion-review-decision
+```
+
+The dashboard page is visual only. It does not approve controlled expansion, add workflows, enable delivery, or bypass governance.

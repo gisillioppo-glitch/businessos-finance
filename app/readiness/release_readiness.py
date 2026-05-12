@@ -291,7 +291,7 @@ def generate_release_readiness():
     )
 
     access_control_text = _read_text("app/security/access_control.py")
-    required_pages = ["Notifications", "Delivery Approval", "Secure Email", "Scheduled Close", "System Integrity", "Demo Readiness", "Pilot Plan", "Pilot Tracker", "Pilot Exit", "Pilot Day 1", "Pilot Day 2"]
+    required_pages = ["Notifications", "Delivery Approval", "Secure Email", "Scheduled Close", "System Integrity", "Demo Readiness", "Pilot Plan", "Pilot Tracker", "Pilot Exit", "Pilot Day 1", "Pilot Day 2", "Pilot Expansion"]
     missing_pages = [page for page in required_pages if page not in access_control_text]
     checks.append(
         _check(

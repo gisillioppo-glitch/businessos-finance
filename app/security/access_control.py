@@ -28,6 +28,7 @@ ALLOWED_ROLES = {
         "Pilot Exit",
         "Pilot Day 1",
         "Pilot Day 2",
+        "Pilot Expansion",
         "People",
     ],
     "executive": [
@@ -52,6 +53,7 @@ ALLOWED_ROLES = {
         "Pilot Exit",
         "Pilot Day 1",
         "Pilot Day 2",
+        "Pilot Expansion",
         "People",
     ],
     "viewer": [
@@ -76,6 +78,7 @@ ALLOWED_ROLES = {
         "Pilot Exit",
         "Pilot Day 1",
         "Pilot Day 2",
+        "Pilot Expansion",
         "People",
     ],
 }

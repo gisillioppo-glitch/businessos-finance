@@ -26,4 +26,4 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 8 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: skipped_existing_close |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Git working tree | warning | warning | M reports/release_readiness_2026-05-11.md |
+| Git working tree | warning | warning | M README.md; M app/dashboard/main.py; M app/readiness/release_readiness.py; M app/security/access_control.py; M reports/release_readiness_2026-05-11.md; M reports/system_integrity_2026-05-11.md; ?? docs/dashboard-pilot-expansion-page-v0.1-status.md |
