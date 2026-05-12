@@ -48,6 +48,14 @@ docs/dashboard-boundary-index-v0.1-status.md
 
 This index classifies current private dashboard pages by OS Core candidate, BusinessOS-specific, shared candidate, and public/private exposure boundary.
 
+The private dashboard implementation of that index is documented in:
+
+```text
+docs/dashboard-boundary-index-page-v0.1-status.md
+```
+
+This page shows the boundary index inside the protected dashboard as a read-only governance view.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

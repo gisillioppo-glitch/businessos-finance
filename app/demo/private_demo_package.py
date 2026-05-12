@@ -46,6 +46,7 @@ DASHBOARD_PAGES = [
     "Secure Email",
     "Scheduled Close",
     "System Integrity",
+    "Boundary Index",
     "Demo Readiness",
     "Pilot Plan",
     "Pilot Tracker",
@@ -61,7 +62,7 @@ DEMO_FLOW = [
     "Walk through Finance, Operations, Governance, Support, Alerts, and Approvals as connected operating layers.",
     "Show Daily Close and Evidence Index as the executive close-of-day package.",
     "Show Notifications and Scheduled Close as controlled automation readiness.",
-    "Close with System Integrity and Release Readiness as the demo quality gate.",
+    "Close with Boundary Index, System Integrity, and Release Readiness as the demo quality gate.",
 ]
 
 SHOW_ITEMS = [
@@ -72,6 +73,7 @@ SHOW_ITEMS = [
     "Notification Delivery Approval report before any external delivery adapter.",
     "Secure Email Delivery report in disabled or dry-run mode unless credentials are explicitly enabled.",
     "Scheduled Close status and last scheduler result.",
+    "Boundary Index as the private dashboard exposure map.",
     "System Integrity and Release Readiness reports.",
 ]
 

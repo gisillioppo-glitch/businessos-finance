@@ -34,6 +34,226 @@ from app.security.config import settings  # noqa: E402
 DB_PATH = ROOT_DIR / "finance.db"
 
 
+DASHBOARD_BOUNDARY_INDEX = [
+    {
+        "page": "Dashboard",
+        "primary_boundary": "Shared candidate, not core yet",
+        "secondary_boundary": "BusinessOS executive overview",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Executive synthesis pattern may transfer after another vertical repeats it.",
+    },
+    {
+        "page": "Alerts",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS executive alert context",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Alert status and resolution patterns are reusable.",
+    },
+    {
+        "page": "Finance",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Finance domain module",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "no",
+        "note": "Finance metrics and records stay BusinessOS-specific.",
+    },
+    {
+        "page": "Operations",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared work queue pattern candidate",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Work tracking shape may transfer, but current language remains domain-specific.",
+    },
+    {
+        "page": "Governance",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS audit context",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Governance findings and policy controls are strong core candidates.",
+    },
+    {
+        "page": "Sensitivity",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "Governance sensitivity rules",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Sensitivity classification is reusable institutional control logic.",
+    },
+    {
+        "page": "Support",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared incident pattern candidate",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Incident model may transfer, current language is business support-specific.",
+    },
+    {
+        "page": "Assistance",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS assistance workflow",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Assistance request lifecycle could become a shared intake/control pattern.",
+    },
+    {
+        "page": "Approvals",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS decision context",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Approval-gated action workflow is reusable.",
+    },
+    {
+        "page": "Daily Close",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared daily close pattern candidate",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Operating close pattern may transfer, current content is business-specific.",
+    },
+    {
+        "page": "Scheduled Close",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS daily close schedule",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Controlled recurring job visibility is reusable.",
+    },
+    {
+        "page": "Notifications",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS notification outbox",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Notification state model is reusable.",
+    },
+    {
+        "page": "Delivery Approval",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS notification delivery context",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Approval before delivery is reusable institutional control.",
+    },
+    {
+        "page": "Secure Email",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "External delivery adapter visibility",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Adapter visibility may become core after hardening and second vertical validation.",
+    },
+    {
+        "page": "System Integrity",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS runtime checks",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "System health and integrity checks are reusable.",
+    },
+    {
+        "page": "Boundary Index",
+        "primary_boundary": "Documentation / architecture",
+        "secondary_boundary": "Shared dashboard governance pattern candidate",
+        "private_data": "no",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Private read-only index for dashboard exposure and extraction review.",
+    },
+    {
+        "page": "Demo Readiness",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared demo readiness candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Demo readiness is go-to-market-specific but pattern may transfer.",
+    },
+    {
+        "page": "Pilot Plan",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Pilot methodology is BusinessOS-specific until another vertical repeats it.",
+    },
+    {
+        "page": "Pilot Tracker",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Pilot tracking remains business pilot workflow for now.",
+    },
+    {
+        "page": "Pilot Exit",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Exit decision pattern may transfer later.",
+    },
+    {
+        "page": "Pilot Day 1",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Day-level pilot operation remains BusinessOS-specific.",
+    },
+    {
+        "page": "Pilot Day 2",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Repeatable rhythm may transfer after second vertical validation.",
+    },
+    {
+        "page": "Pilot Expansion",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Expansion decision workflow is not core yet.",
+    },
+    {
+        "page": "People",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS internal roles",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Institutional people and role layer is reusable.",
+    },
+]
+
+
 CUSTOM_CSS = """
 <style>
 :root {
@@ -446,6 +666,23 @@ def load_system_integrity_status():
         "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
         "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
         "checks": checks,
+    }
+
+
+def load_dashboard_boundary_index():
+    rows = [dict(row) for row in DASHBOARD_BOUNDARY_INDEX]
+    core_count = sum(1 for row in rows if row["primary_boundary"] == "OS Core candidate")
+    business_count = sum(1 for row in rows if row["primary_boundary"] == "BusinessOS-specific")
+    shared_count = sum(1 for row in rows if "Shared" in row["primary_boundary"])
+    public_surface_count = sum(1 for row in rows if row["public_surface"] != "no")
+
+    return {
+        "rows": rows,
+        "total_pages": len(rows),
+        "core_count": core_count,
+        "business_count": business_count,
+        "shared_count": shared_count,
+        "public_surface_count": public_surface_count,
     }
 
 
@@ -1581,6 +1818,7 @@ def load_dashboard_data():
     pilot_day_1_package_status = load_pilot_day_1_package_status()
     pilot_day_2_rhythm_status = load_pilot_day_2_rhythm_status()
     pilot_expansion_review_decision_status = load_pilot_expansion_review_decision_status()
+    dashboard_boundary_index = load_dashboard_boundary_index()
 
     return {
         "transactions_count": transactions_count,
@@ -1640,6 +1878,7 @@ def load_dashboard_data():
         "secure_email_status": secure_email_status,
         "secure_email_report": secure_email_report,
         "system_integrity_status": system_integrity_status,
+        "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
         "private_pilot_plan_status": private_pilot_plan_status,
@@ -2415,6 +2654,98 @@ def render_module_page(page, data):
                 f"{system_integrity['warning_checks']} warning(s) and {system_integrity['failed_checks']} failed check(s)",
                 "Warnings are expected during active uncommitted work; failures require immediate review",
             )
+            render_panel_end()
+    elif page == "Boundary Index":
+        boundary_index = data["dashboard_boundary_index"]
+        boundary_rows = boundary_index["rows"]
+
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            render_metric_card("Pages", boundary_index["total_pages"], "Private dashboard pages", "")
+        with c2:
+            render_metric_card("OS Core", boundary_index["core_count"], "Primary core candidates", "green")
+        with c3:
+            render_metric_card("BusinessOS", boundary_index["business_count"], "Domain-specific pages", "gold")
+        with c4:
+            render_metric_card("Public Surface", boundary_index["public_surface_count"], "Should remain zero", "green" if boundary_index["public_surface_count"] == 0 else "red")
+
+        boundary_filter = st.selectbox(
+            "Boundary filter",
+            [
+                "all",
+                "OS Core candidate",
+                "BusinessOS-specific",
+                "Shared candidate, not core yet",
+                "Documentation / architecture",
+            ],
+            index=0,
+        )
+        filtered_rows = [
+            row
+            for row in boundary_rows
+            if boundary_filter == "all" or row["primary_boundary"] == boundary_filter
+        ]
+
+        left, right = st.columns([1.65, 1])
+
+        with left:
+            render_panel_start("Dashboard Boundary Register")
+            if filtered_rows:
+                for row in filtered_rows:
+                    status = "healthy" if row["core_candidate"] == "yes" else "medium"
+                    if row["primary_boundary"] == "BusinessOS-specific":
+                        status = "medium"
+                    render_status_row(
+                        row["page"],
+                        f"{row['primary_boundary']} | {row['private_data']} | public: {row['public_surface']}",
+                        status,
+                    )
+            else:
+                render_status_row("No pages found", "No dashboard pages match this boundary filter", "healthy")
+            render_panel_end()
+
+            frame = pd.DataFrame(filtered_rows)
+            st.dataframe(
+                frame[
+                    [
+                        "page",
+                        "primary_boundary",
+                        "secondary_boundary",
+                        "private_data",
+                        "public_surface",
+                        "core_candidate",
+                    ]
+                ],
+                use_container_width=True,
+                hide_index=True,
+            )
+
+        with right:
+            render_panel_start("Boundary Brief")
+            render_brief_item(
+                "Read-only private index",
+                "This page does not change permissions, expose public data, or mutate system state",
+            )
+            render_brief_item(
+                f"{boundary_index['core_count']} primary OS Core candidate page(s)",
+                "These pages should stay domain-neutral where practical",
+            )
+            render_brief_item(
+                f"{boundary_index['business_count']} BusinessOS-specific page(s)",
+                "These remain inside BusinessOS until another vertical proves the pattern",
+            )
+            render_brief_item(
+                "docs/dashboard-boundary-index-v0.1-status.md",
+                "Source status document for this boundary index",
+            )
+            render_panel_end()
+
+            render_panel_start("Filtered Notes")
+            if filtered_rows:
+                for row in filtered_rows[:8]:
+                    render_status_row(row["page"], row["note"], row["core_candidate"])
+            else:
+                render_status_row("No notes", "Select another boundary filter", "medium")
             render_panel_end()
     elif page == "Pilot Plan":
         pilot = data["private_pilot_plan_status"]

@@ -38,6 +38,7 @@ Notifications
 Delivery Approval
 Secure Email
 System Integrity
+Boundary Index
 Demo Readiness
 Pilot Plan
 Pilot Tracker
@@ -67,6 +68,7 @@ People
 | Delivery Approval | OS Core candidate | BusinessOS notification delivery context | read-only | no | yes | Approval before delivery is reusable institutional control. |
 | Secure Email | OS Core candidate | External delivery adapter visibility | read-only | no | partial | Adapter visibility may become core after security hardening and second vertical validation. |
 | System Integrity | OS Core candidate | BusinessOS runtime checks | read-only | no | yes | System health and integrity checks are reusable. |
+| Boundary Index | Documentation / architecture | Shared dashboard governance pattern candidate | no | no | partial | Private read-only index for dashboard exposure and extraction review. |
 | Demo Readiness | BusinessOS-specific | Shared demo readiness candidate | sanitized only | no | partial | Demo readiness is go-to-market-specific but pattern may transfer. |
 | Pilot Plan | BusinessOS-specific | Shared pilot methodology candidate | sanitized only | no | partial | Pilot methodology is BusinessOS-specific until another vertical repeats it. |
 | Pilot Tracker | BusinessOS-specific | Shared pilot methodology candidate | sanitized only | no | partial | Pilot tracking remains business pilot workflow for now. |
@@ -101,4 +103,3 @@ It documents the existing private dashboard boundary only.
 ## Next Step
 
 Dashboard Boundary Index Page v0.1 or Status Docs Boundary Backfill Batch 2 v0.1.
-

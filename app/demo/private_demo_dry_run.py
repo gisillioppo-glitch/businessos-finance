@@ -20,6 +20,7 @@ REQUIRED_DEMO_PAGES = [
     "Notifications",
     "Scheduled Close",
     "System Integrity",
+    "Boundary Index",
 ]
 
 REQUIRED_BOUNDARY_MARKERS = [
@@ -36,7 +37,7 @@ DEMO_RUN_SEQUENCE = [
     "Walk through Finance, Operations, Governance, Support.",
     "Show Assistance, Approvals, Sensitivity, People as human-control layer.",
     "Show Daily Close, Notifications, Delivery Approval, Secure Email, Scheduled Close.",
-    "Close with System Integrity, Release Readiness, and pilot questions.",
+    "Close with Boundary Index, System Integrity, Release Readiness, and pilot questions.",
 ]
 
 
