@@ -16,6 +16,14 @@ docs/os-foundational-vision-architecture-doctrine-v0.1.md
 
 This doctrine defines the long-term relationship between BusinessOS, EduOS, the Public AI Layer, governance, security, institutional context, and future verticals. BusinessOS should continue maturing until the OS pattern is stable enough to duplicate and adapt for EduOS and other branches.
 
+The first technical extraction map is documented in:
+
+```text
+docs/institutional-core-extraction-map-v0.1.md
+```
+
+This map classifies current BusinessOS modules into OS Core candidates, BusinessOS-specific logic, EduOS future domain logic, and Public AI boundaries.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

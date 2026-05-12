@@ -1,0 +1,436 @@
+# Institutional Core Extraction Map v0.1
+
+Date: 2026-05-12
+
+## Purpose
+
+This document maps the current BusinessOS implementation into reusable OS Core, BusinessOS-specific domain logic, future EduOS-specific domain logic, Public AI boundary logic, and shared platform candidates.
+
+The goal is not to extract code yet. The goal is to understand which parts of BusinessOS are becoming the repeatable pattern for future OS branches.
+
+## Strategic Position
+
+BusinessOS remains the first live branch and reference implementation of the OS Software System.
+
+Current doctrine:
+
+```text
+BusinessOS -> harden -> identify reusable core -> design OS Platform -> design EduOS -> implement EduOS
+```
+
+BusinessOS should continue maturing until the core pattern is stable enough to duplicate. EduOS should not be opened as a rushed clone or loose module inside BusinessOS.
+
+## Current BusinessOS Module Map
+
+```text
+app/
+|-- actions
+|-- alerts
+|-- approvals
+|-- assistance
+|-- audit
+|-- command_center
+|-- dashboard
+|-- db
+|-- demo
+|-- evidence
+|-- governance
+|-- ingest
+|-- notifications
+|-- operations
+|-- people
+|-- readiness
+|-- reports
+|-- rules
+|-- scheduler
+|-- security
+|-- support
+`-- system
+```
+
+## Classification Summary
+
+| Area | Current Module(s) | Classification | Future Direction |
+| --- | --- | --- | --- |
+| Audit trail | `audit` | OS Core candidate | Shared append-only activity layer. |
+| Security | `security` | OS Core candidate | Shared role/session/access boundary. |
+| People and roles | `people` | OS Core candidate | Shared institutional identity model. |
+| Approvals | `approvals` | OS Core candidate | Shared approval-gated action layer. |
+| Governance | `governance` | OS Core candidate | Shared sensitivity and policy layer. |
+| Notifications | `notifications` | OS Core candidate | Shared internal/external delivery control. |
+| Evidence | `evidence` | OS Core candidate | Shared evidence packet and review layer. |
+| Readiness | `readiness` | OS Core candidate | Shared release/demo/pilot readiness logic. |
+| System checks | `system` | OS Core candidate | Shared integrity and runtime stability checks. |
+| Scheduler | `scheduler` | OS Core candidate | Shared controlled recurring job layer. |
+| Dashboard shell | `dashboard` | Shared UI candidate | Shared shell with vertical-specific pages. |
+| Command center | `command_center` | Shared pattern candidate | Shared executive synthesis pattern. |
+| Demo and pilot | `demo` | Shared go-to-market candidate | Shared private demo/pilot methodology. |
+| Reports | `reports` | Shared utility candidate | Shared report history/export utilities. |
+| Database connection | `db` | Shared utility candidate | Shared persistence conventions, not final schema. |
+| Finance actions/rules | `actions`, `rules`, `ingest` | BusinessOS-specific | Enterprise finance and operating rules. |
+| Operations | `operations` | BusinessOS-specific with shared pattern | Business workflow model; pattern may transfer. |
+| Support | `support` | BusinessOS-specific with shared pattern | Incident model; pattern may transfer. |
+
+## OS Core Candidates
+
+These modules are likely reusable across BusinessOS, EduOS, and future verticals once hardened.
+
+### Audit
+
+Current role:
+
+- records traceable events
+- supports governance review
+- supports readiness and system checks
+
+Future OS Core role:
+
+- shared event timeline
+- append-only audit behavior
+- role-aware audit visibility
+- incident and evidence linkage
+
+Extraction condition:
+
+- audit events must support domain-neutral event types and metadata.
+
+### Security
+
+Current role:
+
+- protects the private dashboard
+- defines allowed dashboard pages by role
+- separates public landing from private runtime
+
+Future OS Core role:
+
+- shared role validation
+- access boundaries per OS branch
+- protected mode foundation
+- public/private route separation
+
+Extraction condition:
+
+- roles must be generalized beyond BusinessOS labels.
+
+### People
+
+Current role:
+
+- maintains internal users
+- tracks roles, departments, status, access levels
+
+Future OS Core role:
+
+- shared institutional identity layer
+- branch-specific role extensions
+- access-level enforcement
+
+EduOS adaptation:
+
+- student
+- teacher
+- director
+- guardian or family contact
+- academic coordinator
+
+### Approvals
+
+Current role:
+
+- handles pending, approved, rejected, and cancelled approval requests
+- supports approval reports and briefings
+- integrates with notification delivery approval
+
+Future OS Core role:
+
+- shared approval-gated execution model
+- sensitive action approval workflow
+- justification and rationale tracking
+
+Extraction condition:
+
+- approval types must become configurable per branch.
+
+### Governance
+
+Current role:
+
+- evaluates findings
+- evaluates sensitivity rules
+- supports governance brief and KPIs
+
+Future OS Core role:
+
+- shared policy and sensitivity engine
+- branch-specific rule packs
+- escalation and protected mode triggers
+
+BusinessOS rule pack examples:
+
+- budget approval
+- sensitive operation
+- overdue operational task
+
+EduOS rule pack examples:
+
+- grade modification
+- restricted assessment behavior
+- academic integrity event
+
+### Evidence
+
+Current role:
+
+- builds executive evidence index
+- generates daily close
+- generates daily close distribution
+
+Future OS Core role:
+
+- shared evidence packet model
+- review chain support
+- repeatability evidence
+- owner review artifacts
+
+Extraction condition:
+
+- evidence item definitions must become configurable by vertical.
+
+### Notifications
+
+Current role:
+
+- notification outbox
+- delivery approvals
+- secure email delivery adapter
+- delivery status transitions
+
+Future OS Core role:
+
+- shared internal notification queue
+- external delivery approval gate
+- delivery mode policy
+
+Extraction condition:
+
+- real delivery adapters must remain credential-protected and approval-gated.
+
+### Readiness and System
+
+Current role:
+
+- release readiness
+- system integrity
+- runtime stability
+
+Future OS Core role:
+
+- shared validation framework
+- branch-specific readiness check registry
+- quick/standard/full validation profiles
+
+Extraction condition:
+
+- checks must be modular and declarative enough for BusinessOS, EduOS, and Public AI.
+
+## BusinessOS-Specific Domain Logic
+
+These areas should remain inside BusinessOS unless later generalized carefully.
+
+### Finance
+
+Includes:
+
+- transactions
+- cash flow
+- expense ratio
+- expense concentration
+- financial anomalies
+- finance recommended actions
+
+Why BusinessOS-specific:
+
+- directly tied to enterprise financial operations
+- not a natural EduOS core primitive
+
+Potential shared pattern:
+
+- domain risk rules
+- action generation
+- brief generation
+
+### Operations
+
+Includes:
+
+- operations tasks
+- escalation rules
+- operations brief
+
+Why partially reusable:
+
+- workflow/task concepts are universal
+- actual task types and escalation logic are vertical-specific
+
+Future EduOS analog:
+
+- academic workflows
+- assignment workflow
+- attendance workflow
+- intervention workflow
+
+### Support
+
+Includes:
+
+- support incidents
+- incident status
+- support brief
+- support report
+
+Why partially reusable:
+
+- incident management is universal
+- incident categories and severity rules change by vertical
+
+Future EduOS analog:
+
+- student support requests
+- teacher support
+- academic incident
+- safety or conduct incident
+
+## EduOS Future Domain Map
+
+EduOS should be a separate OS branch, not a module inside BusinessOS.
+
+Future EduOS modules may include:
+
+- students
+- teachers
+- courses
+- subjects
+- assignments
+- assessments
+- grading governance
+- academic integrity
+- learning support
+- restricted assessment mode
+- subject intelligence modes
+- family/guardian communication
+- academic evidence index
+- director command center
+
+Shared patterns to reuse from BusinessOS:
+
+- people and role structure
+- governance sensitivity rules
+- approvals
+- audit logging
+- dashboard shell
+- evidence packets
+- readiness checks
+- notification approval gate
+- pilot methodology
+- command center synthesis
+
+BusinessOS patterns to adapt, not copy:
+
+- finance rules become academic performance/integrity rules
+- operations tasks become academic workflows
+- support incidents become academic/student support incidents
+- daily close becomes academic daily/weekly institutional close
+
+## Public AI Boundary Map
+
+Public AI should remain isolated from private OS runtime.
+
+Allowed:
+
+- product explanation
+- public Q&A
+- lead qualification
+- demo guidance
+- intake routing
+- high-level education about OS branches
+
+Not allowed:
+
+- private DB access
+- private reports access
+- approval execution
+- workflow mutation
+- sensitive internal artifact exposure
+- credential use
+- user impersonation
+
+Future Public AI modules may include:
+
+- public product assistant
+- demo request assistant
+- lead qualification assistant
+- OS branch explainer
+- controlled intake summarizer
+
+Boundary doctrine:
+
+```text
+Public AI routes interest inward; it does not operate the private OS core.
+```
+
+## Extraction Readiness Levels
+
+| Level | Meaning | Action |
+| --- | --- | --- |
+| L0 | BusinessOS-only | Keep inside BusinessOS. |
+| L1 | Shared pattern candidate | Document pattern, do not extract yet. |
+| L2 | Core candidate | Prepare config/domain separation. |
+| L3 | Extractable core | Ready to move into `os-core` or shared package. |
+| L4 | Shared platform service | Can serve multiple OS branches. |
+
+## Current Extraction Readiness
+
+| Module | Level | Reason |
+| --- | --- | --- |
+| `audit` | L2 | Strong shared pattern, needs domain-neutral metadata. |
+| `security` | L2 | Shared access pattern, needs branch-aware roles. |
+| `people` | L2 | Shared identity pattern, needs vertical role extension. |
+| `approvals` | L2 | Shared approval gate, needs configurable approval types. |
+| `governance` | L2 | Shared policy engine, needs branch-specific rule packs. |
+| `notifications` | L2 | Shared queue/delivery gate, needs adapter boundaries. |
+| `evidence` | L2 | Shared evidence model, needs configurable evidence registry. |
+| `readiness` | L2 | Shared validation pattern, needs check registry. |
+| `system` | L2 | Shared integrity/runtime pattern, needs branch registry. |
+| `dashboard` | L1 | Shared visual shell, still tightly coupled to BusinessOS pages. |
+| `demo` | L1 | Shared methodology, currently BusinessOS/private-pilot specific. |
+| `command_center` | L1 | Shared executive synthesis pattern, current data is BusinessOS-specific. |
+| `actions` | L0 | Finance action model is BusinessOS-specific. |
+| `rules` | L0 | Current rules are financial/BusinessOS-specific. |
+| `ingest` | L0 | CSV finance ingestion is BusinessOS-specific. |
+| `operations` | L1 | Workflow pattern reusable, current domain is BusinessOS. |
+| `support` | L1 | Incident pattern reusable, current domain is BusinessOS. |
+
+## Recommended Next Steps
+
+1. Continue hardening BusinessOS as the reference implementation.
+2. Avoid opening EduOS implementation until BusinessOS core patterns are stable.
+3. Add branch-aware configuration only when a second branch is ready to consume it.
+4. Keep documenting shared patterns before extracting code.
+5. Design OS Platform as a parent view after BusinessOS hardening and before EduOS implementation.
+
+## Immediate Follow-Up Blocks
+
+Recommended sequence:
+
+```text
+BusinessOS Module Stability Matrix v0.1
+OS Platform Map v0.1
+Public AI Surface Boundary v0.1
+EduOS Concept Architecture v0.1
+```
+
+## Operator Note
+
+This map is architectural. It does not move code, create EduOS, or split repositories. It defines what BusinessOS is teaching us about the reusable OS pattern.
+
