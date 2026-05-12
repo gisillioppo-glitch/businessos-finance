@@ -6,6 +6,18 @@ Notification Delivery Approval adds a governance gate before queued BusinessOS n
 
 It prepares BusinessOS for a future secure email delivery adapter without allowing external delivery to bypass approvals.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS-specific notification delivery context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after EduOS validates same approval-gated delivery pattern
+
 ## Current Capabilities
 
 - Adds `python cli.py notification-delivery-approval`.

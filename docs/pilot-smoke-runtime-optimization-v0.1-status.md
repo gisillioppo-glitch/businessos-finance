@@ -10,6 +10,18 @@ Closed for MVP validation.
 
 This block reduces daily validation friction while preserving full release coverage. BusinessOS now separates smoke testing into quick, standard, and full profiles so the first live OS branch can be checked frequently without repeatedly running the heavy pilot package chain.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS validation workflow
+- Private data touched: no
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after second vertical reuses profile-based smoke validation
+
 ## Scope
 
 - Add smoke profiles: `quick`, `standard`, and `full`.
@@ -44,4 +56,3 @@ python scripts/smoke_test.py quick
 python scripts/smoke_test.py
 python cli.py runtime-stability
 ```
-

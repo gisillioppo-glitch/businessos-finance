@@ -6,6 +6,18 @@ Secure Email Delivery Adapter prepares BusinessOS for real notification delivery
 
 It only attempts SMTP delivery when the adapter is explicitly enabled, dry-run is disabled, SMTP configuration is complete, the notification is queued, and delivery approval is approved.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: External delivery adapter with BusinessOS notification context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: report only
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after security hardening and second vertical repeats delivery adapter pattern
+
 ## Current Capabilities
 
 - Adds `python cli.py secure-email-delivery`.

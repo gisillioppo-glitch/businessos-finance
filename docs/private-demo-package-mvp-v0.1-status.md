@@ -6,6 +6,18 @@ Private Demo Package gives BusinessOS a controlled demo artifact for private pre
 
 It turns the current system state into a single Markdown package with the demo story, commands, readiness status, safe boundaries, known risks, and pre-demo checklist.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private demo methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private demo package pattern
+
 ## Current Capabilities
 
 - Adds `python cli.py private-demo-package`.

@@ -6,6 +6,18 @@ Dashboard Secure Email Page makes the protected email delivery adapter visible i
 
 It shows whether the adapter is disabled, dry-run, configured, ready, or failing.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared dashboard pattern candidate
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats secure delivery dashboard pattern
+
 ## Current Capabilities
 
 - Adds `Secure Email` to private dashboard navigation.
