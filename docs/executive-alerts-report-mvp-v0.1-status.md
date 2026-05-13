@@ -6,6 +6,18 @@ Executive Alerts Report v0.1 turns the executive alert queue into a timestamped 
 
 This gives leadership a durable record of cross-module risks, owners, and next recommended actions.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS executive alert evidence report
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats executive alert reporting
+
 ## Why it matters
 
 Executive alerts are useful in the dashboard, but institutions also need records. This block preserves the alert state as a report that can be reviewed, shared internally, or attached to operating cadence notes.

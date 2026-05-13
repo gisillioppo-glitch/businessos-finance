@@ -6,6 +6,18 @@ Executive Alert Resolution v0.2 completes the first operational lifecycle for Bu
 
 Executive alerts can now move from open to acknowledged, into review, and finally resolved with owner and justification tracking.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS executive alert resolution context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats alert resolution workflow
+
 ## Why it matters
 
 The operating system should not only detect institutional risk. It should also track whether the institution acted on that risk. This block creates the first resolution trail for executive signals.

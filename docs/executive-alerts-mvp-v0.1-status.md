@@ -6,6 +6,18 @@ Executive Alerts v0.1 turns cross-module BusinessOS signals into a single execut
 
 This block connects governance sensitivity, finance recommendations, support incidents, approvals, assistance, and operations risk into one private operating layer for leadership review.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS executive risk synthesis context
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats cross-module executive alert pattern
+
 ## Why it matters
 
 Before this block, each module could report its own state. With Executive Alerts, the operating system now consolidates what needs executive attention across modules instead of forcing leaders to inspect each page separately.

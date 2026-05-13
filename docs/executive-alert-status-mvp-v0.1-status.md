@@ -6,6 +6,18 @@ Executive Alert Status v0.1 gives BusinessOS executive alerts a controlled opera
 
 Alerts are no longer only generated signals. They can now be acknowledged, moved into review, resolved, or dismissed with justification and audit logging.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS executive alert lifecycle context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats alert status lifecycle
+
 ## Why it matters
 
 Executive intelligence becomes more useful when the system can track whether leadership has seen, accepted, and acted on a signal. This block creates the first resolution layer for cross-module alerts.

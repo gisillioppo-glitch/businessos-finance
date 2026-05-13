@@ -8,6 +8,18 @@ Dashboard UI Upgrade v0.2 is implemented as the first premium visual pass for th
 
 This block turns the functional Streamlit dashboard into a more executive product surface while preserving the existing security login and real SQLite-backed metrics.
 
+## Boundary Classification
+
+- Primary boundary: Shared candidate, not core yet
+- Secondary boundary: BusinessOS private dashboard shell
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats dashboard shell and navigation pattern
+
 ## What this block adds
 
 - Dark institutional visual system.
