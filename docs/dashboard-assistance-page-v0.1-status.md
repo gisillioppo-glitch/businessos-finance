@@ -4,6 +4,18 @@
 
 Dashboard Assistance Page v0.1 makes the Assistance Layer visible inside the private BusinessOS dashboard. Internal help, approval, incident, access, and decision requests are now part of the visual operating surface.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS assistance dashboard visibility
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats assistance request dashboard pattern
+
 ## Why It Matters
 
 BusinessOS is moving from backend workflows into a usable operating platform. Assistance requests should not live only in CLI output; leaders and operators need to see active requests, severity, owner, status, and approval pressure in one protected view.

@@ -6,6 +6,18 @@ Dashboard Delivery Approval Page makes the notification delivery governance gate
 
 It shows which queued notifications are blocked, pending, approved, or ready for a future secure delivery adapter.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS notification delivery dashboard visibility
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after EduOS validates same approval-gated delivery dashboard pattern
+
 ## Current Capabilities
 
 - Adds `Delivery Approval` to private dashboard navigation.

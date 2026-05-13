@@ -4,6 +4,18 @@
 
 The Dashboard System Integrity Page makes BusinessOS self-check results visible inside the private dashboard.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS system integrity dashboard visibility
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats integrity dashboard pattern
+
 ## Current Capabilities
 
 - Adds a System Integrity page to private dashboard navigation.

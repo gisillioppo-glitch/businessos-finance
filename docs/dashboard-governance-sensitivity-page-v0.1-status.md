@@ -6,6 +6,18 @@ Dashboard Governance Sensitivity Page v0.1 makes the Governance Sensitivity Rule
 
 This page shows leaders which signals require institutional control before action proceeds.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS governance sensitivity dashboard visibility
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats sensitivity visibility pattern
+
 ## Why It Matters
 
 The CLI can detect sensitive signals, but a governance operating system needs visibility. This block turns rule-based sensitivity into a product surface with KPIs, findings, and recommended next moves.

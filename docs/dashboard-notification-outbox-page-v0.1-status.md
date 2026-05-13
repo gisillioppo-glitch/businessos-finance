@@ -4,6 +4,18 @@
 
 The Dashboard Notification Outbox Page gives BusinessOS private dashboard visibility into prepared internal notifications.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS notification outbox dashboard visibility
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats notification outbox dashboard pattern
+
 ## Current Capabilities
 
 - Adds a Notifications page to the private dashboard navigation.

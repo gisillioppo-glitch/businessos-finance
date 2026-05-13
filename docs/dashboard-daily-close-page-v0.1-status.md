@@ -6,6 +6,18 @@ The Dashboard Daily Close Page makes the executive close visible inside the priv
 
 This turns the daily close from a CLI/report artifact into a dashboard page where leadership can confirm whether the operating day has been closed with supporting evidence.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared daily close dashboard pattern candidate
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats close dashboard pattern with different domain content
+
 ## Why It Matters
 
 BusinessOS now has a visual close layer for institutional discipline. A leader can see close completion, evidence availability, missing proof points, and the latest report paths without searching through files or CLI output.

@@ -4,6 +4,18 @@
 
 The Dashboard Scheduled Close Page gives BusinessOS private dashboard visibility into the controlled daily close runner.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS scheduled close dashboard visibility
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats controlled schedule dashboard pattern
+
 ## Current Capabilities
 
 - Adds a Scheduled Close page to private dashboard navigation.

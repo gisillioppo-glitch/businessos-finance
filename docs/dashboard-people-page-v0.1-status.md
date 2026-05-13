@@ -4,6 +4,18 @@
 
 Dashboard People Page v0.1 makes the People Layer visible inside the private BusinessOS dashboard. Internal users, roles, departments, statuses, and access levels are now part of the visual operating surface.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS people dashboard visibility
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after identity and role hardening
+
 ## Why It Matters
 
 BusinessOS needs people awareness before it can support approvals, routing, permissions, manager views, and human + AI collaboration. This page turns the People Layer from backend/CLI structure into visible product behavior.
