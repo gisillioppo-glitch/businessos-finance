@@ -4,6 +4,18 @@
 
 This block creates the controlled pre-demo rehearsal layer for BusinessOS. It verifies that the private demo package, demo script, release readiness gate, required dashboard pages, and safety boundaries are present before a private presentation.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private demo readiness candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private demo dry-run pattern
+
 ## Why it matters
 
 BusinessOS is now presentable, but every private demo needs discipline. The dry run prevents accidental exposure of internals, confirms the evidence package exists, and gives the operator a clear green/yellow/red signal before showing the system.

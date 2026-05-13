@@ -6,6 +6,18 @@ Landing Publish MVP v0.1 prepares the BusinessOS public landing website for GitH
 
 This block publishes only the static `public/` surface and keeps the private dashboard/backend out of the public website.
 
+## Boundary Classification
+
+- Primary boundary: Public AI boundary
+- Secondary boundary: Static public deployment boundary
+- Private data touched: no
+- Public surface touched: yes
+- Approval required: future
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after public/private deployment boundary repeats in another vertical
+
 ## What this block adds
 
 - GitHub Actions workflow for Pages deployment.
@@ -42,7 +54,7 @@ The workflow does this:
 In GitHub:
 
 ```text
-Repository → Settings → Pages → Build and deployment → Source → GitHub Actions
+Repository -> Settings -> Pages -> Build and deployment -> Source -> GitHub Actions
 ```
 
 After that, pushes to `main` can deploy the landing page.

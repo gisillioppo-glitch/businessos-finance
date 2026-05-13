@@ -8,6 +8,18 @@ Lead Intake & Demo Request MVP v0.1 adds the public demo request flow to the Bus
 
 The landing page now moves from presentation-only to lead intake. Visitors can submit structured demo interest through a form surface that is ready to connect to an external form provider or future BusinessOS backend endpoint.
 
+## Boundary Classification
+
+- Primary boundary: Public AI boundary
+- Secondary boundary: BusinessOS public lead intake surface
+- Private data touched: no
+- Public surface touched: yes
+- Approval required: future
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: keep public intake outside private runtime until sanitized handoff exists
+
 ## What this block adds
 
 - Request Demo anchors point to the form section.

@@ -6,6 +6,18 @@ Release Readiness gives BusinessOS a private demo readiness gate.
 
 It answers whether the current private build is ready to be shown in a controlled demo without exposing the private runtime, skipping validation, or ignoring local artifacts.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS private demo readiness gate
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats release readiness gate
+
 ## Current Capabilities
 
 - Adds `python cli.py release-readiness`.

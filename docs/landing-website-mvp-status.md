@@ -8,6 +8,18 @@ Landing Website MVP v0.1 is implemented as a public static product presentation 
 
 This block creates the first public-facing BusinessOS website without exposing the private dashboard, database, or backend logic.
 
+## Boundary Classification
+
+- Primary boundary: Public AI boundary
+- Secondary boundary: BusinessOS public product surface
+- Private data touched: no
+- Public surface touched: yes
+- Approval required: no
+- Evidence generated: no
+- Audit generated: no
+- Reusable core candidate: no
+- Extraction timing: keep outside private runtime
+
 ## What this block adds
 
 - Static public landing page.

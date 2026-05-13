@@ -6,6 +6,18 @@ The Private Demo Script / Sketch MVP turns the current BusinessOS product state 
 
 It complements the Private Demo Package by defining what to show, what to say, what commands to run, what not to show, known risks, and closing questions for a controlled presentation.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private demo methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private demo script pattern
+
 ## Why It Matters
 
 BusinessOS is now large enough that a demo can become confusing if it is improvised. This script protects the product story, avoids exposing internal implementation details, and helps present the system as an institutional operating rhythm rather than disconnected features.

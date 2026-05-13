@@ -10,6 +10,18 @@ Closed for MVP validation.
 
 This block gives BusinessOS a formal runtime stability review before deeper feature work. It checks whether the first live OS branch is healthy enough to continue and identifies runtime areas that need hardening before BusinessOS becomes the reference pattern for future branches such as EduOS.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS runtime stability gate
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats runtime stability review
+
 ## Scope
 
 - Add `python cli.py runtime-stability`.
@@ -36,4 +48,3 @@ python cli.py runtime-stability
 python cli.py system-check
 python cli.py release-readiness
 ```
-
