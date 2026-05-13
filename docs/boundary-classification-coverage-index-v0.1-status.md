@@ -1,10 +1,10 @@
-# Boundary Classification Coverage Index v0.2
+# Boundary Classification Coverage Index v1.0
 
 ## Product Meaning
 
-Boundary Classification Coverage Index tracks which BusinessOS status documents include `Boundary Classification` and which still need backfill.
+Boundary Classification Coverage Index records the final coverage state for BusinessOS status-document boundary governance.
 
-This v0.2 refresh records the state after Batch 4 through Batch 8. It gives the project a clear, current finish line for boundary governance coverage.
+This v1.0 refresh confirms that every current status document includes `Boundary Classification`.
 
 ## Boundary Classification
 
@@ -22,9 +22,9 @@ This v0.2 refresh records the state after Batch 4 through Batch 8. It gives the 
 
 ```text
 Total status docs: 65
-With Boundary Classification: 54
-Missing Boundary Classification: 11
-Coverage: 83.1%
+With Boundary Classification: 65
+Missing Boundary Classification: 0
+Coverage: 100.0%
 ```
 
 ## Covered Status Docs
@@ -57,6 +57,11 @@ dashboard-pilot-tracker-page-v0.1-status.md
 dashboard-scheduled-close-page-v0.1-status.md
 dashboard-secure-email-page-v0.1-status.md
 dashboard-system-integrity-page-v0.1-status.md
+dashboard-ui-v0.2-status.md
+executive-alert-resolution-mvp-v0.2-status.md
+executive-alert-status-mvp-v0.1-status.md
+executive-alerts-mvp-v0.1-status.md
+executive-alerts-report-mvp-v0.1-status.md
 executive-daily-close-mvp-v0.1-status.md
 executive-evidence-index-mvp-v0.1-status.md
 finance-mvp-status.md
@@ -74,10 +79,16 @@ pilot-day-2-operating-rhythm-mvp-v0.1-status.md
 pilot-day-3-evidence-review-mvp-v0.1-status.md
 pilot-day-4-owner-confirmation-mvp-v0.1-status.md
 pilot-day-5-narrow-continuation-mvp-v0.1-status.md
+pilot-expansion-review-decision-mvp-v0.1-status.md
+pilot-expansion-review-prep-mvp-v0.1-status.md
 pilot-smoke-runtime-optimization-v0.1-status.md
 private-demo-dry-run-mvp-v0.1-status.md
 private-demo-package-mvp-v0.1-status.md
 private-demo-script-mvp-v0.1-status.md
+private-pilot-daily-tracker-mvp-v0.1-status.md
+private-pilot-exit-decision-mvp-v0.1-status.md
+private-pilot-intake-mvp-v0.1-status.md
+private-pilot-plan-mvp-v0.1-status.md
 release-readiness-mvp-v0.1-status.md
 scheduled-daily-close-mvp-v0.1-status.md
 secure-email-delivery-adapter-v0.1-status.md
@@ -89,73 +100,50 @@ system-integrity-check-mvp-v0.1-status.md
 ## Missing Status Docs
 
 ```text
-dashboard-ui-v0.2-status.md
-executive-alert-resolution-mvp-v0.2-status.md
-executive-alert-status-mvp-v0.1-status.md
-executive-alerts-mvp-v0.1-status.md
-executive-alerts-report-mvp-v0.1-status.md
-pilot-expansion-review-decision-mvp-v0.1-status.md
-pilot-expansion-review-prep-mvp-v0.1-status.md
-private-pilot-daily-tracker-mvp-v0.1-status.md
-private-pilot-exit-decision-mvp-v0.1-status.md
-private-pilot-intake-mvp-v0.1-status.md
-private-pilot-plan-mvp-v0.1-status.md
+None.
 ```
 
-## Recommended Final Backfill Order
+## Governance Meaning
 
-### Batch 9: Alerts And Dashboard Foundation
+BusinessOS now has complete boundary classification coverage across current status documentation.
+
+Every current status document identifies:
+
+- primary boundary
+- secondary boundary
+- private data exposure
+- public surface exposure
+- approval behavior
+- evidence behavior
+- audit behavior
+- reusable core candidacy
+- extraction timing
+
+## Operating Rule Going Forward
+
+Every new status document must include `## Boundary Classification` at creation time.
+
+Use:
 
 ```text
-dashboard-ui-v0.2-status.md
-executive-alert-resolution-mvp-v0.2-status.md
-executive-alert-status-mvp-v0.1-status.md
-executive-alerts-mvp-v0.1-status.md
-executive-alerts-report-mvp-v0.1-status.md
+docs/feature-boundary-classification-template-v0.1.md
 ```
 
-Reason:
-
-These documents cover executive alerting and dashboard foundation. Alerts are likely OS Core candidates, while dashboard UI is a shared shell candidate rather than domain core.
-
-### Batch 10: Private Pilot Remaining
+Before closing any new feature block, confirm:
 
 ```text
-pilot-expansion-review-decision-mvp-v0.1-status.md
-pilot-expansion-review-prep-mvp-v0.1-status.md
-private-pilot-daily-tracker-mvp-v0.1-status.md
-private-pilot-exit-decision-mvp-v0.1-status.md
-private-pilot-intake-mvp-v0.1-status.md
-private-pilot-plan-mvp-v0.1-status.md
-```
-
-Reason:
-
-These remaining private pilot documents should be classified as BusinessOS-specific with shared private pilot methodology potential. They should not be treated as OS Core until another vertical repeats the pilot operating pattern.
-
-## Operating Rule
-
-Finish coverage in two small commits:
-
-```text
-Batch 9: alerts and dashboard foundation
-Batch 10: private pilot remaining
-```
-
-After Batch 10, refresh this index again and confirm:
-
-```text
-Missing Boundary Classification: 0
-Coverage: 100%
+Boundary Classification present
+Private/public exposure declared
+Approval/evidence/audit behavior declared
+Extraction timing declared
 ```
 
 ## Completion Criteria
 
-This v0.2 refresh is complete when:
+This v1.0 refresh is complete because:
 
-- current coverage is recalculated from the repo
-- covered status docs are updated
-- missing status docs are reduced to the real remaining set
-- final backfill batches are clearly identified
-- future work can close the remaining coverage without rediscovery
+- coverage was recalculated from the repository
+- all current status docs include `Boundary Classification`
+- no missing status docs remain
+- future governance work has a clear operating rule
 
