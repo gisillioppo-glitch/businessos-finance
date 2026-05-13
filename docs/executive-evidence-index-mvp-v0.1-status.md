@@ -4,6 +4,18 @@
 
 BusinessOS now has an executive evidence index that consolidates the key reports generated during the operating day. It tells leadership which decision, alert, governance, support, command center, and finance evidence files are available.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS executive evidence context
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after EduOS validates same evidence index pattern
+
 ## Why it matters
 
 As the system grows, evidence can spread across many reports. This block creates a single register for institutional review, audit readiness, and executive handoff. The operating system can now point to its own evidence trail.

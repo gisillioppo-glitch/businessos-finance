@@ -6,6 +6,18 @@ The Notification Outbox MVP gives BusinessOS a safe internal delivery queue.
 
 Instead of sending emails directly from local MVP code, BusinessOS now prepares notification records with recipient, subject, body, source, and status. This creates the foundation for secure future delivery through email, Slack, Teams, or another protected notification channel.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS daily close notification context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats notification outbox pattern
+
 ## Why It Matters
 
 BusinessOS should not only generate intelligence; it should route it to the correct responsible person. The outbox turns daily close distribution into an operational queue that can be reviewed, audited, and later connected to real delivery providers without exposing credentials or sending uncontrolled messages.
@@ -25,11 +37,11 @@ BusinessOS should not only generate intelligence; it should route it to the corr
 
 ```text
 python cli.py daily-close
-→ generate evidence reports
-→ export daily close
-→ export daily close distribution
-→ queue CEO/manager notifications
-→ review with python cli.py notifications
+-> generate evidence reports
+-> export daily close
+-> export daily close distribution
+-> queue CEO/manager notifications
+-> review with python cli.py notifications
 ```
 
 ## Safety Boundary

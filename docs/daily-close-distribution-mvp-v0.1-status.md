@@ -6,6 +6,18 @@ The Daily Close Distribution MVP turns the executive daily close into an email-r
 
 BusinessOS now prepares the operational close, evidence register, and responsible-owner review packages automatically. Workers and managers do not need to assemble the close manually; they review the evidence assigned to their area and confirm follow-up.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared evidence distribution pattern candidate
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats role-scoped close distribution
+
 ## Why It Matters
 
 This is a core BusinessOS behavior: the system should operate, package evidence, and route the right information to the right owner. Human teams remain responsible for judgment and review, while BusinessOS handles daily synthesis, routing, and traceability.

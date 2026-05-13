@@ -6,6 +6,18 @@ Scheduled Daily Close gives BusinessOS a controlled execution gate for the execu
 
 It does not install an operating system scheduler or send external email. It provides an idempotent command that can be called by Windows Task Scheduler, cron, or a future internal automation layer.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS daily close schedule
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats controlled scheduled job pattern
+
 ## Current Capabilities
 
 - Adds a `scheduled_daily_close` control table.

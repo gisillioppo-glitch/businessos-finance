@@ -6,6 +6,18 @@ The Notification Status MVP gives BusinessOS notification lifecycle control.
 
 The system can now move notification outbox items from queued into sent, dismissed, or failed states. This creates traceability for future delivery workflows and lets operators review which messages were handled, skipped, or need repair.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS notification lifecycle context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats notification status lifecycle
+
 ## Why It Matters
 
 BusinessOS should not only prepare messages. It needs to know what happened to each message. Status control creates the operational foundation for secure email, Slack, Teams, or provider-based delivery because every message can be tracked and audited.

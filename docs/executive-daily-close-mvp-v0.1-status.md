@@ -4,6 +4,18 @@
 
 BusinessOS now has a single daily close command that generates the core executive report set and then indexes the resulting evidence. This creates an operating ritual for ending the day with a clean institutional record.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared institutional close pattern candidate
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats daily close pattern with different domain content
+
 ## Why it matters
 
 The platform now produces many reports across Finance, Governance, Support, Command Center, Approvals, Executive Alerts, and Evidence. A daily close command prevents fragmented reporting and gives leadership one repeatable close process.
