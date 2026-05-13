@@ -4,6 +4,18 @@
 
 This block turns pilot evidence into an executive exit decision artifact. BusinessOS can now recommend whether the private pilot should extend, expand, convert to implementation, pause, or close.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private pilot exit decision pattern
+
 ## What Changed
 
 - Added `app/demo/private_pilot_exit_decision.py`.

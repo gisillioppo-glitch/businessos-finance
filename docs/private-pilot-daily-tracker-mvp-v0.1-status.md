@@ -4,6 +4,18 @@
 
 This block turns the private pilot plan into a daily execution control point. Instead of only having a 14-day plan, BusinessOS can now verify whether enough evidence exists to continue the pilot rhythm safely.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private pilot daily tracker pattern
+
 ## What Changed
 
 - Added `app/demo/private_pilot_tracker.py`.

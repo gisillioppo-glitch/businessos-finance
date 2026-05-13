@@ -4,6 +4,18 @@
 
 This block converts private pilot intake into an actionable 14-day pilot plan. It defines the owner, primary workflow, daily rhythm, success criteria, exit decisions, and protected boundaries for a controlled BusinessOS pilot.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private pilot plan pattern
+
 ## Why it matters
 
 The product can now move from demo interest to a structured pilot without improvisation. This protects scope, keeps expectations realistic, and gives the executive owner a clear evidence-based path to decide whether to extend, expand, implement, pause, or close.

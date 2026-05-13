@@ -8,6 +8,18 @@ Closed for MVP implementation once validation, commit, push, and tag are complet
 
 This block turns the expansion review preparation packet into a formal decision recommendation. It preserves the governance boundary between preparing a review and approving controlled expansion.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: yes
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats controlled pilot expansion decision pattern
+
 ## What Changed
 
 - Added `app/demo/pilot_expansion_review_decision.py`.

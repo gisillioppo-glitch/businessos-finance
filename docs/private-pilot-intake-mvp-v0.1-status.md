@@ -4,6 +4,18 @@
 
 This block creates the bridge from private demo to private pilot. It helps BusinessOS qualify whether a potential organization is ready for a controlled pilot, what workflow should be piloted first, what questions need to be answered, and what boundaries must remain protected.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats private pilot intake pattern
+
 ## Why it matters
 
 After a demo, the next risk is expanding too fast. A private pilot intake keeps the product focused: one owner, one workflow, clear readiness, clear security boundaries, and a realistic first module.

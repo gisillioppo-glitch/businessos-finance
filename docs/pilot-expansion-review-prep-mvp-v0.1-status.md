@@ -8,6 +8,18 @@ Closed for MVP implementation once validation, commit, push, and tag are complet
 
 This block prepares an executive expansion review package without approving expansion. It gives BusinessOS a controlled bridge between narrow pilot continuation and a future expansion decision.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared private pilot methodology candidate
+- Private data touched: sanitized only
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: report only
+- Audit generated: no
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats controlled pilot expansion prep pattern
+
 ## What Changed
 
 - Added `app/demo/pilot_expansion_review_prep.py`.
