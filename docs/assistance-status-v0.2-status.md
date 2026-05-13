@@ -4,6 +4,18 @@
 
 Assistance Status v0.2 gives BusinessOS the first controlled lifecycle movement for internal requests. Assistance requests can now move from intake to triage with a required audit trail and justification.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS assistance lifecycle context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats assistance status lifecycle
+
 ## Why It Matters
 
 The Assistance Layer should not only collect requests. It must move work forward. Status updates make requests operational, accountable, and auditable.

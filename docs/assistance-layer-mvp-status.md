@@ -4,6 +4,18 @@
 
 The Assistance Layer is the first internal request and escalation intake system for BusinessOS. It lets institutional users create structured requests for help, approvals, incidents, access changes, and executive decisions.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS assistance and escalation context
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: future
+- Evidence generated: no
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats institutional request intake pattern
+
 ## Why It Matters
 
 BusinessOS should not only observe the institution. It should become a place where people can ask for help, escalate issues, request decisions, and create accountable operational follow-up. This block connects People Layer, Operations, Governance, Support, and future approval workflows.

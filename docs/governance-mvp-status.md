@@ -8,6 +8,18 @@ The BusinessOS Governance Layer MVP is active.
 
 Governance reads audit logs, evaluates control signals, detects missing justification or critical events, and generates a governance brief.
 
+## Boundary Classification
+
+- Primary boundary: OS Core candidate
+- Secondary boundary: BusinessOS audit and policy context
+- Private data touched: read-only
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: no
+- Reusable core candidate: yes
+- Extraction timing: after second vertical repeats governance finding pattern
+
 ## Current Architecture
 
 The Governance module lives in:

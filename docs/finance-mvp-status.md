@@ -8,6 +8,18 @@ The BusinessOS Finance Module MVP is operational as a local modular backend.
 
 The system can ingest financial transactions, store them in SQLite, evaluate financial rules, generate recommended actions, export executive reports, and write audit logs for traceability.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Finance domain reference implementation
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: yes
+- Audit generated: yes
+- Reusable core candidate: no
+- Extraction timing: remain BusinessOS-specific
+
 ## Verified Runtime
 
 Main command:

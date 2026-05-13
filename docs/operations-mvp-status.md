@@ -8,6 +8,18 @@ The BusinessOS Operations Module MVP is now active inside the same local backend
 
 The module converts operational work into trackable tasks with owners, priorities, deadlines, statuses, justifications, escalations, KPIs, and an operations brief.
 
+## Boundary Classification
+
+- Primary boundary: BusinessOS-specific
+- Secondary boundary: Shared work queue pattern candidate
+- Private data touched: yes
+- Public surface touched: no
+- Approval required: no
+- Evidence generated: report only
+- Audit generated: yes
+- Reusable core candidate: partial
+- Extraction timing: after second vertical repeats work queue pattern with different domain language
+
 ## Current Architecture
 
 The Operations module lives in:
