@@ -29,6 +29,7 @@ As BusinessOS grows, it needs a fast way to confirm that the operating system is
 - Checks required SQLite tables.
 - Checks latest critical reports.
 - Checks notification outbox statuses.
+- Checks status-document boundary classification coverage.
 - Checks `.gitignore` protection for local DB, env, venv, and Streamlit secrets.
 - Checks that sensitive files are not present in the public website surface.
 - Checks Git working tree status and treats local artifacts as non-critical.

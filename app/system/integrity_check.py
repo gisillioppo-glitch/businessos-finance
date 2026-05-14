@@ -9,6 +9,7 @@ from app.scheduler.scheduled_daily_close import create_scheduled_daily_close_tab
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DB_PATH = ROOT_DIR / "finance.db"
+DOCS_DIR = ROOT_DIR / "docs"
 REPORTS_DIR = ROOT_DIR / "reports"
 
 REQUIRED_MODULES = [
@@ -148,6 +149,21 @@ def _run_git_status():
     return [line.strip() for line in result.stdout.splitlines() if line.strip()], None
 
 
+def _boundary_classification_coverage():
+    if not DOCS_DIR.exists():
+        return 0, ["docs folder missing"]
+
+    status_docs = sorted(DOCS_DIR.glob("*status.md"))
+    missing = []
+
+    for status_doc in status_docs:
+        content = status_doc.read_text(encoding="utf-8")
+        if "## Boundary Classification" not in content:
+            missing.append(status_doc.name)
+
+    return len(status_docs), missing
+
+
 def generate_system_integrity_check(conn):
     create_scheduled_daily_close_table(conn)
 
@@ -226,6 +242,19 @@ def generate_system_integrity_check(conn):
             "Notification statuses",
             not invalid_notification_statuses,
             "valid" if not invalid_notification_statuses else ", ".join(invalid_notification_statuses),
+        )
+    )
+
+    boundary_doc_count, missing_boundary_docs = _boundary_classification_coverage()
+    checks.append(
+        _check(
+            "Boundary classification coverage",
+            boundary_doc_count > 0 and not missing_boundary_docs,
+            (
+                f"{boundary_doc_count}/{boundary_doc_count} status docs covered"
+                if boundary_doc_count > 0 and not missing_boundary_docs
+                else "missing: " + ", ".join(missing_boundary_docs)
+            ),
         )
     )
 

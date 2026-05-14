@@ -6,6 +6,8 @@ Boundary Classification Coverage Index records the final coverage state for Busi
 
 This v1.0 refresh confirms that every current status document includes `Boundary Classification`.
 
+The current count includes the Boundary Classification Guard MVP, which keeps this coverage rule active inside system integrity checks.
+
 ## Boundary Classification
 
 - Primary boundary: Documentation / architecture
@@ -21,8 +23,8 @@ This v1.0 refresh confirms that every current status document includes `Boundary
 ## Coverage Summary
 
 ```text
-Total status docs: 65
-With Boundary Classification: 65
+Total status docs: 66
+With Boundary Classification: 66
 Missing Boundary Classification: 0
 Coverage: 100.0%
 ```
@@ -36,6 +38,7 @@ approval-layer-mvp-status.md
 assistance-layer-mvp-status.md
 assistance-status-v0.2-status.md
 boundary-classification-coverage-index-v0.1-status.md
+boundary-classification-guard-mvp-v0.1-status.md
 businessos-runtime-stability-review-v0.1-status.md
 command-center-mvp-status.md
 daily-close-distribution-mvp-v0.1-status.md
@@ -142,8 +145,7 @@ Extraction timing declared
 
 This v1.0 refresh is complete because:
 
-- coverage was recalculated from the repository
+- coverage was recalculated from the repository after adding the guard status doc
 - all current status docs include `Boundary Classification`
 - no missing status docs remain
 - future governance work has a clear operating rule
-

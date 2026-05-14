@@ -4,10 +4,10 @@ Date: 2026-05-13
 
 ## Integrity Summary
 
-Overall status: passed
-Total checks: 56
+Overall status: warning
+Total checks: 57
 Passed checks: 56
-Warning checks: 0
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -47,15 +47,15 @@ Failed checks: 0
 | Database table: approval_requests | passed | present |
 | Database table: notification_outbox | passed | present |
 | Database table: scheduled_daily_close | passed | present |
-| Latest report: daily_brief | passed | reports\daily_brief_2026-05-12.md |
-| Latest report: governance_brief | passed | reports\governance_brief_2026-05-12.md |
-| Latest report: support_brief | passed | reports\support_brief_2026-05-12.md |
-| Latest report: command_center | passed | reports\command_center_2026-05-12.md |
-| Latest report: approval_decisions | passed | reports\approval_decisions_2026-05-12.md |
-| Latest report: executive_alerts | passed | reports\executive_alerts_2026-05-12.md |
-| Latest report: executive_evidence_index | passed | reports\executive_evidence_index_2026-05-12.md |
-| Latest report: daily_close | passed | reports\daily_close_2026-05-12.md |
-| Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-12.md |
+| Latest report: daily_brief | passed | reports\daily_brief_2026-05-13.md |
+| Latest report: governance_brief | passed | reports\governance_brief_2026-05-13.md |
+| Latest report: support_brief | passed | reports\support_brief_2026-05-13.md |
+| Latest report: command_center | passed | reports\command_center_2026-05-13.md |
+| Latest report: approval_decisions | passed | reports\approval_decisions_2026-05-13.md |
+| Latest report: executive_alerts | passed | reports\executive_alerts_2026-05-13.md |
+| Latest report: executive_evidence_index | passed | reports\executive_evidence_index_2026-05-13.md |
+| Latest report: daily_close | passed | reports\daily_close_2026-05-13.md |
+| Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-13.md |
 | Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-12.md |
 | Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-12.md |
 | Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-12.md |
@@ -69,4 +69,5 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Git working tree | passed | clean except known local artifacts |
+| Boundary classification coverage | passed | 66/66 status docs covered |
+| Git working tree | warning | M README.md; M app/system/integrity_check.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M docs/system-integrity-check-mvp-v0.1-status.md; ?? docs/boundary-classification-guard-mvp-v0.1-status.md |

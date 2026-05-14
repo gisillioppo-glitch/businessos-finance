@@ -64,6 +64,14 @@ docs/boundary-classification-coverage-index-v0.1-status.md
 
 This index tracks which status documents already include `Boundary Classification` and which documents still need backfill.
 
+The first automated guard for that status-document boundary rule is documented in:
+
+```text
+docs/boundary-classification-guard-mvp-v0.1-status.md
+```
+
+This guard runs inside `python cli.py system-check` and verifies that every `docs/*status.md` file includes `## Boundary Classification`.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
