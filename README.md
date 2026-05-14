@@ -152,6 +152,14 @@ docs/release-checkpoint-full-smoke-v0.1-status.md
 
 This checkpoint records the full smoke release validation, including the heavier private pilot chain.
 
+The private demo break handoff is documented in:
+
+```text
+docs/private-demo-break-handoff-v0.1-status.md
+```
+
+This handoff records the end-of-day operating state for pausing, resuming, or moving the work to a new chat.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
