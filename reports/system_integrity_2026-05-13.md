@@ -57,7 +57,7 @@ Failed checks: 0
 | Latest report: daily_close | passed | reports\daily_close_2026-05-13.md |
 | Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-13.md |
 | Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-13.md |
-| Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-12.md |
+| Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-13.md |
 | Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-12.md |
 | Latest report: secure_email_delivery | passed | reports\secure_email_delivery_2026-05-12.md |
 | Gitignore protects: finance.db | passed | protected |
