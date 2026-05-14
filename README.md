@@ -128,6 +128,14 @@ docs/release-checkpoint-quick-smoke-v0.1-status.md
 
 This checkpoint records the quick smoke release validation after dashboard, release readiness, boundary governance, and handoff hardening.
 
+The private dashboard runtime stability page is documented in:
+
+```text
+docs/dashboard-runtime-stability-page-v0.1-status.md
+```
+
+This page shows the latest runtime-stability artifact inside the protected dashboard as a read-only smoke/runtime profile health view.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

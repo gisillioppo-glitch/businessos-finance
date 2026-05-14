@@ -180,6 +180,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Release readiness gate is reusable as a controlled readiness pattern.",
     },
     {
+        "page": "Runtime Stability",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS smoke/runtime profile visibility",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Runtime profile health is reusable as an operating stability pattern.",
+    },
+    {
         "page": "Boundary Index",
         "primary_boundary": "Documentation / architecture",
         "secondary_boundary": "Shared dashboard governance pattern candidate",
@@ -734,6 +743,93 @@ def load_release_readiness_status():
         "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
         "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
         "checks": checks,
+    }
+
+
+def load_runtime_stability_status():
+    report_path = get_latest_report_path("runtime_stability")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "overall_status": "missing",
+            "total_checks": 0,
+            "passed_checks": 0,
+            "warning_checks": 0,
+            "failed_checks": 0,
+            "smoke_command_count": 0,
+            "heavy_pilot_command_count": 0,
+            "full_smoke_command_count": 0,
+            "full_heavy_pilot_command_count": 0,
+            "checks": [],
+            "full_heavy_commands": [],
+            "recommendations": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    checks = []
+    full_heavy_commands = []
+    recommendations = []
+    section = None
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped[3:].strip()
+            continue
+
+        if section == "Checks":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Check"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 3:
+                checks.append(
+                    {
+                        "name": parts[0],
+                        "status": parts[1],
+                        "detail": " | ".join(parts[2:]),
+                    }
+                )
+
+        elif section == "Full Profile Heavy Pilot Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Command"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 2:
+                full_heavy_commands.append(
+                    {
+                        "command": parts[0].strip("`"),
+                        "runtime_risk": parts[1],
+                    }
+                )
+
+        elif section == "Recommendations" and stripped.startswith("- "):
+            recommendations.append(stripped[2:].strip())
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "overall_status": status_match.group(1) if status_match else "unknown",
+        "total_checks": extract_metric_from_markdown(content, "Total checks"),
+        "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
+        "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
+        "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "smoke_command_count": extract_metric_from_markdown(content, "Smoke command count"),
+        "heavy_pilot_command_count": extract_metric_from_markdown(content, "Heavy pilot command count"),
+        "full_smoke_command_count": extract_metric_from_markdown(content, "Full smoke command count"),
+        "full_heavy_pilot_command_count": extract_metric_from_markdown(content, "Full heavy pilot command count"),
+        "checks": checks,
+        "full_heavy_commands": full_heavy_commands,
+        "recommendations": recommendations,
     }
 
 
@@ -1975,6 +2071,7 @@ def load_dashboard_data():
     evidence_index_status = load_evidence_index_status()
     system_integrity_status = load_system_integrity_status()
     release_readiness_status = load_release_readiness_status()
+    runtime_stability_status = load_runtime_stability_status()
     session_handoff_status = load_session_handoff_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
@@ -2045,6 +2142,7 @@ def load_dashboard_data():
         "secure_email_report": secure_email_report,
         "system_integrity_status": system_integrity_status,
         "release_readiness_status": release_readiness_status,
+        "runtime_stability_status": runtime_stability_status,
         "session_handoff_status": session_handoff_status,
         "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
@@ -2899,6 +2997,92 @@ def render_module_page(page, data):
                 "Use CLI to refresh the artifact; dashboard remains read-only",
             )
             render_panel_end()
+    elif page == "Runtime Stability":
+        runtime = data["runtime_stability_status"]
+        overall_status = runtime["overall_status"]
+        overall_class = {
+            "runtime_stable": "green",
+            "runtime_warning": "gold",
+            "runtime_unstable": "red",
+            "missing": "red",
+        }.get(overall_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Overall", overall_status.replace("_", " ").title(), "Latest runtime-stability result", overall_class)
+        with c2:
+            render_metric_card("Checks", runtime["total_checks"], "Runtime checks evaluated", "")
+        with c3:
+            render_metric_card("Standard", runtime["smoke_command_count"], "Standard smoke commands", "green")
+        with c4:
+            render_metric_card("Full", runtime["full_smoke_command_count"], "Full smoke commands", "gold")
+        with c5:
+            render_metric_card("Heavy", runtime["full_heavy_pilot_command_count"], "Full-profile heavy commands", "gold" if runtime["full_heavy_pilot_command_count"] else "green")
+
+        status_filter = st.selectbox(
+            "Runtime status filter",
+            ["all", "passed", "warning", "failed"],
+            index=0,
+        )
+        filtered_checks = [
+            check
+            for check in runtime["checks"]
+            if status_filter == "all" or check["status"] == status_filter
+        ]
+
+        status_styles = {
+            "passed": "healthy",
+            "warning": "medium",
+            "failed": "high",
+        }
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Runtime Checks")
+            if filtered_checks:
+                for check in filtered_checks:
+                    render_status_row(
+                        check["name"],
+                        check["detail"],
+                        status_styles.get(check["status"], check["status"]),
+                    )
+            else:
+                render_status_row("No checks found", "No runtime checks match this filter", "healthy")
+            render_panel_end()
+
+            if runtime["full_heavy_commands"]:
+                st.dataframe(
+                    pd.DataFrame(runtime["full_heavy_commands"]),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+        with right:
+            render_panel_start("Runtime Brief")
+            render_brief_item(
+                runtime["report_path"] or "Runtime stability report not generated",
+                "Latest exported runtime-stability artifact",
+            )
+            render_brief_item(
+                f"{runtime['passed_checks']} of {runtime['total_checks']} checks passing",
+                "Operational stability of standard and full smoke profiles",
+            )
+            render_brief_item(
+                f"{runtime['heavy_pilot_command_count']} heavy command(s) in standard, {runtime['full_heavy_pilot_command_count']} reserved for full",
+                "Standard profile stays fast while full profile preserves deep validation",
+            )
+            render_brief_item(
+                "python cli.py runtime-stability",
+                "Use CLI to refresh the artifact; dashboard remains read-only",
+            )
+            render_panel_end()
+
+            if runtime["recommendations"]:
+                render_panel_start("Recommendations")
+                for recommendation in runtime["recommendations"]:
+                    render_status_row(recommendation, "Runtime stability guidance", "healthy")
+                render_panel_end()
     elif page == "Boundary Index":
         boundary_index = data["dashboard_boundary_index"]
         boundary_rows = boundary_index["rows"]

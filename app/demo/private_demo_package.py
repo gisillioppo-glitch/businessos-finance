@@ -49,6 +49,7 @@ DASHBOARD_PAGES = [
     "Secure Email",
     "Scheduled Close",
     "System Integrity",
+    "Runtime Stability",
     "Boundary Index",
     "Session Handoff",
     "Demo Readiness",
