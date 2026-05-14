@@ -57,6 +57,7 @@ Failed checks: 0
 - Secure Email
 - Scheduled Close
 - System Integrity
+- Runtime Stability
 - Boundary Index
 - Session Handoff
 - Demo Readiness
