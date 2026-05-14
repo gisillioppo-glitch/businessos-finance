@@ -5,16 +5,16 @@ Date: 2026-05-13
 ## Current Git State
 
 Branch: main
-Latest commit: d81ade6 Refresh session handoff after readiness dashboard
+Latest commit: 1d1b48a Refresh release readiness after quick smoke checkpoint
 Head tag(s):
-- businessos-dashboard-release-readiness-summary-v0.1
+- none
 Git status: clean except known local artifacts
 Known local artifacts:
 - BussinessOS Avance.pdf
 
 ## Governance Coverage
 
-Boundary classification coverage: 72/72 status docs covered
+Boundary classification coverage: 73/73 status docs covered
 
 ## Latest System Artifacts
 
@@ -30,9 +30,9 @@ Boundary classification coverage: 72/72 status docs covered
 
 ## Recommended Next Blocks
 
-- Release Checkpoint Quick Smoke v0.1
 - Dashboard Runtime Stability Page v0.1
 - Dashboard Demo Package Page v0.1
+- Release Checkpoint Full Smoke v0.1
 
 ## Operator Note
 
