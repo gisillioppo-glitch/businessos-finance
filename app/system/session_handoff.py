@@ -28,9 +28,9 @@ KEY_REPORT_PREFIXES = [
 ]
 
 NEXT_RECOMMENDED_BLOCKS = [
-    "Architecture Boundary Governance Lock v0.1",
     "Private Demo Package Refresh v0.2",
     "Dashboard Release Readiness Summary v0.1",
+    "Release Checkpoint Quick Smoke v0.1",
 ]
 
 
