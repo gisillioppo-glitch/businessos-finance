@@ -5,7 +5,7 @@ Date: 2026-05-13
 ## Current Git State
 
 Branch: main
-Latest commit: 4bc510e Update handoff recommendations after governance lock
+Latest commit: c859198 Update handoff recommendations after demo package
 Head tag(s):
 - none
 Git status: clean except known local artifacts
@@ -30,9 +30,9 @@ Boundary classification coverage: 71/71 status docs covered
 
 ## Recommended Next Blocks
 
-- Private Demo Package Refresh v0.2
 - Dashboard Release Readiness Summary v0.1
 - Release Checkpoint Quick Smoke v0.1
+- Dashboard Runtime Stability Page v0.1
 
 ## Operator Note
 
