@@ -61,6 +61,7 @@ Failed checks: 0
 - Boundary Index
 - Session Handoff
 - Demo Readiness
+- Demo Package
 - Pilot Plan
 - Pilot Tracker
 - Pilot Exit
