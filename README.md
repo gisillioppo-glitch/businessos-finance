@@ -112,6 +112,14 @@ docs/architecture-boundary-governance-lock-v0.1.md
 
 This lock defines the minimum closure rule for future BusinessOS blocks: boundary classification, targeted validation, system/readiness checks when relevant, explicit staging, commit, push, tag, and clean handoff discipline.
 
+The private dashboard release readiness summary is documented in:
+
+```text
+docs/dashboard-release-readiness-summary-v0.1-status.md
+```
+
+This page shows the latest release-readiness artifact inside the protected dashboard as a read-only release/demo gate view.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

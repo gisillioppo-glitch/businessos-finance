@@ -171,6 +171,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "System health and integrity checks are reusable.",
     },
     {
+        "page": "Release Readiness",
+        "primary_boundary": "OS Core candidate",
+        "secondary_boundary": "BusinessOS private demo readiness gate",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "yes",
+        "note": "Release readiness gate is reusable as a controlled readiness pattern.",
+    },
+    {
         "page": "Boundary Index",
         "primary_boundary": "Documentation / architecture",
         "secondary_boundary": "Shared dashboard governance pattern candidate",
@@ -659,6 +668,56 @@ def load_system_integrity_status():
                     "name": parts[0],
                     "status": parts[1],
                     "detail": parts[2],
+                }
+            )
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "overall_status": status_match.group(1) if status_match else "unknown",
+        "total_checks": extract_metric_from_markdown(content, "Total checks"),
+        "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
+        "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
+        "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "checks": checks,
+    }
+
+
+def load_release_readiness_status():
+    report_path = get_latest_report_path("release_readiness")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "overall_status": "missing",
+            "total_checks": 0,
+            "passed_checks": 0,
+            "warning_checks": 0,
+            "failed_checks": 0,
+            "checks": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    checks = []
+
+    for line in content.splitlines():
+        if not line.startswith("|") or line.startswith("| ---") or line.startswith("| Check"):
+            continue
+
+        parts = [part.strip() for part in line.strip("|").split("|")]
+        if len(parts) == 4:
+            checks.append(
+                {
+                    "name": parts[0],
+                    "status": parts[1],
+                    "severity": parts[2],
+                    "detail": parts[3].replace("\\|", "|"),
                 }
             )
 
@@ -1915,6 +1974,7 @@ def load_dashboard_data():
     daily_close_status = load_daily_close_status()
     evidence_index_status = load_evidence_index_status()
     system_integrity_status = load_system_integrity_status()
+    release_readiness_status = load_release_readiness_status()
     session_handoff_status = load_session_handoff_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
@@ -1984,6 +2044,7 @@ def load_dashboard_data():
         "secure_email_status": secure_email_status,
         "secure_email_report": secure_email_report,
         "system_integrity_status": system_integrity_status,
+        "release_readiness_status": release_readiness_status,
         "session_handoff_status": session_handoff_status,
         "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
@@ -2760,6 +2821,82 @@ def render_module_page(page, data):
             render_brief_item(
                 f"{system_integrity['warning_checks']} warning(s) and {system_integrity['failed_checks']} failed check(s)",
                 "Warnings are expected during active uncommitted work; failures require immediate review",
+            )
+            render_panel_end()
+    elif page == "Release Readiness":
+        readiness = data["release_readiness_status"]
+        overall_status = readiness["overall_status"]
+        overall_class = {
+            "ready": "green",
+            "ready_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(overall_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Overall", overall_status.replace("_", " ").title(), "Latest release-readiness result", overall_class)
+        with c2:
+            render_metric_card("Total", readiness["total_checks"], "Checks evaluated", "")
+        with c3:
+            render_metric_card("Passed", readiness["passed_checks"], "Ready controls", "green")
+        with c4:
+            render_metric_card("Warnings", readiness["warning_checks"], "Needs review", "gold" if readiness["warning_checks"] else "green")
+        with c5:
+            render_metric_card("Failed", readiness["failed_checks"], "Blocking issues", "red" if readiness["failed_checks"] else "green")
+
+        status_filter = st.selectbox(
+            "Readiness status filter",
+            ["all", "passed", "warning", "failed"],
+            index=0,
+        )
+        filtered_checks = [
+            check
+            for check in readiness["checks"]
+            if status_filter == "all" or check["status"] == status_filter
+        ]
+
+        status_styles = {
+            "passed": "healthy",
+            "warning": "medium",
+            "failed": "high",
+        }
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Readiness Checks")
+            if filtered_checks:
+                for check in filtered_checks:
+                    render_status_row(
+                        check["name"],
+                        f"{check['severity']} | {check['detail']}",
+                        status_styles.get(check["status"], check["status"]),
+                    )
+            else:
+                render_status_row("No checks found", "No readiness checks match this filter", "healthy")
+            render_panel_end()
+
+            if filtered_checks:
+                st.dataframe(
+                    pd.DataFrame(filtered_checks),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+        with right:
+            render_panel_start("Readiness Brief")
+            render_brief_item(
+                readiness["report_path"] or "Release readiness report not generated",
+                "Latest exported release-readiness artifact",
+            )
+            render_brief_item(
+                f"{readiness['passed_checks']} of {readiness['total_checks']} checks passing",
+                "Demo and release readiness coverage",
+            )
+            render_brief_item(
+                "python cli.py release-readiness",
+                "Use CLI to refresh the artifact; dashboard remains read-only",
             )
             render_panel_end()
     elif page == "Boundary Index":
