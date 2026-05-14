@@ -28,6 +28,7 @@ It answers whether the current private build is ready to be shown in a controlle
 - Checks public landing files and lead intake markers.
 - Checks sensitive file protections and public secret boundaries.
 - Checks daily close, notification outbox, scheduled close, dashboard readiness pages, and Git working tree.
+- Checks status-document boundary classification coverage.
 - Treats `BussinessOS Avance.pdf` as a known local artifact that remains outside release scope.
 
 ## Safety Boundary

@@ -6,7 +6,7 @@ Boundary Classification Coverage Index records the final coverage state for Busi
 
 This v1.0 refresh confirms that every current status document includes `Boundary Classification`.
 
-The current count includes the Boundary Classification Guard MVP, which keeps this coverage rule active inside system integrity checks.
+The current count includes the Boundary Classification Guard MVP and Release Readiness Boundary Guard MVP, which keep this coverage rule active inside system integrity and release readiness checks.
 
 ## Boundary Classification
 
@@ -23,8 +23,8 @@ The current count includes the Boundary Classification Guard MVP, which keeps th
 ## Coverage Summary
 
 ```text
-Total status docs: 66
-With Boundary Classification: 66
+Total status docs: 67
+With Boundary Classification: 67
 Missing Boundary Classification: 0
 Coverage: 100.0%
 ```
@@ -93,6 +93,7 @@ private-pilot-exit-decision-mvp-v0.1-status.md
 private-pilot-intake-mvp-v0.1-status.md
 private-pilot-plan-mvp-v0.1-status.md
 release-readiness-mvp-v0.1-status.md
+release-readiness-boundary-guard-mvp-v0.1-status.md
 scheduled-daily-close-mvp-v0.1-status.md
 secure-email-delivery-adapter-v0.1-status.md
 security-mvp-status.md

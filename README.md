@@ -72,6 +72,14 @@ docs/boundary-classification-guard-mvp-v0.1-status.md
 
 This guard runs inside `python cli.py system-check` and verifies that every `docs/*status.md` file includes `## Boundary Classification`.
 
+The release readiness implementation of that same boundary rule is documented in:
+
+```text
+docs/release-readiness-boundary-guard-mvp-v0.1-status.md
+```
+
+This guard runs inside `python cli.py release-readiness` and verifies boundary classification coverage directly before demo or release checkpoints.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

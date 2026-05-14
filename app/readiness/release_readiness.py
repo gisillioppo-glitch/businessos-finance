@@ -11,6 +11,7 @@ from app.audit.audit_log import write_audit_log
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 REPORTS_DIR = ROOT_DIR / "reports"
+DOCS_DIR = ROOT_DIR / "docs"
 DB_PATH = ROOT_DIR / "finance.db"
 DASHBOARD_URL = "http://localhost:8501"
 
@@ -150,6 +151,21 @@ def _scheduled_close_status():
         "last_run_date": row[2],
         "last_status": row[3],
     }
+
+
+def _boundary_classification_coverage():
+    if not DOCS_DIR.exists():
+        return 0, ["docs folder missing"]
+
+    status_docs = sorted(DOCS_DIR.glob("*status.md"))
+    missing = []
+
+    for status_doc in status_docs:
+        content = status_doc.read_text(encoding="utf-8")
+        if "## Boundary Classification" not in content:
+            missing.append(status_doc.name)
+
+    return len(status_docs), missing
 
 
 def generate_release_readiness():
@@ -298,6 +314,19 @@ def generate_release_readiness():
             "Dashboard readiness pages",
             not missing_pages,
             "visible in navigation" if not missing_pages else ", ".join(missing_pages),
+        )
+    )
+
+    boundary_doc_count, missing_boundary_docs = _boundary_classification_coverage()
+    checks.append(
+        _check(
+            "Boundary classification coverage",
+            boundary_doc_count > 0 and not missing_boundary_docs,
+            (
+                f"{boundary_doc_count}/{boundary_doc_count} status docs covered"
+                if boundary_doc_count > 0 and not missing_boundary_docs
+                else "missing: " + ", ".join(missing_boundary_docs)
+            ),
         )
     )
 
