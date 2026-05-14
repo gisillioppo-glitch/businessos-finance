@@ -49,7 +49,9 @@ Operators refresh the artifact from CLI with `python cli.py session-handoff`.
 - Passed: `.venv\Scripts\python.exe -m py_compile app\dashboard\main.py app\security\access_control.py`
 - Passed: direct boundary coverage recalculation, `70/70`, `0` missing
 - Passed: dashboard import and `Session Handoff` access check
-- Pending final evidence refresh after commit
+- Passed: `python cli.py session-handoff`
+- Pending: `system-check`
+- Pending: `release-readiness`
 
 ## Git Closure
 
