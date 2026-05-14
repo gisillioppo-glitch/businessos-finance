@@ -58,8 +58,8 @@ Failed checks: 0
 | Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-13.md |
 | Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-13.md |
 | Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-13.md |
-| Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-12.md |
-| Latest report: secure_email_delivery | passed | reports\secure_email_delivery_2026-05-12.md |
+| Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-13.md |
+| Latest report: secure_email_delivery | passed | reports\secure_email_delivery_2026-05-13.md |
 | Gitignore protects: finance.db | passed | protected |
 | Gitignore protects: .env | passed | protected |
 | Gitignore protects: .venv/ | passed | protected |
@@ -69,5 +69,5 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Boundary classification coverage | passed | 75/75 status docs covered |
+| Boundary classification coverage | passed | 76/76 status docs covered |
 | Git working tree | passed | clean except known local artifacts |
