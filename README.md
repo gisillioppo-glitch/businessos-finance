@@ -88,6 +88,14 @@ docs/boundary-classification-shared-guard-utility-v0.1-status.md
 
 This utility keeps `system-check` and `release-readiness` aligned on the same status-document coverage logic.
 
+The first session handoff snapshot is documented in:
+
+```text
+docs/session-handoff-snapshot-mvp-v0.1-status.md
+```
+
+This command exports a concise operating snapshot for pausing, resuming, or moving work across chats.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

@@ -101,6 +101,7 @@ from app.scheduler.scheduled_daily_close import (
 )
 from app.system.integrity_check import export_system_integrity_report
 from app.system.runtime_stability import print_runtime_stability_review
+from app.system.session_handoff import print_session_handoff_snapshot
 from app.support.incident_views import (
     print_support_incident_summary_kpis,
     print_support_incidents_list,
@@ -293,6 +294,19 @@ def run_runtime_stability():
 
     try:
         print_runtime_stability_review(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_session_handoff():
+    conn = create_connection()
+
+    try:
+        print_session_handoff_snapshot(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -956,6 +970,7 @@ def main():
             "health",
             "system-check",
             "runtime-stability",
+            "session-handoff",
             "actions",
             "reports",
             "release-readiness",
@@ -1028,6 +1043,8 @@ def main():
         run_system_check()
     elif args.command == "runtime-stability":
         run_runtime_stability()
+    elif args.command == "session-handoff":
+        run_session_handoff()
     elif args.command == "actions":
         run_actions()
     elif args.command == "reports":
