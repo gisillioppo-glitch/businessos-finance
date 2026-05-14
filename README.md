@@ -120,6 +120,14 @@ docs/dashboard-release-readiness-summary-v0.1-status.md
 
 This page shows the latest release-readiness artifact inside the protected dashboard as a read-only release/demo gate view.
 
+The quick release checkpoint smoke validation is documented in:
+
+```text
+docs/release-checkpoint-quick-smoke-v0.1-status.md
+```
+
+This checkpoint records the quick smoke release validation after dashboard, release readiness, boundary governance, and handoff hardening.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
