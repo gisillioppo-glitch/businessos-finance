@@ -26,5 +26,5 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 16 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: skipped_existing_close |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Boundary classification coverage | passed | critical | 69/69 status docs covered |
+| Boundary classification coverage | passed | critical | 70/70 status docs covered |
 | Git working tree | passed | critical | clean except known local artifacts |
