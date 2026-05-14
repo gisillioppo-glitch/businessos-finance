@@ -80,6 +80,14 @@ docs/release-readiness-boundary-guard-mvp-v0.1-status.md
 
 This guard runs inside `python cli.py release-readiness` and verifies boundary classification coverage directly before demo or release checkpoints.
 
+The shared utility behind these boundary guards is documented in:
+
+```text
+docs/boundary-classification-shared-guard-utility-v0.1-status.md
+```
+
+This utility keeps `system-check` and `release-readiness` aligned on the same status-document coverage logic.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

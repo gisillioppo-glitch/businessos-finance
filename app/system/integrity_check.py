@@ -4,12 +4,15 @@ from datetime import date
 from pathlib import Path
 
 from app.audit.audit_log import write_audit_log
+from app.system.boundary_classification import (
+    format_boundary_classification_detail,
+    get_boundary_classification_coverage,
+)
 from app.scheduler.scheduled_daily_close import create_scheduled_daily_close_table
 
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DB_PATH = ROOT_DIR / "finance.db"
-DOCS_DIR = ROOT_DIR / "docs"
 REPORTS_DIR = ROOT_DIR / "reports"
 
 REQUIRED_MODULES = [
@@ -149,21 +152,6 @@ def _run_git_status():
     return [line.strip() for line in result.stdout.splitlines() if line.strip()], None
 
 
-def _boundary_classification_coverage():
-    if not DOCS_DIR.exists():
-        return 0, ["docs folder missing"]
-
-    status_docs = sorted(DOCS_DIR.glob("*status.md"))
-    missing = []
-
-    for status_doc in status_docs:
-        content = status_doc.read_text(encoding="utf-8")
-        if "## Boundary Classification" not in content:
-            missing.append(status_doc.name)
-
-    return len(status_docs), missing
-
-
 def generate_system_integrity_check(conn):
     create_scheduled_daily_close_table(conn)
 
@@ -245,16 +233,12 @@ def generate_system_integrity_check(conn):
         )
     )
 
-    boundary_doc_count, missing_boundary_docs = _boundary_classification_coverage()
+    boundary_coverage = get_boundary_classification_coverage()
     checks.append(
         _check(
             "Boundary classification coverage",
-            boundary_doc_count > 0 and not missing_boundary_docs,
-            (
-                f"{boundary_doc_count}/{boundary_doc_count} status docs covered"
-                if boundary_doc_count > 0 and not missing_boundary_docs
-                else "missing: " + ", ".join(missing_boundary_docs)
-            ),
+            boundary_coverage["total"] > 0 and not boundary_coverage["missing"],
+            format_boundary_classification_detail(boundary_coverage),
         )
     )
 
