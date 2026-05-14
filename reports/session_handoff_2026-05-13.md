@@ -5,9 +5,9 @@ Date: 2026-05-13
 ## Current Git State
 
 Branch: main
-Latest commit: 5506e8d Update handoff recommendations after readiness dashboard
+Latest commit: d81ade6 Refresh session handoff after readiness dashboard
 Head tag(s):
-- none
+- businessos-dashboard-release-readiness-summary-v0.1
 Git status: clean except known local artifacts
 Known local artifacts:
 - BussinessOS Avance.pdf
