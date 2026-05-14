@@ -69,5 +69,5 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Boundary classification coverage | passed | 69/69 status docs covered |
+| Boundary classification coverage | passed | 70/70 status docs covered |
 | Git working tree | passed | clean except known local artifacts |
