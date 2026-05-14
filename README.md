@@ -96,6 +96,14 @@ docs/session-handoff-snapshot-mvp-v0.1-status.md
 
 This command exports a concise operating snapshot for pausing, resuming, or moving work across chats.
 
+The private dashboard view for that snapshot is documented in:
+
+```text
+docs/dashboard-session-handoff-page-v0.1-status.md
+```
+
+This page shows the latest session handoff snapshot inside the protected dashboard as a read-only operator view.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

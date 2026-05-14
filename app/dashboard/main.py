@@ -180,6 +180,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Private read-only index for dashboard exposure and extraction review.",
     },
     {
+        "page": "Session Handoff",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared operator handoff pattern candidate",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Session handoff is operational context today; pattern may transfer later.",
+    },
+    {
         "page": "Demo Readiness",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared demo readiness candidate",
@@ -683,6 +692,102 @@ def load_dashboard_boundary_index():
         "business_count": business_count,
         "shared_count": shared_count,
         "public_surface_count": public_surface_count,
+    }
+
+
+def _parse_handoff_bullets(lines, start_index):
+    items = []
+    index = start_index
+
+    while index < len(lines):
+        stripped = lines[index].strip()
+        if stripped.startswith("## "):
+            break
+        if stripped.startswith("- "):
+            items.append(stripped[2:].strip())
+        index += 1
+
+    return items
+
+
+def load_session_handoff_status():
+    report_path = get_latest_report_path("session_handoff")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "branch": "missing",
+            "latest_commit": "missing",
+            "head_tags": [],
+            "git_status": "missing",
+            "known_local_artifacts": [],
+            "boundary_coverage": "missing",
+            "reports": [],
+            "next_blocks": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    lines = content.splitlines()
+    reports = []
+    next_blocks = []
+    head_tags = []
+    known_local_artifacts = []
+    section = None
+
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if stripped.startswith("Head tag(s):"):
+            head_tags = _parse_handoff_bullets(lines, index + 1)
+            continue
+
+        if stripped.startswith("Known local artifacts:"):
+            known_local_artifacts = _parse_handoff_bullets(lines, index + 1)
+            continue
+
+        if section == "Recommended Next Blocks" and stripped.startswith("- "):
+            next_blocks.append(stripped[2:].strip())
+            continue
+
+        if section == "Latest System Artifacts":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Report"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 4:
+                reports.append(
+                    {
+                        "name": parts[0],
+                        "path": parts[1],
+                        "status": parts[2],
+                        "detail": parts[3].replace("\\|", "|"),
+                    }
+                )
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    branch_match = re.search(r"Branch:\s*(.+)", content)
+    commit_match = re.search(r"Latest commit:\s*(.+)", content)
+    git_match = re.search(r"Git status:\s*(.+)", content)
+    coverage_match = re.search(r"Boundary classification coverage:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "branch": branch_match.group(1).strip() if branch_match else "unknown",
+        "latest_commit": commit_match.group(1).strip() if commit_match else "unknown",
+        "head_tags": head_tags,
+        "git_status": git_match.group(1).strip() if git_match else "unknown",
+        "known_local_artifacts": known_local_artifacts,
+        "boundary_coverage": coverage_match.group(1).strip() if coverage_match else "unknown",
+        "reports": reports,
+        "next_blocks": next_blocks,
     }
 
 
@@ -1810,6 +1915,7 @@ def load_dashboard_data():
     daily_close_status = load_daily_close_status()
     evidence_index_status = load_evidence_index_status()
     system_integrity_status = load_system_integrity_status()
+    session_handoff_status = load_session_handoff_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
     private_pilot_plan_status = load_private_pilot_plan_status()
@@ -1878,6 +1984,7 @@ def load_dashboard_data():
         "secure_email_status": secure_email_status,
         "secure_email_report": secure_email_report,
         "system_integrity_status": system_integrity_status,
+        "session_handoff_status": session_handoff_status,
         "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
@@ -2746,6 +2853,75 @@ def render_module_page(page, data):
                     render_status_row(row["page"], row["note"], row["core_candidate"])
             else:
                 render_status_row("No notes", "Select another boundary filter", "medium")
+            render_panel_end()
+    elif page == "Session Handoff":
+        handoff = data["session_handoff_status"]
+        git_clean = handoff["git_status"] == "clean except known local artifacts"
+        boundary_ready = "status docs covered" in handoff["boundary_coverage"]
+
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            render_metric_card("Snapshot", "Available" if handoff["exists"] else "Missing", "Latest handoff artifact", "green" if handoff["exists"] else "red")
+        with c2:
+            render_metric_card("Branch", handoff["branch"], "Current tracked branch", "")
+        with c3:
+            render_metric_card("Git", "Clean" if git_clean else "Review", "Working tree state", "green" if git_clean else "gold")
+        with c4:
+            render_metric_card("Boundary", "Covered" if boundary_ready else "Review", handoff["boundary_coverage"], "green" if boundary_ready else "gold")
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Latest System Artifacts")
+            if handoff["reports"]:
+                for report in handoff["reports"]:
+                    status = "healthy"
+                    if report["status"] in ("missing", "blocked", "failed"):
+                        status = "high"
+                    elif report["status"] in ("unknown", "ready_with_warnings", "warning"):
+                        status = "medium"
+                    render_status_row(
+                        report["name"],
+                        f"{report['path']} | {report['detail']}",
+                        status,
+                    )
+            else:
+                render_status_row("No handoff artifacts", "Run python cli.py session-handoff", "medium")
+            render_panel_end()
+
+            if handoff["reports"]:
+                st.dataframe(
+                    pd.DataFrame(handoff["reports"]),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+        with right:
+            render_panel_start("Handoff Brief")
+            render_brief_item(
+                handoff["report_path"] or "Session handoff snapshot not generated",
+                "Latest exported handoff artifact",
+            )
+            render_brief_item(
+                handoff["latest_commit"],
+                "Commit captured by the latest handoff",
+            )
+            render_brief_item(
+                ", ".join(handoff["head_tags"]) if handoff["head_tags"] else "No tag at captured HEAD",
+                "Tag(s) captured by the latest handoff",
+            )
+            render_brief_item(
+                ", ".join(handoff["known_local_artifacts"]) if handoff["known_local_artifacts"] else "No known local artifacts listed",
+                "Local files intentionally outside repo scope",
+            )
+            render_panel_end()
+
+            render_panel_start("Recommended Next Blocks")
+            if handoff["next_blocks"]:
+                for block in handoff["next_blocks"]:
+                    render_status_row(block, "Suggested continuation from latest handoff", "medium")
+            else:
+                render_status_row("No next blocks recorded", "Refresh with python cli.py session-handoff", "medium")
             render_panel_end()
     elif page == "Pilot Plan":
         pilot = data["private_pilot_plan_status"]
