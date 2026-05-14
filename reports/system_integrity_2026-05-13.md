@@ -4,10 +4,10 @@ Date: 2026-05-13
 
 ## Integrity Summary
 
-Overall status: warning
+Overall status: passed
 Total checks: 57
-Passed checks: 56
-Warning checks: 1
+Passed checks: 57
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -70,4 +70,4 @@ Failed checks: 0
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
 | Boundary classification coverage | passed | 66/66 status docs covered |
-| Git working tree | warning | M README.md; M app/system/integrity_check.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M docs/system-integrity-check-mvp-v0.1-status.md; ?? docs/boundary-classification-guard-mvp-v0.1-status.md |
+| Git working tree | passed | clean except known local artifacts |
