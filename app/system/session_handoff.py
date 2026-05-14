@@ -28,9 +28,9 @@ KEY_REPORT_PREFIXES = [
 ]
 
 NEXT_RECOMMENDED_BLOCKS = [
-    "Dashboard Session Handoff Page v0.1",
     "Architecture Boundary Governance Lock v0.1",
     "Private Demo Package Refresh v0.2",
+    "Dashboard Release Readiness Summary v0.1",
 ]
 
 
