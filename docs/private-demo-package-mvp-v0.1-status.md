@@ -1,10 +1,10 @@
-# Private Demo Package MVP v0.1
+# Private Demo Package MVP v0.2
 
 ## Product Meaning
 
 Private Demo Package gives BusinessOS a controlled demo artifact for private presentations.
 
-It turns the current system state into a single Markdown package with the demo story, commands, readiness status, safe boundaries, known risks, and pre-demo checklist.
+It turns the current system state into a single Markdown package with the demo story, commands, readiness status, safe boundaries, governance lock, handoff state, known risks, and pre-demo checklist.
 
 ## Boundary Classification
 
@@ -24,6 +24,9 @@ It turns the current system state into a single Markdown package with the demo s
 - Exports `reports/private_demo_package_YYYY-MM-DD.md`.
 - Reuses the Release Readiness gate as the package readiness source.
 - Lists the private dashboard pages that are safe to show.
+- Includes Runtime Stability and Session Handoff commands.
+- Includes Boundary Index and Session Handoff dashboard pages.
+- Includes Architecture Boundary Governance Lock in the demo story.
 - Documents the recommended demo flow.
 - Separates what to show from what not to show.
 - Documents known risks before external presentation.
@@ -36,11 +39,11 @@ Private Demo Package does not deploy anything, send email, modify notification s
 
 ## Validation
 
-- Passed: `python -m py_compile cli.py app\demo\private_demo_package.py app\system\integrity_check.py scripts\smoke_test.py`.
-- Passed: `python cli.py private-demo-package`.
-- Passed: `python cli.py system-check`.
-- Passed: `python scripts\smoke_test.py`.
+- Passed: `.venv\Scripts\python.exe -m py_compile app\demo\private_demo_package.py`
+- Passed: direct boundary coverage recalculation, `71/71`, `0` missing
+- Passed: `.venv\Scripts\python.exe cli.py private-demo-package`
+- Pending final evidence refresh after commit
 
 ## Next Step
 
-Notification Delivery Approval MVP v0.1 or Secure Email Delivery Adapter v0.1.
+Dashboard Release Readiness Summary v0.1 or Release Checkpoint Quick Smoke v0.1.

@@ -12,6 +12,8 @@ REPORTS_DIR = ROOT_DIR / "reports"
 DEMO_COMMANDS = [
     ("Release readiness gate", "python cli.py release-readiness"),
     ("System integrity check", "python cli.py system-check"),
+    ("Runtime stability review", "python cli.py runtime-stability"),
+    ("Session handoff snapshot", "python cli.py session-handoff"),
     ("Executive daily close", "python cli.py daily-close"),
     ("Notification outbox", "python cli.py notifications"),
     ("Notification delivery approval", "python cli.py notification-delivery-approval"),
@@ -27,7 +29,8 @@ DEMO_COMMANDS = [
     ("Pilot Day 5 narrow continuation", "python cli.py pilot-day-5-narrow-continuation"),
     ("Pilot expansion review prep", "python cli.py pilot-expansion-review-prep"),
     ("Pilot expansion review decision", "python cli.py pilot-expansion-review-decision"),
-    ("Full smoke test", "python scripts/smoke_test.py"),
+    ("Quick smoke checkpoint", "python scripts/smoke_test.py quick"),
+    ("Full smoke test", "python scripts/smoke_test.py full"),
 ]
 
 DASHBOARD_PAGES = [
@@ -47,6 +50,7 @@ DASHBOARD_PAGES = [
     "Scheduled Close",
     "System Integrity",
     "Boundary Index",
+    "Session Handoff",
     "Demo Readiness",
     "Pilot Plan",
     "Pilot Tracker",
@@ -62,7 +66,8 @@ DEMO_FLOW = [
     "Walk through Finance, Operations, Governance, Support, Alerts, and Approvals as connected operating layers.",
     "Show Daily Close and Evidence Index as the executive close-of-day package.",
     "Show Notifications and Scheduled Close as controlled automation readiness.",
-    "Close with Boundary Index, System Integrity, and Release Readiness as the demo quality gate.",
+    "Show Boundary Index, Session Handoff, and Governance Lock as operating discipline.",
+    "Close with System Integrity, Release Readiness, and Runtime Stability as the demo quality gate.",
 ]
 
 SHOW_ITEMS = [
@@ -74,7 +79,10 @@ SHOW_ITEMS = [
     "Secure Email Delivery report in disabled or dry-run mode unless credentials are explicitly enabled.",
     "Scheduled Close status and last scheduler result.",
     "Boundary Index as the private dashboard exposure map.",
+    "Session Handoff as the pause/resume and operator continuity view.",
+    "Architecture Boundary Governance Lock as the block closure discipline.",
     "System Integrity and Release Readiness reports.",
+    "Runtime Stability report for quick validation confidence.",
 ]
 
 DO_NOT_SHOW_ITEMS = [
@@ -91,12 +99,15 @@ KNOWN_RISKS = [
     "Release Readiness may show a Git working tree warning while an active development block is uncommitted.",
     "Lead intake requires a real external form endpoint before production capture.",
     "The private dashboard is not a public production deployment target.",
+    "Architecture governance is enforced by operating discipline and readiness checks, not by CI yet.",
 ]
 
 PRE_DEMO_CHECKLIST = [
     "Run python cli.py system-check.",
     "Run python cli.py release-readiness.",
-    "Run python scripts/smoke_test.py when time allows.",
+    "Run python cli.py runtime-stability.",
+    "Run python cli.py session-handoff before changing chat or pausing.",
+    "Run python scripts/smoke_test.py quick before demo checkpoints.",
     "Confirm the private dashboard responds at http://localhost:8501.",
     "Confirm Git status has no unexpected changes beyond BussinessOS Avance.pdf.",
     "Confirm finance.db, .env, and Streamlit secrets are not in the public surface.",
@@ -147,6 +158,8 @@ def _format_report_links():
     report_prefixes = [
         ("Release Readiness", "release_readiness"),
         ("System Integrity", "system_integrity"),
+        ("Runtime Stability", "runtime_stability"),
+        ("Session Handoff", "session_handoff"),
         ("Daily Close", "daily_close"),
         ("Daily Close Distribution", "daily_close_distribution"),
         ("Executive Evidence Index", "executive_evidence_index"),
@@ -188,13 +201,13 @@ def export_private_demo_package(conn=None):
     readiness = package["readiness"]
     report_path = REPORTS_DIR / f"private_demo_package_{package['date']}.md"
 
-    content = f"""# Private Demo Package MVP v0.1
+    content = f"""# Private Demo Package MVP v0.2
 
 Date: {package['date']}
 
 ## System Summary
 
-BusinessOS is a private institutional AI operating system that connects Finance, Operations, Governance, Support, Command Center, Executive Alerts, Evidence, Daily Close, Notifications, Scheduled Close, System Integrity, and Release Readiness.
+BusinessOS is a private institutional AI operating system that connects Finance, Operations, Governance, Support, Command Center, Executive Alerts, Evidence, Daily Close, Notifications, Scheduled Close, System Integrity, Release Readiness, Runtime Stability, Boundary Governance, and Session Handoff.
 
 ## Demo Readiness
 
