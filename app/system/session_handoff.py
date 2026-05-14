@@ -28,9 +28,9 @@ KEY_REPORT_PREFIXES = [
 ]
 
 NEXT_RECOMMENDED_BLOCKS = [
-    "Dashboard Release Readiness Summary v0.1",
     "Release Checkpoint Quick Smoke v0.1",
     "Dashboard Runtime Stability Page v0.1",
+    "Dashboard Demo Package Page v0.1",
 ]
 
 
