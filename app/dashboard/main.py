@@ -216,6 +216,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Demo readiness is go-to-market-specific but pattern may transfer.",
     },
     {
+        "page": "Demo Package",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared demo package candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Demo package is go-to-market-specific; packaging pattern may transfer.",
+    },
+    {
         "page": "Pilot Plan",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared pilot methodology candidate",
@@ -943,6 +952,116 @@ def load_session_handoff_status():
         "boundary_coverage": coverage_match.group(1).strip() if coverage_match else "unknown",
         "reports": reports,
         "next_blocks": next_blocks,
+    }
+
+
+def load_private_demo_package_status():
+    report_path = get_latest_report_path("private_demo_package")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "overall_status": "missing",
+            "total_checks": 0,
+            "passed_checks": 0,
+            "warning_checks": 0,
+            "failed_checks": 0,
+            "demo_commands": [],
+            "dashboard_pages": [],
+            "demo_flow": [],
+            "show_items": [],
+            "do_not_show_items": [],
+            "known_risks": [],
+            "pre_demo_checklist": [],
+            "latest_artifacts": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    demo_commands = []
+    latest_artifacts = []
+    dashboard_pages = []
+    demo_flow = []
+    show_items = []
+    do_not_show_items = []
+    known_risks = []
+    pre_demo_checklist = []
+    section = None
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped[3:].strip()
+            continue
+
+        if section == "Demo Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 2:
+                demo_commands.append(
+                    {
+                        "purpose": parts[0],
+                        "command": parts[1].strip("`"),
+                    }
+                )
+
+        elif section == "Dashboard Pages To Show" and stripped.startswith("- "):
+            dashboard_pages.append(stripped[2:].strip())
+
+        elif section == "Recommended Demo Flow":
+            match = re.match(r"\d+\.\s+(.+)", stripped)
+            if match:
+                demo_flow.append(match.group(1).strip())
+
+        elif section == "Show" and stripped.startswith("- "):
+            show_items.append(stripped[2:].strip())
+
+        elif section == "Do Not Show" and stripped.startswith("- "):
+            do_not_show_items.append(stripped[2:].strip())
+
+        elif section == "Known Risks" and stripped.startswith("- "):
+            known_risks.append(stripped[2:].strip())
+
+        elif section == "Pre-Demo Checklist" and stripped.startswith("- "):
+            pre_demo_checklist.append(stripped[2:].strip())
+
+        elif section == "Latest Demo Artifacts":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Artifact"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 2:
+                latest_artifacts.append(
+                    {
+                        "artifact": parts[0],
+                        "latest_report": parts[1],
+                    }
+                )
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "overall_status": status_match.group(1) if status_match else "unknown",
+        "total_checks": extract_metric_from_markdown(content, "Total checks"),
+        "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
+        "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
+        "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "demo_commands": demo_commands,
+        "dashboard_pages": dashboard_pages,
+        "demo_flow": demo_flow,
+        "show_items": show_items,
+        "do_not_show_items": do_not_show_items,
+        "known_risks": known_risks,
+        "pre_demo_checklist": pre_demo_checklist,
+        "latest_artifacts": latest_artifacts,
     }
 
 
@@ -2074,6 +2193,7 @@ def load_dashboard_data():
     runtime_stability_status = load_runtime_stability_status()
     session_handoff_status = load_session_handoff_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
+    private_demo_package_status = load_private_demo_package_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
     private_pilot_plan_status = load_private_pilot_plan_status()
     private_pilot_tracker_status = load_private_pilot_tracker_status()
@@ -2146,6 +2266,7 @@ def load_dashboard_data():
         "session_handoff_status": session_handoff_status,
         "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
+        "private_demo_package_status": private_demo_package_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
         "private_pilot_plan_status": private_pilot_plan_status,
         "private_pilot_tracker_status": private_pilot_tracker_status,
@@ -3916,6 +4037,97 @@ def render_module_page(page, data):
                     render_status_row(page_name, "Available in private demo scope", "healthy")
             else:
                 render_status_row("No pages found", "Run python cli.py private-demo-dry-run", "medium")
+            render_panel_end()
+    elif page == "Demo Package":
+        package = data["private_demo_package_status"]
+        overall_status = package["overall_status"]
+        overall_class = {
+            "ready": "green",
+            "ready_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(overall_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Package", overall_status.replace("_", " ").title(), "Latest private demo package", overall_class)
+        with c2:
+            render_metric_card("Commands", len(package["demo_commands"]), "Operator commands", "")
+        with c3:
+            render_metric_card("Pages", len(package["dashboard_pages"]), "Dashboard pages to show", "green")
+        with c4:
+            render_metric_card("Checklist", len(package["pre_demo_checklist"]), "Pre-demo checks", "gold")
+        with c5:
+            render_metric_card("Risks", len(package["known_risks"]), "Known demo risks", "gold" if package["known_risks"] else "green")
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Demo Flow")
+            if package["demo_flow"]:
+                for index, step in enumerate(package["demo_flow"], start=1):
+                    render_status_row(f"Step {index}", step, "healthy")
+            else:
+                render_status_row("No demo flow found", "Run python cli.py private-demo-package", "medium")
+            render_panel_end()
+
+            render_panel_start("Demo Commands")
+            if package["demo_commands"]:
+                for command in package["demo_commands"]:
+                    render_status_row(command["purpose"], command["command"], "healthy")
+            else:
+                render_status_row("No demo commands found", "Run python cli.py private-demo-package", "medium")
+            render_panel_end()
+
+            render_panel_start("Latest Demo Artifacts")
+            if package["latest_artifacts"]:
+                st.dataframe(
+                    pd.DataFrame(package["latest_artifacts"]),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+            else:
+                render_status_row("No demo artifacts found", "Run python cli.py private-demo-package", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Package Brief")
+            render_brief_item(
+                package["report_path"] or "Private demo package not generated",
+                "Latest private demo package artifact",
+            )
+            render_brief_item(
+                f"{package['passed_checks']} passed, {package['warning_checks']} warning(s), {package['failed_checks']} failed",
+                "Release readiness summary embedded in the package",
+            )
+            render_brief_item(
+                "python cli.py private-demo-package",
+                "Use CLI to refresh the artifact; dashboard remains read-only",
+            )
+            render_panel_end()
+
+            render_panel_start("Pages To Show")
+            if package["dashboard_pages"]:
+                for page_name in package["dashboard_pages"]:
+                    render_status_row(page_name, "Included in private demo scope", "healthy")
+            else:
+                render_status_row("No pages found", "Run python cli.py private-demo-package", "medium")
+            render_panel_end()
+
+            render_panel_start("Pre-Demo Checklist")
+            if package["pre_demo_checklist"]:
+                for item in package["pre_demo_checklist"]:
+                    render_status_row(item, "Operator pre-demo check", "medium")
+            else:
+                render_status_row("No checklist found", "Run python cli.py private-demo-package", "medium")
+            render_panel_end()
+
+            render_panel_start("Known Risks")
+            if package["known_risks"]:
+                for risk in package["known_risks"]:
+                    render_status_row(risk, "Known demo boundary", "medium")
+            else:
+                render_status_row("No known risks listed", "Package reports no known risks", "healthy")
             render_panel_end()
     elif page == "People":
         c1, c2, c3, c4 = st.columns(4)

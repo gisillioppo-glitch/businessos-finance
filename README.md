@@ -136,6 +136,14 @@ docs/dashboard-runtime-stability-page-v0.1-status.md
 
 This page shows the latest runtime-stability artifact inside the protected dashboard as a read-only smoke/runtime profile health view.
 
+The private dashboard demo package page is documented in:
+
+```text
+docs/dashboard-demo-package-page-v0.1-status.md
+```
+
+This page shows the latest private demo package inside the protected dashboard as a read-only demo operating packet.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

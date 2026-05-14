@@ -53,6 +53,7 @@ DASHBOARD_PAGES = [
     "Boundary Index",
     "Session Handoff",
     "Demo Readiness",
+    "Demo Package",
     "Pilot Plan",
     "Pilot Tracker",
     "Pilot Exit",
