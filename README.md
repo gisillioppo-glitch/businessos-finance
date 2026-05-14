@@ -144,6 +144,14 @@ docs/dashboard-demo-package-page-v0.1-status.md
 
 This page shows the latest private demo package inside the protected dashboard as a read-only demo operating packet.
 
+The full release checkpoint smoke validation is documented in:
+
+```text
+docs/release-checkpoint-full-smoke-v0.1-status.md
+```
+
+This checkpoint records the full smoke release validation, including the heavier private pilot chain.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.
