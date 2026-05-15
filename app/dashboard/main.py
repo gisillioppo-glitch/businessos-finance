@@ -225,6 +225,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Demo package is go-to-market-specific; packaging pattern may transfer.",
     },
     {
+        "page": "Demo Script",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared demo narrative candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Demo script is go-to-market-specific; narrative sequencing pattern may transfer.",
+    },
+    {
         "page": "Pilot Plan",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared pilot methodology candidate",
@@ -1071,6 +1080,116 @@ def load_private_demo_package_status():
         "known_risks": known_risks,
         "pre_demo_checklist": pre_demo_checklist,
         "latest_artifacts": latest_artifacts,
+    }
+
+
+def load_private_demo_script_status():
+    report_path = get_latest_report_path("private_demo_script")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "readiness_status": "missing",
+            "passed_checks": 0,
+            "warning_checks": 0,
+            "failed_checks": 0,
+            "demo_arc": [],
+            "dashboard_pages": [],
+            "demo_commands": [],
+            "pre_demo_checklist": [],
+            "do_not_show": [],
+            "known_risks": [],
+            "closing_questions": [],
+            "closing_statement": "Private demo script not generated.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    demo_arc = []
+    dashboard_pages = []
+    demo_commands = []
+    pre_demo_checklist = []
+    do_not_show = []
+    known_risks = []
+    closing_questions = []
+    section = None
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped[3:].strip()
+            continue
+
+        if section == "Demo Arc":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Segment"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 5:
+                demo_arc.append(
+                    {
+                        "segment": parts[0],
+                        "timebox": parts[1],
+                        "screen": parts[2],
+                        "talk_track": parts[3],
+                        "proof": parts[4],
+                    }
+                )
+
+        elif section == "Demo Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 2:
+                demo_commands.append(
+                    {
+                        "purpose": parts[0],
+                        "command": parts[1].strip("`"),
+                    }
+                )
+
+        elif section == "Dashboard Pages Available" and stripped.startswith("- "):
+            dashboard_pages.append(stripped[2:].strip())
+
+        elif section == "Pre-Demo Checklist" and stripped.startswith("- "):
+            pre_demo_checklist.append(stripped[2:].strip())
+
+        elif section == "Do Not Show" and stripped.startswith("- "):
+            do_not_show.append(stripped[2:].strip())
+
+        elif section == "Known Risks To Name Honestly" and stripped.startswith("- "):
+            known_risks.append(stripped[2:].strip())
+
+        elif section == "Closing Questions" and stripped.startswith("- "):
+            closing_questions.append(stripped[2:].strip())
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    readiness_match = re.search(r"Release readiness:\s*([a-z_]+)", content)
+    closing_match = re.search(
+        r"## Suggested Closing Statement\s+(.+)",
+        content,
+        flags=re.DOTALL,
+    )
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "readiness_status": readiness_match.group(1) if readiness_match else "unknown",
+        "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
+        "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
+        "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "demo_arc": demo_arc,
+        "dashboard_pages": dashboard_pages,
+        "demo_commands": demo_commands,
+        "pre_demo_checklist": pre_demo_checklist,
+        "do_not_show": do_not_show,
+        "known_risks": known_risks,
+        "closing_questions": closing_questions,
+        "closing_statement": closing_match.group(1).strip() if closing_match else "",
     }
 
 
@@ -2317,6 +2436,7 @@ def load_dashboard_data():
     session_handoff_status = load_session_handoff_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
     private_demo_package_status = load_private_demo_package_status()
+    private_demo_script_status = load_private_demo_script_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
     private_pilot_plan_status = load_private_pilot_plan_status()
     private_pilot_tracker_status = load_private_pilot_tracker_status()
@@ -2391,6 +2511,7 @@ def load_dashboard_data():
         "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
         "private_demo_package_status": private_demo_package_status,
+        "private_demo_script_status": private_demo_script_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
         "private_pilot_plan_status": private_pilot_plan_status,
         "private_pilot_tracker_status": private_pilot_tracker_status,
@@ -4350,6 +4471,98 @@ def render_module_page(page, data):
             else:
                 render_status_row("No known risks listed", "Package reports no known risks", "healthy")
             render_panel_end()
+    elif page == "Demo Script":
+        script = data["private_demo_script_status"]
+        readiness_status = script["readiness_status"]
+        readiness_class = {
+            "ready": "green",
+            "ready_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(readiness_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Script", readiness_status.replace("_", " ").title(), "Latest private demo script", readiness_class)
+        with c2:
+            render_metric_card("Segments", len(script["demo_arc"]), "Narrative sequence", "green" if script["demo_arc"] else "gold")
+        with c3:
+            render_metric_card("Commands", len(script["demo_commands"]), "Operator commands", "")
+        with c4:
+            render_metric_card("Questions", len(script["closing_questions"]), "Discovery close", "gold")
+        with c5:
+            render_metric_card("Risks", len(script["known_risks"]), "Name honestly", "gold" if script["known_risks"] else "green")
+
+        left, right = st.columns([1.65, 1])
+
+        with left:
+            render_panel_start("Demo Arc")
+            if script["demo_arc"]:
+                for index, segment in enumerate(script["demo_arc"], start=1):
+                    render_status_row(
+                        f"{index}. {segment['segment']} | {segment['timebox']}",
+                        f"{segment['screen']} | {segment['talk_track']}",
+                        "healthy",
+                    )
+                    render_brief_item(segment["proof"], "Proof point")
+            else:
+                render_status_row("No demo arc found", "Run python cli.py private-demo-script", "medium")
+            render_panel_end()
+
+            render_panel_start("Demo Commands")
+            if script["demo_commands"]:
+                for command in script["demo_commands"]:
+                    render_status_row(command["purpose"], command["command"], "healthy")
+            else:
+                render_status_row("No commands found", "Run python cli.py private-demo-script", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Script Brief")
+            render_brief_item(
+                script["report_path"] or "Private demo script not generated",
+                "Latest private demo script artifact",
+            )
+            render_brief_item(
+                f"{script['passed_checks']} passed, {script['warning_checks']} warning(s), {script['failed_checks']} failed",
+                "Release readiness context embedded in the script",
+            )
+            render_brief_item(
+                "python cli.py private-demo-script",
+                "Use CLI to refresh the artifact; dashboard remains read-only",
+            )
+            render_panel_end()
+
+            render_panel_start("Pre-Demo Checklist")
+            if script["pre_demo_checklist"]:
+                for item in script["pre_demo_checklist"]:
+                    render_status_row(item, "Operator pre-demo check", "medium")
+            else:
+                render_status_row("No checklist found", "Generate the private demo script artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Do Not Show")
+            if script["do_not_show"]:
+                for item in script["do_not_show"]:
+                    render_status_row(item, "Protected demo boundary", "medium")
+            else:
+                render_status_row("No show boundaries found", "Generate the private demo script artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Closing Questions")
+            if script["closing_questions"]:
+                for question in script["closing_questions"]:
+                    render_status_row(question, "Use to qualify pilot fit", "healthy")
+            else:
+                render_status_row("No closing questions found", "Generate the private demo script artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Suggested Closing Statement")
+        render_brief_item(
+            script["closing_statement"] or "Generate the private demo script artifact",
+            "Operator close",
+        )
+        render_panel_end()
     elif page == "People":
         c1, c2, c3, c4 = st.columns(4)
         with c1:

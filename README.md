@@ -168,6 +168,14 @@ docs/dashboard-pilot-day-3-page-v0.1-status.md
 
 This page shows the latest Pilot Day 3 evidence review artifact inside the protected dashboard as a read-only continuation checkpoint.
 
+The private dashboard demo script page is documented in:
+
+```text
+docs/dashboard-private-demo-script-page-v0.1-status.md
+```
+
+This page shows the latest private demo script artifact inside the protected dashboard as a read-only presentation run-of-show.
+
 The public/private surface audit is documented in:
 
 ```text
