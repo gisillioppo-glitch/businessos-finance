@@ -53,6 +53,10 @@ pilot-day-5-narrow-continuation OK
 loader check OK
 boundary coverage OK: 83/83
 diff check OK
+system-check OK: 57/57
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
 ```
 
 Loader check:
@@ -71,11 +75,11 @@ boundary_pages 33
 has_day_5 True
 ```
 
-Pending final system-check, release-readiness, runtime-stability, quick smoke, and handoff.
+All targeted and general validation passed.
 
 ## Git Closure
 
-Pending commit, push, tag, and clean status verification.
+Pending final handoff, push, tag, and clean status verification.
 
 ## Next Step
 
