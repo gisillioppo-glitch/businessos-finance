@@ -58,6 +58,7 @@ Failed checks: 0
 - Scheduled Close
 - System Integrity
 - Runtime Stability
+- Surface Audit
 - Boundary Index
 - Session Handoff
 - Demo Readiness
