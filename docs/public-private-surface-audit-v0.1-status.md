@@ -51,6 +51,10 @@ Failed checks: 0
 py_compile OK
 public-private-surface-audit OK
 deployment_check OK
+system-check OK
+release-readiness OK
+runtime-stability OK
+quick smoke OK
 ```
 
 Command result:
@@ -66,4 +70,4 @@ Public files found: 5
 
 ## Git Closure
 
-Pending final system-check, release-readiness, quick smoke, commit, push, tag, and clean status verification.
+Pending final push, tag, and clean status verification.
