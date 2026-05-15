@@ -306,6 +306,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Owner confirmation remains BusinessOS-specific until another vertical repeats it.",
     },
     {
+        "page": "Pilot Day 5",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Narrow continuation remains BusinessOS-specific until another vertical repeats it.",
+    },
+    {
         "page": "Pilot Expansion",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared pilot methodology candidate",
@@ -2122,6 +2131,112 @@ def load_pilot_day_4_owner_confirmation_status():
     }
 
 
+def load_pilot_day_5_narrow_continuation_status():
+    report_path = get_latest_report_path("pilot_day_5_narrow_continuation")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "day_5_status": "missing",
+            "continuation_scope": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "day_4_status": "missing",
+            "owner_confirmation_mode": "missing",
+            "allowed_continuation": "missing",
+            "expansion_status": "unknown",
+            "delivery_status": "unknown",
+            "missing_required_evidence": 0,
+            "highest_exit_risk": "unknown",
+            "next_action": "Run python cli.py pilot-day-5-narrow-continuation.",
+            "commands": [],
+            "operating_rhythm": [],
+            "evidence_to_observe": [],
+            "boundaries": [],
+            "next_decision_points": [],
+            "operator_note": "No Pilot Day 5 narrow continuation artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    commands = []
+    operating_rhythm = []
+    evidence_to_observe = []
+    boundaries = []
+    next_decision_points = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Day 5 Continuation Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Day 5 Operating Rhythm" and stripped.startswith("- "):
+            operating_rhythm.append(stripped[2:])
+
+        elif section == "Evidence To Observe" and stripped.startswith("- "):
+            evidence_to_observe.append(stripped[2:])
+
+        elif section == "Day 5 Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+        elif section == "Next Decision Points" and stripped.startswith("- "):
+            next_decision_points.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    day_5_status_match = re.search(r"Day 5 status:\s*([a-z_]+)", content)
+    continuation_scope_match = re.search(r"Continuation scope:\s*([a-z_]+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    day_4_status_match = re.search(r"Day 4 status:\s*([a-z_]+)", content)
+    owner_mode_match = re.search(r"Owner confirmation mode:\s*([a-z_]+)", content)
+    allowed_continuation_match = re.search(r"Allowed continuation:\s*([a-z_]+)", content)
+    expansion_status_match = re.search(r"Expansion status:\s*([a-z_]+)", content)
+    delivery_status_match = re.search(r"Delivery status:\s*([a-z_]+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    highest_exit_risk_match = re.search(r"Highest exit risk:\s*(.+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "day_5_status": day_5_status_match.group(1) if day_5_status_match else "unknown",
+        "continuation_scope": continuation_scope_match.group(1) if continuation_scope_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "day_4_status": day_4_status_match.group(1) if day_4_status_match else "unknown",
+        "owner_confirmation_mode": owner_mode_match.group(1) if owner_mode_match else "unknown",
+        "allowed_continuation": allowed_continuation_match.group(1) if allowed_continuation_match else "unknown",
+        "expansion_status": expansion_status_match.group(1) if expansion_status_match else "unknown",
+        "delivery_status": delivery_status_match.group(1) if delivery_status_match else "unknown",
+        "missing_required_evidence": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "highest_exit_risk": highest_exit_risk_match.group(1).strip() if highest_exit_risk_match else "unknown",
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "commands": commands,
+        "operating_rhythm": operating_rhythm,
+        "evidence_to_observe": evidence_to_observe,
+        "boundaries": boundaries,
+        "next_decision_points": next_decision_points,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
+
 def load_pilot_expansion_review_decision_status():
     report_path = get_latest_report_path("pilot_expansion_review_decision")
 
@@ -2652,6 +2767,7 @@ def load_dashboard_data():
     pilot_day_2_rhythm_status = load_pilot_day_2_rhythm_status()
     pilot_day_3_evidence_review_status = load_pilot_day_3_evidence_review_status()
     pilot_day_4_owner_confirmation_status = load_pilot_day_4_owner_confirmation_status()
+    pilot_day_5_narrow_continuation_status = load_pilot_day_5_narrow_continuation_status()
     pilot_expansion_review_decision_status = load_pilot_expansion_review_decision_status()
     dashboard_boundary_index = load_dashboard_boundary_index()
 
@@ -2729,6 +2845,7 @@ def load_dashboard_data():
         "pilot_day_2_rhythm_status": pilot_day_2_rhythm_status,
         "pilot_day_3_evidence_review_status": pilot_day_3_evidence_review_status,
         "pilot_day_4_owner_confirmation_status": pilot_day_4_owner_confirmation_status,
+        "pilot_day_5_narrow_continuation_status": pilot_day_5_narrow_continuation_status,
         "pilot_expansion_review_decision_status": pilot_expansion_review_decision_status,
     }
 
@@ -4578,6 +4695,112 @@ def render_module_page(page, data):
 
         render_panel_start("Operator Note")
         render_brief_item(day_4["operator_note"], "Read-only guidance; no expansion or delivery approval")
+        render_panel_end()
+    elif page == "Pilot Day 5":
+        day_5 = data["pilot_day_5_narrow_continuation_status"]
+        day_5_status = day_5["day_5_status"]
+        day_5_class = {
+            "continue_narrow_pilot": "green",
+            "continue_with_owner_confirmation": "gold",
+            "prepare_expansion_review_only": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(day_5_status, "gold")
+        risk_class = {
+            "low": "green",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(day_5["highest_exit_risk"].lower(), "gold")
+        scope_class = {
+            "single_workflow_narrow_pilot": "green",
+            "expansion_review_preparation_only": "gold",
+            "paused_until_evidence_restored": "red",
+            "missing": "red",
+        }.get(day_5["continuation_scope"], "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Day 5 Status", day_5_status.replace("_", " ").title(), "Latest narrow continuation", day_5_class)
+        with c2:
+            render_metric_card("Scope", day_5["continuation_scope"].replace("_", " ").title(), "Continuation boundary", scope_class)
+        with c3:
+            render_metric_card("Evidence Items", len(day_5["evidence_to_observe"]), "Repeatability signals", "green" if day_5["evidence_to_observe"] else "gold")
+        with c4:
+            render_metric_card("Missing Required", day_5["missing_required_evidence"], "Blocks continuation if above zero", "red" if day_5["missing_required_evidence"] else "green")
+        with c5:
+            render_metric_card("Exit Risk", day_5["highest_exit_risk"].title(), "Before expansion review", risk_class)
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Day 5 Operating Rhythm")
+            if day_5["operating_rhythm"]:
+                for item in day_5["operating_rhythm"]:
+                    render_status_row(item, "Single-workflow narrow pilot rhythm", "healthy")
+            else:
+                render_status_row("No operating rhythm found", "Run python cli.py pilot-day-5-narrow-continuation", "medium")
+            render_panel_end()
+
+            render_panel_start("Evidence To Observe")
+            if day_5["evidence_to_observe"]:
+                for item in day_5["evidence_to_observe"]:
+                    render_status_row(item, "Repeatability evidence checkpoint", "medium")
+            else:
+                render_status_row("No evidence items found", "Generate the Day 5 narrow continuation artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Day 5 Continuation Commands")
+            if day_5["commands"]:
+                for item in day_5["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No command list found", "Generate the Day 5 narrow continuation artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Day 5 Summary")
+            render_brief_item(
+                day_5["report_path"] or "Pilot Day 5 narrow continuation not generated",
+                "Latest Day 5 narrow continuation artifact",
+            )
+            render_brief_item(day_5["pilot_owner"], "Pilot owner")
+            render_brief_item(day_5["primary_workflow"], "Primary workflow")
+            render_brief_item(day_5["day_4_status"].replace("_", " ").title(), "Source Day 4 status")
+            render_brief_item(day_5["allowed_continuation"].replace("_", " ").title(), "Allowed continuation")
+            render_panel_end()
+
+            render_panel_start("Control Boundary")
+            render_status_row(
+                day_5["expansion_status"].replace("_", " ").title(),
+                f"Delivery status: {day_5['delivery_status'].replace('_', ' ').title()}",
+                "medium",
+            )
+            render_status_row(
+                day_5["next_action"],
+                "Day 5 does not approve expansion or delivery",
+                day_5_class,
+            )
+            render_panel_end()
+
+            render_panel_start("Next Decision Points")
+            if day_5["next_decision_points"]:
+                for item in day_5["next_decision_points"]:
+                    render_status_row(item, "Decision point after narrow continuation", "medium")
+            else:
+                render_status_row("No next decision points found", "Generate the Day 5 narrow continuation artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Day 5 Boundaries")
+            if day_5["boundaries"]:
+                for boundary in day_5["boundaries"]:
+                    render_status_row(boundary, "Protected narrow continuation boundary", "medium")
+            else:
+                render_status_row("No boundaries found", "Generate the Day 5 narrow continuation artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(day_5["operator_note"], "Read-only guidance; no expansion or delivery approval")
         render_panel_end()
     elif page == "Pilot Expansion":
         expansion = data["pilot_expansion_review_decision_status"]

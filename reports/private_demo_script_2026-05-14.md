@@ -8,9 +8,9 @@ Present BusinessOS as a private institutional AI operating system that helps lea
 
 ## Readiness Context
 
-Release readiness: ready
-Passed checks: 14
-Warning checks: 0
+Release readiness: ready_with_warnings
+Passed checks: 13
+Warning checks: 1
 Failed checks: 0
 
 ## Pre-Demo Checklist
@@ -64,6 +64,7 @@ Failed checks: 0
 - Scheduled Close
 - System Integrity
 - Runtime Stability
+- Surface Audit
 - Boundary Index
 - Session Handoff
 - Demo Readiness
@@ -76,6 +77,7 @@ Failed checks: 0
 - Pilot Day 2
 - Pilot Day 3
 - Pilot Day 4
+- Pilot Day 5
 - People
 
 ## Do Not Show

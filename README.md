@@ -176,6 +176,14 @@ docs/dashboard-pilot-day-4-page-v0.1-status.md
 
 This page shows the latest Pilot Day 4 owner confirmation packet inside the protected dashboard as a read-only acknowledgement checkpoint.
 
+The private dashboard Pilot Day 5 page is documented in:
+
+```text
+docs/dashboard-pilot-day-5-page-v0.1-status.md
+```
+
+This page shows the latest Pilot Day 5 narrow continuation artifact inside the protected dashboard as a read-only repeatability checkpoint.
+
 The private dashboard public/private surface audit page is documented in:
 
 ```text
