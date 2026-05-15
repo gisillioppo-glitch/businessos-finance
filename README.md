@@ -168,6 +168,14 @@ docs/dashboard-pilot-day-3-page-v0.1-status.md
 
 This page shows the latest Pilot Day 3 evidence review artifact inside the protected dashboard as a read-only continuation checkpoint.
 
+The public/private surface audit is documented in:
+
+```text
+docs/public-private-surface-audit-v0.1-status.md
+```
+
+This command inventories the public landing surface and confirms that private runtime assets remain outside `public/`.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

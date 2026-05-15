@@ -99,6 +99,7 @@ from app.scheduler.scheduled_daily_close import (
     print_scheduled_daily_close_status,
     run_scheduled_daily_close,
 )
+from app.security.surface_audit import print_public_private_surface_audit
 from app.system.integrity_check import export_system_integrity_report
 from app.system.runtime_stability import print_runtime_stability_review
 from app.system.session_handoff import print_session_handoff_snapshot
@@ -156,6 +157,19 @@ def run_release_readiness():
 
     try:
         print_release_readiness(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_public_private_surface_audit():
+    conn = create_connection()
+
+    try:
+        print_public_private_surface_audit(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -974,6 +988,7 @@ def main():
             "actions",
             "reports",
             "release-readiness",
+            "public-private-surface-audit",
             "private-demo-package",
             "private-demo-script",
             "private-demo-dry-run",
@@ -1051,6 +1066,8 @@ def main():
         run_reports()
     elif args.command == "release-readiness":
         run_release_readiness()
+    elif args.command == "public-private-surface-audit":
+        run_public_private_surface_audit()
     elif args.command == "private-demo-package":
         run_private_demo_package()
     elif args.command == "private-demo-script":

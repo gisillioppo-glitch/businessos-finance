@@ -21,6 +21,7 @@ KEY_REPORT_PREFIXES = [
     "system_integrity",
     "release_readiness",
     "runtime_stability",
+    "public_private_surface_audit",
     "daily_close",
     "daily_close_distribution",
     "notification_delivery_approval",
@@ -28,9 +29,9 @@ KEY_REPORT_PREFIXES = [
 ]
 
 NEXT_RECOMMENDED_BLOCKS = [
-    "Public Private Surface Audit v0.1",
     "Private Demo Script Dashboard Page v0.1",
     "Dashboard Pilot Day 4 Page v0.1",
+    "Dashboard Public Private Surface Audit Page v0.1",
 ]
 
 
