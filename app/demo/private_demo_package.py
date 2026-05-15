@@ -59,6 +59,7 @@ DASHBOARD_PAGES = [
     "Pilot Exit",
     "Pilot Day 1",
     "Pilot Day 2",
+    "Pilot Day 3",
     "People",
 ]
 

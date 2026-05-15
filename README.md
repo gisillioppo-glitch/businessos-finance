@@ -160,6 +160,14 @@ docs/private-demo-break-handoff-v0.1-status.md
 
 This handoff records the end-of-day operating state for pausing, resuming, or moving the work to a new chat.
 
+The private dashboard Pilot Day 3 page is documented in:
+
+```text
+docs/dashboard-pilot-day-3-page-v0.1-status.md
+```
+
+This page shows the latest Pilot Day 3 evidence review artifact inside the protected dashboard as a read-only continuation checkpoint.
+
 ## Current Architecture
 
 The project is organized as a modular Python application.

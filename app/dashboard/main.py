@@ -270,6 +270,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Repeatable rhythm may transfer after second vertical validation.",
     },
     {
+        "page": "Pilot Day 3",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Evidence review remains BusinessOS-specific until another vertical repeats it.",
+    },
+    {
         "page": "Pilot Expansion",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared pilot methodology candidate",
@@ -1674,6 +1683,120 @@ def load_pilot_day_2_rhythm_status():
     }
 
 
+def load_pilot_day_3_evidence_review_status():
+    report_path = get_latest_report_path("pilot_day_3_evidence_review")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "day_3_status": "missing",
+            "evidence_recommendation": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "day_1_status": "missing",
+            "day_2_status": "missing",
+            "continuation_decision": "missing",
+            "tracker_status": "missing",
+            "exit_decision_status": "missing",
+            "recommended_exit_decision": "missing",
+            "highest_exit_risk": "unknown",
+            "available_evidence": 0,
+            "missing_required_evidence": 0,
+            "missing_optional_evidence": 0,
+            "next_action": "Run python cli.py pilot-day-3-evidence-review.",
+            "commands": [],
+            "signals": [],
+            "review_questions": [],
+            "boundaries": [],
+            "operator_note": "No Pilot Day 3 evidence review generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    commands = []
+    signals = []
+    review_questions = []
+    boundaries = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Day 3 Review Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Evidence Signals":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Signal"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                signals.append({"signal": parts[0], "value": parts[1]})
+
+        elif section == "Review Questions" and stripped.startswith("- "):
+            review_questions.append(stripped[2:])
+
+        elif section == "Day 3 Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    day_3_status_match = re.search(r"Day 3 status:\s*([a-z_]+)", content)
+    evidence_recommendation_match = re.search(r"Evidence recommendation:\s*([a-z_]+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    day_1_status_match = re.search(r"Day 1 status:\s*([a-z_]+)", content)
+    day_2_status_match = re.search(r"Day 2 status:\s*([a-z_]+)", content)
+    continuation_decision_match = re.search(r"Continuation decision:\s*([a-z_]+)", content)
+    tracker_status_match = re.search(r"Tracker status:\s*([a-z_]+)", content)
+    exit_decision_status_match = re.search(r"Exit decision status:\s*([a-z_]+)", content)
+    recommended_exit_decision_match = re.search(r"Recommended exit decision:\s*([a-z_]+)", content)
+    highest_exit_risk_match = re.search(r"Highest exit risk:\s*(.+)", content)
+    available_evidence_match = re.search(r"Available evidence:\s*(\d+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    missing_optional_match = re.search(r"Missing optional evidence:\s*(\d+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "day_3_status": day_3_status_match.group(1) if day_3_status_match else "unknown",
+        "evidence_recommendation": evidence_recommendation_match.group(1) if evidence_recommendation_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "day_1_status": day_1_status_match.group(1) if day_1_status_match else "unknown",
+        "day_2_status": day_2_status_match.group(1) if day_2_status_match else "unknown",
+        "continuation_decision": continuation_decision_match.group(1) if continuation_decision_match else "unknown",
+        "tracker_status": tracker_status_match.group(1) if tracker_status_match else "unknown",
+        "exit_decision_status": exit_decision_status_match.group(1) if exit_decision_status_match else "unknown",
+        "recommended_exit_decision": recommended_exit_decision_match.group(1) if recommended_exit_decision_match else "unknown",
+        "highest_exit_risk": highest_exit_risk_match.group(1).strip() if highest_exit_risk_match else "unknown",
+        "available_evidence": int(available_evidence_match.group(1)) if available_evidence_match else 0,
+        "missing_required_evidence": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "missing_optional_evidence": int(missing_optional_match.group(1)) if missing_optional_match else 0,
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "commands": commands,
+        "signals": signals,
+        "review_questions": review_questions,
+        "boundaries": boundaries,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
+
 def load_pilot_expansion_review_decision_status():
     report_path = get_latest_report_path("pilot_expansion_review_decision")
 
@@ -2200,6 +2323,7 @@ def load_dashboard_data():
     private_pilot_exit_decision_status = load_private_pilot_exit_decision_status()
     pilot_day_1_package_status = load_pilot_day_1_package_status()
     pilot_day_2_rhythm_status = load_pilot_day_2_rhythm_status()
+    pilot_day_3_evidence_review_status = load_pilot_day_3_evidence_review_status()
     pilot_expansion_review_decision_status = load_pilot_expansion_review_decision_status()
     dashboard_boundary_index = load_dashboard_boundary_index()
 
@@ -2273,6 +2397,7 @@ def load_dashboard_data():
         "private_pilot_exit_decision_status": private_pilot_exit_decision_status,
         "pilot_day_1_package_status": pilot_day_1_package_status,
         "pilot_day_2_rhythm_status": pilot_day_2_rhythm_status,
+        "pilot_day_3_evidence_review_status": pilot_day_3_evidence_review_status,
         "pilot_expansion_review_decision_status": pilot_expansion_review_decision_status,
     }
 
@@ -3833,6 +3958,102 @@ def render_module_page(page, data):
 
         render_panel_start("Operator Note")
         render_brief_item(day_2["operator_note"], "Read-only guidance for repeatable pilot operation")
+        render_panel_end()
+    elif page == "Pilot Day 3":
+        day_3 = data["pilot_day_3_evidence_review_status"]
+        day_3_status = day_3["day_3_status"]
+        day_3_class = {
+            "review_ready": "green",
+            "review_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(day_3_status, "gold")
+        risk_class = {
+            "low": "green",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(day_3["highest_exit_risk"].lower(), "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Day 3 Status", day_3_status.replace("_", " ").title(), "Latest evidence review", day_3_class)
+        with c2:
+            render_metric_card("Recommendation", day_3["evidence_recommendation"].replace("_", " ").title(), "Evidence guidance", day_3_class)
+        with c3:
+            render_metric_card("Evidence", day_3["available_evidence"], "Available review artifacts", "green" if day_3["available_evidence"] else "red")
+        with c4:
+            render_metric_card("Missing Required", day_3["missing_required_evidence"], "Blocks continuation if above zero", "red" if day_3["missing_required_evidence"] else "green")
+        with c5:
+            render_metric_card("Exit Risk", day_3["highest_exit_risk"].title(), "Before Day 4", risk_class)
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Evidence Signals")
+            if day_3["signals"]:
+                for signal in day_3["signals"]:
+                    status = "healthy"
+                    if signal["value"] in ("needs_attention", "decision_ready_with_warnings", "medium"):
+                        status = "medium"
+                    elif signal["value"] in ("blocked", "high", "critical", "missing"):
+                        status = "high"
+                    render_status_row(signal["signal"], signal["value"].replace("_", " ").title(), status)
+            else:
+                render_status_row("No evidence signals found", "Run python cli.py pilot-day-3-evidence-review", "medium")
+            render_panel_end()
+
+            render_panel_start("Day 3 Review Commands")
+            if day_3["commands"]:
+                for item in day_3["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No command list found", "Generate the Day 3 evidence review artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Review Questions")
+            if day_3["review_questions"]:
+                for question in day_3["review_questions"]:
+                    render_status_row(question, "Executive evidence review checkpoint", "medium")
+            else:
+                render_status_row("No review questions found", "Generate the Day 3 evidence review artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Day 3 Summary")
+            render_brief_item(
+                day_3["report_path"] or "Pilot Day 3 evidence review not generated",
+                "Latest Day 3 evidence review artifact",
+            )
+            render_brief_item(day_3["pilot_owner"], "Pilot owner")
+            render_brief_item(day_3["primary_workflow"], "Primary workflow")
+            render_brief_item(day_3["day_1_status"].replace("_", " ").title(), "Source Day 1 status")
+            render_brief_item(day_3["day_2_status"].replace("_", " ").title(), "Source Day 2 status")
+            render_panel_end()
+
+            render_panel_start("Continuation Boundary")
+            render_status_row(
+                day_3["continuation_decision"].replace("_", " ").title(),
+                f"Exit decision: {day_3['recommended_exit_decision'].replace('_', ' ').title()}",
+                day_3_class,
+            )
+            render_status_row(
+                day_3["next_action"],
+                "Before Day 4 owner confirmation",
+                "medium" if day_3_status == "review_with_warnings" else day_3_class,
+            )
+            render_panel_end()
+
+            render_panel_start("Day 3 Boundaries")
+            if day_3["boundaries"]:
+                for boundary in day_3["boundaries"]:
+                    render_status_row(boundary, "Protected evidence review boundary", "medium")
+            else:
+                render_status_row("No boundaries found", "Generate the Day 3 evidence review artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(day_3["operator_note"], "Read-only guidance; no expansion approval")
         render_panel_end()
     elif page == "Pilot Expansion":
         expansion = data["pilot_expansion_review_decision_status"]
