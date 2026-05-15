@@ -50,6 +50,7 @@ DASHBOARD_PAGES = [
     "Scheduled Close",
     "System Integrity",
     "Runtime Stability",
+    "Surface Audit",
     "Boundary Index",
     "Session Handoff",
     "Demo Readiness",

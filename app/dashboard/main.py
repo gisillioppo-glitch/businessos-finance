@@ -189,6 +189,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Runtime profile health is reusable as an operating stability pattern.",
     },
     {
+        "page": "Surface Audit",
+        "primary_boundary": "Security / public-private separation",
+        "secondary_boundary": "Demo readiness and deployment hygiene",
+        "private_data": "no",
+        "public_surface": "read-only inspection",
+        "core_candidate": "partial",
+        "note": "Public/private surface audit may transfer after another vertical repeats the boundary.",
+    },
+    {
         "page": "Boundary Index",
         "primary_boundary": "Documentation / architecture",
         "secondary_boundary": "Shared dashboard governance pattern candidate",
@@ -1199,6 +1208,94 @@ def load_private_demo_script_status():
         "known_risks": known_risks,
         "closing_questions": closing_questions,
         "closing_statement": closing_match.group(1).strip() if closing_match else "",
+    }
+
+
+def load_public_private_surface_audit_status():
+    report_path = get_latest_report_path("public_private_surface_audit")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "overall_status": "missing",
+            "total_checks": 0,
+            "passed_checks": 0,
+            "warning_checks": 0,
+            "failed_checks": 0,
+            "public_files_found": 0,
+            "public_files": [],
+            "checks": [],
+            "findings": [],
+            "boundary_meaning": "No public/private surface audit generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    public_files = []
+    checks = []
+    findings = []
+    boundary_meaning = []
+    section = None
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped[3:].strip()
+            continue
+
+        if section == "Public Surface Inventory":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Public File"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 2:
+                public_files.append(
+                    {
+                        "public_file": parts[0],
+                        "size_bytes": int(parts[1]) if parts[1].isdigit() else 0,
+                    }
+                )
+
+        elif section == "Checks":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Check"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 3:
+                checks.append(
+                    {
+                        "check": parts[0],
+                        "status": parts[1],
+                        "detail": parts[2].replace("\\|", "|"),
+                    }
+                )
+
+        elif section == "Findings" and stripped.startswith("- "):
+            findings.append(stripped[2:].strip())
+
+        elif section == "Boundary Meaning" and stripped:
+            boundary_meaning.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+    public_files_match = re.search(r"Public files found:\s*(\d+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "overall_status": status_match.group(1) if status_match else "unknown",
+        "total_checks": extract_metric_from_markdown(content, "Total checks"),
+        "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
+        "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
+        "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "public_files_found": int(public_files_match.group(1)) if public_files_match else len(public_files),
+        "public_files": public_files,
+        "checks": checks,
+        "findings": findings,
+        "boundary_meaning": " ".join(boundary_meaning) if boundary_meaning else "No boundary meaning recorded.",
     }
 
 
@@ -2544,6 +2641,7 @@ def load_dashboard_data():
     runtime_stability_status = load_runtime_stability_status()
     session_handoff_status = load_session_handoff_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
+    public_private_surface_audit_status = load_public_private_surface_audit_status()
     private_demo_package_status = load_private_demo_package_status()
     private_demo_script_status = load_private_demo_script_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
@@ -2620,6 +2718,7 @@ def load_dashboard_data():
         "session_handoff_status": session_handoff_status,
         "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
+        "public_private_surface_audit_status": public_private_surface_audit_status,
         "private_demo_package_status": private_demo_package_status,
         "private_demo_script_status": private_demo_script_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
@@ -3561,6 +3660,101 @@ def render_module_page(page, data):
                 for recommendation in runtime["recommendations"]:
                     render_status_row(recommendation, "Runtime stability guidance", "healthy")
                 render_panel_end()
+    elif page == "Surface Audit":
+        surface = data["public_private_surface_audit_status"]
+        overall_status = surface["overall_status"]
+        overall_class = {
+            "surface_ready": "green",
+            "surface_ready_with_warnings": "gold",
+            "surface_blocked": "red",
+            "missing": "red",
+        }.get(overall_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Surface", overall_status.replace("_", " ").title(), "Latest public/private audit", overall_class)
+        with c2:
+            render_metric_card("Public Files", surface["public_files_found"], "Static public inventory", "green" if surface["public_files_found"] else "gold")
+        with c3:
+            render_metric_card("Passed", surface["passed_checks"], "Boundary checks passing", "green")
+        with c4:
+            render_metric_card("Warnings", surface["warning_checks"], "Review before publishing", "gold" if surface["warning_checks"] else "green")
+        with c5:
+            render_metric_card("Failed", surface["failed_checks"], "Blocks public boundary", "red" if surface["failed_checks"] else "green")
+
+        status_filter = st.selectbox(
+            "Surface check status filter",
+            ["all", "passed", "warning", "failed"],
+            index=0,
+        )
+        filtered_checks = [
+            check
+            for check in surface["checks"]
+            if status_filter == "all" or check["status"] == status_filter
+        ]
+
+        status_styles = {
+            "passed": "healthy",
+            "warning": "medium",
+            "failed": "high",
+        }
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("Surface Checks")
+            if filtered_checks:
+                for check in filtered_checks:
+                    render_status_row(
+                        check["check"],
+                        check["detail"],
+                        status_styles.get(check["status"], "medium"),
+                    )
+            else:
+                render_status_row("No checks found", "Run python cli.py public-private-surface-audit", "medium")
+            render_panel_end()
+
+            render_panel_start("Public Surface Inventory")
+            if surface["public_files"]:
+                st.dataframe(
+                    pd.DataFrame(surface["public_files"]),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+            else:
+                render_status_row("No public files found", "Generate the surface audit artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Audit Brief")
+            render_brief_item(
+                surface["report_path"] or "Public/private surface audit not generated",
+                "Latest surface audit artifact",
+            )
+            render_brief_item(
+                f"{surface['passed_checks']} passed, {surface['warning_checks']} warning(s), {surface['failed_checks']} failed",
+                "Public/private boundary check summary",
+            )
+            render_brief_item(
+                "python cli.py public-private-surface-audit",
+                "Use CLI to refresh the artifact; dashboard remains read-only",
+            )
+            render_panel_end()
+
+            render_panel_start("Findings")
+            if surface["findings"] and surface["findings"] != ["None."]:
+                for finding in surface["findings"]:
+                    render_status_row(finding, "Surface audit finding", "medium")
+            else:
+                render_status_row("No findings", "Public/private surface boundary is clear", "healthy")
+            render_panel_end()
+
+            render_panel_start("Boundary Meaning")
+            render_brief_item(
+                surface["boundary_meaning"],
+                "Read-only public/private separation guidance",
+            )
+            render_panel_end()
     elif page == "Boundary Index":
         boundary_index = data["dashboard_boundary_index"]
         boundary_rows = boundary_index["rows"]
