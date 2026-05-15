@@ -62,6 +62,7 @@ Failed checks: 0
 - Session Handoff
 - Demo Readiness
 - Demo Package
+- Demo Script
 - Pilot Plan
 - Pilot Tracker
 - Pilot Exit
