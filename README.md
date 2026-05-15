@@ -168,6 +168,14 @@ docs/dashboard-pilot-day-3-page-v0.1-status.md
 
 This page shows the latest Pilot Day 3 evidence review artifact inside the protected dashboard as a read-only continuation checkpoint.
 
+The private dashboard Pilot Day 4 page is documented in:
+
+```text
+docs/dashboard-pilot-day-4-page-v0.1-status.md
+```
+
+This page shows the latest Pilot Day 4 owner confirmation packet inside the protected dashboard as a read-only acknowledgement checkpoint.
+
 The private dashboard demo script page is documented in:
 
 ```text

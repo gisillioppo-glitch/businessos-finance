@@ -29,8 +29,8 @@ KEY_REPORT_PREFIXES = [
 ]
 
 NEXT_RECOMMENDED_BLOCKS = [
-    "Dashboard Pilot Day 4 Page v0.1",
     "Dashboard Public Private Surface Audit Page v0.1",
+    "Dashboard Pilot Day 5 Page v0.1",
     "Private Demo Script Personalization v0.2",
 ]
 

@@ -8,10 +8,10 @@ BusinessOS is a private institutional AI operating system that connects Finance,
 
 ## Demo Readiness
 
-Overall status: ready
+Overall status: ready_with_warnings
 Total checks: 14
-Passed checks: 14
-Warning checks: 0
+Passed checks: 13
+Warning checks: 1
 Failed checks: 0
 
 ## Demo Commands
@@ -69,6 +69,7 @@ Failed checks: 0
 - Pilot Day 1
 - Pilot Day 2
 - Pilot Day 3
+- Pilot Day 4
 - People
 
 ## Recommended Demo Flow

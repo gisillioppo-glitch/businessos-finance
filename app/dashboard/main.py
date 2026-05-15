@@ -288,6 +288,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Evidence review remains BusinessOS-specific until another vertical repeats it.",
     },
     {
+        "page": "Pilot Day 4",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Owner confirmation remains BusinessOS-specific until another vertical repeats it.",
+    },
+    {
         "page": "Pilot Expansion",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared pilot methodology candidate",
@@ -1916,6 +1925,106 @@ def load_pilot_day_3_evidence_review_status():
     }
 
 
+def load_pilot_day_4_owner_confirmation_status():
+    report_path = get_latest_report_path("pilot_day_4_owner_confirmation")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "day_4_status": "missing",
+            "owner_confirmation_mode": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "day_3_status": "missing",
+            "evidence_recommendation": "missing",
+            "allowed_continuation": "missing",
+            "expansion_status": "unknown",
+            "delivery_status": "unknown",
+            "missing_required_evidence": 0,
+            "highest_exit_risk": "unknown",
+            "next_action": "Run python cli.py pilot-day-4-owner-confirmation.",
+            "commands": [],
+            "owner_confirmations": [],
+            "boundaries": [],
+            "next_review_items": [],
+            "operator_note": "No Pilot Day 4 owner confirmation packet generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    commands = []
+    owner_confirmations = []
+    boundaries = []
+    next_review_items = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Day 4 Confirmation Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Executive Owner Confirmation Checklist" and stripped.startswith("- "):
+            owner_confirmations.append(stripped[2:])
+
+        elif section == "Day 4 Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+        elif section == "Next Review Items" and stripped.startswith("- "):
+            next_review_items.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    day_4_status_match = re.search(r"Day 4 status:\s*([a-z_]+)", content)
+    owner_mode_match = re.search(r"Owner confirmation mode:\s*([a-z_]+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    day_3_status_match = re.search(r"Day 3 status:\s*([a-z_]+)", content)
+    evidence_recommendation_match = re.search(r"Evidence recommendation:\s*([a-z_]+)", content)
+    allowed_continuation_match = re.search(r"Allowed continuation:\s*([a-z_]+)", content)
+    expansion_status_match = re.search(r"Expansion status:\s*([a-z_]+)", content)
+    delivery_status_match = re.search(r"Delivery status:\s*([a-z_]+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    highest_exit_risk_match = re.search(r"Highest exit risk:\s*(.+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "day_4_status": day_4_status_match.group(1) if day_4_status_match else "unknown",
+        "owner_confirmation_mode": owner_mode_match.group(1) if owner_mode_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "day_3_status": day_3_status_match.group(1) if day_3_status_match else "unknown",
+        "evidence_recommendation": evidence_recommendation_match.group(1) if evidence_recommendation_match else "unknown",
+        "allowed_continuation": allowed_continuation_match.group(1) if allowed_continuation_match else "unknown",
+        "expansion_status": expansion_status_match.group(1) if expansion_status_match else "unknown",
+        "delivery_status": delivery_status_match.group(1) if delivery_status_match else "unknown",
+        "missing_required_evidence": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "highest_exit_risk": highest_exit_risk_match.group(1).strip() if highest_exit_risk_match else "unknown",
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "commands": commands,
+        "owner_confirmations": owner_confirmations,
+        "boundaries": boundaries,
+        "next_review_items": next_review_items,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
+
 def load_pilot_expansion_review_decision_status():
     report_path = get_latest_report_path("pilot_expansion_review_decision")
 
@@ -2444,6 +2553,7 @@ def load_dashboard_data():
     pilot_day_1_package_status = load_pilot_day_1_package_status()
     pilot_day_2_rhythm_status = load_pilot_day_2_rhythm_status()
     pilot_day_3_evidence_review_status = load_pilot_day_3_evidence_review_status()
+    pilot_day_4_owner_confirmation_status = load_pilot_day_4_owner_confirmation_status()
     pilot_expansion_review_decision_status = load_pilot_expansion_review_decision_status()
     dashboard_boundary_index = load_dashboard_boundary_index()
 
@@ -2519,6 +2629,7 @@ def load_dashboard_data():
         "pilot_day_1_package_status": pilot_day_1_package_status,
         "pilot_day_2_rhythm_status": pilot_day_2_rhythm_status,
         "pilot_day_3_evidence_review_status": pilot_day_3_evidence_review_status,
+        "pilot_day_4_owner_confirmation_status": pilot_day_4_owner_confirmation_status,
         "pilot_expansion_review_decision_status": pilot_expansion_review_decision_status,
     }
 
@@ -4175,6 +4286,104 @@ def render_module_page(page, data):
 
         render_panel_start("Operator Note")
         render_brief_item(day_3["operator_note"], "Read-only guidance; no expansion approval")
+        render_panel_end()
+    elif page == "Pilot Day 4":
+        day_4 = data["pilot_day_4_owner_confirmation_status"]
+        day_4_status = day_4["day_4_status"]
+        day_4_class = {
+            "owner_confirmation_ready": "green",
+            "owner_confirmation_required": "gold",
+            "expansion_review_confirmation_required": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(day_4_status, "gold")
+        risk_class = {
+            "low": "green",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(day_4["highest_exit_risk"].lower(), "gold")
+        continuation_class = {
+            "continue_narrow_pilot_only": "green",
+            "prepare_expansion_review_only": "gold",
+            "pause_until_required_evidence_is_resolved": "red",
+            "missing": "red",
+        }.get(day_4["allowed_continuation"], "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Day 4 Status", day_4_status.replace("_", " ").title(), "Latest owner confirmation", day_4_class)
+        with c2:
+            render_metric_card("Continuation", day_4["allowed_continuation"].replace("_", " ").title(), "Allowed next move", continuation_class)
+        with c3:
+            render_metric_card("Owner Checks", len(day_4["owner_confirmations"]), "Manual confirmation items", "gold")
+        with c4:
+            render_metric_card("Missing Required", day_4["missing_required_evidence"], "Blocks confirmation if above zero", "red" if day_4["missing_required_evidence"] else "green")
+        with c5:
+            render_metric_card("Exit Risk", day_4["highest_exit_risk"].title(), "Before Day 5", risk_class)
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Owner Confirmation Checklist")
+            if day_4["owner_confirmations"]:
+                for item in day_4["owner_confirmations"]:
+                    render_status_row(item, "Manual executive acknowledgement required", "medium")
+            else:
+                render_status_row("No owner confirmation checklist found", "Run python cli.py pilot-day-4-owner-confirmation", "medium")
+            render_panel_end()
+
+            render_panel_start("Day 4 Confirmation Commands")
+            if day_4["commands"]:
+                for item in day_4["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No command list found", "Generate the Day 4 owner confirmation packet", "medium")
+            render_panel_end()
+
+            render_panel_start("Next Review Items")
+            if day_4["next_review_items"]:
+                for item in day_4["next_review_items"]:
+                    render_status_row(item, "Before Day 5 continuation", "medium")
+            else:
+                render_status_row("No next review items found", "Generate the Day 4 owner confirmation packet", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Day 4 Summary")
+            render_brief_item(
+                day_4["report_path"] or "Pilot Day 4 owner confirmation not generated",
+                "Latest Day 4 owner confirmation artifact",
+            )
+            render_brief_item(day_4["pilot_owner"], "Pilot owner")
+            render_brief_item(day_4["primary_workflow"], "Primary workflow")
+            render_brief_item(day_4["owner_confirmation_mode"].replace("_", " ").title(), "Confirmation mode")
+            render_brief_item(day_4["day_3_status"].replace("_", " ").title(), "Source Day 3 status")
+            render_panel_end()
+
+            render_panel_start("Control Boundary")
+            render_status_row(
+                day_4["expansion_status"].replace("_", " ").title(),
+                f"Delivery status: {day_4['delivery_status'].replace('_', ' ').title()}",
+                "medium",
+            )
+            render_status_row(
+                day_4["next_action"],
+                "Owner confirmation does not approve expansion or delivery",
+                day_4_class,
+            )
+            render_panel_end()
+
+            render_panel_start("Day 4 Boundaries")
+            if day_4["boundaries"]:
+                for boundary in day_4["boundaries"]:
+                    render_status_row(boundary, "Protected owner confirmation boundary", "medium")
+            else:
+                render_status_row("No boundaries found", "Generate the Day 4 owner confirmation packet", "medium")
+            render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(day_4["operator_note"], "Read-only guidance; no expansion or delivery approval")
         render_panel_end()
     elif page == "Pilot Expansion":
         expansion = data["pilot_expansion_review_decision_status"]

@@ -154,10 +154,10 @@ Present BusinessOS as a private institutional AI operating system that helps lea
 
 ## Readiness Context
 
-Release readiness: {readiness['overall_status']}  
-Passed checks: {readiness['passed_checks']}  
-Warning checks: {readiness['warning_checks']}  
-Failed checks: {readiness['failed_checks']}  
+Release readiness: {readiness['overall_status']}
+Passed checks: {readiness['passed_checks']}
+Warning checks: {readiness['warning_checks']}
+Failed checks: {readiness['failed_checks']}
 
 ## Pre-Demo Checklist
 
