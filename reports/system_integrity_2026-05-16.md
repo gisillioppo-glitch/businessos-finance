@@ -5,8 +5,8 @@ Date: 2026-05-16
 ## Integrity Summary
 
 Overall status: passed
-Total checks: 57
-Passed checks: 57
+Total checks: 58
+Passed checks: 58
 Warning checks: 0
 Failed checks: 0
 
@@ -58,6 +58,7 @@ Failed checks: 0
 | Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-16.md |
 | Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-16.md |
 | Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-14.md |
+| Latest report: public_surface_publish_checklist | passed | reports\public_surface_publish_checklist_2026-05-16.md |
 | Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-13.md |
 | Latest report: secure_email_delivery | passed | reports\secure_email_delivery_2026-05-13.md |
 | Gitignore protects: finance.db | passed | protected |
@@ -69,5 +70,5 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Boundary classification coverage | passed | 84/84 status docs covered |
+| Boundary classification coverage | passed | 85/85 status docs covered |
 | Git working tree | passed | clean except known local artifacts |
