@@ -4,10 +4,10 @@ Date: 2026-05-16
 
 ## Demo Readiness Summary
 
-Overall status: ready
+Overall status: ready_with_warnings
 Total checks: 14
-Passed checks: 14
-Warning checks: 0
+Passed checks: 13
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -26,5 +26,5 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 24 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Boundary classification coverage | passed | critical | 84/84 status docs covered |
-| Git working tree | passed | critical | clean except known local artifacts |
+| Boundary classification coverage | passed | critical | 85/85 status docs covered |
+| Git working tree | warning | warning | M reports/release_readiness_2026-05-16.md |
