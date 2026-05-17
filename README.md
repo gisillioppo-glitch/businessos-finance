@@ -192,6 +192,14 @@ docs/dashboard-public-private-surface-audit-page-v0.1-status.md
 
 This page shows the latest public/private surface audit artifact inside the protected dashboard as a read-only separation checkpoint.
 
+The private dashboard public surface publish checklist page is documented in:
+
+```text
+docs/dashboard-public-surface-publish-checklist-v0.1-status.md
+```
+
+This page shows whether the public landing surface is safe to show or publish, using surface audit, release readiness, required public files, sensitive path checks, lead intake, local landing response, and evidence artifacts.
+
 The private dashboard demo script page is documented in:
 
 ```text
@@ -207,6 +215,14 @@ docs/public-private-surface-audit-v0.1-status.md
 ```
 
 This command inventories the public landing surface and confirms that private runtime assets remain outside `public/`.
+
+Run the public surface publish checklist with:
+
+```bash
+python cli.py public-surface-publish-checklist
+```
+
+The checklist exports `reports/public_surface_publish_checklist_YYYY-MM-DD.md` and keeps publish review separate from actual deployment.
 
 ## Current Architecture
 

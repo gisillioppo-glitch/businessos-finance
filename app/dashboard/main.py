@@ -198,6 +198,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Public/private surface audit may transfer after another vertical repeats the boundary.",
     },
     {
+        "page": "Publish Checklist",
+        "primary_boundary": "Security / public publish gate",
+        "secondary_boundary": "Public surface demo and publish readiness",
+        "private_data": "sanitized only",
+        "public_surface": "read-only inspection",
+        "core_candidate": "partial",
+        "note": "Publish checklist may transfer after another public surface repeats this gate.",
+    },
+    {
         "page": "Boundary Index",
         "primary_boundary": "Documentation / architecture",
         "secondary_boundary": "Shared dashboard governance pattern candidate",
@@ -1334,6 +1343,101 @@ def load_public_private_surface_audit_status():
         "public_files": public_files,
         "checks": checks,
         "findings": findings,
+        "boundary_meaning": " ".join(boundary_meaning) if boundary_meaning else "No boundary meaning recorded.",
+    }
+
+
+def load_public_surface_publish_checklist_status():
+    report_path = get_latest_report_path("public_surface_publish_checklist")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "overall_status": "missing",
+            "total_checks": 0,
+            "passed_checks": 0,
+            "warning_checks": 0,
+            "blocked_checks": 0,
+            "public_files_found": 0,
+            "surface_status": "missing",
+            "release_status": "missing",
+            "checks": [],
+            "artifacts": [],
+            "publish_guidance": [],
+            "boundary_meaning": "No public surface publish checklist generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    checks = []
+    artifacts = []
+    publish_guidance = []
+    boundary_meaning = []
+    section = None
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped[3:].strip()
+            continue
+
+        if section == "Checklist":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Check"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 4:
+                checks.append(
+                    {
+                        "check": parts[0],
+                        "status": parts[1],
+                        "severity": parts[2],
+                        "detail": parts[3].replace("\\|", "|"),
+                    }
+                )
+
+        elif section == "Evidence Artifacts":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Artifact"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 2:
+                artifacts.append(
+                    {
+                        "artifact": parts[0],
+                        "path": parts[1],
+                    }
+                )
+
+        elif section == "Publish Guidance" and stripped.startswith("- "):
+            publish_guidance.append(stripped[2:].strip())
+
+        elif section == "Boundary Meaning" and stripped:
+            boundary_meaning.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+    public_files_match = re.search(r"Public files found:\s*(\d+)", content)
+    surface_status_match = re.search(r"Surface audit status:\s*([a-z_]+)", content)
+    release_status_match = re.search(r"Release readiness status:\s*([a-z_]+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "overall_status": status_match.group(1) if status_match else "unknown",
+        "total_checks": extract_metric_from_markdown(content, "Total checks"),
+        "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
+        "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
+        "blocked_checks": extract_metric_from_markdown(content, "Blocked checks"),
+        "public_files_found": int(public_files_match.group(1)) if public_files_match else 0,
+        "surface_status": surface_status_match.group(1) if surface_status_match else "unknown",
+        "release_status": release_status_match.group(1) if release_status_match else "unknown",
+        "checks": checks,
+        "artifacts": artifacts,
+        "publish_guidance": publish_guidance,
         "boundary_meaning": " ".join(boundary_meaning) if boundary_meaning else "No boundary meaning recorded.",
     }
 
@@ -2787,6 +2891,7 @@ def load_dashboard_data():
     session_handoff_status = load_session_handoff_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
     public_private_surface_audit_status = load_public_private_surface_audit_status()
+    public_surface_publish_checklist_status = load_public_surface_publish_checklist_status()
     private_demo_package_status = load_private_demo_package_status()
     private_demo_script_status = load_private_demo_script_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
@@ -2865,6 +2970,7 @@ def load_dashboard_data():
         "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
         "public_private_surface_audit_status": public_private_surface_audit_status,
+        "public_surface_publish_checklist_status": public_surface_publish_checklist_status,
         "private_demo_package_status": private_demo_package_status,
         "private_demo_script_status": private_demo_script_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
@@ -3900,6 +4006,105 @@ def render_module_page(page, data):
             render_brief_item(
                 surface["boundary_meaning"],
                 "Read-only public/private separation guidance",
+            )
+            render_panel_end()
+    elif page == "Publish Checklist":
+        checklist = data["public_surface_publish_checklist_status"]
+        overall_status = checklist["overall_status"]
+        overall_class = {
+            "safe": "green",
+            "safe_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(overall_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Public Surface", overall_status.replace("_", " ").title(), "Latest publish checklist", overall_class)
+        with c2:
+            render_metric_card("Passed", checklist["passed_checks"], "Ready checks", "green")
+        with c3:
+            render_metric_card("Warnings", checklist["warning_checks"], "Review before publish", "gold" if checklist["warning_checks"] else "green")
+        with c4:
+            render_metric_card("Blocked", checklist["blocked_checks"], "Stops publish", "red" if checklist["blocked_checks"] else "green")
+        with c5:
+            render_metric_card("Public Files", checklist["public_files_found"], "Static surface files", "green" if checklist["public_files_found"] else "gold")
+
+        status_filter = st.selectbox(
+            "Publish checklist status filter",
+            ["all", "passed", "warning", "blocked"],
+            index=0,
+        )
+        filtered_checks = [
+            check
+            for check in checklist["checks"]
+            if status_filter == "all" or check["status"] == status_filter
+        ]
+
+        status_styles = {
+            "passed": "healthy",
+            "warning": "medium",
+            "blocked": "high",
+        }
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("Publish Checklist")
+            if filtered_checks:
+                for check in filtered_checks:
+                    render_status_row(
+                        f"{check['check']} | {check['severity']}",
+                        check["detail"],
+                        status_styles.get(check["status"], "medium"),
+                    )
+            else:
+                render_status_row("No publish checklist found", "Run python cli.py public-surface-publish-checklist", "medium")
+            render_panel_end()
+
+            render_panel_start("Evidence Artifacts")
+            if checklist["artifacts"]:
+                st.dataframe(
+                    pd.DataFrame(checklist["artifacts"]),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+            else:
+                render_status_row("No evidence artifacts found", "Generate the publish checklist artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Checklist Brief")
+            render_brief_item(
+                checklist["report_path"] or "Public surface publish checklist not generated",
+                "Latest publish checklist artifact",
+            )
+            render_brief_item(
+                checklist["surface_status"],
+                "Surface audit status",
+            )
+            render_brief_item(
+                checklist["release_status"],
+                "Release readiness status",
+            )
+            render_brief_item(
+                "python cli.py public-surface-publish-checklist",
+                "Use CLI to refresh the artifact; dashboard remains read-only",
+            )
+            render_panel_end()
+
+            render_panel_start("Publish Guidance")
+            if checklist["publish_guidance"]:
+                for item in checklist["publish_guidance"]:
+                    render_status_row(item, "Public surface operating rule", "medium")
+            else:
+                render_status_row("No publish guidance found", "Generate the publish checklist artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Boundary Meaning")
+            render_brief_item(
+                checklist["boundary_meaning"],
+                "Protected internal publish gate",
             )
             render_panel_end()
     elif page == "Boundary Index":

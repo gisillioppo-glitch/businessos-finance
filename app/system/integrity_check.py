@@ -63,6 +63,7 @@ REQUIRED_REPORT_PREFIXES = [
     "daily_close_distribution",
     "runtime_stability",
     "private_demo_package",
+    "public_surface_publish_checklist",
     "notification_delivery_approval",
     "secure_email_delivery",
 ]

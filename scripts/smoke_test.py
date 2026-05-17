@@ -39,6 +39,7 @@ STANDARD_COMMANDS = [
     "reports",
     "release-readiness",
     "runtime-stability",
+    "public-surface-publish-checklist",
     "private-demo-package",
     "private-demo-script",
     "notifications",
@@ -95,6 +96,7 @@ FULL_COMMANDS = [
     "reports",
     "release-readiness",
     "runtime-stability",
+    "public-surface-publish-checklist",
     "private-demo-package",
     "private-demo-script",
     *PILOT_CHAIN_COMMANDS,
@@ -238,4 +240,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

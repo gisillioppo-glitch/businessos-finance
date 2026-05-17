@@ -51,6 +51,7 @@ DASHBOARD_PAGES = [
     "System Integrity",
     "Runtime Stability",
     "Surface Audit",
+    "Publish Checklist",
     "Boundary Index",
     "Session Handoff",
     "Demo Readiness",
@@ -74,6 +75,7 @@ DEMO_FLOW = [
     "Show Daily Close and Evidence Index as the executive close-of-day package.",
     "Show Notifications and Scheduled Close as controlled automation readiness.",
     "Show Boundary Index, Session Handoff, and Governance Lock as operating discipline.",
+    "Use Publish Checklist before presenting or publishing the public landing surface.",
     "Close with System Integrity, Release Readiness, and Runtime Stability as the demo quality gate.",
 ]
 
@@ -86,6 +88,7 @@ SHOW_ITEMS = [
     "Secure Email Delivery report in disabled or dry-run mode unless credentials are explicitly enabled.",
     "Scheduled Close status and last scheduler result.",
     "Boundary Index as the private dashboard exposure map.",
+    "Publish Checklist as the public surface go/no-go gate.",
     "Session Handoff as the pause/resume and operator continuity view.",
     "Architecture Boundary Governance Lock as the block closure discipline.",
     "System Integrity and Release Readiness reports.",
