@@ -4,10 +4,10 @@ Date: 2026-05-16
 
 ## Runtime Stability Summary
 
-Overall status: stable_with_runtime_optimization_needed
+Overall status: runtime_stable
 Total checks: 8
-Passed checks: 7
-Warning checks: 1
+Passed checks: 8
+Warning checks: 0
 Failed checks: 0
 Smoke command count: 53
 Heavy pilot command count: 0
@@ -22,7 +22,7 @@ Full heavy pilot command count: 12
 | Release readiness | passed | reports\release_readiness_2026-05-16.md | status: ready_with_warnings | failed: 0 | warnings: 1 |
 | Daily close artifact | passed | reports\daily_close_2026-05-16.md |
 | Dashboard local response | passed | http://localhost:8501 returned 200 |
-| Git working tree | warning | ?? reports/approval_decisions_2026-05-16.md; ?? reports/command_center_2026-05-16.md; ?? reports/daily_brief_2026-05-16.md; ?? reports/daily_close_2026-05-16.md; ?? reports/daily_close_distribution_2026-05-16.md; ?? reports/executive_alerts_2026-05-16.md; ?? reports/executive_evidence_index_2026-05-16.md; ?? reports/governance_brief_2026-05-16.md; ?? reports/release_readiness_2026-05-16.md; ?? reports/support_brief_2026-05-16.md; ?? reports/system_integrity_2026-05-16.md |
+| Git working tree | passed | clean except known local artifacts |
 | Standard smoke profile size | passed | 53 command(s) in standard profile |
 | Default heavy pilot command chain | passed | 0 heavy pilot command(s) in standard profile |
 | Full smoke profile reserve | passed | 12 heavy pilot command(s) reserved for full profile |
