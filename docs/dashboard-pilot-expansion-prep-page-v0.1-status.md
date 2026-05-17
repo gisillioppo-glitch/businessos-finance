@@ -58,7 +58,39 @@ Operators refresh the artifact from CLI with `python cli.py pilot-expansion-revi
 
 ## Validation
 
-Pending final block validation.
+```text
+py_compile OK
+pilot-expansion-review-prep OK
+dashboard loader check OK
+system-check OK: passed, 58/58
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Expansion prep result:
+
+```text
+Expansion prep status: prep_ready_with_conditions
+Review recommendation: prepare_review_packet_only
+Pending conditions: 2
+Missing required evidence: 0
+Expansion status: not_approved
+```
+
+Loader check:
+
+```text
+exists True
+status prep_ready_with_conditions
+conditions 5
+commands 6
+evidence 7
+questions 5
+pending 2
+```
+
+All targeted and general validation passed.
 
 ## Next Step
 
