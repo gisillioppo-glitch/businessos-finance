@@ -65,6 +65,8 @@ DASHBOARD_PAGES = [
     "Pilot Day 3",
     "Pilot Day 4",
     "Pilot Day 5",
+    "Expansion Prep",
+    "Pilot Expansion",
     "People",
 ]
 
@@ -76,6 +78,7 @@ DEMO_FLOW = [
     "Show Notifications and Scheduled Close as controlled automation readiness.",
     "Show Boundary Index, Session Handoff, and Governance Lock as operating discipline.",
     "Use Publish Checklist before presenting or publishing the public landing surface.",
+    "Use Expansion Prep and Pilot Expansion to show the separation between review preparation and decision recommendation.",
     "Close with System Integrity, Release Readiness, and Runtime Stability as the demo quality gate.",
 ]
 
@@ -90,6 +93,8 @@ SHOW_ITEMS = [
     "Boundary Index as the private dashboard exposure map.",
     "Publish Checklist as the public surface go/no-go gate.",
     "Session Handoff as the pause/resume and operator continuity view.",
+    "Expansion Prep as the pre-decision review packet for controlled pilot expansion.",
+    "Pilot Expansion as the advisory decision view after preparation is reviewed.",
     "Architecture Boundary Governance Lock as the block closure discipline.",
     "System Integrity and Release Readiness reports.",
     "Runtime Stability report for quick validation confidence.",

@@ -324,6 +324,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Narrow continuation remains BusinessOS-specific until another vertical repeats it.",
     },
     {
+        "page": "Expansion Prep",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot methodology candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Expansion preparation is advisory and must remain separate from approval.",
+    },
+    {
         "page": "Pilot Expansion",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared pilot methodology candidate",
@@ -2489,6 +2498,134 @@ def load_pilot_expansion_review_decision_status():
         "boundaries": boundaries,
         "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
     }
+
+
+def load_pilot_expansion_review_prep_status():
+    report_path = get_latest_report_path("pilot_expansion_review_prep")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "expansion_prep_status": "missing",
+            "review_recommendation": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "continuation_scope": "unknown",
+            "day_5_status": "missing",
+            "allowed_continuation": "unknown",
+            "expansion_status": "unknown",
+            "delivery_status": "unknown",
+            "missing_required_evidence": 0,
+            "highest_exit_risk": "unknown",
+            "pending_conditions": 0,
+            "next_action": "Run python cli.py pilot-expansion-review-prep.",
+            "conditions": [],
+            "commands": [],
+            "review_conditions": [],
+            "review_evidence": [],
+            "review_questions": [],
+            "boundaries": [],
+            "operator_note": "No pilot expansion review preparation artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    conditions = []
+    commands = []
+    review_conditions = []
+    review_evidence = []
+    review_questions = []
+    boundaries = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Condition Gate":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Condition"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 3:
+                conditions.append(
+                    {
+                        "condition": parts[0],
+                        "status": parts[1],
+                        "detail": parts[2],
+                    }
+                )
+
+        elif section == "Preparation Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Expansion Review Conditions" and stripped.startswith("- "):
+            review_conditions.append(stripped[2:])
+
+        elif section == "Evidence To Include" and stripped.startswith("- "):
+            review_evidence.append(stripped[2:])
+
+        elif section == "Review Questions" and stripped.startswith("- "):
+            review_questions.append(stripped[2:])
+
+        elif section == "Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    prep_status_match = re.search(r"Expansion prep status:\s*([a-z_]+)", content)
+    review_recommendation_match = re.search(r"Review recommendation:\s*([a-z_]+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    continuation_scope_match = re.search(r"Continuation scope:\s*([a-z_]+)", content)
+    day_5_status_match = re.search(r"Day 5 status:\s*([a-z_]+)", content)
+    allowed_continuation_match = re.search(r"Allowed continuation:\s*([a-z_]+)", content)
+    expansion_status_match = re.search(r"Expansion status:\s*([a-z_]+)", content)
+    delivery_status_match = re.search(r"Delivery status:\s*([a-z_]+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    highest_exit_risk_match = re.search(r"Highest exit risk:\s*(.+)", content)
+    pending_conditions_match = re.search(r"Pending conditions:\s*(\d+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "expansion_prep_status": prep_status_match.group(1) if prep_status_match else "unknown",
+        "review_recommendation": review_recommendation_match.group(1) if review_recommendation_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "continuation_scope": continuation_scope_match.group(1) if continuation_scope_match else "unknown",
+        "day_5_status": day_5_status_match.group(1) if day_5_status_match else "unknown",
+        "allowed_continuation": allowed_continuation_match.group(1) if allowed_continuation_match else "unknown",
+        "expansion_status": expansion_status_match.group(1) if expansion_status_match else "unknown",
+        "delivery_status": delivery_status_match.group(1) if delivery_status_match else "unknown",
+        "missing_required_evidence": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "highest_exit_risk": highest_exit_risk_match.group(1).strip() if highest_exit_risk_match else "unknown",
+        "pending_conditions": int(pending_conditions_match.group(1)) if pending_conditions_match else len([condition for condition in conditions if condition["status"] != "met"]),
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "conditions": conditions,
+        "commands": commands,
+        "review_conditions": review_conditions,
+        "review_evidence": review_evidence,
+        "review_questions": review_questions,
+        "boundaries": boundaries,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
+
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -2903,6 +3040,7 @@ def load_dashboard_data():
     pilot_day_3_evidence_review_status = load_pilot_day_3_evidence_review_status()
     pilot_day_4_owner_confirmation_status = load_pilot_day_4_owner_confirmation_status()
     pilot_day_5_narrow_continuation_status = load_pilot_day_5_narrow_continuation_status()
+    pilot_expansion_review_prep_status = load_pilot_expansion_review_prep_status()
     pilot_expansion_review_decision_status = load_pilot_expansion_review_decision_status()
     dashboard_boundary_index = load_dashboard_boundary_index()
 
@@ -2982,6 +3120,7 @@ def load_dashboard_data():
         "pilot_day_3_evidence_review_status": pilot_day_3_evidence_review_status,
         "pilot_day_4_owner_confirmation_status": pilot_day_4_owner_confirmation_status,
         "pilot_day_5_narrow_continuation_status": pilot_day_5_narrow_continuation_status,
+        "pilot_expansion_review_prep_status": pilot_expansion_review_prep_status,
         "pilot_expansion_review_decision_status": pilot_expansion_review_decision_status,
     }
 
@@ -5036,6 +5175,115 @@ def render_module_page(page, data):
 
         render_panel_start("Operator Note")
         render_brief_item(day_5["operator_note"], "Read-only guidance; no expansion or delivery approval")
+        render_panel_end()
+    elif page == "Expansion Prep":
+        prep = data["pilot_expansion_review_prep_status"]
+        prep_status = prep["expansion_prep_status"]
+        prep_class = {
+            "ready_for_expansion_review": "green",
+            "prep_ready_with_conditions": "gold",
+            "blocked_missing_required_evidence": "red",
+            "blocked_scope_not_narrow": "red",
+            "missing": "red",
+        }.get(prep_status, "gold")
+        risk_class = {
+            "low": "green",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(prep["highest_exit_risk"].lower(), "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Prep Status", prep_status.replace("_", " ").title(), "Latest expansion prep", prep_class)
+        with c2:
+            render_metric_card("Recommendation", prep["review_recommendation"].replace("_", " ").title(), "Prep only", prep_class)
+        with c3:
+            render_metric_card("Pending", prep["pending_conditions"], "Review conditions", "gold" if prep["pending_conditions"] else "green")
+        with c4:
+            render_metric_card("Missing Required", prep["missing_required_evidence"], "Evidence gate", "red" if prep["missing_required_evidence"] else "green")
+        with c5:
+            render_metric_card("Exit Risk", prep["highest_exit_risk"].title(), "Before review", risk_class)
+
+        left, right = st.columns([1.45, 1])
+
+        with left:
+            render_panel_start("Preparation Condition Gate")
+            if prep["conditions"]:
+                status_styles = {
+                    "met": "healthy",
+                    "pending": "medium",
+                    "not_approved": "medium",
+                    "missing": "high",
+                    "blocked": "high",
+                    "review_required": "medium",
+                }
+                for condition in prep["conditions"]:
+                    render_status_row(
+                        f"{condition['condition']} | {condition['status'].replace('_', ' ').title()}",
+                        condition["detail"],
+                        status_styles.get(condition["status"], "medium"),
+                    )
+            else:
+                render_status_row("No preparation conditions found", "Run python cli.py pilot-expansion-review-prep", "medium")
+            render_panel_end()
+
+            render_panel_start("Preparation Commands")
+            if prep["commands"]:
+                for item in prep["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No command list found", "Generate the expansion prep artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Evidence To Include")
+            if prep["review_evidence"]:
+                for item in prep["review_evidence"]:
+                    render_status_row(item, "Expansion review evidence", "healthy")
+            else:
+                render_status_row("No evidence list found", "Generate the expansion prep artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Prep Summary")
+            render_brief_item(
+                prep["report_path"] or "Pilot expansion prep report not generated",
+                "Latest expansion review prep artifact",
+            )
+            render_brief_item(prep["pilot_owner"], "Pilot owner")
+            render_brief_item(prep["primary_workflow"], "Primary workflow")
+            render_brief_item(prep["continuation_scope"].replace("_", " ").title(), "Continuation scope")
+            render_brief_item(prep["day_5_status"].replace("_", " ").title(), "Day 5 status")
+            render_brief_item(prep["allowed_continuation"].replace("_", " ").title(), "Allowed continuation")
+            render_panel_end()
+
+            render_panel_start("Approval Boundary")
+            render_status_row(
+                prep["expansion_status"].replace("_", " ").title(),
+                f"Delivery status: {prep['delivery_status'].replace('_', ' ').title()}",
+                "gold" if prep["expansion_status"] != "approved" else "green",
+            )
+            render_status_row(prep["next_action"], "Preparation does not approve expansion", "medium")
+            render_panel_end()
+
+            render_panel_start("Review Questions")
+            if prep["review_questions"]:
+                for question in prep["review_questions"]:
+                    render_status_row(question, "Ask before any expansion decision", "medium")
+            else:
+                render_status_row("No review questions found", "Generate the expansion prep artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Boundaries")
+        if prep["boundaries"]:
+            for boundary in prep["boundaries"]:
+                render_status_row(boundary, "Protected expansion prep boundary", "medium")
+        else:
+            render_status_row("No boundaries found", "Generate the expansion prep artifact", "medium")
+        render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(prep["operator_note"], "Read-only guidance; no automatic expansion approval")
         render_panel_end()
     elif page == "Pilot Expansion":
         expansion = data["pilot_expansion_review_decision_status"]

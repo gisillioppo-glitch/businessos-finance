@@ -23,8 +23,8 @@ The current count includes the Boundary Classification Guard MVP, Release Readin
 ## Coverage Summary
 
 ```text
-Total status docs: 85
-With Boundary Classification: 85
+Total status docs: 86
+With Boundary Classification: 86
 Missing Boundary Classification: 0
 Coverage: 100.0%
 ```
@@ -61,6 +61,7 @@ dashboard-pilot-day-4-page-v0.1-status.md
 dashboard-pilot-day-5-page-v0.1-status.md
 dashboard-pilot-exit-page-v0.1-status.md
 dashboard-pilot-expansion-page-v0.1-status.md
+dashboard-pilot-expansion-prep-page-v0.1-status.md
 dashboard-pilot-plan-page-v0.1-status.md
 dashboard-pilot-tracker-page-v0.1-status.md
 dashboard-private-demo-script-page-v0.1-status.md
