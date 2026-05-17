@@ -49,7 +49,27 @@ The dashboard remains read-only. Operators regenerate the artifact from CLI.
 
 ## Validation
 
-Pending final block validation.
+```text
+py_compile OK
+private-demo-script OK
+dashboard loader check OK
+system-check OK: passed, 57/57
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Loader check:
+
+```text
+exists True
+personas 4
+proof_steps 6
+operator_cues 4
+segments 7
+```
+
+All targeted and general validation passed.
 
 ## Next Step
 
