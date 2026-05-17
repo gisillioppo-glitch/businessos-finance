@@ -4,10 +4,10 @@ Date: 2026-05-16
 
 ## Integrity Summary
 
-Overall status: warning
+Overall status: passed
 Total checks: 57
-Passed checks: 56
-Warning checks: 1
+Passed checks: 57
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -56,7 +56,7 @@ Failed checks: 0
 | Latest report: executive_evidence_index | passed | reports\executive_evidence_index_2026-05-16.md |
 | Latest report: daily_close | passed | reports\daily_close_2026-05-16.md |
 | Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-16.md |
-| Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-14.md |
+| Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-16.md |
 | Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-14.md |
 | Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-13.md |
 | Latest report: secure_email_delivery | passed | reports\secure_email_delivery_2026-05-13.md |
@@ -70,4 +70,4 @@ Failed checks: 0
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
 | Boundary classification coverage | passed | 83/83 status docs covered |
-| Git working tree | warning | ?? reports/approval_decisions_2026-05-16.md; ?? reports/command_center_2026-05-16.md; ?? reports/daily_brief_2026-05-16.md; ?? reports/daily_close_2026-05-16.md; ?? reports/daily_close_distribution_2026-05-16.md; ?? reports/executive_alerts_2026-05-16.md; ?? reports/executive_evidence_index_2026-05-16.md; ?? reports/governance_brief_2026-05-16.md; ?? reports/support_brief_2026-05-16.md |
+| Git working tree | passed | clean except known local artifacts |
