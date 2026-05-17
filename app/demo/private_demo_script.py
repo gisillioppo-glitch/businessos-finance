@@ -91,6 +91,49 @@ KNOWN_RISKS = [
     "Release readiness may show warnings during active development blocks before commit.",
 ]
 
+AUDIENCE_PERSONALIZATION = [
+    {
+        "audience": "Executive sponsor",
+        "emphasis": "decision visibility, daily close, risk prioritization, and operator confidence.",
+        "lead_with": "Dashboard, Command Center, Daily Close, Release Readiness.",
+        "avoid": "raw technical internals unless they ask for architecture review.",
+    },
+    {
+        "audience": "Operations owner",
+        "emphasis": "handoffs, owners, blockers, support signals, and day-by-day pilot rhythm.",
+        "lead_with": "Operations, Support, Pilot Day 1-5, Pilot Tracker.",
+        "avoid": "over-positioning as an email or reporting tool.",
+    },
+    {
+        "audience": "Governance or security reviewer",
+        "emphasis": "approval gates, sensitivity controls, public/private boundaries, and system integrity.",
+        "lead_with": "Governance, Sensitivity, Delivery Approval, Surface Audit, Boundary Index.",
+        "avoid": "suggesting autonomous external delivery without approval.",
+    },
+    {
+        "audience": "Pilot evaluator",
+        "emphasis": "narrow pilot scope, measurable proof, exit decision, and expansion readiness.",
+        "lead_with": "Pilot Plan, Pilot Tracker, Pilot Exit, Pilot Day 5, Expansion Prep.",
+        "avoid": "making the pilot feel broader than the controlled operating lane.",
+    },
+]
+
+PERSONALIZED_PROOF_PATH = [
+    "Start with the public landing only to frame the product promise.",
+    "Move quickly into the private dashboard as the protected operating surface.",
+    "Show one connected loop: signal, owner, approval, evidence, daily close, notification status.",
+    "Use Surface Audit and Boundary Index to prove public/private separation.",
+    "Use Pilot Day 1-5 and Pilot Exit to show how a controlled pilot would be measured.",
+    "Close with readiness status and ask which workflow should be piloted first.",
+]
+
+OPERATOR_CUES = [
+    "If the audience asks for automation, show Scheduled Close before Secure Email.",
+    "If the audience asks about risk, show Governance, Sensitivity, Delivery Approval, and Surface Audit.",
+    "If the audience asks about implementation, name the private boundary first, then offer a separate technical review.",
+    "If the audience asks about next steps, move to Pilot Plan, Pilot Tracker, and Pilot Exit.",
+]
+
 
 def _format_arc_rows():
     rows = [
@@ -122,6 +165,20 @@ def _format_commands(commands):
     return "\n".join(rows)
 
 
+def _format_personalization_rows(items):
+    rows = [
+        "| Audience | Emphasis | Lead With | Avoid |",
+        "| --- | --- | --- | --- |",
+    ]
+
+    for item in items:
+        rows.append(
+            f"| {item['audience']} | {item['emphasis']} | {item['lead_with']} | {item['avoid']} |"
+        )
+
+    return "\n".join(rows)
+
+
 def generate_private_demo_script():
     readiness = generate_release_readiness()
 
@@ -135,6 +192,9 @@ def generate_private_demo_script():
         "closing_questions": CLOSING_QUESTIONS,
         "known_risks": KNOWN_RISKS,
         "pre_demo_checklist": PRE_DEMO_CHECKLIST,
+        "audience_personalization": AUDIENCE_PERSONALIZATION,
+        "personalized_proof_path": PERSONALIZED_PROOF_PATH,
+        "operator_cues": OPERATOR_CUES,
     }
 
 
@@ -144,7 +204,7 @@ def export_private_demo_script(conn=None):
     readiness = script["readiness"]
     report_path = REPORTS_DIR / f"private_demo_script_{script['date']}.md"
 
-    content = f"""# Private Demo Script / Sketch MVP v0.1
+    content = f"""# Private Demo Script / Sketch MVP v0.2
 
 Date: {script['date']}
 
@@ -166,6 +226,18 @@ Failed checks: {readiness['failed_checks']}
 ## Demo Commands
 
 {_format_commands(script['demo_commands'])}
+
+## Audience Personalization
+
+{_format_personalization_rows(script['audience_personalization'])}
+
+## Personalized Proof Path
+
+{_format_bullets(script['personalized_proof_path'])}
+
+## Operator Cues
+
+{_format_bullets(script['operator_cues'])}
 
 ## Demo Arc
 

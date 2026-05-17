@@ -1125,6 +1125,9 @@ def load_private_demo_script_status():
             "demo_arc": [],
             "dashboard_pages": [],
             "demo_commands": [],
+            "audience_personalization": [],
+            "personalized_proof_path": [],
+            "operator_cues": [],
             "pre_demo_checklist": [],
             "do_not_show": [],
             "known_risks": [],
@@ -1136,6 +1139,9 @@ def load_private_demo_script_status():
     demo_arc = []
     dashboard_pages = []
     demo_commands = []
+    audience_personalization = []
+    personalized_proof_path = []
+    operator_cues = []
     pre_demo_checklist = []
     do_not_show = []
     known_risks = []
@@ -1178,6 +1184,27 @@ def load_private_demo_script_status():
                     }
                 )
 
+        elif section == "Audience Personalization":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Audience"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 4:
+                audience_personalization.append(
+                    {
+                        "audience": parts[0],
+                        "emphasis": parts[1],
+                        "lead_with": parts[2],
+                        "avoid": parts[3],
+                    }
+                )
+
+        elif section == "Personalized Proof Path" and stripped.startswith("- "):
+            personalized_proof_path.append(stripped[2:].strip())
+
+        elif section == "Operator Cues" and stripped.startswith("- "):
+            operator_cues.append(stripped[2:].strip())
+
         elif section == "Dashboard Pages Available" and stripped.startswith("- "):
             dashboard_pages.append(stripped[2:].strip())
 
@@ -1212,6 +1239,9 @@ def load_private_demo_script_status():
         "demo_arc": demo_arc,
         "dashboard_pages": dashboard_pages,
         "demo_commands": demo_commands,
+        "audience_personalization": audience_personalization,
+        "personalized_proof_path": personalized_proof_path,
+        "operator_cues": operator_cues,
         "pre_demo_checklist": pre_demo_checklist,
         "do_not_show": do_not_show,
         "known_risks": known_risks,
@@ -5115,7 +5145,7 @@ def render_module_page(page, data):
         with c3:
             render_metric_card("Commands", len(script["demo_commands"]), "Operator commands", "")
         with c4:
-            render_metric_card("Questions", len(script["closing_questions"]), "Discovery close", "gold")
+            render_metric_card("Personas", len(script["audience_personalization"]), "Audience modes", "green" if script["audience_personalization"] else "gold")
         with c5:
             render_metric_card("Risks", len(script["known_risks"]), "Name honestly", "gold" if script["known_risks"] else "green")
 
@@ -5133,6 +5163,27 @@ def render_module_page(page, data):
                     render_brief_item(segment["proof"], "Proof point")
             else:
                 render_status_row("No demo arc found", "Run python cli.py private-demo-script", "medium")
+            render_panel_end()
+
+            render_panel_start("Audience Personalization")
+            if script["audience_personalization"]:
+                for item in script["audience_personalization"]:
+                    render_status_row(
+                        item["audience"],
+                        f"{item['emphasis']} | Lead with: {item['lead_with']}",
+                        "healthy",
+                    )
+                    render_brief_item(item["avoid"], "Avoid")
+            else:
+                render_status_row("No audience personalization found", "Run python cli.py private-demo-script", "medium")
+            render_panel_end()
+
+            render_panel_start("Personalized Proof Path")
+            if script["personalized_proof_path"]:
+                for index, item in enumerate(script["personalized_proof_path"], start=1):
+                    render_status_row(f"{index}. Proof step", item, "healthy")
+            else:
+                render_status_row("No proof path found", "Run python cli.py private-demo-script", "medium")
             render_panel_end()
 
             render_panel_start("Demo Commands")
@@ -5165,6 +5216,14 @@ def render_module_page(page, data):
                     render_status_row(item, "Operator pre-demo check", "medium")
             else:
                 render_status_row("No checklist found", "Generate the private demo script artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Operator Cues")
+            if script["operator_cues"]:
+                for cue in script["operator_cues"]:
+                    render_status_row(cue, "Live demo steering cue", "medium")
+            else:
+                render_status_row("No operator cues found", "Generate the private demo script artifact", "medium")
             render_panel_end()
 
             render_panel_start("Do Not Show")

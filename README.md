@@ -1395,6 +1395,24 @@ Current capabilities:
 - Include known risks and closing discovery questions.
 - Validate the script through smoke test.
 
+## Private Demo Script Personalization v0.2
+
+BusinessOS can now adapt the private demo script to the audience without leaving the protected operating boundary.
+
+Documentation:
+
+```text
+docs/private-demo-script-personalization-v0.2-status.md
+```
+
+Current capabilities:
+
+- Add audience modes for executive sponsors, operations owners, governance reviewers, and pilot evaluators.
+- Add a personalized proof path for controlled private demos.
+- Add operator cues for steering the demo based on live questions.
+- Show the new script sections on the private dashboard `Demo Script` page.
+- Keep the script read-only in dashboard and regenerated from CLI.
+
 ## Private Demo Dry Run MVP v0.1
 
 BusinessOS now includes a controlled pre-demo rehearsal gate for private product presentations.
