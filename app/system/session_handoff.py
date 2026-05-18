@@ -149,7 +149,16 @@ def _format_bullets(items):
 def generate_session_handoff_snapshot():
     today = date.today().isoformat()
     git_lines = _git_status_lines()
-    relevant_git_lines = [line for line in git_lines if line not in KNOWN_LOCAL_ARTIFACTS]
+    handoff_report_lines = {
+        f"?? reports/session_handoff_{today}.md",
+        f" M reports/session_handoff_{today}.md",
+        f"M reports/session_handoff_{today}.md",
+    }
+    relevant_git_lines = [
+        line
+        for line in git_lines
+        if line not in KNOWN_LOCAL_ARTIFACTS and line not in handoff_report_lines
+    ]
 
     latest_commit = _run_git(["git", "log", "-1", "--oneline"]) or "unknown"
     head_tags = _run_git(["git", "tag", "--points-at", "HEAD"]) or "none"
