@@ -4,11 +4,11 @@ Date: 2026-05-18
 
 ## Demo Readiness Summary
 
-Overall status: blocked
+Overall status: ready_with_warnings
 Total checks: 14
-Passed checks: 12
+Passed checks: 13
 Warning checks: 1
-Failed checks: 1
+Failed checks: 0
 
 ## Checks
 
@@ -22,9 +22,9 @@ Failed checks: 1
 | Sensitive file protections | passed | critical | protected |
 | Public secret boundary | passed | critical | clear |
 | Private database readiness | passed | critical | required tables present |
-| Daily close artifact | failed | critical | missing |
-| Notification outbox readiness | passed | critical | 24 notification(s), invalid statuses: none |
+| Daily close artifact | passed | critical | reports\daily_close_2026-05-18.md |
+| Notification outbox readiness | passed | critical | 28 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 86/86 status docs covered |
-| Git working tree | warning | warning | ?? reports/system_integrity_2026-05-18.md |
+| Git working tree | warning | warning | M reports/release_readiness_2026-05-18.md |
