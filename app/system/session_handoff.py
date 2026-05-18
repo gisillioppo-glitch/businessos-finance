@@ -22,16 +22,19 @@ KEY_REPORT_PREFIXES = [
     "release_readiness",
     "runtime_stability",
     "public_private_surface_audit",
+    "public_surface_publish_checklist",
     "daily_close",
     "daily_close_distribution",
     "notification_delivery_approval",
     "secure_email_delivery",
+    "pilot_expansion_review_prep",
+    "pilot_expansion_review_decision",
 ]
 
 NEXT_RECOMMENDED_BLOCKS = [
-    "Private Demo Script Personalization v0.2",
-    "Dashboard Public Surface Publish Checklist v0.1",
-    "Dashboard Pilot Expansion Prep Page v0.1",
+    "Pilot Expansion Decision Dashboard Refresh v0.2",
+    "Support Area Review v0.1",
+    "Operations Area Review v0.1",
 ]
 
 

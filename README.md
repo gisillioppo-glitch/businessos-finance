@@ -160,6 +160,14 @@ docs/private-demo-break-handoff-v0.1-status.md
 
 This handoff records the end-of-day operating state for pausing, resuming, or moving the work to a new chat.
 
+The session handoff refresh review is documented in:
+
+```text
+docs/session-handoff-refresh-review-v0.1-status.md
+```
+
+This refresh updates the handoff snapshot with current publish, readiness, and pilot expansion artifacts before moving into the next block.
+
 The private dashboard Pilot Day 3 page is documented in:
 
 ```text
