@@ -1764,6 +1764,23 @@ python cli.py pilot-expansion-review-decision
 
 The dashboard page is visual only. It does not approve controlled expansion, add workflows, enable delivery, or bypass governance.
 
+## Pilot Expansion Decision Dashboard Refresh v0.2
+
+The private dashboard `Pilot Expansion` page now makes the advisory decision boundary clearer.
+
+Documentation:
+
+```text
+docs/pilot-expansion-decision-dashboard-refresh-v0.2-status.md
+```
+
+Current capabilities:
+
+- Shows a decision boundary panel.
+- Parses and displays decision rules.
+- Highlights the current recommended decision.
+- Keeps expansion approval separate from decision review.
+
 ## BusinessOS Runtime Stability Review v0.1
 
 BusinessOS can now generate a runtime stability review before deeper feature work.

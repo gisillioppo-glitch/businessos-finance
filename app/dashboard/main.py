@@ -2405,6 +2405,7 @@ def load_pilot_expansion_review_decision_status():
             "rationale": [],
             "commands": [],
             "decision_options": [],
+            "decision_rules": [],
             "boundaries": [],
             "operator_note": "No pilot expansion review decision artifact generated yet.",
         }
@@ -2415,6 +2416,7 @@ def load_pilot_expansion_review_decision_status():
     rationale = []
     commands = []
     decision_options = []
+    decision_rules = []
     boundaries = []
     operator_note = []
 
@@ -2452,6 +2454,9 @@ def load_pilot_expansion_review_decision_status():
 
         elif section == "Decision Options" and stripped.startswith("- "):
             decision_options.append(stripped[2:])
+
+        elif section == "Decision Rules" and stripped.startswith("- "):
+            decision_rules.append(stripped[2:])
 
         elif section == "Boundaries" and stripped.startswith("- "):
             boundaries.append(stripped[2:])
@@ -2495,6 +2500,7 @@ def load_pilot_expansion_review_decision_status():
         "rationale": rationale,
         "commands": commands,
         "decision_options": decision_options,
+        "decision_rules": decision_rules,
         "boundaries": boundaries,
         "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
     }
@@ -5315,6 +5321,19 @@ def render_module_page(page, data):
         with c5:
             render_metric_card("Exit Risk", expansion["highest_exit_risk"].title(), "Before expansion", risk_class)
 
+        render_panel_start("Decision Boundary")
+        render_status_row(
+            expansion["recommended_decision"].replace("_", " ").title(),
+            "Advisory recommendation only; no workflow, delivery, or expansion approval is executed here.",
+            decision_class,
+        )
+        render_status_row(
+            expansion["expansion_status"].replace("_", " ").title(),
+            f"Prep status: {expansion['expansion_prep_status'].replace('_', ' ').title()} | Review recommendation: {expansion['review_recommendation'].replace('_', ' ').title()}",
+            expansion_class,
+        )
+        render_panel_end()
+
         left, right = st.columns([1.45, 1])
 
         with left:
@@ -5354,6 +5373,14 @@ def render_module_page(page, data):
                 render_status_row("No command list found", "Generate the expansion decision artifact", "medium")
             render_panel_end()
 
+            render_panel_start("Decision Rules")
+            if expansion["decision_rules"]:
+                for rule in expansion["decision_rules"]:
+                    render_status_row(rule, "Decision guardrail", "medium")
+            else:
+                render_status_row("No decision rules found", "Generate the expansion decision artifact", "medium")
+            render_panel_end()
+
         with right:
             render_panel_start("Expansion Summary")
             render_brief_item(
@@ -5383,7 +5410,9 @@ def render_module_page(page, data):
             render_panel_start("Decision Options")
             if expansion["decision_options"]:
                 for option in expansion["decision_options"]:
-                    render_status_row(option.replace("_", " ").title(), "Allowed decision label", "medium")
+                    option_style = "healthy" if option == expansion["recommended_decision"] else "medium"
+                    option_detail = "Current recommendation" if option == expansion["recommended_decision"] else "Allowed decision label"
+                    render_status_row(option.replace("_", " ").title(), option_detail, option_style)
             else:
                 render_status_row("No decision options found", "Generate the expansion decision artifact", "medium")
             render_panel_end()
