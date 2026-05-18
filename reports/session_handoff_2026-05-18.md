@@ -5,10 +5,10 @@ Date: 2026-05-18
 ## Current Git State
 
 Branch: main
-Latest commit: 2c5cd09 Improve session handoff report status summaries
+Latest commit: 0345028 Ignore active handoff report in handoff status
 Head tag(s):
 - none
-Git status: ?? reports/session_handoff_2026-05-18.md
+Git status: clean except known local artifacts
 Known local artifacts:
 - BussinessOS Avance.pdf
 
@@ -30,7 +30,7 @@ Boundary classification coverage: 87/87 status docs covered
 | notification_delivery_approval | reports\notification_delivery_approval_2026-05-13.md | unknown | failed: n/a \| warnings: n/a |
 | secure_email_delivery | reports\secure_email_delivery_2026-05-13.md | disabled | failed: n/a \| warnings: n/a |
 | pilot_expansion_review_prep | reports\pilot_expansion_review_prep_2026-05-16.md | prep_ready_with_conditions | failed: n/a \| warnings: n/a |
-| pilot_expansion_review_decision | reports\pilot_expansion_review_decision_2026-05-13.md | prep_ready_with_conditions | failed: n/a \| warnings: n/a |
+| pilot_expansion_review_decision | reports\pilot_expansion_review_decision_2026-05-13.md | decision_ready_with_conditions | failed: n/a \| warnings: n/a |
 
 ## Recommended Next Blocks
 
