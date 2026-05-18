@@ -83,6 +83,14 @@ def _extract_metric(content, label, default="unknown"):
     return default
 
 
+def _extract_first_metric(content, labels, default="unknown"):
+    for label in labels:
+        value = _extract_metric(content, label, None)
+        if value is not None:
+            return value
+    return default
+
+
 def _report_summary(prefix):
     report = _latest_report(prefix)
     if not report:
@@ -94,9 +102,19 @@ def _report_summary(prefix):
         }
 
     content = report.read_text(encoding="utf-8")
-    status = _extract_metric(content, "Overall status")
-    failed = _extract_metric(content, "Failed checks")
-    warnings = _extract_metric(content, "Warning checks")
+    status = _extract_first_metric(
+        content,
+        [
+            "Overall status",
+            "Release readiness status",
+            "Surface audit status",
+            "Expansion prep status",
+            "Decision status",
+            "Delivery mode",
+        ],
+    )
+    failed = _extract_first_metric(content, ["Failed checks", "Blocked checks"], "n/a")
+    warnings = _extract_metric(content, "Warning checks", "n/a")
 
     return {
         "name": prefix,
