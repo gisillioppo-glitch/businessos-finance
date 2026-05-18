@@ -102,17 +102,20 @@ def _report_summary(prefix):
         }
 
     content = report.read_text(encoding="utf-8")
-    status = _extract_first_metric(
-        content,
-        [
-            "Overall status",
-            "Release readiness status",
-            "Surface audit status",
-            "Expansion prep status",
-            "Decision status",
-            "Delivery mode",
-        ],
-    )
+    status_labels = [
+        "Overall status",
+        "Release readiness status",
+        "Surface audit status",
+        "Expansion prep status",
+        "Decision status",
+        "Delivery mode",
+    ]
+    if prefix == "pilot_expansion_review_decision":
+        status_labels = ["Decision status", *status_labels]
+    elif prefix == "pilot_expansion_review_prep":
+        status_labels = ["Expansion prep status", *status_labels]
+
+    status = _extract_first_metric(content, status_labels)
     failed = _extract_first_metric(content, ["Failed checks", "Blocked checks"], "n/a")
     warnings = _extract_metric(content, "Warning checks", "n/a")
 
