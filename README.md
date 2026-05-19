@@ -463,6 +463,7 @@ app/governance/
 ```bash
 python cli.py gov-findings
 python cli.py gov-brief
+python cli.py governance-area-review
 ```
 
 ### Current Governance Capabilities
@@ -474,6 +475,7 @@ python cli.py gov-brief
 - Generate governance brief.
 - Report audit trail health.
 - Recommend next best governance move.
+- Export read-only governance area review with sensitivity findings and close criteria.
 - Write governance audit events.
 - Validate governance commands through smoke test.
 ## Governance Reports

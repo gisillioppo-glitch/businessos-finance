@@ -63,6 +63,7 @@ from app.governance.findings import (
     evaluate_governance_findings,
     print_governance_kpis,
 )
+from app.governance.area_review import print_governance_area_review
 from app.governance.governance_brief import print_governance_brief
 from app.governance.governance_report import export_governance_report
 from app.governance.sensitivity_rules import (
@@ -608,6 +609,20 @@ def run_gov_sensitivity_brief():
     finally:
         conn.close()
 
+
+def run_governance_area_review():
+    conn = create_connection()
+
+    try:
+        print_governance_area_review(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
 def run_support_incidents():
     conn = create_connection()
 
@@ -1062,6 +1077,7 @@ def main():
             "gov-report",
             "gov-sensitivity",
             "gov-sensitivity-brief",
+            "governance-area-review",
             "support-incidents",
             "support-brief",
             "support-report",
@@ -1175,6 +1191,8 @@ def main():
         run_gov_sensitivity()
     elif args.command == "gov-sensitivity-brief":
         run_gov_sensitivity_brief()
+    elif args.command == "governance-area-review":
+        run_governance_area_review()
     elif args.command == "support-incidents":
         run_support_incidents()
     elif args.command == "support-brief":
