@@ -49,7 +49,29 @@ It is advisory and read-only except for exporting the review artifact and writin
 
 ## Validation
 
-Pending final block validation.
+Completed.
+
+```text
+py_compile OK
+governance-area-review OK
+system-check OK: passed, 58/58
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Governance area review result:
+
+```text
+Review status: governance_review_high_risk
+Review recommendation: resolve_high_risk_governance_signals
+Highest governance risk: none
+Highest sensitivity risk: high
+Governance findings detected: 0
+Sensitive findings: 7
+High sensitivity findings: 2
+Next action: Review approval_required from approval_requests and confirm owner decision path.
+```
 
 ## Next Step
 
