@@ -81,6 +81,7 @@ from app.notifications.status import (
     demo_mark_first_queued_notification_sent,
 )
 from app.operations.escalation_rules import evaluate_operations_escalation_rules
+from app.operations.area_review import print_operations_area_review
 from app.people.people_brief import print_people_brief
 from app.people.people_views import (
     print_people_list,
@@ -505,6 +506,19 @@ def run_ops_brief():
         task_kpis = print_operations_task_summary_kpis(conn)
         escalations = evaluate_operations_escalation_rules(conn)
         print_operations_brief(conn, task_kpis, escalations)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_operations_area_review():
+    conn = create_connection()
+
+    try:
+        print_operations_area_review(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -1041,6 +1055,7 @@ def main():
             "ops-tasks",
             "ops-escalations",
             "ops-brief",
+            "operations-area-review",
             "gov-findings",
             "gov-kpis",
             "gov-brief",
@@ -1146,6 +1161,8 @@ def main():
         run_ops_escalations()
     elif args.command == "ops-brief":
         run_ops_brief()
+    elif args.command == "operations-area-review":
+        run_operations_area_review()
     elif args.command == "gov-findings":
         run_gov_findings()
     elif args.command == "gov-kpis":

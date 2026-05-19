@@ -412,6 +412,7 @@ source_reference_id
 python cli.py ops-tasks
 python cli.py ops-escalations
 python cli.py ops-brief
+python cli.py operations-area-review
 ```
 
 ### Current Operations Capabilities
@@ -426,6 +427,7 @@ python cli.py ops-brief
 - Generate operations KPIs.
 - Evaluate escalation rules.
 - Generate operations brief.
+- Export read-only operations area review with close criteria.
 - Write audit logs for operations events.
 - Validate operations commands through smoke test.
 ## Finance To Operations Handoff

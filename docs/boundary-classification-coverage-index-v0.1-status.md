@@ -23,8 +23,8 @@ The current count includes the Boundary Classification Guard MVP, Release Readin
 ## Coverage Summary
 
 ```text
-Total status docs: 89
-With Boundary Classification: 89
+Total status docs: 90
+With Boundary Classification: 90
 Missing Boundary Classification: 0
 Coverage: 100.0%
 ```
@@ -89,6 +89,7 @@ notification-delivery-approval-mvp-v0.1-status.md
 notification-outbox-mvp-v0.1-status.md
 notification-status-mvp-v0.2-status.md
 operations-mvp-status.md
+operations-area-review-v0.1-status.md
 people-layer-mvp-status.md
 pilot-day-1-operations-package-mvp-v0.1-status.md
 pilot-day-2-operating-rhythm-mvp-v0.1-status.md
