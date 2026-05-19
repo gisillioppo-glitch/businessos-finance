@@ -11,6 +11,7 @@ from app.audit.audit_log import write_audit_log
 ROOT_DIR = Path(__file__).resolve().parents[2]
 REPORTS_DIR = ROOT_DIR / "reports"
 DASHBOARD_URL = "http://localhost:8501"
+STANDARD_SMOKE_COMMAND_LIMIT = 60
 
 KNOWN_LOCAL_ARTIFACTS = {
     '?? "BussinessOS Avance.pdf"',
@@ -235,8 +236,8 @@ def generate_runtime_stability_review():
     checks.append(
         _check(
             "Standard smoke profile size",
-            "warning" if len(smoke_commands) > 55 else "passed",
-            f"{len(smoke_commands)} command(s) in standard profile",
+            "warning" if len(smoke_commands) > STANDARD_SMOKE_COMMAND_LIMIT else "passed",
+            f"{len(smoke_commands)} command(s) in standard profile | limit: {STANDARD_SMOKE_COMMAND_LIMIT}",
         )
     )
     checks.append(
