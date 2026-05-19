@@ -108,6 +108,7 @@ from app.support.incident_views import (
     print_support_incident_summary_kpis,
     print_support_incidents_list,
 )
+from app.support.area_review import print_support_area_review
 from app.support.support_brief import print_support_brief
 from app.support.support_report import export_support_report
 from main import main as run_main
@@ -636,6 +637,19 @@ def run_support_report():
         conn.close()
 
 
+def run_support_area_review():
+    conn = create_connection()
+
+    try:
+        print_support_area_review(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
 def run_command_center():
     conn = create_connection()
 
@@ -1036,6 +1050,7 @@ def main():
             "support-incidents",
             "support-brief",
             "support-report",
+            "support-area-review",
             "command-center",
             "command-report",
             "people",
@@ -1149,6 +1164,8 @@ def main():
         run_support_brief()
     elif args.command == "support-report":
         run_support_report()
+    elif args.command == "support-area-review":
+        run_support_area_review()
     elif args.command == "command-center":
         run_command_center()
     elif args.command == "command-report":

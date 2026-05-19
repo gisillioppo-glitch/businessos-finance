@@ -521,6 +521,7 @@ app/support/
 python cli.py support-incidents
 python cli.py support-brief
 python cli.py support-report
+python cli.py support-area-review
 ```
 
 ### Current Support Capabilities
@@ -536,6 +537,7 @@ python cli.py support-report
 - Generate support incident KPIs.
 - Generate support brief.
 - Export support brief report.
+- Export read-only support area review with close criteria.
 - Write support audit events.
 - Validate support commands through smoke test.
 ## Command Center / Executive Dashboard MVP
