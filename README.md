@@ -297,6 +297,7 @@ Available commands:
 python cli.py run
 python cli.py health
 python cli.py actions
+python cli.py finance-area-review
 python cli.py reports
 ```
 
@@ -308,6 +309,8 @@ python cli.py reports
   - Runs the Finance health check.
 - `actions`
   - Shows active recommended actions and action KPIs.
+- `finance-area-review`
+  - Exports read-only finance area review with risks, active actions, and close criteria.
 - `reports`
   - Shows report history.
 
@@ -316,6 +319,7 @@ python cli.py reports
 ```bash
 python cli.py health
 python cli.py actions
+python cli.py finance-area-review
 python cli.py reports
 ```
 ## Smoke Test
@@ -331,6 +335,7 @@ The smoke test verifies the main CLI commands:
 ```bash
 python cli.py health
 python cli.py actions
+python cli.py finance-area-review
 python cli.py reports
 python cli.py run
 ```

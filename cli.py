@@ -5,6 +5,7 @@ from app.actions.action_views import (
     print_action_summary_kpis,
     print_recommended_actions_list,
 )
+from app.actions.area_review import print_finance_area_review
 from app.approvals.approval_brief import print_approval_brief
 from app.approvals.approval_report import export_approval_report
 from app.approvals.approval_views import (
@@ -135,6 +136,19 @@ def run_actions():
     try:
         print_recommended_actions_list(conn)
         print_action_summary_kpis(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_finance_area_review():
+    conn = create_connection()
+
+    try:
+        print_finance_area_review(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -1043,6 +1057,7 @@ def main():
             "runtime-stability",
             "session-handoff",
             "actions",
+            "finance-area-review",
             "reports",
             "release-readiness",
             "public-private-surface-audit",
@@ -1123,6 +1138,8 @@ def main():
         run_session_handoff()
     elif args.command == "actions":
         run_actions()
+    elif args.command == "finance-area-review":
+        run_finance_area_review()
     elif args.command == "reports":
         run_reports()
     elif args.command == "release-readiness":
