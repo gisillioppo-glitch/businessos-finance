@@ -49,7 +49,28 @@ It is advisory and read-only except for exporting the review artifact and writin
 
 ## Validation
 
-Pending final block validation.
+Completed.
+
+```text
+py_compile OK
+finance-area-review OK
+system-check OK: passed, 58/58
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Finance area review result:
+
+```text
+Review status: finance_review_high_risk
+Review recommendation: resolve_high_financial_risk
+Financial health: positive
+Net cash flow: $250.00
+Highest financial risk: high
+Active actions: 2
+Next action: Review expense_ratio_warning with Finance Manager and confirm action progress.
+```
 
 ## Next Step
 
