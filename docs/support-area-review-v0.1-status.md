@@ -48,7 +48,27 @@ It is advisory and read-only except for exporting the review artifact and writin
 
 ## Validation
 
-Pending final block validation.
+Completed.
+
+```text
+py_compile OK
+support-area-review OK
+system-check OK: passed, 58/58
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Support area review result:
+
+```text
+Review status: support_review_monitoring_required
+Review recommendation: continue_investigation
+Highest support risk: medium
+Active incidents: 1
+Investigating incidents: 1
+Next action: Continue investigation for Governance monitoring follow-up and capture resolution evidence before closing.
+```
 
 ## Next Step
 
