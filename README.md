@@ -300,6 +300,7 @@ python cli.py actions
 python cli.py finance-area-review
 python cli.py reports
 python cli.py area-review-index
+python cli.py area-review-bundle
 ```
 
 ### Command Details
@@ -316,6 +317,8 @@ python cli.py area-review-index
   - Shows report history.
 - `area-review-index`
   - Exports the executive index across Finance, Operations, Governance, and Support area reviews.
+- `area-review-bundle`
+  - Refreshes all area reviews and the executive area review index in one controlled command.
 
 ### Recommended Daily Check
 
@@ -325,6 +328,7 @@ python cli.py actions
 python cli.py finance-area-review
 python cli.py reports
 python cli.py area-review-index
+python cli.py area-review-bundle
 ```
 ## Smoke Test
 
@@ -342,6 +346,7 @@ python cli.py actions
 python cli.py finance-area-review
 python cli.py reports
 python cli.py area-review-index
+python cli.py area-review-bundle
 python cli.py run
 ```
 
