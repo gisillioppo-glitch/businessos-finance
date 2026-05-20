@@ -16,10 +16,10 @@ Next action: Review Finance first: Review expense_ratio_warning with Finance Man
 
 | Area | Status | Risk | Active Signal | Source Report |
 | --- | --- | --- | --- | --- |
-| Finance | needs_executive_attention | high | Active actions: 2 | reports\finance_area_review_2026-05-18.md |
-| Operations | needs_executive_attention | high | Active tasks: 2 | reports\operations_area_review_2026-05-18.md |
-| Governance | needs_executive_attention | high | Sensitive findings: 7 | reports\governance_area_review_2026-05-18.md |
-| Support | monitoring_required | medium | Active incidents: 1 | reports\support_area_review_2026-05-18.md |
+| Finance | needs_executive_attention | high | Active actions: 2 | reports\finance_area_review_2026-05-19.md |
+| Operations | needs_executive_attention | high | Active tasks: 2 | reports\operations_area_review_2026-05-19.md |
+| Governance | needs_executive_attention | high | Sensitive findings: 7 | reports\governance_area_review_2026-05-19.md |
+| Support | monitoring_required | medium | Active incidents: 1 | reports\support_area_review_2026-05-19.md |
 
 ## Area Next Actions
 
