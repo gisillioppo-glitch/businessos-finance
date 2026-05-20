@@ -47,7 +47,31 @@ It only refreshes review artifacts and writes audit logs.
 
 ## Validation
 
-Pending final block validation.
+Completed.
+
+```text
+py_compile OK
+area-review-bundle OK
+system-check OK: passed, 58/58
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Bundle result:
+
+```text
+Overall status: area_review_attention_required
+Areas reviewed: 4
+Areas missing: 0
+Attention areas: 3
+Monitoring areas: 1
+Clear areas: 0
+Index report: reports/area_review_index_2026-05-19.md
+Standard smoke commands: 57
+Full smoke commands: 69
+Boundary coverage: 96/96
+```
 
 ## Next Step
 
