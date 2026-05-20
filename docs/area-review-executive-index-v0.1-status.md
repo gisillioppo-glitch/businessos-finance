@@ -51,7 +51,28 @@ It is advisory and read-only except for exporting the index artifact and writing
 
 ## Validation
 
-Pending final block validation.
+Completed.
+
+```text
+py_compile OK
+area-review-index OK
+system-check OK: passed, 58/58
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Area review index result:
+
+```text
+Overall status: area_review_attention_required
+Areas reviewed: 4
+Areas missing: 0
+Attention areas: 3
+Monitoring areas: 1
+Clear areas: 0
+Next action: Review Finance first: Review expense_ratio_warning with Finance Manager and confirm action progress.
+```
 
 ## Next Step
 
