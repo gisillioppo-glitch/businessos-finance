@@ -79,9 +79,9 @@ The dashboard remains read-only.
 py_compile OK
 area-review-index OK
 dashboard loader freshness parse OK
-system-check OK: 57 passed / 1 warning / 0 failed during active edits
-release-readiness OK: 13 passed / 1 warning / 0 failed during active edits
-runtime-stability OK: 7 passed / 1 warning / 0 failed during active edits
+system-check OK: 58 passed / 0 warnings / 0 failed after commit
+release-readiness OK: 13 passed / 1 warning / 0 failed during report refresh
+runtime-stability OK: 7 passed / 1 warning / 0 failed during report refresh
 quick smoke OK: 10 commands
 
 Area review index result:
