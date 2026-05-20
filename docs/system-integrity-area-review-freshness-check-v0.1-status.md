@@ -52,10 +52,10 @@ Otherwise, system integrity fails because executive area evidence is not fresh e
 
 ```text
 py_compile OK
-system-check OK: 58 passed / 1 warning / 0 failed during active edits
+system-check OK: 59 passed / 0 warnings / 0 failed after commit
 area review freshness check OK
-release-readiness OK: 14 passed / 1 warning / 0 failed during active edits
-runtime-stability OK: 7 passed / 1 warning / 0 failed during active edits
+release-readiness OK: 14 passed / 1 warning / 0 failed during report refresh
+runtime-stability OK: 7 passed / 1 warning / 0 failed during report refresh
 quick smoke OK: 10 commands
 
 System check result:
