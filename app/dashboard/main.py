@@ -926,6 +926,10 @@ def load_area_review_index_status():
             "areas_reviewed": 0,
             "areas_missing": 0,
             "stale_areas": 0,
+            "fresh_areas": 0,
+            "freshness_status": "missing",
+            "stale_area_names": [],
+            "missing_area_names": [],
             "attention_areas": 0,
             "monitoring_areas": 0,
             "clear_areas": 0,
@@ -992,6 +996,26 @@ def load_area_review_index_status():
     date_match = re.search(r"Date:\s*([0-9-]+)", content)
     status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
     next_action_match = re.search(r"Next action:\s*(.+)", content)
+    stale_area_names = [
+        row["area"] for row in areas
+        if row.get("freshness") == "stale" or row.get("status") == "stale"
+    ]
+    missing_area_names = [
+        row["area"] for row in areas
+        if row.get("freshness") == "missing" or row.get("status") == "missing"
+    ]
+    fresh_area_count = sum(1 for row in areas if row.get("freshness") == "fresh")
+    stale_area_count = extract_metric_from_markdown(content, "Stale areas")
+    missing_area_count = extract_metric_from_markdown(content, "Areas missing")
+
+    if missing_area_count:
+        freshness_status = "missing_area_reviews"
+    elif stale_area_count:
+        freshness_status = "stale_area_reviews"
+    elif areas and fresh_area_count == len(areas):
+        freshness_status = "fresh"
+    else:
+        freshness_status = "unknown"
 
     return {
         "exists": True,
@@ -999,8 +1023,12 @@ def load_area_review_index_status():
         "date": date_match.group(1) if date_match else None,
         "overall_status": status_match.group(1) if status_match else "unknown",
         "areas_reviewed": extract_metric_from_markdown(content, "Areas reviewed"),
-        "areas_missing": extract_metric_from_markdown(content, "Areas missing"),
-        "stale_areas": extract_metric_from_markdown(content, "Stale areas"),
+        "areas_missing": missing_area_count,
+        "stale_areas": stale_area_count,
+        "fresh_areas": fresh_area_count,
+        "freshness_status": freshness_status,
+        "stale_area_names": stale_area_names,
+        "missing_area_names": missing_area_names,
         "attention_areas": extract_metric_from_markdown(content, "Attention areas"),
         "monitoring_areas": extract_metric_from_markdown(content, "Monitoring areas"),
         "clear_areas": extract_metric_from_markdown(content, "Clear areas"),
@@ -4188,6 +4216,33 @@ def render_module_page(page, data):
             render_metric_card("Stale", area_index["stale_areas"], "Needs refresh", "gold" if area_index["stale_areas"] else "green")
         with c5:
             render_metric_card("Missing", area_index["areas_missing"], "Missing area reviews", "red" if area_index["areas_missing"] else "green")
+
+        freshness_class = {
+            "fresh": "healthy",
+            "stale_area_reviews": "medium",
+            "missing_area_reviews": "high",
+            "missing": "high",
+        }.get(area_index["freshness_status"], "medium")
+
+        render_panel_start("Freshness Summary")
+        render_status_row(
+            area_index["freshness_status"].replace("_", " ").title(),
+            f"{area_index['fresh_areas']} fresh | {area_index['stale_areas']} stale | {area_index['areas_missing']} missing",
+            freshness_class,
+        )
+        if area_index["stale_area_names"]:
+            render_status_row(
+                "Stale areas",
+                ", ".join(area_index["stale_area_names"]),
+                "medium",
+            )
+        if area_index["missing_area_names"]:
+            render_status_row(
+                "Missing areas",
+                ", ".join(area_index["missing_area_names"]),
+                "high",
+            )
+        render_panel_end()
 
         status_filter = st.selectbox(
             "Area status filter",
