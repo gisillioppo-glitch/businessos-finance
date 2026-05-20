@@ -66,6 +66,13 @@ def _extract_metric(content, label, default=0):
     return default
 
 
+def _extract_value(content, label, default="n/a"):
+    for line in content.splitlines():
+        if line.startswith(f"{label}:"):
+            return line.split(":", 1)[1].strip()
+    return default
+
+
 def _run_command(command, timeout=30):
     return subprocess.run(
         command,
@@ -153,6 +160,31 @@ def _scheduled_close_status():
         "run_time_local": row[1],
         "last_run_date": row[2],
         "last_status": row[3],
+    }
+
+
+def _area_review_freshness_status(today):
+    report = _latest_report("area_review_index")
+    if not report:
+        return {
+            "passed": False,
+            "detail": "No area review index report found",
+        }
+
+    content = report.read_text(encoding="utf-8")
+    report_date = _extract_value(content, "Date")
+    areas_missing = _extract_metric(content, "Areas missing")
+    stale_areas = _extract_metric(content, "Stale areas")
+
+    passed = report_date == today and areas_missing == 0 and stale_areas == 0
+    detail = (
+        f"{report.relative_to(ROOT_DIR)} | date: {report_date} | "
+        f"stale areas: {stale_areas} | missing areas: {areas_missing}"
+    )
+
+    return {
+        "passed": passed,
+        "detail": detail,
     }
 
 
@@ -269,6 +301,15 @@ def generate_release_readiness():
             "Daily close artifact",
             daily_close_report.exists(),
             str(daily_close_report.relative_to(ROOT_DIR)) if daily_close_report.exists() else "missing",
+        )
+    )
+
+    area_review_freshness = _area_review_freshness_status(today)
+    checks.append(
+        _check(
+            "Area review freshness",
+            area_review_freshness["passed"],
+            area_review_freshness["detail"],
         )
     )
 

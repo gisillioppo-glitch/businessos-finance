@@ -23,8 +23,8 @@ The current count includes the Boundary Classification Guard MVP, Release Readin
 ## Coverage Summary
 
 ```text
-Total status docs: 99
-With Boundary Classification: 99
+Total status docs: 100
+With Boundary Classification: 100
 Missing Boundary Classification: 0
 Coverage: 100.0%
 ```
@@ -121,6 +121,7 @@ private-demo-break-handoff-v0.1-status.md
 release-checkpoint-full-smoke-v0.1-status.md
 release-checkpoint-quick-smoke-v0.1-status.md
 release-readiness-mvp-v0.1-status.md
+release-readiness-area-review-freshness-gate-v0.1-status.md
 release-readiness-boundary-guard-mvp-v0.1-status.md
 scheduled-daily-close-mvp-v0.1-status.md
 secure-email-delivery-adapter-v0.1-status.md

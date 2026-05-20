@@ -5,8 +5,8 @@ Date: 2026-05-19
 ## Demo Readiness Summary
 
 Overall status: ready_with_warnings
-Total checks: 14
-Passed checks: 13
+Total checks: 15
+Passed checks: 14
 Warning checks: 1
 Failed checks: 0
 
@@ -23,8 +23,9 @@ Failed checks: 0
 | Public secret boundary | passed | critical | clear |
 | Private database readiness | passed | critical | required tables present |
 | Daily close artifact | passed | critical | reports\daily_close_2026-05-19.md |
+| Area review freshness | passed | critical | reports\area_review_index_2026-05-19.md \| date: 2026-05-19 \| stale areas: 0 \| missing areas: 0 |
 | Notification outbox readiness | passed | critical | 32 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Boundary classification coverage | passed | critical | 99/99 status docs covered |
-| Git working tree | warning | warning | M app/reports/area_review_bundle.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/area_review_bundle_2026-05-19.md; M reports/release_readiness_2026-05-19.md; M reports/runtime_stability_2026-05-19.md; M reports/system_integrity_2026-05-19.md; ?? docs/area-review-bundle-freshness-validation-v0.1-status.md |
+| Boundary classification coverage | passed | critical | 100/100 status docs covered |
+| Git working tree | warning | warning | M app/readiness/release_readiness.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/release_readiness_2026-05-19.md; M reports/runtime_stability_2026-05-19.md; M reports/system_integrity_2026-05-19.md; ?? docs/release-readiness-area-review-freshness-gate-v0.1-status.md |
