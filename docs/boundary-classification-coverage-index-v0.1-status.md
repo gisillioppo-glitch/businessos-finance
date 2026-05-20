@@ -23,8 +23,8 @@ The current count includes the Boundary Classification Guard MVP, Release Readin
 ## Coverage Summary
 
 ```text
-Total status docs: 93
-With Boundary Classification: 93
+Total status docs: 94
+With Boundary Classification: 94
 Missing Boundary Classification: 0
 Coverage: 100.0%
 ```
@@ -46,6 +46,7 @@ businessos-runtime-stability-review-v0.1-status.md
 command-center-mvp-status.md
 daily-close-distribution-mvp-v0.1-status.md
 dashboard-assistance-page-v0.1-status.md
+dashboard-area-review-index-page-v0.1-status.md
 dashboard-boundary-index-page-v0.1-status.md
 dashboard-boundary-index-v0.1-status.md
 dashboard-daily-close-page-v0.1-status.md

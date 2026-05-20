@@ -189,6 +189,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Runtime profile health is reusable as an operating stability pattern.",
     },
     {
+        "page": "Area Review Index",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared executive area review pattern candidate",
+        "private_data": "read-only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Multi-area executive review may transfer after another vertical repeats it.",
+    },
+    {
         "page": "Surface Audit",
         "primary_boundary": "Security / public-private separation",
         "secondary_boundary": "Demo readiness and deployment hygiene",
@@ -902,6 +911,86 @@ def load_runtime_stability_status():
         "checks": checks,
         "full_heavy_commands": full_heavy_commands,
         "recommendations": recommendations,
+    }
+
+
+def load_area_review_index_status():
+    report_path = get_latest_report_path("area_review_index")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "overall_status": "missing",
+            "areas_reviewed": 0,
+            "areas_missing": 0,
+            "attention_areas": 0,
+            "monitoring_areas": 0,
+            "clear_areas": 0,
+            "next_action": "Run python cli.py area-review-index",
+            "areas": [],
+            "next_actions": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    areas = []
+    next_actions = []
+    section = None
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped[3:].strip()
+            continue
+
+        if section == "Area Status":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Area"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 5:
+                areas.append(
+                    {
+                        "area": parts[0],
+                        "status": parts[1],
+                        "risk": parts[2],
+                        "active_signal": parts[3],
+                        "source_report": parts[4],
+                    }
+                )
+
+        elif section == "Area Next Actions":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Area"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 2:
+                next_actions.append(
+                    {
+                        "area": parts[0],
+                        "next_action": " | ".join(parts[1:]),
+                    }
+                )
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "overall_status": status_match.group(1) if status_match else "unknown",
+        "areas_reviewed": extract_metric_from_markdown(content, "Areas reviewed"),
+        "areas_missing": extract_metric_from_markdown(content, "Areas missing"),
+        "attention_areas": extract_metric_from_markdown(content, "Attention areas"),
+        "monitoring_areas": extract_metric_from_markdown(content, "Monitoring areas"),
+        "clear_areas": extract_metric_from_markdown(content, "Clear areas"),
+        "next_action": next_action_match.group(1).strip() if next_action_match else "n/a",
+        "areas": areas,
+        "next_actions": next_actions,
     }
 
 
@@ -3031,6 +3120,7 @@ def load_dashboard_data():
     system_integrity_status = load_system_integrity_status()
     release_readiness_status = load_release_readiness_status()
     runtime_stability_status = load_runtime_stability_status()
+    area_review_index_status = load_area_review_index_status()
     session_handoff_status = load_session_handoff_status()
     scheduled_daily_close_status = load_scheduled_daily_close_status()
     public_private_surface_audit_status = load_public_private_surface_audit_status()
@@ -3110,6 +3200,7 @@ def load_dashboard_data():
         "system_integrity_status": system_integrity_status,
         "release_readiness_status": release_readiness_status,
         "runtime_stability_status": runtime_stability_status,
+        "area_review_index_status": area_review_index_status,
         "session_handoff_status": session_handoff_status,
         "dashboard_boundary_index": dashboard_boundary_index,
         "scheduled_daily_close_status": scheduled_daily_close_status,
@@ -4058,6 +4149,92 @@ def render_module_page(page, data):
                 for recommendation in runtime["recommendations"]:
                     render_status_row(recommendation, "Runtime stability guidance", "healthy")
                 render_panel_end()
+    elif page == "Area Review Index":
+        area_index = data["area_review_index_status"]
+        overall_status = area_index["overall_status"]
+        overall_class = {
+            "area_review_clear": "green",
+            "area_review_monitoring_required": "gold",
+            "area_review_attention_required": "red",
+            "area_review_index_incomplete": "red",
+            "missing": "red",
+        }.get(overall_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Overall", overall_status.replace("_", " ").title(), "Latest area review index", overall_class)
+        with c2:
+            render_metric_card("Reviewed", area_index["areas_reviewed"], "Area reviews available", "green" if area_index["areas_missing"] == 0 else "gold")
+        with c3:
+            render_metric_card("Attention", area_index["attention_areas"], "Needs executive review", "red" if area_index["attention_areas"] else "green")
+        with c4:
+            render_metric_card("Monitoring", area_index["monitoring_areas"], "Watch areas", "gold" if area_index["monitoring_areas"] else "green")
+        with c5:
+            render_metric_card("Missing", area_index["areas_missing"], "Missing area reviews", "red" if area_index["areas_missing"] else "green")
+
+        status_filter = st.selectbox(
+            "Area status filter",
+            ["all", "needs_executive_attention", "monitoring_required", "clear", "missing"],
+            index=0,
+        )
+        filtered_areas = [
+            row
+            for row in area_index["areas"]
+            if status_filter == "all" or row["status"] == status_filter
+        ]
+
+        status_styles = {
+            "needs_executive_attention": "high",
+            "monitoring_required": "medium",
+            "clear": "healthy",
+            "missing": "high",
+        }
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Area Status")
+            if filtered_areas:
+                for row in filtered_areas:
+                    render_status_row(
+                        row["area"],
+                        f"{row['risk']} | {row['active_signal']} | {row['source_report']}",
+                        status_styles.get(row["status"], "medium"),
+                    )
+            else:
+                render_status_row("No areas found", "No area reviews match this filter", "healthy")
+            render_panel_end()
+
+            if filtered_areas:
+                st.dataframe(
+                    pd.DataFrame(filtered_areas),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+        with right:
+            render_panel_start("Executive Next Move")
+            render_brief_item(
+                area_index["next_action"],
+                "Recommended area-level sequence from the latest index",
+            )
+            render_brief_item(
+                area_index["report_path"] or "Area review index report not generated",
+                "Latest exported area-review-index artifact",
+            )
+            render_brief_item(
+                "python cli.py area-review-index",
+                "Use CLI to refresh the artifact; dashboard remains read-only",
+            )
+            render_panel_end()
+
+            render_panel_start("Area Next Actions")
+            if area_index["next_actions"]:
+                for row in area_index["next_actions"]:
+                    render_status_row(row["area"], row["next_action"], "medium")
+            else:
+                render_status_row("No next actions found", "Run python cli.py area-review-index", "medium")
+            render_panel_end()
     elif page == "Surface Audit":
         surface = data["public_private_surface_audit_status"]
         overall_status = surface["overall_status"]
