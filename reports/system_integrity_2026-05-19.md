@@ -4,10 +4,10 @@ Date: 2026-05-19
 
 ## Integrity Summary
 
-Overall status: passed
+Overall status: warning
 Total checks: 58
-Passed checks: 58
-Warning checks: 0
+Passed checks: 57
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -70,5 +70,5 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Boundary classification coverage | passed | 96/96 status docs covered |
-| Git working tree | passed | clean except known local artifacts |
+| Boundary classification coverage | passed | 97/97 status docs covered |
+| Git working tree | warning | M README.md; M app/dashboard/main.py; M app/reports/area_review_index.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/area_review_index_2026-05-19.md; M reports/release_readiness_2026-05-19.md; M reports/runtime_stability_2026-05-19.md; M reports/system_integrity_2026-05-19.md; ?? docs/area-review-freshness-guard-v0.1-status.md |

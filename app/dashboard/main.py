@@ -925,6 +925,7 @@ def load_area_review_index_status():
             "overall_status": "missing",
             "areas_reviewed": 0,
             "areas_missing": 0,
+            "stale_areas": 0,
             "attention_areas": 0,
             "monitoring_areas": 0,
             "clear_areas": 0,
@@ -950,11 +951,25 @@ def load_area_review_index_status():
                 continue
 
             parts = [part.strip() for part in stripped.strip("|").split("|")]
-            if len(parts) >= 5:
+            if len(parts) >= 7:
                 areas.append(
                     {
                         "area": parts[0],
                         "status": parts[1],
+                        "freshness": parts[2],
+                        "report_date": parts[3],
+                        "risk": parts[4],
+                        "active_signal": parts[5],
+                        "source_report": parts[6],
+                    }
+                )
+            elif len(parts) >= 5:
+                areas.append(
+                    {
+                        "area": parts[0],
+                        "status": parts[1],
+                        "freshness": "unknown",
+                        "report_date": "n/a",
                         "risk": parts[2],
                         "active_signal": parts[3],
                         "source_report": parts[4],
@@ -985,6 +1000,7 @@ def load_area_review_index_status():
         "overall_status": status_match.group(1) if status_match else "unknown",
         "areas_reviewed": extract_metric_from_markdown(content, "Areas reviewed"),
         "areas_missing": extract_metric_from_markdown(content, "Areas missing"),
+        "stale_areas": extract_metric_from_markdown(content, "Stale areas"),
         "attention_areas": extract_metric_from_markdown(content, "Attention areas"),
         "monitoring_areas": extract_metric_from_markdown(content, "Monitoring areas"),
         "clear_areas": extract_metric_from_markdown(content, "Clear areas"),
@@ -4157,6 +4173,7 @@ def render_module_page(page, data):
             "area_review_monitoring_required": "gold",
             "area_review_attention_required": "red",
             "area_review_index_incomplete": "red",
+            "area_review_index_stale": "gold",
             "missing": "red",
         }.get(overall_status, "gold")
 
@@ -4168,13 +4185,13 @@ def render_module_page(page, data):
         with c3:
             render_metric_card("Attention", area_index["attention_areas"], "Needs executive review", "red" if area_index["attention_areas"] else "green")
         with c4:
-            render_metric_card("Monitoring", area_index["monitoring_areas"], "Watch areas", "gold" if area_index["monitoring_areas"] else "green")
+            render_metric_card("Stale", area_index["stale_areas"], "Needs refresh", "gold" if area_index["stale_areas"] else "green")
         with c5:
             render_metric_card("Missing", area_index["areas_missing"], "Missing area reviews", "red" if area_index["areas_missing"] else "green")
 
         status_filter = st.selectbox(
             "Area status filter",
-            ["all", "needs_executive_attention", "monitoring_required", "clear", "missing"],
+            ["all", "needs_executive_attention", "monitoring_required", "stale", "clear", "missing"],
             index=0,
         )
         filtered_areas = [
@@ -4186,6 +4203,7 @@ def render_module_page(page, data):
         status_styles = {
             "needs_executive_attention": "high",
             "monitoring_required": "medium",
+            "stale": "medium",
             "clear": "healthy",
             "missing": "high",
         }
@@ -4198,7 +4216,7 @@ def render_module_page(page, data):
                 for row in filtered_areas:
                     render_status_row(
                         row["area"],
-                        f"{row['risk']} | {row['active_signal']} | {row['source_report']}",
+                        f"{row['freshness']} | {row['report_date']} | {row['risk']} | {row['active_signal']} | {row['source_report']}",
                         status_styles.get(row["status"], "medium"),
                     )
             else:

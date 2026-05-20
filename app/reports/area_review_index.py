@@ -71,6 +71,9 @@ def _area_status(entry):
     if entry["missing"]:
         return "missing"
 
+    if entry["is_stale"]:
+        return "stale"
+
     risk_rank = _risk_rank(entry["highest_risk"])
     active_value = entry["active_count"]
 
@@ -87,6 +90,9 @@ def _overall_status(entries):
     if any(entry["missing"] for entry in entries):
         return "area_review_index_incomplete"
 
+    if any(entry["is_stale"] for entry in entries):
+        return "area_review_index_stale"
+
     if any(entry["area_status"] == "needs_executive_attention" for entry in entries):
         return "area_review_attention_required"
 
@@ -97,6 +103,14 @@ def _overall_status(entries):
 
 
 def _next_action(entries):
+    missing = [entry for entry in entries if entry["missing"]]
+    if missing:
+        return f"Generate missing area review for {missing[0]['area']}."
+
+    stale = [entry for entry in entries if entry["is_stale"]]
+    if stale:
+        return "Run python cli.py area-review-bundle to refresh stale area reviews."
+
     attention = [
         entry for entry in entries
         if entry["area_status"] == "needs_executive_attention"
@@ -113,22 +127,18 @@ def _next_action(entries):
         first = monitoring[0]
         return f"Monitor {first['area']}: {first['next_action']}"
 
-    missing = [entry for entry in entries if entry["missing"]]
-    if missing:
-        return f"Generate missing area review for {missing[0]['area']}."
-
     return "Maintain area review cadence."
 
 
 def _format_area_rows(entries):
     rows = [
-        "| Area | Status | Risk | Active Signal | Source Report |",
-        "| --- | --- | --- | --- | --- |",
+        "| Area | Status | Freshness | Report Date | Risk | Active Signal | Source Report |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
     ]
 
     for entry in entries:
         rows.append(
-            f"| {entry['area']} | {entry['area_status']} | {entry['highest_risk']} | {entry['active_label']}: {entry['active_count']} | {entry['report_path']} |"
+            f"| {entry['area']} | {entry['area_status']} | {entry['freshness']} | {entry['report_date']} | {entry['highest_risk']} | {entry['active_label']}: {entry['active_count']} | {entry['report_path']} |"
         )
 
     return "\n".join(rows)
@@ -146,7 +156,7 @@ def _format_next_actions(entries):
     return "\n".join(rows)
 
 
-def _load_area_entry(source):
+def _load_area_entry(source, index_date):
     report = _latest_report(source["prefix"])
 
     if not report:
@@ -155,6 +165,8 @@ def _load_area_entry(source):
             "missing": True,
             "report_path": "missing",
             "report_date": "n/a",
+            "freshness": "missing",
+            "is_stale": False,
             "review_status": "missing",
             "review_recommendation": "generate_area_review",
             "highest_risk": "n/a",
@@ -165,11 +177,15 @@ def _load_area_entry(source):
         }
 
     content = report.read_text(encoding="utf-8")
+    report_date = _extract_value(content, "Date")
+    is_stale = report_date != index_date
     entry = {
         "area": source["area"],
         "missing": False,
         "report_path": str(report.relative_to(ROOT_DIR)),
-        "report_date": _extract_value(content, "Date"),
+        "report_date": report_date,
+        "freshness": "stale" if is_stale else "fresh",
+        "is_stale": is_stale,
         "review_status": _extract_value(content, "Review status"),
         "review_recommendation": _extract_value(content, "Review recommendation"),
         "highest_risk": _extract_value(content, source["risk_label"]),
@@ -182,13 +198,15 @@ def _load_area_entry(source):
 
 
 def generate_area_review_index():
-    entries = [_load_area_entry(source) for source in AREA_REVIEW_SOURCES]
+    index_date = date.today().isoformat()
+    entries = [_load_area_entry(source, index_date) for source in AREA_REVIEW_SOURCES]
 
     return {
-        "date": date.today().isoformat(),
+        "date": index_date,
         "overall_status": _overall_status(entries),
         "areas_reviewed": sum(1 for entry in entries if not entry["missing"]),
         "areas_missing": sum(1 for entry in entries if entry["missing"]),
+        "stale_areas": sum(1 for entry in entries if entry["is_stale"]),
         "attention_areas": sum(
             1 for entry in entries
             if entry["area_status"] == "needs_executive_attention"
@@ -217,6 +235,7 @@ Date: {result['date']}
 Overall status: {result['overall_status']}
 Areas reviewed: {result['areas_reviewed']}
 Areas missing: {result['areas_missing']}
+Stale areas: {result['stale_areas']}
 Attention areas: {result['attention_areas']}
 Monitoring areas: {result['monitoring_areas']}
 Clear areas: {result['clear_areas']}
@@ -248,6 +267,7 @@ This index is read-only. It summarizes the latest available area review reports 
                 "overall_status": result["overall_status"],
                 "areas_reviewed": result["areas_reviewed"],
                 "areas_missing": result["areas_missing"],
+                "stale_areas": result["stale_areas"],
                 "attention_areas": result["attention_areas"],
             },
         )
@@ -263,6 +283,7 @@ def print_area_review_index(conn=None):
     print(f"Overall status: {result['overall_status']}")
     print(f"Areas reviewed: {result['areas_reviewed']}")
     print(f"Areas missing: {result['areas_missing']}")
+    print(f"Stale areas: {result['stale_areas']}")
     print(f"Attention areas: {result['attention_areas']}")
     print(f"Monitoring areas: {result['monitoring_areas']}")
     print(f"Clear areas: {result['clear_areas']}")

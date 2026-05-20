@@ -317,6 +317,7 @@ python cli.py area-review-bundle
   - Shows report history.
 - `area-review-index`
   - Exports the executive index across Finance, Operations, Governance, and Support area reviews.
+  - Flags stale area reviews when the latest source report date does not match the index date.
 - `area-review-bundle`
   - Refreshes all area reviews and the executive area review index in one controlled command.
 
