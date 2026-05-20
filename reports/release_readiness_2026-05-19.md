@@ -4,10 +4,10 @@ Date: 2026-05-19
 
 ## Demo Readiness Summary
 
-Overall status: ready_with_warnings
+Overall status: ready
 Total checks: 14
-Passed checks: 13
-Warning checks: 1
+Passed checks: 14
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -27,4 +27,4 @@ Failed checks: 0
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 92/92 status docs covered |
-| Git working tree | warning | warning | ?? reports/approval_decisions_2026-05-19.md; ?? reports/command_center_2026-05-19.md; ?? reports/daily_brief_2026-05-19.md; ?? reports/daily_close_2026-05-19.md; ?? reports/daily_close_distribution_2026-05-19.md; ?? reports/executive_alerts_2026-05-19.md; ?? reports/executive_evidence_index_2026-05-19.md; ?? reports/governance_brief_2026-05-19.md; ?? reports/release_readiness_2026-05-19.md; ?? reports/runtime_stability_2026-05-19.md; ?? reports/support_brief_2026-05-19.md; ?? reports/system_integrity_2026-05-19.md |
+| Git working tree | passed | critical | clean except known local artifacts |
