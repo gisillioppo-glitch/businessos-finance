@@ -138,6 +138,38 @@ def _latest_report(prefix):
     return reports[0] if reports else None
 
 
+def _extract_metric(content, label, default=0):
+    for line in content.splitlines():
+        if line.startswith(f"{label}:"):
+            value = line.split(":", 1)[1].strip()
+            return int(value) if value.isdigit() else default
+    return default
+
+
+def _extract_value(content, label, default="n/a"):
+    for line in content.splitlines():
+        if line.startswith(f"{label}:"):
+            return line.split(":", 1)[1].strip()
+    return default
+
+
+def _area_review_freshness_check(today):
+    report = _latest_report("area_review_index")
+    if not report:
+        return _check("Area review freshness", False, "No area review index report found")
+
+    content = report.read_text(encoding="utf-8")
+    report_date = _extract_value(content, "Date")
+    areas_missing = _extract_metric(content, "Areas missing")
+    stale_areas = _extract_metric(content, "Stale areas")
+    passed = report_date == today and areas_missing == 0 and stale_areas == 0
+    detail = (
+        f"{report.relative_to(ROOT_DIR)} | date: {report_date} | "
+        f"stale areas: {stale_areas} | missing areas: {areas_missing}"
+    )
+    return _check("Area review freshness", passed, detail)
+
+
 def _run_git_status():
     result = subprocess.run(
         ["git", "status", "--short"],
@@ -155,6 +187,7 @@ def _run_git_status():
 
 def generate_system_integrity_check(conn):
     create_scheduled_daily_close_table(conn)
+    today = date.today().isoformat()
 
     checks = []
 
@@ -234,6 +267,8 @@ def generate_system_integrity_check(conn):
         )
     )
 
+    checks.append(_area_review_freshness_check(today))
+
     boundary_coverage = get_boundary_classification_coverage()
     checks.append(
         _check(
@@ -264,7 +299,7 @@ def generate_system_integrity_check(conn):
         overall_status = "passed"
 
     return {
-        "date": date.today().isoformat(),
+        "date": today,
         "overall_status": overall_status,
         "total_checks": len(checks),
         "passed_checks": sum(1 for check in checks if check["status"] == "passed"),

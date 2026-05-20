@@ -4,10 +4,10 @@ Date: 2026-05-19
 
 ## Integrity Summary
 
-Overall status: passed
-Total checks: 58
+Overall status: warning
+Total checks: 59
 Passed checks: 58
-Warning checks: 0
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -70,5 +70,6 @@ Failed checks: 0
 | Public secret boundary: public/secrets.toml | passed | not present |
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
-| Boundary classification coverage | passed | 100/100 status docs covered |
-| Git working tree | passed | clean except known local artifacts |
+| Area review freshness | passed | reports\area_review_index_2026-05-19.md | date: 2026-05-19 | stale areas: 0 | missing areas: 0 |
+| Boundary classification coverage | passed | 101/101 status docs covered |
+| Git working tree | warning | M app/system/integrity_check.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/release_readiness_2026-05-19.md; M reports/runtime_stability_2026-05-19.md; M reports/system_integrity_2026-05-19.md; ?? docs/system-integrity-area-review-freshness-check-v0.1-status.md |

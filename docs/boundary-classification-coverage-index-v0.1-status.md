@@ -23,8 +23,8 @@ The current count includes the Boundary Classification Guard MVP, Release Readin
 ## Coverage Summary
 
 ```text
-Total status docs: 100
-With Boundary Classification: 100
+Total status docs: 101
+With Boundary Classification: 101
 Missing Boundary Classification: 0
 Coverage: 100.0%
 ```
@@ -131,6 +131,7 @@ session-handoff-snapshot-mvp-v0.1-status.md
 smoke-profile-capacity-rebalance-v0.1-status.md
 support-mvp-status.md
 support-area-review-v0.1-status.md
+system-integrity-area-review-freshness-check-v0.1-status.md
 system-integrity-check-mvp-v0.1-status.md
 ```
 

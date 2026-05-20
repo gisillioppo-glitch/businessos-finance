@@ -22,7 +22,7 @@ Full heavy pilot command count: 12
 | Release readiness | passed | reports\release_readiness_2026-05-19.md | status: ready_with_warnings | failed: 0 | warnings: 1 |
 | Daily close artifact | passed | reports\daily_close_2026-05-19.md |
 | Dashboard local response | passed | http://localhost:8501 returned 200 |
-| Git working tree | warning | M app/readiness/release_readiness.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/release_readiness_2026-05-19.md; M reports/runtime_stability_2026-05-19.md; M reports/system_integrity_2026-05-19.md; ?? docs/release-readiness-area-review-freshness-gate-v0.1-status.md |
+| Git working tree | warning | M app/system/integrity_check.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/release_readiness_2026-05-19.md; M reports/runtime_stability_2026-05-19.md; M reports/system_integrity_2026-05-19.md; ?? docs/system-integrity-area-review-freshness-check-v0.1-status.md |
 | Standard smoke profile size | passed | 57 command(s) in standard profile | limit: 60 |
 | Default heavy pilot command chain | passed | 0 heavy pilot command(s) in standard profile |
 | Full smoke profile reserve | passed | 12 heavy pilot command(s) reserved for full profile |
