@@ -46,7 +46,28 @@ It only changes smoke profile composition.
 
 ## Validation
 
-Pending final block validation.
+Completed.
+
+```text
+py_compile OK
+profile count OK
+system-check OK: passed, 58/58
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Profile result:
+
+```text
+quick commands: 10
+standard commands: 56
+full commands: 68
+standard notifications checks: 1
+standard notification-delivery-approval checks: 1
+standard secure-email-delivery checks: 1
+boundary coverage: 95/95
+```
 
 ## Next Step
 
