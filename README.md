@@ -299,6 +299,7 @@ python cli.py health
 python cli.py actions
 python cli.py finance-area-review
 python cli.py reports
+python cli.py area-review-index
 ```
 
 ### Command Details
@@ -313,6 +314,8 @@ python cli.py reports
   - Exports read-only finance area review with risks, active actions, and close criteria.
 - `reports`
   - Shows report history.
+- `area-review-index`
+  - Exports the executive index across Finance, Operations, Governance, and Support area reviews.
 
 ### Recommended Daily Check
 
@@ -321,6 +324,7 @@ python cli.py health
 python cli.py actions
 python cli.py finance-area-review
 python cli.py reports
+python cli.py area-review-index
 ```
 ## Smoke Test
 
@@ -337,6 +341,7 @@ python cli.py health
 python cli.py actions
 python cli.py finance-area-review
 python cli.py reports
+python cli.py area-review-index
 python cli.py run
 ```
 

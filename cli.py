@@ -96,6 +96,7 @@ from app.operations.task_views import (
     print_operations_task_summary_kpis,
     print_operations_tasks_list,
 )
+from app.reports.area_review_index import print_area_review_index
 from app.reports.report_history import print_report_history
 from app.readiness.release_readiness import print_release_readiness
 from app.scheduler.scheduled_daily_close import (
@@ -162,6 +163,19 @@ def run_reports():
 
     try:
         print_report_history(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_area_review_index():
+    conn = create_connection()
+
+    try:
+        print_area_review_index(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -1059,6 +1073,7 @@ def main():
             "actions",
             "finance-area-review",
             "reports",
+            "area-review-index",
             "release-readiness",
             "public-private-surface-audit",
             "public-surface-publish-checklist",
@@ -1142,6 +1157,8 @@ def main():
         run_finance_area_review()
     elif args.command == "reports":
         run_reports()
+    elif args.command == "area-review-index":
+        run_area_review_index()
     elif args.command == "release-readiness":
         run_release_readiness()
     elif args.command == "public-private-surface-audit":
