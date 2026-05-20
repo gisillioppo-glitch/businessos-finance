@@ -5,8 +5,10 @@ Date: 2026-05-19
 ## Bundle Summary
 
 Overall status: area_review_attention_required
+Freshness status: fresh
 Areas reviewed: 4
 Areas missing: 0
+Stale areas: 0
 Attention areas: 3
 Monitoring areas: 1
 Clear areas: 0

@@ -38,6 +38,16 @@ def _format_bundle_rows(area_results):
     return "\n".join(rows)
 
 
+def _freshness_status(index_result):
+    if index_result["areas_missing"]:
+        return "missing_area_reviews"
+
+    if index_result["stale_areas"]:
+        return "stale_area_reviews"
+
+    return "fresh"
+
+
 def _risk_for_area(area_name, result):
     if area_name == "Finance":
         return result["highest_financial_risk"]
@@ -74,8 +84,10 @@ def export_area_review_bundle(conn):
     bundle = {
         "date": date.today().isoformat(),
         "overall_status": index_result["overall_status"],
+        "freshness_status": _freshness_status(index_result),
         "areas_reviewed": len(area_results),
         "areas_missing": index_result["areas_missing"],
+        "stale_areas": index_result["stale_areas"],
         "attention_areas": index_result["attention_areas"],
         "monitoring_areas": index_result["monitoring_areas"],
         "clear_areas": index_result["clear_areas"],
@@ -92,8 +104,10 @@ Date: {bundle['date']}
 ## Bundle Summary
 
 Overall status: {bundle['overall_status']}
+Freshness status: {bundle['freshness_status']}
 Areas reviewed: {bundle['areas_reviewed']}
 Areas missing: {bundle['areas_missing']}
+Stale areas: {bundle['stale_areas']}
 Attention areas: {bundle['attention_areas']}
 Monitoring areas: {bundle['monitoring_areas']}
 Clear areas: {bundle['clear_areas']}
@@ -119,8 +133,10 @@ This bundle refreshes area review artifacts and the executive index. It does not
         {
             "report_path": str(report_path.relative_to(ROOT_DIR)),
             "overall_status": bundle["overall_status"],
+            "freshness_status": bundle["freshness_status"],
             "areas_reviewed": bundle["areas_reviewed"],
             "attention_areas": bundle["attention_areas"],
+            "stale_areas": bundle["stale_areas"],
             "index_report": bundle["index_report_path"],
         },
     )
@@ -134,8 +150,10 @@ def print_area_review_bundle(conn):
     print("Area Review Bundle:")
     print(f"Date: {result['date']}")
     print(f"Overall status: {result['overall_status']}")
+    print(f"Freshness status: {result['freshness_status']}")
     print(f"Areas reviewed: {result['areas_reviewed']}")
     print(f"Areas missing: {result['areas_missing']}")
+    print(f"Stale areas: {result['stale_areas']}")
     print(f"Attention areas: {result['attention_areas']}")
     print(f"Monitoring areas: {result['monitoring_areas']}")
     print(f"Clear areas: {result['clear_areas']}")
