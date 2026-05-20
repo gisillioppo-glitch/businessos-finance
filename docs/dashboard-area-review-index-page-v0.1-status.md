@@ -40,7 +40,28 @@ It only displays the latest exported area review index artifact.
 
 ## Validation
 
-Pending final block validation.
+Completed.
+
+```text
+py_compile OK
+dashboard loader/navigation OK
+system-check OK: passed, 58/58
+release-readiness OK: ready, 14/14
+runtime-stability OK: runtime_stable, 8/8
+quick smoke OK: 10 commands
+```
+
+Dashboard result:
+
+```text
+Area Review Index page added to private navigation.
+Admin access: yes
+Executive access: yes
+Viewer access: yes
+Boundary index coverage: 94/94
+Latest index status: area_review_attention_required
+Areas reviewed: 4
+```
 
 ## Next Step
 
