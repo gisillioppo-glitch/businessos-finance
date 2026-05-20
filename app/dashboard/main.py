@@ -741,6 +741,11 @@ def load_system_integrity_status():
             "passed_checks": 0,
             "warning_checks": 0,
             "failed_checks": 0,
+            "area_review_freshness": {
+                "exists": False,
+                "status": "missing",
+                "detail": "System integrity report not generated",
+            },
             "checks": [],
         }
 
@@ -752,17 +757,28 @@ def load_system_integrity_status():
             continue
 
         parts = [part.strip() for part in line.strip("|").split("|")]
-        if len(parts) == 3:
+        if len(parts) >= 3:
             checks.append(
                 {
                     "name": parts[0],
                     "status": parts[1],
-                    "detail": parts[2],
+                    "detail": " | ".join(parts[2:]),
                 }
             )
 
     date_match = re.search(r"Date:\s*([0-9-]+)", content)
     status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+    area_review_freshness = next(
+        (
+            check for check in checks
+            if check["name"] == "Area review freshness"
+        ),
+        {
+            "name": "Area review freshness",
+            "status": "missing",
+            "detail": "Area review freshness check not found",
+        },
+    )
 
     return {
         "exists": True,
@@ -773,6 +789,11 @@ def load_system_integrity_status():
         "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
         "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
         "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "area_review_freshness": {
+            "exists": area_review_freshness["status"] != "missing",
+            "status": area_review_freshness["status"],
+            "detail": area_review_freshness["detail"],
+        },
         "checks": checks,
     }
 
@@ -3983,6 +4004,22 @@ def render_module_page(page, data):
             render_metric_card("Warnings", system_integrity["warning_checks"], "Needs review", "gold" if system_integrity["warning_checks"] else "green")
         with c5:
             render_metric_card("Failed", system_integrity["failed_checks"], "Critical failures", "red" if system_integrity["failed_checks"] else "green")
+
+        freshness = system_integrity["area_review_freshness"]
+        freshness_style = {
+            "passed": "healthy",
+            "warning": "medium",
+            "failed": "high",
+            "missing": "high",
+        }.get(freshness["status"], "medium")
+
+        render_panel_start("Area Review Freshness")
+        render_status_row(
+            freshness["status"].title(),
+            freshness["detail"],
+            freshness_style,
+        )
+        render_panel_end()
 
         status_filter = st.selectbox(
             "Check status filter",

@@ -27,5 +27,5 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 32 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Boundary classification coverage | passed | critical | 101/101 status docs covered |
-| Git working tree | warning | warning | M reports/runtime_stability_2026-05-19.md; M reports/system_integrity_2026-05-19.md |
+| Boundary classification coverage | passed | critical | 102/102 status docs covered |
+| Git working tree | warning | warning | M app/dashboard/main.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/release_readiness_2026-05-19.md; M reports/runtime_stability_2026-05-19.md; M reports/system_integrity_2026-05-19.md; ?? docs/dashboard-system-integrity-freshness-signal-v0.1-status.md |
