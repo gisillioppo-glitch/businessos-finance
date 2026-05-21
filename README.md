@@ -1598,6 +1598,18 @@ Generate the backing artifact with:
 python cli.py private-pilot-start-gate
 ```
 
+## Private Pilot Start Confirmation v0.1
+
+BusinessOS can now generate an owner-confirmation packet before starting Day 1 of a controlled private pilot.
+
+Run:
+
+```bash
+python cli.py private-pilot-start-confirmation
+```
+
+The confirmation packet reads the pilot start gate and Day 1 package, records whether Day 1 is blocked, ready with required owner confirmation, or ready to start, and exports `reports/private_pilot_start_confirmation_YYYY-MM-DD.md`.
+
 ## Dashboard Pilot Plan Page v0.1
 
 The private dashboard now includes a read-only `Pilot Plan` page.

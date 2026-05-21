@@ -47,6 +47,7 @@ from app.demo.private_demo_final_review import print_private_demo_final_review
 from app.demo.private_pilot_intake import print_private_pilot_intake
 from app.demo.private_pilot_plan import print_private_pilot_plan
 from app.demo.private_pilot_start_gate import print_private_pilot_start_gate
+from app.demo.private_pilot_start_confirmation import print_private_pilot_start_confirmation
 from app.demo.private_pilot_tracker import print_private_pilot_tracker
 from app.demo.private_pilot_exit_decision import print_private_pilot_exit_decision
 from app.demo.pilot_day_1_package import print_pilot_day_1_package
@@ -317,6 +318,18 @@ def run_private_pilot_start_gate():
 
     try:
         print_private_pilot_start_gate(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+def run_private_pilot_start_confirmation():
+    conn = create_connection()
+
+    try:
+        print_private_pilot_start_confirmation(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -1125,6 +1138,7 @@ def main():
             "private-pilot-intake",
             "private-pilot-plan",
             "private-pilot-start-gate",
+            "private-pilot-start-confirmation",
             "private-pilot-tracker",
             "private-pilot-exit-decision",
             "pilot-day-1-package",
@@ -1224,6 +1238,8 @@ def main():
         run_private_pilot_plan()
     elif args.command == "private-pilot-start-gate":
         run_private_pilot_start_gate()
+    elif args.command == "private-pilot-start-confirmation":
+        run_private_pilot_start_confirmation()
     elif args.command == "private-pilot-tracker":
         run_private_pilot_tracker()
     elif args.command == "private-pilot-exit-decision":
