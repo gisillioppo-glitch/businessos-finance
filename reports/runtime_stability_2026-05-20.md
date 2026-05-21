@@ -4,10 +4,10 @@ Date: 2026-05-20
 
 ## Runtime Stability Summary
 
-Overall status: stable_with_runtime_optimization_needed
+Overall status: runtime_stable
 Total checks: 8
-Passed checks: 7
-Warning checks: 1
+Passed checks: 8
+Warning checks: 0
 Failed checks: 0
 Smoke command count: 57
 Heavy pilot command count: 0
@@ -18,11 +18,11 @@ Full heavy pilot command count: 12
 
 | Check | Status | Detail |
 | --- | --- | --- |
-| System integrity | passed | reports\system_integrity_2026-05-20.md | failed: 0 | warnings: 1 |
-| Release readiness | passed | reports\release_readiness_2026-05-20.md | status: ready_with_warnings | failed: 0 | warnings: 1 |
+| System integrity | passed | reports\system_integrity_2026-05-20.md | failed: 0 | warnings: 0 |
+| Release readiness | passed | reports\release_readiness_2026-05-20.md | status: ready | failed: 0 | warnings: 0 |
 | Daily close artifact | passed | reports\daily_close_2026-05-20.md |
 | Dashboard local response | passed | http://localhost:8501 returned 200 |
-| Git working tree | warning | ?? reports/approval_decisions_2026-05-20.md; ?? reports/area_review_bundle_2026-05-20.md; ?? reports/area_review_index_2026-05-20.md; ?? reports/command_center_2026-05-20.md; ?? reports/daily_brief_2026-05-20.md; ?? reports/daily_close_2026-05-20.md; ?? reports/daily_close_distribution_2026-05-20.md; ?? reports/executive_alerts_2026-05-20.md; ?? reports/executive_evidence_index_2026-05-20.md; ?? reports/finance_area_review_2026-05-20.md; ?? reports/governance_area_review_2026-05-20.md; ?? reports/governance_brief_2026-05-20.md; ?? reports/operations_area_review_2026-05-20.md; ?? reports/release_readiness_2026-05-20.md; ?? reports/runtime_stability_2026-05-20.md; ?? reports/support_area_review_2026-05-20.md; ?? reports/support_brief_2026-05-20.md; ?? reports/system_integrity_2026-05-20.md |
+| Git working tree | passed | clean except known local artifacts |
 | Standard smoke profile size | passed | 57 command(s) in standard profile | limit: 60 |
 | Default heavy pilot command chain | passed | 0 heavy pilot command(s) in standard profile |
 | Full smoke profile reserve | passed | 12 heavy pilot command(s) reserved for full profile |
