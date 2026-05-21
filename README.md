@@ -1610,6 +1610,26 @@ python cli.py private-pilot-start-confirmation
 
 The confirmation packet reads the pilot start gate and Day 1 package, records whether Day 1 is blocked, ready with required owner confirmation, or ready to start, and exports `reports/private_pilot_start_confirmation_YYYY-MM-DD.md`.
 
+## Dashboard Pilot Confirmation Page v0.1
+
+The private dashboard now includes a read-only `Pilot Confirmation` page.
+
+It reads the latest `reports/private_pilot_start_confirmation_YYYY-MM-DD.md` artifact and shows:
+
+- owner confirmation status
+- conditional and blocked gate counts
+- required evidence status
+- executive owner checklist
+- condition acknowledgements
+- Day 1 confirmation actions
+- Day 1 next action
+
+Generate the backing artifact with:
+
+```bash
+python cli.py private-pilot-start-confirmation
+```
+
 ## Dashboard Pilot Plan Page v0.1
 
 The private dashboard now includes a read-only `Pilot Plan` page.

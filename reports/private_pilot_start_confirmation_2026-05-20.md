@@ -10,8 +10,8 @@ Start gate status: ready_with_conditions
 Day 1 status: ready_with_warnings
 Pilot owner: Executive Owner
 Primary workflow: Executive Daily Close
-Passed gates: 3
-Conditional gates: 2
+Passed gates: 2
+Conditional gates: 3
 Blocked gates: 0
 Available evidence: 7
 Missing required evidence: 0

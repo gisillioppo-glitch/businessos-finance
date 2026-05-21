@@ -288,6 +288,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Pilot start gate controls Day 1 readiness before pilot operation begins.",
     },
     {
+        "page": "Pilot Confirmation",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Owner confirmation / pilot governance candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Owner confirmation records accepted conditions before Day 1 begins.",
+    },
+    {
         "page": "Pilot Tracker",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared pilot methodology candidate",
@@ -2074,6 +2083,91 @@ def load_private_pilot_start_gate_status():
         "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
     }
 
+def load_private_pilot_start_confirmation_status():
+    report_path = get_latest_report_path("private_pilot_start_confirmation")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "confirmation_status": "missing",
+            "recommendation": "Run python cli.py private-pilot-start-confirmation.",
+            "start_gate_status": "missing",
+            "day_1_status": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "passed_gates": 0,
+            "conditional_gates": 0,
+            "blocked_gates": 0,
+            "available_evidence": 0,
+            "missing_required_evidence": 0,
+            "missing_optional_evidence": 0,
+            "day_1_next_action": "Run python cli.py private-pilot-start-confirmation.",
+            "owner_checklist": [],
+            "condition_acknowledgements": [],
+            "day_1_actions": [],
+            "operator_note": "No pilot start confirmation artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    owner_checklist = []
+    condition_acknowledgements = []
+    day_1_actions = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Executive Owner Confirmation Checklist" and stripped.startswith("- "):
+            owner_checklist.append(stripped[2:])
+
+        elif section == "Condition Acknowledgements" and stripped.startswith("- "):
+            condition_acknowledgements.append(stripped[2:])
+
+        elif section == "Day 1 Confirmation Actions" and stripped.startswith("- "):
+            day_1_actions.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Confirmation status:\s*([a-z_]+)", content)
+    recommendation_match = re.search(r"Recommendation:\s*(.+)", content)
+    start_gate_match = re.search(r"Start gate status:\s*([a-z_]+)", content)
+    day_1_match = re.search(r"Day 1 status:\s*([a-z_]+)", content)
+    owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    next_action_match = re.search(r"Day 1 next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "confirmation_status": status_match.group(1) if status_match else "unknown",
+        "recommendation": recommendation_match.group(1).strip() if recommendation_match else "",
+        "start_gate_status": start_gate_match.group(1) if start_gate_match else "unknown",
+        "day_1_status": day_1_match.group(1) if day_1_match else "unknown",
+        "pilot_owner": owner_match.group(1).strip() if owner_match else "Not assigned",
+        "primary_workflow": workflow_match.group(1).strip() if workflow_match else "Not selected",
+        "passed_gates": extract_metric_from_markdown(content, "Passed gates"),
+        "conditional_gates": extract_metric_from_markdown(content, "Conditional gates"),
+        "blocked_gates": extract_metric_from_markdown(content, "Blocked gates"),
+        "available_evidence": extract_metric_from_markdown(content, "Available evidence"),
+        "missing_required_evidence": extract_metric_from_markdown(content, "Missing required evidence"),
+        "missing_optional_evidence": extract_metric_from_markdown(content, "Missing optional evidence"),
+        "day_1_next_action": next_action_match.group(1).strip() if next_action_match else "No Day 1 next action recorded",
+        "owner_checklist": owner_checklist,
+        "condition_acknowledgements": condition_acknowledgements,
+        "day_1_actions": day_1_actions,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
 def load_private_pilot_tracker_status():
     report_path = get_latest_report_path("private_pilot_tracker")
 
@@ -3467,6 +3561,7 @@ def load_dashboard_data():
     private_demo_final_review_status = load_private_demo_final_review_status()
     private_pilot_plan_status = load_private_pilot_plan_status()
     private_pilot_start_gate_status = load_private_pilot_start_gate_status()
+    private_pilot_start_confirmation_status = load_private_pilot_start_confirmation_status()
     private_pilot_tracker_status = load_private_pilot_tracker_status()
     private_pilot_exit_decision_status = load_private_pilot_exit_decision_status()
     pilot_day_1_package_status = load_pilot_day_1_package_status()
@@ -3550,6 +3645,7 @@ def load_dashboard_data():
         "private_demo_final_review_status": private_demo_final_review_status,
         "private_pilot_plan_status": private_pilot_plan_status,
         "private_pilot_start_gate_status": private_pilot_start_gate_status,
+        "private_pilot_start_confirmation_status": private_pilot_start_confirmation_status,
         "private_pilot_tracker_status": private_pilot_tracker_status,
         "private_pilot_exit_decision_status": private_pilot_exit_decision_status,
         "pilot_day_1_package_status": pilot_day_1_package_status,
@@ -5208,6 +5304,94 @@ def render_module_page(page, data):
             render_brief_item(
                 start_gate["operator_note"],
                 "Read-only guidance from the start gate report",
+            )
+            render_panel_end()
+    elif page == "Pilot Confirmation":
+        confirmation = data["private_pilot_start_confirmation_status"]
+        confirmation_status = confirmation["confirmation_status"]
+        confirmation_class = {
+            "confirmed_ready_for_day_1": "green",
+            "requires_owner_confirmation": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(confirmation_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Confirmation", confirmation_status.replace("_", " ").title(), "Owner pre-Day 1 gate", confirmation_class)
+        with c2:
+            render_metric_card("Conditions", confirmation["conditional_gates"], "Accepted by owner", "gold" if confirmation["conditional_gates"] else "green")
+        with c3:
+            render_metric_card("Blocked", confirmation["blocked_gates"], "Blocks confirmation", "red" if confirmation["blocked_gates"] else "green")
+        with c4:
+            render_metric_card("Missing Required", confirmation["missing_required_evidence"], "Blocks Day 1", "red" if confirmation["missing_required_evidence"] else "green")
+        with c5:
+            render_metric_card("Evidence", confirmation["available_evidence"], "Available Day 1 evidence", "green" if confirmation["available_evidence"] else "red")
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("Owner Confirmation Decision")
+            render_brief_item(
+                confirmation["recommendation"] or "Run python cli.py private-pilot-start-confirmation",
+                "Executive owner confirmation guidance",
+            )
+            render_brief_item(confirmation["primary_workflow"], "Primary workflow")
+            render_brief_item(confirmation["pilot_owner"], "Pilot owner")
+            render_panel_end()
+
+            render_panel_start("Executive Owner Checklist")
+            if confirmation["owner_checklist"]:
+                for item in confirmation["owner_checklist"]:
+                    render_status_row(item, "Owner must confirm before Day 1", "healthy")
+            else:
+                render_status_row("No owner checklist found", "Run python cli.py private-pilot-start-confirmation", "medium")
+            render_panel_end()
+
+            render_panel_start("Condition Acknowledgements")
+            if confirmation["condition_acknowledgements"]:
+                for item in confirmation["condition_acknowledgements"]:
+                    render_status_row(item, "Condition to name before starting", "medium")
+            else:
+                render_status_row("No condition acknowledgements found", "Generate the confirmation artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Confirmation Evidence")
+            render_brief_item(
+                confirmation["report_path"] or "Private pilot start confirmation not generated",
+                "Latest confirmation artifact",
+            )
+            render_brief_item(
+                confirmation["start_gate_status"].replace("_", " ").title(),
+                "Source start gate status",
+            )
+            render_brief_item(
+                confirmation["day_1_status"].replace("_", " ").title(),
+                "Source Day 1 status",
+            )
+            render_panel_end()
+
+            render_panel_start("Day 1 Confirmation Actions")
+            if confirmation["day_1_actions"]:
+                for index, action in enumerate(confirmation["day_1_actions"], start=1):
+                    render_status_row(f"Action {index}", action, "healthy")
+            else:
+                render_status_row("No Day 1 confirmation actions found", "Generate the confirmation artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Day 1 Next Action")
+            render_status_row(
+                confirmation["day_1_next_action"],
+                "Action after owner confirmation",
+                "medium" if confirmation_status == "requires_owner_confirmation" else confirmation_status,
+            )
+            render_panel_end()
+
+            render_panel_start("Operator Note")
+            render_brief_item(
+                confirmation["operator_note"],
+                "Read-only guidance from the confirmation report",
             )
             render_panel_end()
     elif page == "Pilot Tracker":
