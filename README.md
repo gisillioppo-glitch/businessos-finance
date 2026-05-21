@@ -1730,6 +1730,12 @@ python cli.py pilot-day-1-package
 
 The package combines the pilot plan, tracker, and exit decision into a Day 1 runbook with commands, expected evidence, owner review, risks/boundaries, close criteria, and next action. It exports `reports/pilot_day_1_package_YYYY-MM-DD.md`.
 
+## Pilot Day 1 Owner Confirmation Link v0.1
+
+The Day 1 package now links to the latest private pilot start confirmation packet.
+
+This keeps Day 1 tied to the executive owner confirmation state before controlled pilot operation begins. The Day 1 report and dashboard page show the linked confirmation status, report path, and recommendation.
+
 ## Dashboard Pilot Day 1 Page v0.1
 
 The private dashboard now includes a read-only `Pilot Day 1` page.

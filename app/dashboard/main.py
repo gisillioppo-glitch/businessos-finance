@@ -2375,6 +2375,9 @@ def load_pilot_day_1_package_status():
             "report_path": None,
             "date": None,
             "day_1_status": "missing",
+            "start_confirmation_status": "missing",
+            "start_confirmation_report": "missing",
+            "start_confirmation_detail": "Run python cli.py private-pilot-start-confirmation.",
             "pilot_owner": "Not assigned",
             "primary_workflow": "Not selected",
             "plan_status": "missing",
@@ -2435,6 +2438,9 @@ def load_pilot_day_1_package_status():
 
     date_match = re.search(r"Date:\s*([0-9-]+)", content)
     day_1_status_match = re.search(r"Day 1 status:\s*([a-z_]+)", content)
+    start_confirmation_status_match = re.search(r"Start confirmation status:\s*([a-z_]+)", content)
+    start_confirmation_report_match = re.search(r"Start confirmation report:\s*(.+)", content)
+    start_confirmation_detail_match = re.search(r"Start confirmation detail:\s*(.+)", content)
     pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
     primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
     plan_status_match = re.search(r"Plan status:\s*([a-z_]+)", content)
@@ -2452,6 +2458,9 @@ def load_pilot_day_1_package_status():
         "report_path": str(report_path.relative_to(ROOT_DIR)),
         "date": date_match.group(1) if date_match else None,
         "day_1_status": day_1_status_match.group(1) if day_1_status_match else "unknown",
+        "start_confirmation_status": start_confirmation_status_match.group(1) if start_confirmation_status_match else "missing",
+        "start_confirmation_report": start_confirmation_report_match.group(1).strip() if start_confirmation_report_match else "missing",
+        "start_confirmation_detail": start_confirmation_detail_match.group(1).strip() if start_confirmation_detail_match else "No start confirmation detail recorded.",
         "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
         "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
         "plan_status": plan_status_match.group(1) if plan_status_match else "unknown",
@@ -5643,6 +5652,14 @@ def render_module_page(page, data):
                 day_1["report_path"] or "Pilot Day 1 package not generated",
                 "Latest Day 1 package artifact",
             )
+            render_brief_item(
+                day_1["start_confirmation_status"].replace("_", " ").title(),
+                "Linked start confirmation status",
+            )
+            render_brief_item(
+                day_1["start_confirmation_report"],
+                "Linked start confirmation artifact",
+            )
             render_brief_item(day_1["pilot_owner"], "Pilot owner")
             render_brief_item(day_1["plan_status"].replace("_", " ").title(), "Linked plan status")
             render_brief_item(day_1["tracker_status"].replace("_", " ").title(), "Linked tracker status")
@@ -5651,6 +5668,14 @@ def render_module_page(page, data):
 
             render_panel_start("Next Action")
             render_status_row(day_1["next_action"], "Executive owner confirms before scope expansion", "medium" if day_1_status == "ready_with_warnings" else day_1_status)
+            render_panel_end()
+
+            render_panel_start("Start Confirmation Link")
+            render_status_row(
+                day_1["start_confirmation_status"].replace("_", " ").title(),
+                day_1["start_confirmation_detail"],
+                "medium" if day_1["start_confirmation_status"] == "requires_owner_confirmation" else "healthy",
+            )
             render_panel_end()
 
             render_panel_start("Executive Owner Review")

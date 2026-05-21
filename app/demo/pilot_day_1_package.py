@@ -26,12 +26,15 @@ DAY_1_EVIDENCE = [
     "reports/daily_close_YYYY-MM-DD.md",
     "reports/daily_close_distribution_YYYY-MM-DD.md",
     "reports/command_center_YYYY-MM-DD.md",
+    "reports/private_pilot_start_confirmation_YYYY-MM-DD.md",
     "reports/private_pilot_tracker_YYYY-MM-DD.md",
     "reports/private_pilot_exit_decision_YYYY-MM-DD.md",
 ]
 
 DAY_1_OWNER_REVIEW = [
+    "Review the latest private pilot start confirmation packet.",
     "Confirm the pilot owner understands the current tracker status.",
+    "Confirm the pilot owner accepts any start conditions before Day 1 begins.",
     "Confirm the recommended decision is advisory and requires owner approval.",
     "Confirm no private data, credentials, or raw database content is shared outside the private environment.",
     "Confirm the next action for Day 2 before ending the Day 1 review.",
@@ -69,6 +72,46 @@ def _format_commands(commands):
     return "\n".join(rows)
 
 
+def _latest_report(prefix):
+    if not REPORTS_DIR.exists():
+        return None
+
+    reports = sorted(
+        REPORTS_DIR.glob(f"{prefix}_*.md"),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
+    return reports[0] if reports else None
+
+
+def _extract_value(content, label, default="missing"):
+    for line in content.splitlines():
+        if line.startswith(f"{label}:"):
+            return line.split(":", 1)[1].strip()
+    return default
+
+
+def _start_confirmation_status():
+    report = _latest_report("private_pilot_start_confirmation")
+
+    if not report:
+        return {
+            "status": "missing",
+            "report_path": "missing",
+            "detail": "No private pilot start confirmation report found.",
+        }
+
+    content = report.read_text(encoding="utf-8")
+    status = _extract_value(content, "Confirmation status")
+    recommendation = _extract_value(content, "Recommendation")
+
+    return {
+        "status": status,
+        "report_path": str(report.relative_to(ROOT_DIR)),
+        "detail": recommendation,
+    }
+
+
 def _day_1_status(tracker, exit_decision):
     if tracker["tracker_status"] == "blocked" or tracker["missing_required"] > 0:
         return "blocked"
@@ -93,11 +136,15 @@ def generate_pilot_day_1_package(conn=None):
     plan = generate_private_pilot_plan(conn)
     tracker = generate_private_pilot_tracker(conn)
     exit_decision = generate_private_pilot_exit_decision(conn)
+    start_confirmation = _start_confirmation_status()
     day_1_status = _day_1_status(tracker, exit_decision)
 
     return {
         "date": date.today().isoformat(),
         "day_1_status": day_1_status,
+        "start_confirmation_status": start_confirmation["status"],
+        "start_confirmation_report": start_confirmation["report_path"],
+        "start_confirmation_detail": start_confirmation["detail"],
         "pilot_owner": plan["pilot_owner"],
         "primary_workflow": plan["primary_workflow"],
         "plan_status": plan["plan_status"],
@@ -129,6 +176,9 @@ Date: {result['date']}
 ## Day 1 Summary
 
 Day 1 status: {result['day_1_status']}
+Start confirmation status: {result['start_confirmation_status']}
+Start confirmation report: {result['start_confirmation_report']}
+Start confirmation detail: {result['start_confirmation_detail']}
 Pilot owner: {result['pilot_owner']}
 Primary workflow: {result['primary_workflow']}
 Plan status: {result['plan_status']}
@@ -191,6 +241,7 @@ def print_pilot_day_1_package(conn=None):
     print("Pilot Day 1 Operations Package:")
     print(f"Date: {result['date']}")
     print(f"Day 1 status: {result['day_1_status']}")
+    print(f"Start confirmation status: {result['start_confirmation_status']}")
     print(f"Pilot owner: {result['pilot_owner']}")
     print(f"Primary workflow: {result['primary_workflow']}")
     print(f"Tracker status: {result['tracker_status']}")
