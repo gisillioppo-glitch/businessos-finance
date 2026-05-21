@@ -43,6 +43,7 @@ from app.db.connection import create_connection
 from app.demo.private_demo_package import print_private_demo_package
 from app.demo.private_demo_script import print_private_demo_script
 from app.demo.private_demo_dry_run import print_private_demo_dry_run
+from app.demo.private_demo_final_review import print_private_demo_final_review
 from app.demo.private_pilot_intake import print_private_pilot_intake
 from app.demo.private_pilot_plan import print_private_pilot_plan
 from app.demo.private_pilot_tracker import print_private_pilot_tracker
@@ -267,6 +268,18 @@ def run_private_demo_dry_run():
 
     try:
         print_private_demo_dry_run(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+def run_private_demo_final_review():
+    conn = create_connection()
+
+    try:
+        print_private_demo_final_review(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -1095,6 +1108,7 @@ def main():
             "private-demo-package",
             "private-demo-script",
             "private-demo-dry-run",
+            "private-demo-final-review",
             "private-pilot-intake",
             "private-pilot-plan",
             "private-pilot-tracker",
@@ -1188,6 +1202,8 @@ def main():
         run_private_demo_script()
     elif args.command == "private-demo-dry-run":
         run_private_demo_dry_run()
+    elif args.command == "private-demo-final-review":
+        run_private_demo_final_review()
     elif args.command == "private-pilot-intake":
         run_private_pilot_intake()
     elif args.command == "private-pilot-plan":

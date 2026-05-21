@@ -1480,6 +1480,18 @@ python cli.py private-demo-dry-run
 
 The dry run validates release readiness, demo package, demo script, required dashboard pages, and private safety boundaries before a presentation. It exports `reports/private_demo_dry_run_YYYY-MM-DD.md` and keeps the demo inside the protected BusinessOS boundary.
 
+## Private Demo Final Review v0.1
+
+BusinessOS can now export a final executive go/no-go review before a controlled private demo.
+
+Run:
+
+```bash
+python cli.py private-demo-final-review
+```
+
+The final review uses release readiness and private demo dry run status to produce `ready_for_private_demo`, `ready_with_warnings`, or `blocked`. It records freshness, boundary coverage, supporting evidence, what is safe to show, and what must remain private in `reports/private_demo_final_review_YYYY-MM-DD.md`.
+
 ## Dashboard Demo Readiness Page v0.1
 
 The private Streamlit dashboard now includes a read-only `Demo Readiness` page.
