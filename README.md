@@ -1564,6 +1564,18 @@ python cli.py private-pilot-plan
 
 The plan defines pilot owner, primary workflow, 14-day timeline, daily operating rhythm, success criteria, exit decisions, and protected boundaries. It exports `reports/private_pilot_plan_YYYY-MM-DD.md`.
 
+## Private Pilot Start Gate v0.1
+
+BusinessOS can now decide whether a controlled private pilot is ready to start after demo review and pilot planning.
+
+Run:
+
+```bash
+python cli.py private-pilot-start-gate
+```
+
+The start gate combines private demo final review, pilot plan, pilot tracker, executive owner, and primary workflow checks. It exports `reports/private_pilot_start_gate_YYYY-MM-DD.md` with `ready_to_start_private_pilot`, `ready_with_conditions`, or `blocked`.
+
 ## Dashboard Pilot Plan Page v0.1
 
 The private dashboard now includes a read-only `Pilot Plan` page.
