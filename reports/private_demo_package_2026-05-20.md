@@ -8,10 +8,10 @@ BusinessOS is a private institutional AI operating system that connects Finance,
 
 ## Demo Readiness
 
-Overall status: ready
+Overall status: ready_with_warnings
 Total checks: 15
-Passed checks: 15
-Warning checks: 0
+Passed checks: 14
+Warning checks: 1
 Failed checks: 0
 
 ## Demo Commands
@@ -28,6 +28,7 @@ Failed checks: 0
 | Secure email delivery | `python cli.py secure-email-delivery` |
 | Scheduled close status | `python cli.py daily-close-schedule` |
 | Private dashboard | `streamlit run app/dashboard/main.py` |
+| Private demo final review | `python cli.py private-demo-final-review` |
 | Private pilot tracker | `python cli.py private-pilot-tracker` |
 | Private pilot exit decision | `python cli.py private-pilot-exit-decision` |
 | Pilot Day 1 package | `python cli.py pilot-day-1-package` |
@@ -63,6 +64,7 @@ Failed checks: 0
 - Boundary Index
 - Session Handoff
 - Demo Readiness
+- Demo Final Review
 - Demo Package
 - Demo Script
 - Pilot Plan
@@ -132,6 +134,7 @@ Failed checks: 0
 - Run python cli.py session-handoff before changing chat or pausing.
 - Run python scripts/smoke_test.py quick before demo checkpoints.
 - Confirm the private dashboard responds at http://localhost:8501.
+- Run python cli.py private-demo-final-review before presenting.
 - Confirm Git status has no unexpected changes beyond BussinessOS Avance.pdf.
 - Confirm finance.db, .env, and Streamlit secrets are not in the public surface.
 

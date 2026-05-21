@@ -20,6 +20,7 @@ DEMO_COMMANDS = [
     ("Secure email delivery", "python cli.py secure-email-delivery"),
     ("Scheduled close status", "python cli.py daily-close-schedule"),
     ("Private dashboard", "streamlit run app/dashboard/main.py"),
+    ("Private demo final review", "python cli.py private-demo-final-review"),
     ("Private pilot tracker", "python cli.py private-pilot-tracker"),
     ("Private pilot exit decision", "python cli.py private-pilot-exit-decision"),
     ("Pilot Day 1 package", "python cli.py pilot-day-1-package"),
@@ -55,6 +56,7 @@ DASHBOARD_PAGES = [
     "Boundary Index",
     "Session Handoff",
     "Demo Readiness",
+    "Demo Final Review",
     "Demo Package",
     "Demo Script",
     "Pilot Plan",
@@ -124,6 +126,7 @@ PRE_DEMO_CHECKLIST = [
     "Run python cli.py session-handoff before changing chat or pausing.",
     "Run python scripts/smoke_test.py quick before demo checkpoints.",
     "Confirm the private dashboard responds at http://localhost:8501.",
+    "Run python cli.py private-demo-final-review before presenting.",
     "Confirm Git status has no unexpected changes beyond BussinessOS Avance.pdf.",
     "Confirm finance.db, .env, and Streamlit secrets are not in the public surface.",
 ]

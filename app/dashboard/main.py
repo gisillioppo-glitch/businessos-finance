@@ -243,6 +243,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Demo readiness is go-to-market-specific but pattern may transfer.",
     },
     {
+        "page": "Demo Final Review",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared demo final gate candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Final demo go/no-go is go-to-market-specific; gate pattern may transfer.",
+    },
+    {
         "page": "Demo Package",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared demo package candidate",
@@ -1716,6 +1725,136 @@ def load_private_demo_dry_run_status():
         "checks": checks,
         "run_sequence": run_sequence,
         "dashboard_pages": dashboard_pages,
+    }
+
+
+def load_private_demo_final_review_status():
+    report_path = get_latest_report_path("private_demo_final_review")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "final_status": "missing",
+            "recommendation": "Run python cli.py private-demo-final-review.",
+            "readiness_status": "missing",
+            "readiness_passed": 0,
+            "readiness_warnings": 0,
+            "readiness_failed": 0,
+            "readiness_total": 0,
+            "dry_run_status": "missing",
+            "dry_run_passed": 0,
+            "dry_run_warnings": 0,
+            "dry_run_failed": 0,
+            "dry_run_total": 0,
+            "dry_run_report": None,
+            "area_review_freshness": "missing",
+            "boundary_coverage": "missing",
+            "artifacts": [],
+            "show_items": [],
+            "do_not_show_items": [],
+            "pre_demo_checklist": [],
+            "readiness_checks": [],
+            "dry_run_checks": [],
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    artifacts = []
+    show_items = []
+    do_not_show_items = []
+    pre_demo_checklist = []
+    readiness_checks = []
+    dry_run_checks = []
+    section = None
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped[3:].strip()
+            continue
+
+        if section == "Supporting Artifacts":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Artifact"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 2:
+                artifacts.append(
+                    {
+                        "artifact": parts[0],
+                        "latest_report": parts[1],
+                    }
+                )
+
+        elif section == "Show" and stripped.startswith("- "):
+            show_items.append(stripped[2:].strip())
+
+        elif section == "Do Not Show" and stripped.startswith("- "):
+            do_not_show_items.append(stripped[2:].strip())
+
+        elif section == "Pre-Demo Checklist" and stripped.startswith("- "):
+            pre_demo_checklist.append(stripped[2:].strip())
+
+        elif section in {"Release Readiness Checks", "Dry Run Checks"}:
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Check"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 4:
+                target = readiness_checks if section == "Release Readiness Checks" else dry_run_checks
+                target.append(
+                    {
+                        "name": parts[0],
+                        "status": parts[1],
+                        "severity": parts[2],
+                        "detail": " | ".join(parts[3:]).replace("\\ |", "|").replace("\\|", "|"),
+                    }
+                )
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    final_status_match = re.search(r"Final status:\s*([a-z_]+)", content)
+    recommendation_match = re.search(r"Recommendation:\s*(.+)", content)
+    readiness_match = re.search(r"Release readiness:\s*([a-z_]+)", content)
+    readiness_counts_match = re.search(
+        r"Readiness checks:\s*(\d+) passed,\s*(\d+) warning,\s*(\d+) failed,\s*(\d+) total",
+        content,
+    )
+    dry_run_match = re.search(r"Private demo dry run:\s*([a-z_]+)", content)
+    dry_run_counts_match = re.search(
+        r"Dry run checks:\s*(\d+) passed,\s*(\d+) warning,\s*(\d+) failed,\s*(\d+) total",
+        content,
+    )
+    dry_run_report_match = re.search(r"Dry run report:\s*(.+)", content)
+    freshness_match = re.search(r"Area review freshness:\s*(.+)", content)
+    boundary_match = re.search(r"Boundary coverage:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "final_status": final_status_match.group(1) if final_status_match else "unknown",
+        "recommendation": recommendation_match.group(1).strip() if recommendation_match else "",
+        "readiness_status": readiness_match.group(1) if readiness_match else "unknown",
+        "readiness_passed": int(readiness_counts_match.group(1)) if readiness_counts_match else 0,
+        "readiness_warnings": int(readiness_counts_match.group(2)) if readiness_counts_match else 0,
+        "readiness_failed": int(readiness_counts_match.group(3)) if readiness_counts_match else 0,
+        "readiness_total": int(readiness_counts_match.group(4)) if readiness_counts_match else 0,
+        "dry_run_status": dry_run_match.group(1) if dry_run_match else "unknown",
+        "dry_run_passed": int(dry_run_counts_match.group(1)) if dry_run_counts_match else 0,
+        "dry_run_warnings": int(dry_run_counts_match.group(2)) if dry_run_counts_match else 0,
+        "dry_run_failed": int(dry_run_counts_match.group(3)) if dry_run_counts_match else 0,
+        "dry_run_total": int(dry_run_counts_match.group(4)) if dry_run_counts_match else 0,
+        "dry_run_report": dry_run_report_match.group(1).strip() if dry_run_report_match else None,
+        "area_review_freshness": freshness_match.group(1).strip() if freshness_match else "missing",
+        "boundary_coverage": boundary_match.group(1).strip() if boundary_match else "missing",
+        "artifacts": artifacts,
+        "show_items": show_items,
+        "do_not_show_items": do_not_show_items,
+        "pre_demo_checklist": pre_demo_checklist,
+        "readiness_checks": readiness_checks,
+        "dry_run_checks": dry_run_checks,
     }
 
 
@@ -3217,6 +3356,7 @@ def load_dashboard_data():
     private_demo_package_status = load_private_demo_package_status()
     private_demo_script_status = load_private_demo_script_status()
     private_demo_dry_run_status = load_private_demo_dry_run_status()
+    private_demo_final_review_status = load_private_demo_final_review_status()
     private_pilot_plan_status = load_private_pilot_plan_status()
     private_pilot_tracker_status = load_private_pilot_tracker_status()
     private_pilot_exit_decision_status = load_private_pilot_exit_decision_status()
@@ -3298,6 +3438,7 @@ def load_dashboard_data():
         "private_demo_package_status": private_demo_package_status,
         "private_demo_script_status": private_demo_script_status,
         "private_demo_dry_run_status": private_demo_dry_run_status,
+        "private_demo_final_review_status": private_demo_final_review_status,
         "private_pilot_plan_status": private_pilot_plan_status,
         "private_pilot_tracker_status": private_pilot_tracker_status,
         "private_pilot_exit_decision_status": private_pilot_exit_decision_status,
@@ -5844,6 +5985,122 @@ def render_module_page(page, data):
                     render_status_row(page_name, "Available in private demo scope", "healthy")
             else:
                 render_status_row("No pages found", "Run python cli.py private-demo-dry-run", "medium")
+            render_panel_end()
+    elif page == "Demo Final Review":
+        review = data["private_demo_final_review_status"]
+        final_status = review["final_status"]
+        final_class = {
+            "ready_for_private_demo": "green",
+            "ready_with_warnings": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(final_status, "gold")
+
+        total_warnings = review["readiness_warnings"] + review["dry_run_warnings"]
+        total_failed = review["readiness_failed"] + review["dry_run_failed"]
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Final Review", final_status.replace("_", " ").title(), "Private demo go/no-go", final_class)
+        with c2:
+            render_metric_card("Readiness", review["readiness_status"].replace("_", " ").title(), "Release gate status", "green" if review["readiness_status"] == "ready" else "gold")
+        with c3:
+            render_metric_card("Dry Run", review["dry_run_status"].replace("_", " ").title(), "Demo rehearsal gate", "green" if review["dry_run_status"] == "ready_for_private_demo" else "gold")
+        with c4:
+            render_metric_card("Warnings", total_warnings, "Warnings across gates", "gold" if total_warnings else "green")
+        with c5:
+            render_metric_card("Failed", total_failed, "Blocks demo", "red" if total_failed else "green")
+
+        status_filter = st.selectbox(
+            "Final review check status filter",
+            ["all", "passed", "warning", "failed"],
+            index=0,
+        )
+        combined_checks = review["readiness_checks"] + review["dry_run_checks"]
+        filtered_checks = [
+            check
+            for check in combined_checks
+            if status_filter == "all" or check["status"] == status_filter
+        ]
+        status_styles = {
+            "passed": "healthy",
+            "warning": "medium",
+            "failed": "high",
+        }
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Final Recommendation")
+            render_brief_item(
+                review["recommendation"] or "Run python cli.py private-demo-final-review",
+                "Executive demo decision",
+            )
+            render_brief_item(review["area_review_freshness"], "Area review freshness gate")
+            render_brief_item(review["boundary_coverage"], "Boundary coverage gate")
+            render_panel_end()
+
+            render_panel_start("Final Review Checks")
+            if filtered_checks:
+                for check in filtered_checks:
+                    render_status_row(
+                        check["name"],
+                        f"{check['severity']} | {check['detail']}",
+                        status_styles.get(check["status"], check["status"]),
+                    )
+            else:
+                render_status_row("No checks found", "Run python cli.py private-demo-final-review", "medium")
+            render_panel_end()
+
+            render_panel_start("Supporting Artifacts")
+            if review["artifacts"]:
+                st.dataframe(
+                    pd.DataFrame(review["artifacts"]),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+            else:
+                render_status_row("No artifacts found", "Generate the private demo final review", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Final Review Brief")
+            render_brief_item(
+                review["report_path"] or "Private demo final review not generated",
+                "Latest final review artifact",
+            )
+            render_brief_item(
+                review["dry_run_report"] or "Private demo dry run not generated",
+                "Dry-run source artifact",
+            )
+            render_brief_item(
+                "python cli.py private-demo-final-review",
+                "Use CLI to refresh the artifact; dashboard remains read-only",
+            )
+            render_panel_end()
+
+            render_panel_start("Show")
+            if review["show_items"]:
+                for item in review["show_items"]:
+                    render_status_row(item, "Safe private demo surface", "healthy")
+            else:
+                render_status_row("No show list found", "Generate the private demo final review", "medium")
+            render_panel_end()
+
+            render_panel_start("Do Not Show")
+            if review["do_not_show_items"]:
+                for item in review["do_not_show_items"]:
+                    render_status_row(item, "Protected boundary", "medium")
+            else:
+                render_status_row("No protected boundary list found", "Generate the private demo final review", "medium")
+            render_panel_end()
+
+            render_panel_start("Pre-Demo Checklist")
+            if review["pre_demo_checklist"]:
+                for item in review["pre_demo_checklist"]:
+                    render_status_row(item, "Operator pre-demo check", "medium")
+            else:
+                render_status_row("No checklist found", "Generate the private demo final review", "medium")
             render_panel_end()
     elif page == "Demo Package":
         package = data["private_demo_package_status"]

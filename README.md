@@ -224,6 +224,14 @@ docs/dashboard-private-demo-script-page-v0.1-status.md
 
 This page shows the latest private demo script artifact inside the protected dashboard as a read-only presentation run-of-show.
 
+The private dashboard demo final review page is documented in:
+
+```text
+docs/dashboard-private-demo-final-review-page-v0.1-status.md
+```
+
+This page shows the latest private demo final review artifact inside the protected dashboard as a read-only go/no-go checkpoint before a controlled presentation.
+
 The public/private surface audit is documented in:
 
 ```text
@@ -1508,6 +1516,28 @@ Generate the backing artifact with:
 
 ```bash
 python cli.py private-demo-dry-run
+```
+
+## Dashboard Private Demo Final Review Page v0.1
+
+The private Streamlit dashboard now includes a read-only `Demo Final Review` page.
+
+It reads the latest `reports/private_demo_final_review_YYYY-MM-DD.md` artifact and shows:
+
+- final private demo status
+- release readiness status
+- private demo dry run status
+- warnings and failures across both gates
+- final recommendation
+- area review freshness and boundary coverage
+- supporting artifacts
+- show / do-not-show lists
+- pre-demo checklist
+
+Generate the backing artifact with:
+
+```bash
+python cli.py private-demo-final-review
 ```
 
 ## Private Pilot Intake MVP v0.1

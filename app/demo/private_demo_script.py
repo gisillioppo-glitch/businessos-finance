@@ -66,6 +66,7 @@ DEMO_COMMANDS = [
     ("System health", "python cli.py system-check"),
     ("Daily close", "python cli.py daily-close"),
     ("Notification outbox", "python cli.py notifications"),
+    ("Private demo final review", "python cli.py private-demo-final-review"),
     ("Private dashboard", "streamlit run app/dashboard/main.py"),
 ]
 

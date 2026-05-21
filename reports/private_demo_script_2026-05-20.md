@@ -21,6 +21,7 @@ Failed checks: 0
 - Run python cli.py session-handoff before changing chat or pausing.
 - Run python scripts/smoke_test.py quick before demo checkpoints.
 - Confirm the private dashboard responds at http://localhost:8501.
+- Run python cli.py private-demo-final-review before presenting.
 - Confirm Git status has no unexpected changes beyond BussinessOS Avance.pdf.
 - Confirm finance.db, .env, and Streamlit secrets are not in the public surface.
 
@@ -32,6 +33,7 @@ Failed checks: 0
 | System health | `python cli.py system-check` |
 | Daily close | `python cli.py daily-close` |
 | Notification outbox | `python cli.py notifications` |
+| Private demo final review | `python cli.py private-demo-final-review` |
 | Private dashboard | `streamlit run app/dashboard/main.py` |
 
 ## Audience Personalization
@@ -94,6 +96,7 @@ Failed checks: 0
 - Boundary Index
 - Session Handoff
 - Demo Readiness
+- Demo Final Review
 - Demo Package
 - Demo Script
 - Pilot Plan
