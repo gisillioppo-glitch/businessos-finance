@@ -15,6 +15,7 @@ DAY_2_COMMANDS = [
     ("Refresh release readiness", "python cli.py release-readiness"),
     ("Run daily close evidence", "python cli.py daily-close"),
     ("Review Day 1 package", "python cli.py pilot-day-1-package"),
+    ("Review pilot start confirmation", "python cli.py private-pilot-start-confirmation"),
     ("Refresh pilot tracker", "python cli.py private-pilot-tracker"),
     ("Refresh exit decision", "python cli.py private-pilot-exit-decision"),
     ("Review notification delivery approval", "python cli.py notification-delivery-approval"),
@@ -23,6 +24,7 @@ DAY_2_COMMANDS = [
 DAY_2_RHYTHM = [
     "Start with system-check and release-readiness before any pilot conversation.",
     "Run or confirm Executive Daily Close as the core evidence package.",
+    "Confirm the latest Day 1 owner confirmation status before continuing the pilot rhythm.",
     "Review Day 1 warnings with the executive owner before expanding scope.",
     "Refresh the pilot tracker and confirm zero missing required evidence.",
     "Keep the pilot focused on Executive Daily Close unless the owner approves a narrow expansion.",
@@ -33,6 +35,7 @@ DAY_2_EVIDENCE = [
     "reports/system_integrity_YYYY-MM-DD.md",
     "reports/release_readiness_YYYY-MM-DD.md",
     "reports/daily_close_YYYY-MM-DD.md",
+    "reports/private_pilot_start_confirmation_YYYY-MM-DD.md",
     "reports/private_pilot_tracker_YYYY-MM-DD.md",
     "reports/private_pilot_exit_decision_YYYY-MM-DD.md",
     "reports/pilot_day_1_package_YYYY-MM-DD.md",
@@ -40,6 +43,7 @@ DAY_2_EVIDENCE = [
 
 DAY_2_REVIEW_CHECKS = [
     "Confirm Day 1 warnings were understood by the executive owner.",
+    "Confirm Day 1 owner confirmation remains accepted or explicitly condition-based.",
     "Confirm no required evidence is missing before continuing pilot operations.",
     "Confirm notification delivery remains disabled or approval-gated unless explicitly configured.",
     "Confirm no public surface exposes private reports, database files, credentials, or local artifacts.",
@@ -71,13 +75,19 @@ def _format_commands(commands):
 
 
 def _day_2_status(day_1, tracker, exit_decision):
+    start_confirmation_status = day_1.get("start_confirmation_status", "missing")
+
     if day_1["day_1_status"] == "blocked" or tracker["missing_required"] > 0:
+        return "blocked"
+
+    if start_confirmation_status == "blocked":
         return "blocked"
 
     if (
         day_1["day_1_status"] == "ready_with_warnings"
         or tracker["tracker_status"] == "needs_attention"
         or "warnings" in exit_decision["decision_status"]
+        or start_confirmation_status in {"missing", "requires_owner_confirmation"}
     ):
         return "continue_with_warnings"
 
@@ -120,6 +130,9 @@ def generate_pilot_day_2_rhythm(conn=None):
         "pilot_owner": day_1["pilot_owner"],
         "primary_workflow": day_1["primary_workflow"],
         "day_1_status": day_1["day_1_status"],
+        "start_confirmation_status": day_1.get("start_confirmation_status", "missing"),
+        "start_confirmation_report": day_1.get("start_confirmation_report", "not_available"),
+        "start_confirmation_detail": day_1.get("start_confirmation_detail", "No start confirmation detail recorded."),
         "tracker_status": tracker["tracker_status"],
         "exit_decision_status": exit_decision["decision_status"],
         "recommended_exit_decision": exit_decision["recommended_decision"],
@@ -152,6 +165,9 @@ Continuation decision: {result['continuation_decision']}
 Pilot owner: {result['pilot_owner']}
 Primary workflow: {result['primary_workflow']}
 Day 1 status: {result['day_1_status']}
+Start confirmation status: {result['start_confirmation_status']}
+Start confirmation report: {result['start_confirmation_report']}
+Start confirmation detail: {result['start_confirmation_detail']}
 Tracker status: {result['tracker_status']}
 Exit decision status: {result['exit_decision_status']}
 Recommended exit decision: {result['recommended_exit_decision']}
@@ -215,6 +231,7 @@ def print_pilot_day_2_rhythm(conn=None):
     print(f"Pilot owner: {result['pilot_owner']}")
     print(f"Primary workflow: {result['primary_workflow']}")
     print(f"Day 1 status: {result['day_1_status']}")
+    print(f"Start confirmation status: {result['start_confirmation_status']}")
     print(f"Tracker status: {result['tracker_status']}")
     print(f"Missing required evidence: {result['missing_required_evidence']}")
     print(f"Next action: {result['next_action']}")

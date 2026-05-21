@@ -1770,6 +1770,12 @@ python cli.py pilot-day-2-rhythm
 
 The rhythm reads the Day 1 package, pilot tracker, and exit decision, then recommends whether to continue, continue narrowly with warnings, or pause until required evidence is resolved. It exports `reports/pilot_day_2_rhythm_YYYY-MM-DD.md`.
 
+## Pilot Day 2 Owner Confirmation Link v0.1
+
+The Day 2 rhythm now links to the Day 1 owner confirmation state.
+
+This keeps Day 2 continuation tied to the same private pilot start confirmation packet used by Day 1. The Day 2 report and dashboard page show the linked confirmation status, report path, and recommendation detail before any Day 3 planning.
+
 ## Dashboard Pilot Day 2 Page v0.1
 
 The private dashboard now includes a read-only `Pilot Day 2` page.
