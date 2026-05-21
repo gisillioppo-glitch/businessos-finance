@@ -4,16 +4,16 @@ Date: 2026-05-20
 
 ## Final Demo Decision
 
-Final status: ready_with_warnings
-Recommendation: Demo only if the warning is named clearly and the demo stays inside the protected boundary.
+Final status: ready_for_private_demo
+Recommendation: Ready for private demo. Keep the demo inside the prepared show list and avoid private internals.
 
 ## Readiness Summary
 
-Release readiness: ready_with_warnings
-Readiness checks: 14 passed, 1 warning, 0 failed, 15 total
+Release readiness: ready
+Readiness checks: 15 passed, 0 warning, 0 failed, 15 total
 
-Private demo dry run: ready_with_warnings
-Dry run checks: 5 passed, 1 warning, 0 failed, 6 total
+Private demo dry run: ready_for_private_demo
+Dry run checks: 6 passed, 0 warning, 0 failed, 6 total
 Dry run report: reports\private_demo_dry_run_2026-05-20.md
 
 ## Freshness And Boundary Gates
@@ -89,13 +89,13 @@ Boundary coverage: passed | 105/105 status docs covered
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 105/105 status docs covered |
-| Git working tree | warning | warning | M README.md; M cli.py; M docs/boundary-classification-coverage-index-v0.1-status.md; ?? app/demo/private_demo_final_review.py; ?? docs/private-demo-final-review-v0.1-status.md; ?? reports/private_demo_dry_run_2026-05-20.md; ?? reports/private_demo_package_2026-05-20.md; ?? reports/private_demo_script_2026-05-20.md |
+| Git working tree | passed | critical | clean except known local artifacts |
 
 ## Dry Run Checks
 
 | Check | Status | Severity | Detail |
 | --- | --- | --- | --- |
-| Release readiness gate | warning | warning | Ready with warnings; name the warning honestly if asked. |
+| Release readiness gate | passed | critical | Release readiness is green. |
 | Private demo package | passed | critical | reports\private_demo_package_2026-05-20.md |
 | Private demo script | passed | critical | reports\private_demo_script_2026-05-20.md |
 | Required demo pages | passed | critical | present |
