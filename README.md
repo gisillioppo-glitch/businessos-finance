@@ -1576,6 +1576,28 @@ python cli.py private-pilot-start-gate
 
 The start gate combines private demo final review, pilot plan, pilot tracker, executive owner, and primary workflow checks. It exports `reports/private_pilot_start_gate_YYYY-MM-DD.md` with `ready_to_start_private_pilot`, `ready_with_conditions`, or `blocked`.
 
+## Dashboard Pilot Start Page v0.1
+
+The private dashboard now includes a read-only `Pilot Start` page.
+
+It reads the latest `reports/private_pilot_start_gate_YYYY-MM-DD.md` artifact and shows:
+
+- start gate status
+- passed, conditional, and blocked gate counts
+- executive recommendation
+- pilot owner and primary workflow
+- private demo final review status
+- pilot plan status
+- pilot tracker status
+- start/no-start conditions
+- Day 1 operator actions
+
+Generate the backing artifact with:
+
+```bash
+python cli.py private-pilot-start-gate
+```
+
 ## Dashboard Pilot Plan Page v0.1
 
 The private dashboard now includes a read-only `Pilot Plan` page.

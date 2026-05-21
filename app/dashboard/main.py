@@ -279,6 +279,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Pilot methodology is BusinessOS-specific until another vertical repeats it.",
     },
     {
+        "page": "Pilot Start",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot governance candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Pilot start gate controls Day 1 readiness before pilot operation begins.",
+    },
+    {
         "page": "Pilot Tracker",
         "primary_boundary": "BusinessOS-specific",
         "secondary_boundary": "Shared pilot methodology candidate",
@@ -1966,6 +1975,105 @@ def load_private_pilot_plan_status():
         "boundaries": boundaries,
     }
 
+def load_private_pilot_start_gate_status():
+    report_path = get_latest_report_path("private_pilot_start_gate")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "start_gate_status": "missing",
+            "recommendation": "Run python cli.py private-pilot-start-gate.",
+            "demo_final_status": "missing",
+            "pilot_plan_status": "missing",
+            "pilot_tracker_status": "missing",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "pilot_length": 0,
+            "passed_gates": 0,
+            "conditional_gates": 0,
+            "blocked_gates": 0,
+            "gates": [],
+            "start_conditions": [],
+            "no_start_conditions": [],
+            "day_1_actions": [],
+            "operator_note": "No pilot start gate artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    gates = []
+    start_conditions = []
+    no_start_conditions = []
+    day_1_actions = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Gates":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Gate"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) >= 3:
+                gates.append(
+                    {
+                        "gate": parts[0],
+                        "status": parts[1],
+                        "detail": " | ".join(parts[2:]).replace("\\ |", "|").replace("\\|", "|"),
+                    }
+                )
+
+        elif section == "Start Conditions" and stripped.startswith("- "):
+            start_conditions.append(stripped[2:])
+
+        elif section == "No-Start Conditions" and stripped.startswith("- "):
+            no_start_conditions.append(stripped[2:])
+
+        elif section == "Day 1 Operator Actions" and stripped.startswith("- "):
+            day_1_actions.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    status_match = re.search(r"Start gate status:\s*([a-z_]+)", content)
+    recommendation_match = re.search(r"Recommendation:\s*(.+)", content)
+    demo_match = re.search(r"Private demo final review:\s*([a-z_]+)", content)
+    plan_match = re.search(r"Pilot plan:\s*([a-z_]+)", content)
+    tracker_match = re.search(r"Pilot tracker:\s*([a-z_]+)", content)
+    owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    length_match = re.search(r"Pilot length:\s*(\d+)\s*days", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "start_gate_status": status_match.group(1) if status_match else "unknown",
+        "recommendation": recommendation_match.group(1).strip() if recommendation_match else "",
+        "demo_final_status": demo_match.group(1) if demo_match else "unknown",
+        "pilot_plan_status": plan_match.group(1) if plan_match else "unknown",
+        "pilot_tracker_status": tracker_match.group(1) if tracker_match else "unknown",
+        "pilot_owner": owner_match.group(1).strip() if owner_match else "Not assigned",
+        "primary_workflow": workflow_match.group(1).strip() if workflow_match else "Not selected",
+        "pilot_length": int(length_match.group(1)) if length_match else 0,
+        "passed_gates": extract_metric_from_markdown(content, "Passed gates"),
+        "conditional_gates": extract_metric_from_markdown(content, "Conditional gates"),
+        "blocked_gates": extract_metric_from_markdown(content, "Blocked gates"),
+        "gates": gates,
+        "start_conditions": start_conditions,
+        "no_start_conditions": no_start_conditions,
+        "day_1_actions": day_1_actions,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
 def load_private_pilot_tracker_status():
     report_path = get_latest_report_path("private_pilot_tracker")
 
@@ -3358,6 +3466,7 @@ def load_dashboard_data():
     private_demo_dry_run_status = load_private_demo_dry_run_status()
     private_demo_final_review_status = load_private_demo_final_review_status()
     private_pilot_plan_status = load_private_pilot_plan_status()
+    private_pilot_start_gate_status = load_private_pilot_start_gate_status()
     private_pilot_tracker_status = load_private_pilot_tracker_status()
     private_pilot_exit_decision_status = load_private_pilot_exit_decision_status()
     pilot_day_1_package_status = load_pilot_day_1_package_status()
@@ -3440,6 +3549,7 @@ def load_dashboard_data():
         "private_demo_dry_run_status": private_demo_dry_run_status,
         "private_demo_final_review_status": private_demo_final_review_status,
         "private_pilot_plan_status": private_pilot_plan_status,
+        "private_pilot_start_gate_status": private_pilot_start_gate_status,
         "private_pilot_tracker_status": private_pilot_tracker_status,
         "private_pilot_exit_decision_status": private_pilot_exit_decision_status,
         "pilot_day_1_package_status": pilot_day_1_package_status,
@@ -4982,6 +5092,124 @@ def render_module_page(page, data):
         else:
             render_status_row("No pilot boundaries found", "Generate the pilot plan artifact", "medium")
         render_panel_end()
+    elif page == "Pilot Start":
+        start_gate = data["private_pilot_start_gate_status"]
+        gate_status = start_gate["start_gate_status"]
+        gate_class = {
+            "ready_to_start_private_pilot": "green",
+            "ready_with_conditions": "gold",
+            "blocked": "red",
+            "missing": "red",
+        }.get(gate_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Start Gate", gate_status.replace("_", " ").title(), "Day 1 pilot go/no-go", gate_class)
+        with c2:
+            render_metric_card("Passed", start_gate["passed_gates"], "Gates ready", "green")
+        with c3:
+            render_metric_card("Conditions", start_gate["conditional_gates"], "Must be accepted", "gold" if start_gate["conditional_gates"] else "green")
+        with c4:
+            render_metric_card("Blocked", start_gate["blocked_gates"], "Blocks Day 1", "red" if start_gate["blocked_gates"] else "green")
+        with c5:
+            render_metric_card("Length", f"{start_gate['pilot_length']} days", "Controlled pilot window", "")
+
+        status_filter = st.selectbox(
+            "Start gate status filter",
+            ["all", "passed", "condition", "blocked"],
+            index=0,
+        )
+        filtered_gates = [
+            gate
+            for gate in start_gate["gates"]
+            if status_filter == "all" or gate["status"] == status_filter
+        ]
+        gate_styles = {
+            "passed": "healthy",
+            "condition": "medium",
+            "blocked": "high",
+        }
+
+        left, right = st.columns([1.55, 1])
+
+        with left:
+            render_panel_start("Start Gate Decision")
+            render_brief_item(
+                start_gate["recommendation"] or "Run python cli.py private-pilot-start-gate",
+                "Executive owner start decision",
+            )
+            render_brief_item(
+                start_gate["primary_workflow"],
+                "Primary workflow",
+            )
+            render_brief_item(
+                start_gate["pilot_owner"],
+                "Pilot owner",
+            )
+            render_panel_end()
+
+            render_panel_start("Gate Checks")
+            if filtered_gates:
+                for gate in filtered_gates:
+                    render_status_row(
+                        gate["gate"],
+                        gate["detail"],
+                        gate_styles.get(gate["status"], gate["status"]),
+                    )
+            else:
+                render_status_row("No gate checks found", "Run python cli.py private-pilot-start-gate", "medium")
+            render_panel_end()
+
+            render_panel_start("Day 1 Operator Actions")
+            if start_gate["day_1_actions"]:
+                for index, action in enumerate(start_gate["day_1_actions"], start=1):
+                    render_status_row(f"Action {index}", action, "healthy")
+            else:
+                render_status_row("No Day 1 actions found", "Generate the start gate artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Start Gate Evidence")
+            render_brief_item(
+                start_gate["report_path"] or "Private pilot start gate not generated",
+                "Latest start gate artifact",
+            )
+            render_brief_item(
+                start_gate["demo_final_status"].replace("_", " ").title(),
+                "Private demo final review",
+            )
+            render_brief_item(
+                start_gate["pilot_plan_status"].replace("_", " ").title(),
+                "Pilot plan",
+            )
+            render_brief_item(
+                start_gate["pilot_tracker_status"].replace("_", " ").title(),
+                "Pilot tracker",
+            )
+            render_panel_end()
+
+            render_panel_start("Start Conditions")
+            if start_gate["start_conditions"]:
+                for item in start_gate["start_conditions"]:
+                    render_status_row(item, "Required to start Day 1", "healthy")
+            else:
+                render_status_row("No start conditions found", "Generate the start gate artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("No-Start Conditions")
+            if start_gate["no_start_conditions"]:
+                for item in start_gate["no_start_conditions"]:
+                    render_status_row(item, "Blocks or pauses Day 1", "medium")
+            else:
+                render_status_row("No no-start conditions found", "Generate the start gate artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Operator Note")
+            render_brief_item(
+                start_gate["operator_note"],
+                "Read-only guidance from the start gate report",
+            )
+            render_panel_end()
     elif page == "Pilot Tracker":
         tracker = data["private_pilot_tracker_status"]
         tracker_status = tracker["tracker_status"]

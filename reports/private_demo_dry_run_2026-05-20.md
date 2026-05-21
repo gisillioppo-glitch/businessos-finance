@@ -4,18 +4,18 @@ Date: 2026-05-20
 
 ## Dry Run Status
 
-Overall status: ready_for_private_demo
+Overall status: ready_with_warnings
 Total checks: 6
-Passed checks: 6
-Warning checks: 0
+Passed checks: 5
+Warning checks: 1
 Failed checks: 0
-Release readiness source: ready
+Release readiness source: ready_with_warnings
 
 ## Checks
 
 | Check | Status | Severity | Detail |
 | --- | --- | --- | --- |
-| Release readiness gate | passed | critical | Release readiness is green. |
+| Release readiness gate | warning | warning | Ready with warnings; name the warning honestly if asked. |
 | Private demo package | passed | critical | reports\private_demo_package_2026-05-20.md |
 | Private demo script | passed | critical | reports\private_demo_script_2026-05-20.md |
 | Required demo pages | passed | critical | present |

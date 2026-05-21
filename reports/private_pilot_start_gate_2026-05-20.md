@@ -6,21 +6,21 @@ Date: 2026-05-20
 
 Start gate status: ready_with_conditions
 Recommendation: Start only if the executive owner accepts the named conditions and the scope stays narrow.
-Private demo final review: ready_for_private_demo
+Private demo final review: ready_with_warnings
 Pilot plan: pilot_plan_ready_with_warnings
 Pilot tracker: needs_attention
 Pilot owner: Executive Owner
 Primary workflow: Executive Daily Close
 Pilot length: 14 days
-Passed gates: 3
-Conditional gates: 2
+Passed gates: 2
+Conditional gates: 3
 Blocked gates: 0
 
 ## Gates
 
 | Gate | Status | Detail |
 | --- | --- | --- |
-| Private demo final review | passed | Ready for private demo. |
+| Private demo final review | condition | Warnings must be named before starting pilot. |
 | Pilot plan | condition | Confirm warning context with the executive owner, then start with Executive Daily Close. |
 | Pilot tracker | condition | Confirm warning context with the executive owner before continuing the pilot rhythm. |
 | Executive owner | passed | Executive Owner |
