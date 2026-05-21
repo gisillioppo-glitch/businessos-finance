@@ -16,6 +16,7 @@ DAY_3_REVIEW_COMMANDS = [
     ("Refresh release readiness", "python cli.py release-readiness"),
     ("Review Day 1 package", "python cli.py pilot-day-1-package"),
     ("Review Day 2 rhythm", "python cli.py pilot-day-2-rhythm"),
+    ("Review pilot start confirmation", "python cli.py private-pilot-start-confirmation"),
     ("Refresh pilot tracker", "python cli.py private-pilot-tracker"),
     ("Refresh exit decision", "python cli.py private-pilot-exit-decision"),
     ("Review evidence index", "python cli.py evidence-index"),
@@ -23,6 +24,7 @@ DAY_3_REVIEW_COMMANDS = [
 
 DAY_3_EVIDENCE_SIGNALS = [
     "Required evidence completeness",
+    "Start confirmation status",
     "Day 1 status",
     "Day 2 continuation decision",
     "Tracker status",
@@ -32,6 +34,7 @@ DAY_3_EVIDENCE_SIGNALS = [
 
 DAY_3_REVIEW_QUESTIONS = [
     "Did the pilot repeat the core workflow without missing required evidence?",
+    "Is the start confirmation still accepted, conditional, or blocked?",
     "Did the executive owner understand and accept the warning context?",
     "Are warnings stable enough to continue without expanding scope?",
     "Is there enough evidence to prepare an expansion review?",
@@ -87,12 +90,17 @@ def _evidence_review_status(day_2, tracker, exit_decision):
     if day_2["day_2_status"] == "blocked" or tracker["missing_required"] > 0:
         return "blocked"
 
+    start_confirmation_status = day_2.get("start_confirmation_status", "missing")
+    if start_confirmation_status == "blocked":
+        return "blocked"
+
     highest_risk = RISK_ORDER.get(exit_decision["highest_exit_risk"], 0)
 
     if (
         day_2["day_2_status"] == "continue_with_warnings"
         or tracker["tracker_status"] == "needs_attention"
         or "warnings" in exit_decision["decision_status"]
+        or start_confirmation_status in {"missing", "requires_owner_confirmation"}
         or highest_risk >= RISK_ORDER["medium"]
     ):
         return "review_with_warnings"
@@ -143,6 +151,7 @@ def generate_pilot_day_3_evidence_review(conn=None):
 
     evidence_signals = [
         ("Required evidence completeness", "complete" if tracker["missing_required"] == 0 else "missing_required"),
+        ("Start confirmation status", day_2.get("start_confirmation_status", "missing")),
         ("Day 1 status", day_1["day_1_status"]),
         ("Day 2 continuation decision", day_2["continuation_decision"]),
         ("Tracker status", tracker["tracker_status"]),
@@ -158,6 +167,9 @@ def generate_pilot_day_3_evidence_review(conn=None):
         "primary_workflow": day_1["primary_workflow"],
         "day_1_status": day_1["day_1_status"],
         "day_2_status": day_2["day_2_status"],
+        "start_confirmation_status": day_2.get("start_confirmation_status", "missing"),
+        "start_confirmation_report": day_2.get("start_confirmation_report", "not_available"),
+        "start_confirmation_detail": day_2.get("start_confirmation_detail", "No start confirmation detail recorded."),
         "continuation_decision": day_2["continuation_decision"],
         "tracker_status": tracker["tracker_status"],
         "exit_decision_status": exit_decision["decision_status"],
@@ -191,6 +203,9 @@ Pilot owner: {result['pilot_owner']}
 Primary workflow: {result['primary_workflow']}
 Day 1 status: {result['day_1_status']}
 Day 2 status: {result['day_2_status']}
+Start confirmation status: {result['start_confirmation_status']}
+Start confirmation report: {result['start_confirmation_report']}
+Start confirmation detail: {result['start_confirmation_detail']}
 Continuation decision: {result['continuation_decision']}
 Tracker status: {result['tracker_status']}
 Exit decision status: {result['exit_decision_status']}
@@ -251,6 +266,7 @@ def print_pilot_day_3_evidence_review(conn=None):
     print(f"Pilot owner: {result['pilot_owner']}")
     print(f"Primary workflow: {result['primary_workflow']}")
     print(f"Day 2 status: {result['day_2_status']}")
+    print(f"Start confirmation status: {result['start_confirmation_status']}")
     print(f"Continuation decision: {result['continuation_decision']}")
     print(f"Tracker status: {result['tracker_status']}")
     print(f"Missing required evidence: {result['missing_required_evidence']}")

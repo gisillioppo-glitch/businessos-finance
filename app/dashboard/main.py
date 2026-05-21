@@ -2611,6 +2611,9 @@ def load_pilot_day_3_evidence_review_status():
             "primary_workflow": "Not selected",
             "day_1_status": "missing",
             "day_2_status": "missing",
+            "start_confirmation_status": "missing",
+            "start_confirmation_report": "not_available",
+            "start_confirmation_detail": "No start confirmation detail recorded.",
             "continuation_decision": "missing",
             "tracker_status": "missing",
             "exit_decision_status": "missing",
@@ -2674,6 +2677,9 @@ def load_pilot_day_3_evidence_review_status():
     primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
     day_1_status_match = re.search(r"Day 1 status:\s*([a-z_]+)", content)
     day_2_status_match = re.search(r"Day 2 status:\s*([a-z_]+)", content)
+    start_confirmation_status_match = re.search(r"Start confirmation status:\s*([a-z_]+)", content)
+    start_confirmation_report_match = re.search(r"Start confirmation report:\s*(.+)", content)
+    start_confirmation_detail_match = re.search(r"Start confirmation detail:\s*(.+)", content)
     continuation_decision_match = re.search(r"Continuation decision:\s*([a-z_]+)", content)
     tracker_status_match = re.search(r"Tracker status:\s*([a-z_]+)", content)
     exit_decision_status_match = re.search(r"Exit decision status:\s*([a-z_]+)", content)
@@ -2694,6 +2700,9 @@ def load_pilot_day_3_evidence_review_status():
         "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
         "day_1_status": day_1_status_match.group(1) if day_1_status_match else "unknown",
         "day_2_status": day_2_status_match.group(1) if day_2_status_match else "unknown",
+        "start_confirmation_status": start_confirmation_status_match.group(1) if start_confirmation_status_match else "unknown",
+        "start_confirmation_report": start_confirmation_report_match.group(1).strip() if start_confirmation_report_match else "not_available",
+        "start_confirmation_detail": start_confirmation_detail_match.group(1).strip() if start_confirmation_detail_match else "No start confirmation detail recorded.",
         "continuation_decision": continuation_decision_match.group(1) if continuation_decision_match else "unknown",
         "tracker_status": tracker_status_match.group(1) if tracker_status_match else "unknown",
         "exit_decision_status": exit_decision_status_match.group(1) if exit_decision_status_match else "unknown",
@@ -5882,6 +5891,22 @@ def render_module_page(page, data):
             render_brief_item(day_3["primary_workflow"], "Primary workflow")
             render_brief_item(day_3["day_1_status"].replace("_", " ").title(), "Source Day 1 status")
             render_brief_item(day_3["day_2_status"].replace("_", " ").title(), "Source Day 2 status")
+            render_brief_item(day_3["start_confirmation_status"].replace("_", " ").title(), "Linked start confirmation")
+            render_brief_item(day_3["start_confirmation_report"], "Start confirmation artifact")
+            render_panel_end()
+
+            render_panel_start("Start Confirmation Link")
+            confirmation_class = {
+                "confirmed_ready_for_day_1": "green",
+                "requires_owner_confirmation": "gold",
+                "blocked": "red",
+                "missing": "red",
+            }.get(day_3["start_confirmation_status"], "gold")
+            render_status_row(
+                day_3["start_confirmation_status"].replace("_", " ").title(),
+                day_3["start_confirmation_detail"],
+                confirmation_class,
+            )
             render_panel_end()
 
             render_panel_start("Continuation Boundary")
