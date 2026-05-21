@@ -4,10 +4,10 @@ Date: 2026-05-20
 
 ## Integrity Summary
 
-Overall status: warning
+Overall status: passed
 Total checks: 59
-Passed checks: 58
-Warning checks: 1
+Passed checks: 59
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -72,4 +72,4 @@ Failed checks: 0
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-20.md | date: 2026-05-20 | stale areas: 0 | missing areas: 0 |
 | Boundary classification coverage | passed | 103/103 status docs covered |
-| Git working tree | warning | M README.md; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/system_integrity_2026-05-20.md; ?? docs/area-review-freshness-operating-procedure-v0.1-status.md; ?? docs/area-review-freshness-operating-procedure-v0.1.md |
+| Git working tree | passed | clean except known local artifacts |

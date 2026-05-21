@@ -45,8 +45,8 @@ Not included:
 
 ```text
 ASCII check OK
-system-check OK: 58 passed / 1 warning / 0 failed during active edits
-release-readiness OK: 14 passed / 1 warning / 0 failed during active edits
+system-check OK: 59 passed / 0 warnings / 0 failed after commit
+release-readiness OK: 14 passed / 1 warning / 0 failed during report refresh
 quick smoke OK: 10 commands
 
 Boundary coverage: 103/103
