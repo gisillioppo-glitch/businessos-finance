@@ -811,6 +811,12 @@ def load_release_readiness_status():
             "passed_checks": 0,
             "warning_checks": 0,
             "failed_checks": 0,
+            "area_review_freshness": {
+                "exists": False,
+                "status": "missing",
+                "severity": "critical",
+                "detail": "Release readiness report not generated",
+            },
             "checks": [],
         }
 
@@ -822,18 +828,30 @@ def load_release_readiness_status():
             continue
 
         parts = [part.strip() for part in line.strip("|").split("|")]
-        if len(parts) == 4:
+        if len(parts) >= 4:
             checks.append(
                 {
                     "name": parts[0],
                     "status": parts[1],
                     "severity": parts[2],
-                    "detail": parts[3].replace("\\|", "|"),
+                    "detail": " | ".join(parts[3:]).replace("\\ |", "|").replace("\\|", "|"),
                 }
             )
 
     date_match = re.search(r"Date:\s*([0-9-]+)", content)
     status_match = re.search(r"Overall status:\s*([a-z_]+)", content)
+    area_review_freshness = next(
+        (
+            check for check in checks
+            if check["name"] == "Area review freshness"
+        ),
+        {
+            "name": "Area review freshness",
+            "status": "missing",
+            "severity": "critical",
+            "detail": "Area review freshness gate not found",
+        },
+    )
 
     return {
         "exists": True,
@@ -844,6 +862,12 @@ def load_release_readiness_status():
         "passed_checks": extract_metric_from_markdown(content, "Passed checks"),
         "warning_checks": extract_metric_from_markdown(content, "Warning checks"),
         "failed_checks": extract_metric_from_markdown(content, "Failed checks"),
+        "area_review_freshness": {
+            "exists": area_review_freshness["status"] != "missing",
+            "status": area_review_freshness["status"],
+            "severity": area_review_freshness["severity"],
+            "detail": area_review_freshness["detail"],
+        },
         "checks": checks,
     }
 
@@ -4089,6 +4113,22 @@ def render_module_page(page, data):
             render_metric_card("Warnings", readiness["warning_checks"], "Needs review", "gold" if readiness["warning_checks"] else "green")
         with c5:
             render_metric_card("Failed", readiness["failed_checks"], "Blocking issues", "red" if readiness["failed_checks"] else "green")
+
+        readiness_freshness = readiness["area_review_freshness"]
+        readiness_freshness_style = {
+            "passed": "healthy",
+            "warning": "medium",
+            "failed": "high",
+            "missing": "high",
+        }.get(readiness_freshness["status"], "medium")
+
+        render_panel_start("Area Review Freshness Gate")
+        render_status_row(
+            readiness_freshness["status"].title(),
+            f"{readiness_freshness['severity']} | {readiness_freshness['detail']}",
+            readiness_freshness_style,
+        )
+        render_panel_end()
 
         status_filter = st.selectbox(
             "Readiness status filter",
