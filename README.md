@@ -88,6 +88,14 @@ docs/boundary-classification-shared-guard-utility-v0.1-status.md
 
 This utility keeps `system-check` and `release-readiness` aligned on the same status-document coverage logic.
 
+The area review freshness operating procedure is documented in:
+
+```text
+docs/area-review-freshness-operating-procedure-v0.1.md
+```
+
+This procedure defines how operators should refresh, interpret, validate, and respond to area review freshness across `area-review-bundle`, `area-review-index`, dashboard visibility, `system-check`, and `release-readiness`.
+
 The first session handoff snapshot is documented in:
 
 ```text
@@ -320,6 +328,7 @@ python cli.py area-review-bundle
   - Flags stale area reviews when the latest source report date does not match the index date.
 - `area-review-bundle`
   - Refreshes all area reviews and the executive area review index in one controlled command.
+  - Use this as the primary freshness refresh before demos, checkpoints, or area review dashboard review.
 
 ### Recommended Daily Check
 
