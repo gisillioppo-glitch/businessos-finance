@@ -31,6 +31,7 @@ HEAVY_RUNTIME_COMMANDS = {
     "python cli.py pilot-day-5-narrow-continuation",
     "python cli.py pilot-expansion-review-prep",
     "python cli.py pilot-expansion-review-decision",
+    "python cli.py pilot-expansion-approval-gate-prep",
 }
 
 RUNTIME_RECOMMENDATIONS = [

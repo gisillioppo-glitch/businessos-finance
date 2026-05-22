@@ -1929,6 +1929,31 @@ python cli.py pilot-owner-confirmation-chain
 
 The dashboard page is visual only. It does not approve controlled expansion, add workflows, enable delivery, regenerate chain artifacts, or bypass governance.
 
+## Pilot Expansion Approval Gate Prep v0.1
+
+BusinessOS can now prepare a controlled expansion approval gate without approving expansion.
+
+Run:
+
+```bash
+python cli.py pilot-expansion-approval-gate-prep
+```
+
+The gate prep reads the latest expansion decision context and owner confirmation chain, then exports `reports/pilot_expansion_approval_gate_prep_YYYY-MM-DD.md`.
+
+It shows:
+
+- approval gate status
+- recommended gate decision
+- expansion decision context
+- owner confirmation chain status
+- pending approval conditions
+- approval requirements
+- gate prep commands
+- protected boundaries
+
+This artifact is preparation only. It does not approve controlled expansion, add workflows, enable delivery, create a formal approval record, or bypass governance.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.

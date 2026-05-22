@@ -30,6 +30,7 @@ PILOT_CHAIN_COMMANDS = [
     "pilot-day-5-narrow-continuation",
     "pilot-expansion-review-prep",
     "pilot-expansion-review-decision",
+    "pilot-expansion-approval-gate-prep",
 ]
 
 STANDARD_COMMANDS = [
