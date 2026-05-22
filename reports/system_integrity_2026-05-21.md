@@ -4,10 +4,10 @@ Date: 2026-05-21
 
 ## Integrity Summary
 
-Overall status: passed
+Overall status: warning
 Total checks: 59
-Passed checks: 59
-Warning checks: 0
+Passed checks: 58
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -71,5 +71,5 @@ Failed checks: 0
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-21.md | date: 2026-05-21 | stale areas: 0 | missing areas: 0 |
-| Boundary classification coverage | passed | 122/122 status docs covered |
-| Git working tree | passed | clean except known local artifacts |
+| Boundary classification coverage | passed | 123/123 status docs covered |
+| Git working tree | warning | M README.md; M app/dashboard/main.py; M app/security/access_control.py; M docs/boundary-classification-coverage-index-v0.1-status.md; ?? docs/dashboard-pilot-expansion-approval-request-draft-page-v0.1-status.md |

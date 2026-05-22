@@ -47,6 +47,7 @@ ALLOWED_ROLES = {
         "Pilot Expansion",
         "Confirmation Chain",
         "Approval Gate",
+        "Approval Draft",
         "People",
     ],
     "executive": [
@@ -90,6 +91,7 @@ ALLOWED_ROLES = {
         "Pilot Expansion",
         "Confirmation Chain",
         "Approval Gate",
+        "Approval Draft",
         "People",
     ],
     "viewer": [
@@ -133,6 +135,7 @@ ALLOWED_ROLES = {
         "Pilot Expansion",
         "Confirmation Chain",
         "Approval Gate",
+        "Approval Draft",
         "People",
     ],
 }

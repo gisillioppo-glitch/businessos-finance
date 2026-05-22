@@ -2011,6 +2011,37 @@ It includes:
 
 This artifact is draft-only. It does not create a database approval request, approve controlled expansion, add workflows, enable delivery, or bypass governance.
 
+## Dashboard Pilot Expansion Approval Request Draft Page v0.1
+
+The private dashboard now includes a read-only `Approval Draft` page.
+
+It reads the latest `reports/pilot_expansion_approval_request_draft_YYYY-MM-DD.md` artifact and shows:
+
+- draft status
+- request priority and approval type
+- requester and approver roles
+- recommended request action
+- request description
+- approval conditions
+- draft commands
+- approval gate context
+- pending conditions
+- protected boundaries
+
+Documentation:
+
+```text
+docs/dashboard-pilot-expansion-approval-request-draft-page-v0.1-status.md
+```
+
+Generate the backing artifact with:
+
+```bash
+python cli.py pilot-expansion-approval-request-draft
+```
+
+The dashboard page is visual only. It does not create a database approval request, approve controlled expansion, add workflows, enable delivery, regenerate draft artifacts, or bypass governance.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.

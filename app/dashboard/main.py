@@ -396,6 +396,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Controlled expansion approval gate prep is visible but not executable.",
     },
     {
+        "page": "Approval Draft",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared approval request drafting candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Controlled expansion approval request draft is visible but does not create a request.",
+    },
+    {
         "page": "People",
         "primary_boundary": "OS Core candidate",
         "secondary_boundary": "BusinessOS internal roles",
@@ -3440,6 +3449,138 @@ def load_pilot_expansion_approval_gate_prep_status():
     }
 
 
+def load_pilot_expansion_approval_request_draft_status():
+    report_path = get_latest_report_path("pilot_expansion_approval_request_draft")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "draft_status": "missing",
+            "request_title": "Not prepared",
+            "approval_type": "missing",
+            "priority": "missing",
+            "requester_email": "Not assigned",
+            "requester_role": "Not assigned",
+            "approver_role": "Not assigned",
+            "source_module": "missing",
+            "source_reference_id": "missing",
+            "approval_gate_status": "missing",
+            "recommended_gate_decision": "missing",
+            "pending_conditions_count": 0,
+            "expansion_status": "unknown",
+            "delivery_status": "unknown",
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "recommended_request_action": "Run python cli.py pilot-expansion-approval-request-draft.",
+            "request_description": "No approval request draft generated yet.",
+            "pending_conditions": [],
+            "conditions": [],
+            "commands": [],
+            "boundaries": [],
+            "operator_note": "No pilot expansion approval request draft artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    request_description = []
+    pending_conditions = []
+    conditions = []
+    commands = []
+    boundaries = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Request Description" and stripped:
+            request_description.append(stripped)
+
+        elif section == "Pending Conditions" and stripped.startswith("- "):
+            pending_conditions.append(stripped[2:])
+
+        elif section == "Approval Conditions":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Condition"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 3:
+                conditions.append(
+                    {
+                        "condition": parts[0],
+                        "status": parts[1],
+                        "detail": parts[2],
+                    }
+                )
+
+        elif section == "Draft Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    draft_status_match = re.search(r"Draft status:\s*([a-z_]+)", content)
+    request_title_match = re.search(r"Request title:\s*(.+)", content)
+    approval_type_match = re.search(r"Approval type:\s*([a-z_]+)", content)
+    priority_match = re.search(r"Priority:\s*([a-z_]+)", content)
+    requester_email_match = re.search(r"Requester email:\s*(.+)", content)
+    requester_role_match = re.search(r"Requester role:\s*(.+)", content)
+    approver_role_match = re.search(r"Approver role:\s*(.+)", content)
+    source_module_match = re.search(r"Source module:\s*([a-z_]+)", content)
+    source_reference_match = re.search(r"Source reference id:\s*(.+)", content)
+    gate_status_match = re.search(r"Approval gate status:\s*([a-z_]+)", content)
+    gate_decision_match = re.search(r"Recommended gate decision:\s*([a-z_]+)", content)
+    pending_count_match = re.search(r"Pending conditions:\s*(\d+)", content)
+    expansion_status_match = re.search(r"Expansion status:\s*([a-z_]+)", content)
+    delivery_status_match = re.search(r"Delivery status:\s*([a-z_]+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    request_action_match = re.search(r"Recommended request action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "draft_status": draft_status_match.group(1) if draft_status_match else "unknown",
+        "request_title": request_title_match.group(1).strip() if request_title_match else "Not prepared",
+        "approval_type": approval_type_match.group(1) if approval_type_match else "unknown",
+        "priority": priority_match.group(1) if priority_match else "unknown",
+        "requester_email": requester_email_match.group(1).strip() if requester_email_match else "Not assigned",
+        "requester_role": requester_role_match.group(1).strip() if requester_role_match else "Not assigned",
+        "approver_role": approver_role_match.group(1).strip() if approver_role_match else "Not assigned",
+        "source_module": source_module_match.group(1) if source_module_match else "unknown",
+        "source_reference_id": source_reference_match.group(1).strip() if source_reference_match else "unknown",
+        "approval_gate_status": gate_status_match.group(1) if gate_status_match else "unknown",
+        "recommended_gate_decision": gate_decision_match.group(1) if gate_decision_match else "unknown",
+        "pending_conditions_count": int(pending_count_match.group(1)) if pending_count_match else len(pending_conditions),
+        "expansion_status": expansion_status_match.group(1) if expansion_status_match else "unknown",
+        "delivery_status": delivery_status_match.group(1) if delivery_status_match else "unknown",
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "recommended_request_action": request_action_match.group(1).strip() if request_action_match else "No request action recorded",
+        "request_description": " ".join(request_description) if request_description else "No request description recorded.",
+        "pending_conditions": pending_conditions,
+        "conditions": conditions,
+        "commands": commands,
+        "boundaries": boundaries,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
+
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -3862,6 +4003,7 @@ def load_dashboard_data():
     pilot_expansion_review_decision_status = load_pilot_expansion_review_decision_status()
     pilot_owner_confirmation_chain_status = load_pilot_owner_confirmation_chain_status()
     pilot_expansion_approval_gate_prep_status = load_pilot_expansion_approval_gate_prep_status()
+    pilot_expansion_approval_request_draft_status = load_pilot_expansion_approval_request_draft_status()
     dashboard_boundary_index = load_dashboard_boundary_index()
 
     return {
@@ -3948,6 +4090,7 @@ def load_dashboard_data():
         "pilot_expansion_review_decision_status": pilot_expansion_review_decision_status,
         "pilot_owner_confirmation_chain_status": pilot_owner_confirmation_chain_status,
         "pilot_expansion_approval_gate_prep_status": pilot_expansion_approval_gate_prep_status,
+        "pilot_expansion_approval_request_draft_status": pilot_expansion_approval_request_draft_status,
     }
 
 
@@ -6918,6 +7061,126 @@ def render_module_page(page, data):
 
         render_panel_start("Operator Note")
         render_brief_item(gate["operator_note"], "Read-only guidance; no controlled expansion approval")
+        render_panel_end()
+    elif page == "Approval Draft":
+        draft = data["pilot_expansion_approval_request_draft_status"]
+        draft_status = draft["draft_status"]
+        draft_class = {
+            "draft_ready": "green",
+            "draft_ready_with_conditions": "gold",
+            "draft_blocked": "red",
+            "missing": "red",
+        }.get(draft_status, "gold")
+        priority_class = {
+            "low": "",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(draft["priority"], "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Draft Status", draft_status.replace("_", " ").title(), "Latest approval draft", draft_class)
+        with c2:
+            render_metric_card("Priority", draft["priority"].replace("_", " ").title(), "Approval request priority", priority_class)
+        with c3:
+            render_metric_card("Pending", draft["pending_conditions_count"], "Conditions before request", "gold" if draft["pending_conditions_count"] else "green")
+        with c4:
+            render_metric_card("Type", draft["approval_type"].replace("_", " ").title(), "Approval request type", "green" if draft["approval_type"] == "decision" else "gold")
+        with c5:
+            render_metric_card("Approver", draft["approver_role"], "Formal approver role", "green" if draft["approver_role"] != "Not assigned" else "red")
+
+        render_panel_start("Draft Boundary")
+        render_status_row(
+            draft_status.replace("_", " ").title(),
+            "Read-only request draft; no database approval request is created from this page.",
+            draft_class,
+        )
+        render_status_row(
+            draft["recommended_request_action"],
+            "Formal approval request creation remains a separate controlled block",
+            "medium" if draft["pending_conditions_count"] else draft_class,
+        )
+        render_panel_end()
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Request Description")
+            render_brief_item(draft["request_description"], "Prepared request language")
+            render_panel_end()
+
+            render_panel_start("Approval Conditions")
+            if draft["conditions"]:
+                status_styles = {
+                    "met": "healthy",
+                    "pending": "medium",
+                    "missing": "high",
+                    "blocked": "high",
+                    "review_required": "medium",
+                }
+                for condition in draft["conditions"]:
+                    render_status_row(
+                        f"{condition['condition']} | {condition['status'].replace('_', ' ').title()}",
+                        condition["detail"],
+                        status_styles.get(condition["status"], "medium"),
+                    )
+            else:
+                render_status_row("No approval conditions found", "Run python cli.py pilot-expansion-approval-request-draft", "medium")
+            render_panel_end()
+
+            render_panel_start("Draft Commands")
+            if draft["commands"]:
+                for item in draft["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No draft commands found", "Generate the approval request draft artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Draft Evidence")
+            render_brief_item(
+                draft["report_path"] or "Pilot expansion approval request draft not generated",
+                "Latest approval request draft artifact",
+            )
+            render_brief_item(draft["request_title"], "Request title")
+            render_brief_item(draft["requester_role"], "Requester role")
+            render_brief_item(draft["requester_email"], "Requester email")
+            render_brief_item(draft["approver_role"], "Approver role")
+            render_brief_item(draft["source_reference_id"], "Source reference")
+            render_panel_end()
+
+            render_panel_start("Gate Context")
+            render_status_row(
+                draft["approval_gate_status"].replace("_", " ").title(),
+                f"Recommended gate decision: {draft['recommended_gate_decision'].replace('_', ' ').title()}",
+                "medium" if draft["pending_conditions_count"] else "healthy",
+            )
+            render_status_row(
+                draft["expansion_status"].replace("_", " ").title(),
+                f"Delivery status: {draft['delivery_status'].replace('_', ' ').title()}",
+                "gold" if draft["expansion_status"] != "approved" else "green",
+            )
+            render_panel_end()
+
+            render_panel_start("Pending Conditions")
+            if draft["pending_conditions"]:
+                for item in draft["pending_conditions"]:
+                    render_status_row(item, "Must be resolved or acknowledged before formal request", "medium")
+            else:
+                render_status_row("No pending conditions", "Draft is ready for separate approval request creation", "healthy")
+            render_panel_end()
+
+        render_panel_start("Protected Boundaries")
+        if draft["boundaries"]:
+            for boundary in draft["boundaries"]:
+                render_status_row(boundary, "Approval request draft boundary", "medium")
+        else:
+            render_status_row("No boundaries found", "Generate the approval request draft artifact", "medium")
+        render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(draft["operator_note"], "Read-only guidance; no approval request creation")
         render_panel_end()
     elif page == "Demo Readiness":
         demo = data["private_demo_dry_run_status"]
