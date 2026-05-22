@@ -1865,6 +1865,12 @@ python cli.py pilot-expansion-review-prep
 
 The package reads Day 5 narrow continuation, keeps expansion marked as `not_approved`, evaluates required preparation conditions, and exports `reports/pilot_expansion_review_prep_YYYY-MM-DD.md`. It is preparation only; it does not add workflows, enable delivery, or approve expansion.
 
+## Pilot Expansion Prep Owner Confirmation Link v0.1
+
+The expansion review preparation package now links to the original pilot start confirmation state inherited through Day 5.
+
+This keeps expansion preparation tied to the same private pilot start packet before any executive expansion review. The expansion prep report and dashboard page show the linked confirmation status, report path, and recommendation detail.
+
 ## Pilot Expansion Review Decision MVP v0.1
 
 BusinessOS can now generate a decision recommendation for the pilot expansion review package.

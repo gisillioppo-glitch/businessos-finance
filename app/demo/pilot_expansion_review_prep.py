@@ -11,6 +11,7 @@ REPORTS_DIR = ROOT_DIR / "reports"
 EXPANSION_PREP_COMMANDS = [
     ("Refresh Day 5 continuation", "python cli.py pilot-day-5-narrow-continuation"),
     ("Refresh owner confirmation", "python cli.py pilot-day-4-owner-confirmation"),
+    ("Review pilot start confirmation", "python cli.py private-pilot-start-confirmation"),
     ("Refresh pilot tracker", "python cli.py private-pilot-tracker"),
     ("Refresh exit decision", "python cli.py private-pilot-exit-decision"),
     ("Review evidence index", "python cli.py evidence-index"),
@@ -19,6 +20,7 @@ EXPANSION_PREP_COMMANDS = [
 
 EXPANSION_REVIEW_CONDITIONS = [
     "Required pilot evidence remains complete.",
+    "Pilot start confirmation state remains visible and not blocked.",
     "Narrow pilot has repeated the primary workflow without adding scope.",
     "Executive owner has acknowledged warning context.",
     "Expansion approval is requested and approved separately.",
@@ -27,6 +29,7 @@ EXPANSION_REVIEW_CONDITIONS = [
 ]
 
 EXPANSION_REVIEW_EVIDENCE = [
+    "Private pilot start confirmation packet.",
     "Pilot Day 3 evidence review report.",
     "Pilot Day 4 owner confirmation packet.",
     "Pilot Day 5 narrow continuation report.",
@@ -83,6 +86,8 @@ def _format_condition_rows(conditions):
 
 def _condition_statuses(day_5):
     required_complete = day_5["missing_required_evidence"] == 0
+    start_confirmation_status = day_5.get("start_confirmation_status", "missing")
+    start_confirmation_clear = start_confirmation_status != "blocked"
     narrow_continuation = day_5["day_5_status"] in ["continue_narrow_pilot", "continue_with_owner_confirmation"]
     owner_acknowledged = day_5["day_4_status"] == "owner_confirmation_ready"
     expansion_approved = day_5["expansion_status"] == "approved"
@@ -93,6 +98,11 @@ def _condition_statuses(day_5):
             "condition": "Required pilot evidence",
             "status": "met" if required_complete else "missing",
             "detail": "No required evidence is missing." if required_complete else "Required evidence must be restored before review.",
+        },
+        {
+            "condition": "Start confirmation state",
+            "status": "met" if start_confirmation_clear else "blocked",
+            "detail": f"Start confirmation status is {start_confirmation_status}.",
         },
         {
             "condition": "Narrow pilot repeatability",
@@ -129,6 +139,9 @@ def _expansion_prep_status(day_5, conditions):
     if day_5["missing_required_evidence"] > 0:
         return "blocked_missing_required_evidence"
 
+    if day_5.get("start_confirmation_status") == "blocked":
+        return "blocked_start_confirmation"
+
     if day_5["continuation_scope"] != "single_workflow_narrow_pilot":
         return "blocked_scope_not_narrow"
 
@@ -154,6 +167,9 @@ def _next_action(status):
     if status == "blocked_missing_required_evidence":
         return "Pause expansion review preparation and restore required pilot evidence."
 
+    if status == "blocked_start_confirmation":
+        return "Pause expansion review preparation and resolve the blocked start confirmation state."
+
     if status == "blocked_scope_not_narrow":
         return "Return to a single-workflow narrow pilot before preparing expansion review."
 
@@ -177,6 +193,9 @@ def generate_pilot_expansion_review_prep(conn=None):
         "primary_workflow": day_5["primary_workflow"],
         "continuation_scope": day_5["continuation_scope"],
         "day_5_status": day_5["day_5_status"],
+        "start_confirmation_status": day_5.get("start_confirmation_status", "missing"),
+        "start_confirmation_report": day_5.get("start_confirmation_report", "not_available"),
+        "start_confirmation_detail": day_5.get("start_confirmation_detail", "No start confirmation detail recorded."),
         "allowed_continuation": day_5["allowed_continuation"],
         "expansion_status": day_5["expansion_status"],
         "delivery_status": day_5["delivery_status"],
@@ -211,6 +230,9 @@ Pilot owner: {result['pilot_owner']}
 Primary workflow: {result['primary_workflow']}
 Continuation scope: {result['continuation_scope']}
 Day 5 status: {result['day_5_status']}
+Start confirmation status: {result['start_confirmation_status']}
+Start confirmation report: {result['start_confirmation_report']}
+Start confirmation detail: {result['start_confirmation_detail']}
 Allowed continuation: {result['allowed_continuation']}
 Expansion status: {result['expansion_status']}
 Delivery status: {result['delivery_status']}
@@ -278,6 +300,7 @@ def print_pilot_expansion_review_prep(conn=None):
     print(f"Primary workflow: {result['primary_workflow']}")
     print(f"Continuation scope: {result['continuation_scope']}")
     print(f"Day 5 status: {result['day_5_status']}")
+    print(f"Start confirmation status: {result['start_confirmation_status']}")
     print(f"Expansion status: {result['expansion_status']}")
     print(f"Pending conditions: {result['pending_condition_count']}")
     print(f"Missing required evidence: {result['missing_required_evidence']}")
