@@ -2042,6 +2042,36 @@ python cli.py pilot-expansion-approval-request-draft
 
 The dashboard page is visual only. It does not create a database approval request, approve controlled expansion, add workflows, enable delivery, regenerate draft artifacts, or bypass governance.
 
+## Pilot Expansion Approval Request Creation v0.1
+
+BusinessOS can now convert the controlled pilot expansion approval request draft into a formal pending approval request.
+
+Run:
+
+```bash
+python cli.py pilot-expansion-approval-request-creation
+```
+
+The command reads the latest approval request draft context, creates or reuses one pending `approval_requests` record, and exports `reports/pilot_expansion_approval_request_creation_YYYY-MM-DD.md`.
+
+It includes:
+
+- creation status
+- approval request id and status
+- request title, type, priority, requester, and approver
+- draft and approval gate context
+- pending conditions
+- creation commands
+- protected boundaries
+
+Documentation:
+
+```text
+docs/pilot-expansion-approval-request-creation-v0.1-status.md
+```
+
+This command creates a pending approval request only. It does not approve controlled expansion, add workflows, enable delivery, change approval status automatically, or bypass governance.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.

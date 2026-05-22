@@ -32,6 +32,7 @@ PILOT_CHAIN_COMMANDS = [
     "pilot-expansion-review-decision",
     "pilot-expansion-approval-gate-prep",
     "pilot-expansion-approval-request-draft",
+    "pilot-expansion-approval-request-creation",
 ]
 
 STANDARD_COMMANDS = [

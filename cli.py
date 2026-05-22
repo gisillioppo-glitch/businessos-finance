@@ -59,6 +59,7 @@ from app.demo.pilot_expansion_review_prep import print_pilot_expansion_review_pr
 from app.demo.pilot_expansion_review_decision import print_pilot_expansion_review_decision
 from app.demo.pilot_expansion_approval_gate_prep import print_pilot_expansion_approval_gate_prep
 from app.demo.pilot_expansion_approval_request_draft import print_pilot_expansion_approval_request_draft
+from app.demo.pilot_expansion_approval_request_creation import print_pilot_expansion_approval_request_creation
 from app.demo.pilot_owner_confirmation_chain_index import print_pilot_owner_confirmation_chain_index
 from app.evidence.daily_close import export_daily_close_report
 from app.evidence.daily_close_distribution import export_daily_close_distribution
@@ -500,6 +501,19 @@ def run_pilot_expansion_approval_request_draft():
 
     try:
         print_pilot_expansion_approval_request_draft(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
+def run_pilot_expansion_approval_request_creation():
+    conn = create_connection()
+
+    try:
+        print_pilot_expansion_approval_request_creation(conn)
 
     except sqlite3.Error as error:
         print(f"Database error: {error}")
@@ -1194,6 +1208,7 @@ def main():
             "pilot-expansion-review-decision",
             "pilot-expansion-approval-gate-prep",
             "pilot-expansion-approval-request-draft",
+            "pilot-expansion-approval-request-creation",
             "pilot-owner-confirmation-chain",
             "notifications",
             "notification-delivery-approval",
@@ -1309,6 +1324,8 @@ def main():
         run_pilot_expansion_approval_gate_prep()
     elif args.command == "pilot-expansion-approval-request-draft":
         run_pilot_expansion_approval_request_draft()
+    elif args.command == "pilot-expansion-approval-request-creation":
+        run_pilot_expansion_approval_request_creation()
     elif args.command == "pilot-owner-confirmation-chain":
         run_pilot_owner_confirmation_chain_index()
     elif args.command == "notifications":
