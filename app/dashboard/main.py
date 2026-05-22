@@ -378,6 +378,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Expansion decision workflow is not core yet.",
     },
     {
+        "page": "Confirmation Chain",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared pilot governance candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Owner confirmation chain visibility is advisory and read-only.",
+    },
+    {
         "page": "People",
         "primary_boundary": "OS Core candidate",
         "secondary_boundary": "BusinessOS internal roles",
@@ -3214,6 +3223,83 @@ def load_pilot_expansion_review_prep_status():
     }
 
 
+def load_pilot_owner_confirmation_chain_status():
+    report_path = get_latest_report_path("pilot_owner_confirmation_chain_index")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "chain_status": "missing",
+            "artifacts_total": 0,
+            "artifacts_present": 0,
+            "blocked_artifacts": 0,
+            "conditional_confirmation_artifacts": 0,
+            "next_action": "Run python cli.py pilot-owner-confirmation-chain.",
+            "chain_rows": [],
+            "governance_boundaries": [],
+            "operator_note": "No pilot owner confirmation chain index generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    chain_rows = []
+    governance_boundaries = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Confirmation Chain":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Artifact"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 4:
+                chain_rows.append(
+                    {
+                        "artifact": parts[0],
+                        "status": parts[1],
+                        "start_confirmation": parts[2],
+                        "report": parts[3],
+                    }
+                )
+
+        elif section == "Governance Boundary" and stripped.startswith("- "):
+            governance_boundaries.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    chain_status_match = re.search(r"Chain status:\s*([a-z_]+)", content)
+    artifacts_total_match = re.search(r"Artifacts total:\s*(\d+)", content)
+    artifacts_present_match = re.search(r"Artifacts present:\s*(\d+)", content)
+    blocked_artifacts_match = re.search(r"Blocked artifacts:\s*(\d+)", content)
+    conditional_match = re.search(r"Conditional confirmation artifacts:\s*(\d+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "chain_status": chain_status_match.group(1) if chain_status_match else "unknown",
+        "artifacts_total": int(artifacts_total_match.group(1)) if artifacts_total_match else len(chain_rows),
+        "artifacts_present": int(artifacts_present_match.group(1)) if artifacts_present_match else len(chain_rows),
+        "blocked_artifacts": int(blocked_artifacts_match.group(1)) if blocked_artifacts_match else 0,
+        "conditional_confirmation_artifacts": int(conditional_match.group(1)) if conditional_match else 0,
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "chain_rows": chain_rows,
+        "governance_boundaries": governance_boundaries,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
+
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -3634,6 +3720,7 @@ def load_dashboard_data():
     pilot_day_5_narrow_continuation_status = load_pilot_day_5_narrow_continuation_status()
     pilot_expansion_review_prep_status = load_pilot_expansion_review_prep_status()
     pilot_expansion_review_decision_status = load_pilot_expansion_review_decision_status()
+    pilot_owner_confirmation_chain_status = load_pilot_owner_confirmation_chain_status()
     dashboard_boundary_index = load_dashboard_boundary_index()
 
     return {
@@ -3718,6 +3805,7 @@ def load_dashboard_data():
         "pilot_day_5_narrow_continuation_status": pilot_day_5_narrow_continuation_status,
         "pilot_expansion_review_prep_status": pilot_expansion_review_prep_status,
         "pilot_expansion_review_decision_status": pilot_expansion_review_decision_status,
+        "pilot_owner_confirmation_chain_status": pilot_owner_confirmation_chain_status,
     }
 
 
@@ -6482,6 +6570,99 @@ def render_module_page(page, data):
 
         render_panel_start("Operator Note")
         render_brief_item(expansion["operator_note"], "Read-only guidance; no automatic expansion approval")
+        render_panel_end()
+    elif page == "Confirmation Chain":
+        chain = data["pilot_owner_confirmation_chain_status"]
+        chain_status = chain["chain_status"]
+        chain_class = {
+            "chain_ready": "green",
+            "chain_ready_with_conditions": "gold",
+            "chain_blocked": "red",
+            "chain_incomplete": "red",
+            "missing": "red",
+        }.get(chain_status, "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Chain Status", chain_status.replace("_", " ").title(), "Latest chain index", chain_class)
+        with c2:
+            render_metric_card("Present", f"{chain['artifacts_present']}/{chain['artifacts_total']}", "Pilot artifacts found", "green" if chain["artifacts_present"] == chain["artifacts_total"] else "gold")
+        with c3:
+            render_metric_card("Blocked", chain["blocked_artifacts"], "Blocks expansion review", "red" if chain["blocked_artifacts"] else "green")
+        with c4:
+            render_metric_card("Conditional", chain["conditional_confirmation_artifacts"], "Need owner acknowledgement", "gold" if chain["conditional_confirmation_artifacts"] else "green")
+        with c5:
+            render_metric_card("Rows", len(chain["chain_rows"]), "Chain checkpoints", "green" if chain["chain_rows"] else "red")
+
+        render_panel_start("Confirmation Boundary")
+        render_status_row(
+            chain_status.replace("_", " ").title(),
+            "Read-only chain index; no expansion, delivery, or workflow action is executed here.",
+            chain_class,
+        )
+        render_status_row(
+            chain["next_action"],
+            "Use before controlled expansion approval discussion",
+            "medium" if chain["conditional_confirmation_artifacts"] else chain_class,
+        )
+        render_panel_end()
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Owner Confirmation Chain")
+            if chain["chain_rows"]:
+                status_styles = {
+                    "confirmed_ready_for_day_1": "healthy",
+                    "requires_owner_confirmation": "medium",
+                    "owner_confirmation_required": "medium",
+                    "continue_narrow_pilot": "healthy",
+                    "ready_with_warnings": "medium",
+                    "continue_with_warnings": "medium",
+                    "review_with_warnings": "medium",
+                    "prep_ready_with_conditions": "medium",
+                    "decision_ready_with_conditions": "medium",
+                    "blocked": "high",
+                    "missing": "high",
+                }
+                for row in chain["chain_rows"]:
+                    detail = (
+                        f"Status: {row['status'].replace('_', ' ').title()} | "
+                        f"Start: {row['start_confirmation'].replace('_', ' ').title()} | "
+                        f"{row['report']}"
+                    )
+                    status = status_styles.get(row["status"], status_styles.get(row["start_confirmation"], "medium"))
+                    render_status_row(row["artifact"], detail, status)
+            else:
+                render_status_row("No chain rows found", "Run python cli.py pilot-owner-confirmation-chain", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Chain Evidence")
+            render_brief_item(
+                chain["report_path"] or "Pilot owner confirmation chain index not generated",
+                "Latest owner confirmation chain index",
+            )
+            render_brief_item(
+                chain["date"] or "No report date found",
+                "Report date",
+            )
+            render_brief_item(
+                "Dashboard view only",
+                "No artifact generation or approval execution",
+            )
+            render_panel_end()
+
+            render_panel_start("Governance Boundary")
+            if chain["governance_boundaries"]:
+                for boundary in chain["governance_boundaries"]:
+                    render_status_row(boundary, "Protected owner-confirmation boundary", "medium")
+            else:
+                render_status_row("No governance boundaries found", "Generate the chain index artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(chain["operator_note"], "Read-only guidance before controlled expansion review")
         render_panel_end()
     elif page == "Demo Readiness":
         demo = data["private_demo_dry_run_status"]

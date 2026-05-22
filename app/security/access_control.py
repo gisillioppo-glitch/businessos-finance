@@ -45,6 +45,7 @@ ALLOWED_ROLES = {
         "Pilot Day 5",
         "Expansion Prep",
         "Pilot Expansion",
+        "Confirmation Chain",
         "People",
     ],
     "executive": [
@@ -86,6 +87,7 @@ ALLOWED_ROLES = {
         "Pilot Day 5",
         "Expansion Prep",
         "Pilot Expansion",
+        "Confirmation Chain",
         "People",
     ],
     "viewer": [
@@ -127,6 +129,7 @@ ALLOWED_ROLES = {
         "Pilot Day 5",
         "Expansion Prep",
         "Pilot Expansion",
+        "Confirmation Chain",
         "People",
     ],
 }

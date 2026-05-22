@@ -1901,6 +1901,34 @@ python cli.py pilot-owner-confirmation-chain
 
 The index reads the latest start confirmation, Day 1 through Day 5 artifacts, expansion prep, and expansion decision artifacts. It summarizes whether the chain is complete, blocked, or ready with conditions. It is evidence only; it does not approve expansion, add workflows, enable delivery, or expose private pilot artifacts.
 
+## Dashboard Pilot Owner Confirmation Chain Page v0.1
+
+The private dashboard now includes a read-only `Confirmation Chain` page.
+
+It reads the latest `reports/pilot_owner_confirmation_chain_index_YYYY-MM-DD.md` artifact and shows:
+
+- chain status
+- present artifacts
+- blocked artifacts
+- conditional confirmation artifacts
+- full owner confirmation chain
+- governance boundary
+- operator note
+
+Documentation:
+
+```text
+docs/dashboard-pilot-owner-confirmation-chain-page-v0.1-status.md
+```
+
+Generate the backing artifact with:
+
+```bash
+python cli.py pilot-owner-confirmation-chain
+```
+
+The dashboard page is visual only. It does not approve controlled expansion, add workflows, enable delivery, regenerate chain artifacts, or bypass governance.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.
