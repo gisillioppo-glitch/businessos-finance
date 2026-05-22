@@ -4,10 +4,10 @@ Date: 2026-05-22
 
 ## Integrity Summary
 
-Overall status: passed
+Overall status: warning
 Total checks: 59
-Passed checks: 59
-Warning checks: 0
+Passed checks: 58
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -57,7 +57,7 @@ Failed checks: 0
 | Latest report: daily_close | passed | reports\daily_close_2026-05-22.md |
 | Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-22.md |
 | Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-22.md |
-| Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-21.md |
+| Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-22.md |
 | Latest report: public_surface_publish_checklist | passed | reports\public_surface_publish_checklist_2026-05-16.md |
 | Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-13.md |
 | Latest report: secure_email_delivery | passed | reports\secure_email_delivery_2026-05-13.md |
@@ -71,5 +71,5 @@ Failed checks: 0
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-22.md | date: 2026-05-22 | stale areas: 0 | missing areas: 0 |
-| Boundary classification coverage | passed | 123/123 status docs covered |
-| Git working tree | passed | clean except known local artifacts |
+| Boundary classification coverage | passed | 124/124 status docs covered |
+| Git working tree | warning | M reports/system_integrity_2026-05-22.md |
