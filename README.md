@@ -1829,6 +1829,12 @@ python cli.py pilot-day-4-owner-confirmation
 
 The packet reads Day 3 evidence review, keeps expansion marked as `not_approved`, keeps delivery approval-gated, and creates an executive owner checklist for accepting warning context before continuing the narrow pilot rhythm.
 
+## Pilot Day 4 Owner Confirmation Link v0.1
+
+The Day 4 owner confirmation packet now links to the original pilot start confirmation state inherited through Day 3.
+
+This keeps owner confirmation grounded in the same private pilot start packet before Day 5 continuation. The Day 4 report and dashboard page show the linked confirmation status, report path, and recommendation detail.
+
 ## Pilot Day 5 Narrow Pilot Continuation MVP v0.1
 
 BusinessOS can now generate a Day 5 narrow continuation plan for controlled private pilots.

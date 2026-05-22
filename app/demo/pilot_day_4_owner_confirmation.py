@@ -10,6 +10,7 @@ REPORTS_DIR = ROOT_DIR / "reports"
 
 DAY_4_CONFIRMATION_COMMANDS = [
     ("Refresh Day 3 evidence review", "python cli.py pilot-day-3-evidence-review"),
+    ("Review pilot start confirmation", "python cli.py private-pilot-start-confirmation"),
     ("Refresh pilot tracker", "python cli.py private-pilot-tracker"),
     ("Refresh exit decision", "python cli.py private-pilot-exit-decision"),
     ("Review evidence index", "python cli.py evidence-index"),
@@ -17,6 +18,7 @@ DAY_4_CONFIRMATION_COMMANDS = [
 ]
 
 DAY_4_OWNER_CONFIRMATIONS = [
+    "The executive owner has reviewed the linked pilot start confirmation state.",
     "The executive owner has reviewed Day 3 evidence status.",
     "The executive owner understands the current warning context.",
     "The executive owner accepts continuing in narrow pilot mode only.",
@@ -57,6 +59,9 @@ def _format_commands(commands):
 
 def _owner_confirmation_status(day_3):
     if day_3["day_3_status"] == "blocked" or day_3["missing_required_evidence"] > 0:
+        return "blocked"
+
+    if day_3.get("start_confirmation_status") == "blocked":
         return "blocked"
 
     if day_3["evidence_recommendation"] == "continue_narrow_pilot":
@@ -102,6 +107,9 @@ def generate_pilot_day_4_owner_confirmation(conn=None):
         "pilot_owner": day_3["pilot_owner"],
         "primary_workflow": day_3["primary_workflow"],
         "day_3_status": day_3["day_3_status"],
+        "start_confirmation_status": day_3.get("start_confirmation_status", "missing"),
+        "start_confirmation_report": day_3.get("start_confirmation_report", "not_available"),
+        "start_confirmation_detail": day_3.get("start_confirmation_detail", "No start confirmation detail recorded."),
         "evidence_recommendation": day_3["evidence_recommendation"],
         "allowed_continuation": _allowed_continuation(status),
         "expansion_status": "not_approved",
@@ -132,6 +140,9 @@ Owner confirmation mode: {result['owner_confirmation_mode']}
 Pilot owner: {result['pilot_owner']}
 Primary workflow: {result['primary_workflow']}
 Day 3 status: {result['day_3_status']}
+Start confirmation status: {result['start_confirmation_status']}
+Start confirmation report: {result['start_confirmation_report']}
+Start confirmation detail: {result['start_confirmation_detail']}
 Evidence recommendation: {result['evidence_recommendation']}
 Allowed continuation: {result['allowed_continuation']}
 Expansion status: {result['expansion_status']}
@@ -190,6 +201,7 @@ def print_pilot_day_4_owner_confirmation(conn=None):
     print(f"Pilot owner: {result['pilot_owner']}")
     print(f"Primary workflow: {result['primary_workflow']}")
     print(f"Day 3 status: {result['day_3_status']}")
+    print(f"Start confirmation status: {result['start_confirmation_status']}")
     print(f"Evidence recommendation: {result['evidence_recommendation']}")
     print(f"Allowed continuation: {result['allowed_continuation']}")
     print(f"Expansion status: {result['expansion_status']}")
