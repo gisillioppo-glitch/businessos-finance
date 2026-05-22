@@ -120,6 +120,14 @@ docs/os-platform-map-v0.1.md
 
 This map defines the future parent architecture above BusinessOS, future EduOS, Public AI, OS Core candidates, branch-specific domain adapters, and extraction guardrails before any OS Platform runtime or EduOS implementation is opened.
 
+The first BusinessOS module stability matrix is documented in:
+
+```text
+docs/businessos-module-stability-matrix-v0.1.md
+```
+
+This matrix summarizes module stability, integration maturity, OS Core readiness, extraction risk, and EduOS opening implications before any EduOS implementation is opened.
+
 The first reusable feature boundary template is documented in:
 
 ```text

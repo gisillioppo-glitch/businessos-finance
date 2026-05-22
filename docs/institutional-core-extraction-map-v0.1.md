@@ -771,7 +771,6 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-BusinessOS Module Stability Matrix v0.1
 EduOS Opening Readiness Checklist v0.1
 EduOS Concept Architecture v0.1
 ```
