@@ -1883,6 +1883,12 @@ python cli.py pilot-expansion-review-decision
 
 The decision reads the expansion review preparation packet, evaluates pending conditions, and exports `reports/pilot_expansion_review_decision_YYYY-MM-DD.md`. It is advisory only; it does not approve controlled expansion, add workflows, enable delivery, or bypass governance.
 
+## Pilot Expansion Decision Owner Confirmation Link v0.1
+
+The expansion review decision artifact now links to the original pilot start confirmation state inherited through expansion prep.
+
+This keeps the advisory expansion decision tied to the same private pilot start packet before any future controlled expansion approval. The expansion decision report and dashboard page show the linked confirmation status, report path, and recommendation detail.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.

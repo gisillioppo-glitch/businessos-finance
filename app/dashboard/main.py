@@ -2957,6 +2957,9 @@ def load_pilot_expansion_review_decision_status():
             "pilot_owner": "Not assigned",
             "primary_workflow": "Not selected",
             "continuation_scope": "unknown",
+            "start_confirmation_status": "missing",
+            "start_confirmation_report": "not_available",
+            "start_confirmation_detail": "No start confirmation detail recorded.",
             "expansion_prep_status": "missing",
             "review_recommendation": "missing",
             "expansion_status": "unknown",
@@ -3034,6 +3037,9 @@ def load_pilot_expansion_review_decision_status():
     pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
     primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
     continuation_scope_match = re.search(r"Continuation scope:\s*([a-z_]+)", content)
+    start_confirmation_status_match = re.search(r"Start confirmation status:\s*([a-z_]+)", content)
+    start_confirmation_report_match = re.search(r"Start confirmation report:\s*(.+)", content)
+    start_confirmation_detail_match = re.search(r"Start confirmation detail:\s*(.+)", content)
     expansion_prep_status_match = re.search(r"Expansion prep status:\s*([a-z_]+)", content)
     review_recommendation_match = re.search(r"Review recommendation:\s*([a-z_]+)", content)
     expansion_status_match = re.search(r"Expansion status:\s*([a-z_]+)", content)
@@ -3052,6 +3058,9 @@ def load_pilot_expansion_review_decision_status():
         "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
         "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
         "continuation_scope": continuation_scope_match.group(1) if continuation_scope_match else "unknown",
+        "start_confirmation_status": start_confirmation_status_match.group(1) if start_confirmation_status_match else "unknown",
+        "start_confirmation_report": start_confirmation_report_match.group(1).strip() if start_confirmation_report_match else "not_available",
+        "start_confirmation_detail": start_confirmation_detail_match.group(1).strip() if start_confirmation_detail_match else "No start confirmation detail recorded.",
         "expansion_prep_status": expansion_prep_status_match.group(1) if expansion_prep_status_match else "unknown",
         "review_recommendation": review_recommendation_match.group(1) if review_recommendation_match else "unknown",
         "expansion_status": expansion_status_match.group(1) if expansion_status_match else "unknown",
@@ -6420,8 +6429,24 @@ def render_module_page(page, data):
             render_brief_item(expansion["pilot_owner"], "Pilot owner")
             render_brief_item(expansion["primary_workflow"], "Primary workflow")
             render_brief_item(expansion["continuation_scope"].replace("_", " ").title(), "Continuation scope")
+            render_brief_item(expansion["start_confirmation_status"].replace("_", " ").title(), "Linked start confirmation")
+            render_brief_item(expansion["start_confirmation_report"], "Start confirmation artifact")
             render_brief_item(expansion["expansion_prep_status"].replace("_", " ").title(), "Expansion prep status")
             render_brief_item(expansion["review_recommendation"].replace("_", " ").title(), "Review recommendation")
+            render_panel_end()
+
+            render_panel_start("Start Confirmation Link")
+            confirmation_class = {
+                "confirmed_ready_for_day_1": "green",
+                "requires_owner_confirmation": "gold",
+                "blocked": "red",
+                "missing": "red",
+            }.get(expansion["start_confirmation_status"], "gold")
+            render_status_row(
+                expansion["start_confirmation_status"].replace("_", " ").title(),
+                expansion["start_confirmation_detail"],
+                confirmation_class,
+            )
             render_panel_end()
 
             render_panel_start("Approval Boundary")

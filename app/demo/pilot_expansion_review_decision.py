@@ -11,6 +11,7 @@ REPORTS_DIR = ROOT_DIR / "reports"
 EXPANSION_DECISION_COMMANDS = [
     ("Refresh expansion review prep", "python cli.py pilot-expansion-review-prep"),
     ("Refresh Day 5 continuation", "python cli.py pilot-day-5-narrow-continuation"),
+    ("Review pilot start confirmation", "python cli.py private-pilot-start-confirmation"),
     ("Review pilot tracker", "python cli.py private-pilot-tracker"),
     ("Review exit decision", "python cli.py private-pilot-exit-decision"),
     ("Confirm release readiness", "python cli.py release-readiness"),
@@ -26,6 +27,7 @@ DECISION_OPTIONS = [
 
 DECISION_RULES = [
     "If required evidence is missing, pause or deny expansion.",
+    "If start confirmation is blocked, deny expansion until that state is resolved.",
     "If expansion is not approved, maintain narrow pilot or prepare review only.",
     "If owner acknowledgement is pending, do not approve expansion.",
     "If all conditions are met, schedule an expansion review before changing scope.",
@@ -73,6 +75,9 @@ def _decision_status(prep):
     if prep["missing_required_evidence"] > 0:
         return "blocked_missing_required_evidence"
 
+    if prep.get("start_confirmation_status") == "blocked":
+        return "blocked_start_confirmation"
+
     if prep["continuation_scope"] != "single_workflow_narrow_pilot":
         return "blocked_scope_not_narrow"
 
@@ -110,6 +115,7 @@ def _decision_rationale(status, prep):
         rationale.append("Required pilot evidence is missing, so expansion cannot proceed.")
 
     rationale.append(f"Continuation scope is {prep['continuation_scope']}.")
+    rationale.append(f"Start confirmation status is {prep.get('start_confirmation_status', 'missing')}.")
     rationale.append(f"Expansion status is {prep['expansion_status']}.")
     rationale.append(f"Pending conditions: {prep['pending_condition_count']}.")
 
@@ -153,6 +159,9 @@ def generate_pilot_expansion_review_decision(conn=None):
         "pilot_owner": prep["pilot_owner"],
         "primary_workflow": prep["primary_workflow"],
         "continuation_scope": prep["continuation_scope"],
+        "start_confirmation_status": prep.get("start_confirmation_status", "missing"),
+        "start_confirmation_report": prep.get("start_confirmation_report", "not_available"),
+        "start_confirmation_detail": prep.get("start_confirmation_detail", "No start confirmation detail recorded."),
         "expansion_prep_status": prep["expansion_prep_status"],
         "review_recommendation": prep["review_recommendation"],
         "expansion_status": prep["expansion_status"],
@@ -187,6 +196,9 @@ Recommended decision: {result['recommended_decision']}
 Pilot owner: {result['pilot_owner']}
 Primary workflow: {result['primary_workflow']}
 Continuation scope: {result['continuation_scope']}
+Start confirmation status: {result['start_confirmation_status']}
+Start confirmation report: {result['start_confirmation_report']}
+Start confirmation detail: {result['start_confirmation_detail']}
 Expansion prep status: {result['expansion_prep_status']}
 Review recommendation: {result['review_recommendation']}
 Expansion status: {result['expansion_status']}
@@ -254,6 +266,7 @@ def print_pilot_expansion_review_decision(conn=None):
     print(f"Pilot owner: {result['pilot_owner']}")
     print(f"Primary workflow: {result['primary_workflow']}")
     print(f"Continuation scope: {result['continuation_scope']}")
+    print(f"Start confirmation status: {result['start_confirmation_status']}")
     print(f"Expansion prep status: {result['expansion_prep_status']}")
     print(f"Expansion status: {result['expansion_status']}")
     print(f"Pending conditions: {result['pending_condition_count']}")
