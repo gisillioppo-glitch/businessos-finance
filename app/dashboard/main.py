@@ -405,6 +405,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Controlled expansion approval request draft is visible but does not create a request.",
     },
     {
+        "page": "Approval Request",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared approval request creation candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Controlled expansion approval request is visible but not actionable from dashboard.",
+    },
+    {
         "page": "People",
         "primary_boundary": "OS Core candidate",
         "secondary_boundary": "BusinessOS internal roles",
@@ -3581,6 +3590,118 @@ def load_pilot_expansion_approval_request_draft_status():
     }
 
 
+def load_pilot_expansion_approval_request_creation_status():
+    report_path = get_latest_report_path("pilot_expansion_approval_request_creation")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "creation_status": "missing",
+            "approval_request_id": "None",
+            "approval_request_status": "not_created",
+            "approval_request_created": False,
+            "request_title": "Not created",
+            "approval_type": "missing",
+            "priority": "missing",
+            "requester_email": "Not assigned",
+            "requester_role": "Not assigned",
+            "approver_role": "Not assigned",
+            "source_module": "missing",
+            "source_reference_id": "missing",
+            "draft_status": "missing",
+            "approval_gate_status": "missing",
+            "recommended_gate_decision": "missing",
+            "pending_conditions_count": 0,
+            "request_description": "No approval request creation artifact generated yet.",
+            "pending_conditions": [],
+            "commands": [],
+            "boundaries": [],
+            "operator_note": "No pilot expansion approval request creation artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    request_description = []
+    pending_conditions = []
+    commands = []
+    boundaries = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Request Description" and stripped:
+            request_description.append(stripped)
+
+        elif section == "Pending Conditions" and stripped.startswith("- "):
+            pending_conditions.append(stripped[2:])
+
+        elif section == "Creation Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    creation_status_match = re.search(r"Creation status:\s*([a-z_]+)", content)
+    approval_id_match = re.search(r"Approval request id:\s*(.+)", content)
+    approval_status_match = re.search(r"Approval request status:\s*([a-z_]+)", content)
+    created_match = re.search(r"Approval request created this run:\s*(True|False)", content)
+    request_title_match = re.search(r"Request title:\s*(.+)", content)
+    approval_type_match = re.search(r"Approval type:\s*([a-z_]+)", content)
+    priority_match = re.search(r"Priority:\s*([a-z_]+)", content)
+    requester_email_match = re.search(r"Requester email:\s*(.+)", content)
+    requester_role_match = re.search(r"Requester role:\s*(.+)", content)
+    approver_role_match = re.search(r"Approver role:\s*(.+)", content)
+    source_module_match = re.search(r"Source module:\s*([a-z_]+)", content)
+    source_reference_match = re.search(r"Source reference id:\s*(.+)", content)
+    draft_status_match = re.search(r"Draft status:\s*([a-z_]+)", content)
+    gate_status_match = re.search(r"Approval gate status:\s*([a-z_]+)", content)
+    gate_decision_match = re.search(r"Recommended gate decision:\s*([a-z_]+)", content)
+    pending_count_match = re.search(r"Pending conditions:\s*(\d+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "creation_status": creation_status_match.group(1) if creation_status_match else "unknown",
+        "approval_request_id": approval_id_match.group(1).strip() if approval_id_match else "None",
+        "approval_request_status": approval_status_match.group(1) if approval_status_match else "unknown",
+        "approval_request_created": created_match.group(1) == "True" if created_match else False,
+        "request_title": request_title_match.group(1).strip() if request_title_match else "Not created",
+        "approval_type": approval_type_match.group(1) if approval_type_match else "unknown",
+        "priority": priority_match.group(1) if priority_match else "unknown",
+        "requester_email": requester_email_match.group(1).strip() if requester_email_match else "Not assigned",
+        "requester_role": requester_role_match.group(1).strip() if requester_role_match else "Not assigned",
+        "approver_role": approver_role_match.group(1).strip() if approver_role_match else "Not assigned",
+        "source_module": source_module_match.group(1) if source_module_match else "unknown",
+        "source_reference_id": source_reference_match.group(1).strip() if source_reference_match else "unknown",
+        "draft_status": draft_status_match.group(1) if draft_status_match else "unknown",
+        "approval_gate_status": gate_status_match.group(1) if gate_status_match else "unknown",
+        "recommended_gate_decision": gate_decision_match.group(1) if gate_decision_match else "unknown",
+        "pending_conditions_count": int(pending_count_match.group(1)) if pending_count_match else len(pending_conditions),
+        "request_description": " ".join(request_description) if request_description else "No request description recorded.",
+        "pending_conditions": pending_conditions,
+        "commands": commands,
+        "boundaries": boundaries,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
+
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -4004,6 +4125,7 @@ def load_dashboard_data():
     pilot_owner_confirmation_chain_status = load_pilot_owner_confirmation_chain_status()
     pilot_expansion_approval_gate_prep_status = load_pilot_expansion_approval_gate_prep_status()
     pilot_expansion_approval_request_draft_status = load_pilot_expansion_approval_request_draft_status()
+    pilot_expansion_approval_request_creation_status = load_pilot_expansion_approval_request_creation_status()
     dashboard_boundary_index = load_dashboard_boundary_index()
 
     return {
@@ -4091,6 +4213,7 @@ def load_dashboard_data():
         "pilot_owner_confirmation_chain_status": pilot_owner_confirmation_chain_status,
         "pilot_expansion_approval_gate_prep_status": pilot_expansion_approval_gate_prep_status,
         "pilot_expansion_approval_request_draft_status": pilot_expansion_approval_request_draft_status,
+        "pilot_expansion_approval_request_creation_status": pilot_expansion_approval_request_creation_status,
     }
 
 
@@ -7181,6 +7304,120 @@ def render_module_page(page, data):
 
         render_panel_start("Operator Note")
         render_brief_item(draft["operator_note"], "Read-only guidance; no approval request creation")
+        render_panel_end()
+    elif page == "Approval Request":
+        request = data["pilot_expansion_approval_request_creation_status"]
+        creation_status = request["creation_status"]
+        creation_class = {
+            "request_created": "green",
+            "request_created_with_conditions": "gold",
+            "request_not_created_blocked": "red",
+            "missing": "red",
+        }.get(creation_status, "gold")
+        approval_class = {
+            "pending": "gold",
+            "approved": "green",
+            "rejected": "red",
+            "cancelled": "red",
+            "not_created": "red",
+        }.get(request["approval_request_status"], "gold")
+        priority_class = {
+            "low": "",
+            "medium": "gold",
+            "high": "red",
+            "critical": "red",
+        }.get(request["priority"], "gold")
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Creation", creation_status.replace("_", " ").title(), "Latest approval request creation", creation_class)
+        with c2:
+            render_metric_card("Request Status", request["approval_request_status"].replace("_", " ").title(), "Governance queue state", approval_class)
+        with c3:
+            render_metric_card("Priority", request["priority"].replace("_", " ").title(), "Approval request priority", priority_class)
+        with c4:
+            render_metric_card("Pending", request["pending_conditions_count"], "Conditions attached", "gold" if request["pending_conditions_count"] else "green")
+        with c5:
+            render_metric_card("Created", "Yes" if request["approval_request_created"] else "Existing", "This run result", "green" if request["approval_request_status"] == "pending" else approval_class)
+
+        render_panel_start("Approval Request Boundary")
+        render_status_row(
+            creation_status.replace("_", " ").title(),
+            "Read-only request evidence; the dashboard does not approve, reject, or execute expansion.",
+            creation_class,
+        )
+        render_status_row(
+            request["approval_request_status"].replace("_", " ").title(),
+            "Formal governance decision remains in the approval flow",
+            approval_class,
+        )
+        render_status_row(
+            request["approval_request_id"],
+            "Approval request id for traceability",
+            "healthy" if request["approval_request_id"] != "None" else "high",
+        )
+        render_panel_end()
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Request Description")
+            render_brief_item(request["request_description"], "Created request language")
+            render_panel_end()
+
+            render_panel_start("Pending Conditions")
+            if request["pending_conditions"]:
+                for item in request["pending_conditions"]:
+                    render_status_row(item, "Must be resolved or acknowledged before any approval decision", "medium")
+            else:
+                render_status_row("No pending conditions", "Request can proceed through normal approval decision review", "healthy")
+            render_panel_end()
+
+            render_panel_start("Creation Commands")
+            if request["commands"]:
+                for item in request["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No creation commands found", "Generate the approval request creation artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Request Evidence")
+            render_brief_item(
+                request["report_path"] or "Pilot expansion approval request creation not generated",
+                "Latest approval request creation artifact",
+            )
+            render_brief_item(request["request_title"], "Request title")
+            render_brief_item(request["approval_type"].replace("_", " ").title(), "Approval type")
+            render_brief_item(request["requester_role"], "Requester role")
+            render_brief_item(request["requester_email"], "Requester email")
+            render_brief_item(request["approver_role"], "Approver role")
+            render_brief_item(request["source_reference_id"], "Source reference")
+            render_panel_end()
+
+            render_panel_start("Gate Context")
+            render_status_row(
+                request["draft_status"].replace("_", " ").title(),
+                f"Gate status: {request['approval_gate_status'].replace('_', ' ').title()}",
+                "medium" if request["pending_conditions_count"] else "healthy",
+            )
+            render_status_row(
+                request["recommended_gate_decision"].replace("_", " ").title(),
+                "Recommended gate decision remains advisory until approval is resolved",
+                "medium",
+            )
+            render_panel_end()
+
+            render_panel_start("Protected Boundaries")
+            if request["boundaries"]:
+                for boundary in request["boundaries"]:
+                    render_status_row(boundary, "Approval request creation boundary", "medium")
+            else:
+                render_status_row("No boundaries found", "Generate the approval request creation artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(request["operator_note"], "Read-only guidance; no approval decision execution")
         render_panel_end()
     elif page == "Demo Readiness":
         demo = data["private_demo_dry_run_status"]

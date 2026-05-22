@@ -2072,6 +2072,37 @@ docs/pilot-expansion-approval-request-creation-v0.1-status.md
 
 This command creates a pending approval request only. It does not approve controlled expansion, add workflows, enable delivery, change approval status automatically, or bypass governance.
 
+## Dashboard Pilot Expansion Approval Request Page v0.1
+
+The private dashboard now includes a read-only `Approval Request` page.
+
+It reads the latest `reports/pilot_expansion_approval_request_creation_YYYY-MM-DD.md` artifact and shows:
+
+- creation status
+- approval request status
+- approval request id
+- priority and approval type
+- pending conditions
+- request description
+- request evidence
+- creation commands
+- approval gate context
+- protected boundaries
+
+Documentation:
+
+```text
+docs/dashboard-pilot-expansion-approval-request-page-v0.1-status.md
+```
+
+Generate the backing artifact with:
+
+```bash
+python cli.py pilot-expansion-approval-request-creation
+```
+
+The dashboard page is visual only. It does not approve, reject, execute controlled expansion, add workflows, enable delivery, regenerate request artifacts, or bypass governance.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.

@@ -48,6 +48,7 @@ ALLOWED_ROLES = {
         "Confirmation Chain",
         "Approval Gate",
         "Approval Draft",
+        "Approval Request",
         "People",
     ],
     "executive": [
@@ -92,6 +93,7 @@ ALLOWED_ROLES = {
         "Confirmation Chain",
         "Approval Gate",
         "Approval Draft",
+        "Approval Request",
         "People",
     ],
     "viewer": [
@@ -136,6 +138,7 @@ ALLOWED_ROLES = {
         "Confirmation Chain",
         "Approval Gate",
         "Approval Draft",
+        "Approval Request",
         "People",
     ],
 }

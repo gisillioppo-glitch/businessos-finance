@@ -7,7 +7,7 @@ Date: 2026-05-22
 Creation status: request_created_with_conditions
 Approval request id: c8d96aa8-4354-433d-a123-e25a71a9febf
 Approval request status: pending
-Approval request created this run: True
+Approval request created this run: False
 Request title: Approve controlled pilot expansion
 Approval type: decision
 Priority: high
@@ -51,4 +51,4 @@ Request executive decision approval for a controlled pilot expansion review. Gat
 
 ## Operator Note
 
-Formal pending approval request was created for executive review. The request remains pending until an authorized governance action changes its status.
+Existing formal pending approval request was reused. The request remains pending until an authorized governance action changes its status.
