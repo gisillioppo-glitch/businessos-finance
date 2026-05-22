@@ -4,10 +4,10 @@ Date: 2026-05-21
 
 ## Integrity Summary
 
-Overall status: warning
+Overall status: passed
 Total checks: 59
-Passed checks: 58
-Warning checks: 1
+Passed checks: 59
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -72,4 +72,4 @@ Failed checks: 0
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-21.md | date: 2026-05-21 | stale areas: 0 | missing areas: 0 |
 | Boundary classification coverage | passed | 119/119 status docs covered |
-| Git working tree | warning | M README.md; M app/dashboard/main.py; M app/security/access_control.py; M docs/boundary-classification-coverage-index-v0.1-status.md; ?? docs/dashboard-pilot-owner-confirmation-chain-page-v0.1-status.md |
+| Git working tree | passed | clean except known local artifacts |
