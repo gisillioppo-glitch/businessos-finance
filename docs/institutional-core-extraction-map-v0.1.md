@@ -343,16 +343,41 @@ Current role:
 - release readiness
 - system integrity
 - runtime stability
+- scheduled daily close status visibility
 
 Future OS Core role:
 
 - shared validation framework
 - branch-specific readiness check registry
 - quick/standard/full validation profiles
+- controlled recurring job status model
+- public/private runtime boundary checks
+- branch-neutral local artifact policy
 
 Extraction condition:
 
-- checks must be modular and declarative enough for BusinessOS, EduOS, and Public AI.
+- checks must be modular and declarative enough for BusinessOS, EduOS, and Public AI
+- required modules, tables, reports, dashboard pages, and public paths must become branch-configurable
+- scheduled jobs must be registered through a generic job registry
+- known local artifacts must be policy-driven
+- smoke profile limits must be configurable per branch
+
+Current readiness:
+
+- system integrity shape: high readiness
+- release readiness shape: high readiness
+- runtime stability shape: high readiness
+- scheduler status visibility: medium readiness
+- BusinessOS runtime specialization: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
+
+Future EduOS analog:
+
+- EduOS module presence checks
+- student/course/teacher table readiness checks
+- school daily close artifact freshness
+- academic evidence packet freshness
+- scheduled academic close or intervention review status
 
 ## BusinessOS-Specific Domain Logic
 

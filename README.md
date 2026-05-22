@@ -72,6 +72,14 @@ docs/os-core-people-security-boundary-readiness-v0.1-status.md
 
 This note classifies institutional identity, user status, access levels, dashboard access control, and private dashboard protection into reusable OS Core candidates, BusinessOS-specific people/security logic, future EduOS people/security analogs, and extraction conditions before any shared OS Core package work.
 
+The first runtime readiness OS Core readiness note is documented in:
+
+```text
+docs/os-core-runtime-readiness-boundary-v0.1-status.md
+```
+
+This note classifies system integrity, release readiness, runtime stability, scheduled job visibility, and smoke profile guardrails into reusable OS Core candidates, BusinessOS-specific runtime checks, future EduOS runtime analogs, and extraction conditions before any shared OS Core package work.
+
 The first reusable feature boundary template is documented in:
 
 ```text
