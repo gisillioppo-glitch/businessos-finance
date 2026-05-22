@@ -4,10 +4,10 @@ Date: 2026-05-22
 
 ## Demo Readiness Summary
 
-Overall status: ready_with_warnings
+Overall status: ready
 Total checks: 15
-Passed checks: 14
-Warning checks: 1
+Passed checks: 15
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -28,4 +28,4 @@ Failed checks: 0
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 125/125 status docs covered |
-| Git working tree | warning | warning | M README.md; M app/dashboard/main.py; M app/readiness/release_readiness.py; M app/security/access_control.py; M reports/pilot_expansion_approval_request_creation_2026-05-22.md; ?? docs/dashboard-pilot-expansion-approval-request-page-v0.1-status.md |
+| Git working tree | passed | critical | clean except known local artifacts |
