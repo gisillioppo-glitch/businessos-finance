@@ -764,7 +764,7 @@ Extraction condition:
 2. Avoid opening EduOS implementation until BusinessOS core patterns are stable.
 3. Add branch-aware configuration only when a second branch is ready to consume it.
 4. Keep documenting shared patterns before extracting code.
-5. Design OS Platform as a parent view after BusinessOS hardening and before EduOS implementation.
+5. Use the OS Platform Map before opening EduOS implementation.
 
 ## Immediate Follow-Up Blocks
 
@@ -772,8 +772,7 @@ Recommended sequence:
 
 ```text
 BusinessOS Module Stability Matrix v0.1
-OS Platform Map v0.1
-Public AI Surface Boundary v0.1
+EduOS Opening Readiness Checklist v0.1
 EduOS Concept Architecture v0.1
 ```
 

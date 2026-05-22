@@ -112,6 +112,14 @@ docs/os-core-public-ai-boundary-readiness-v0.1-status.md
 
 This note classifies what future public AI surfaces may explain, collect, route, and summarize while keeping private runtime, reports, approvals, dashboard, secrets, and workflow mutation outside the public boundary.
 
+The first OS Platform map is documented in:
+
+```text
+docs/os-platform-map-v0.1.md
+```
+
+This map defines the future parent architecture above BusinessOS, future EduOS, Public AI, OS Core candidates, branch-specific domain adapters, and extraction guardrails before any OS Platform runtime or EduOS implementation is opened.
+
 The first reusable feature boundary template is documented in:
 
 ```text
