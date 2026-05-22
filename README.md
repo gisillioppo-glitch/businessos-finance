@@ -1145,6 +1145,33 @@ Current capabilities:
 - Add a dedicated private dashboard Approvals page.
 - Validate approval decisions through smoke test.
 
+## Approval Demo Protected Request Guard v0.1
+
+Generic demo approval commands now skip protected pilot expansion approval requests.
+
+Protected source modules:
+
+```text
+pilot_expansion
+```
+
+This keeps:
+
+```bash
+python cli.py approval-approve
+python cli.py approval-reject
+```
+
+available for demo-safe pending approvals while preventing accidental approval or rejection of controlled pilot expansion requests.
+
+Documentation:
+
+```text
+docs/approval-demo-protected-request-guard-v0.1-status.md
+```
+
+This guard does not approve controlled expansion, reject controlled expansion, add workflows, enable delivery, or bypass governance.
+
 ## Approval Decision Report MVP v0.3
 
 BusinessOS can now export approval decisions as a Markdown governance record.

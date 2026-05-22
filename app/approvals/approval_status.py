@@ -3,6 +3,7 @@ from app.approvals.schema import create_approval_requests_table
 
 
 VALID_APPROVAL_STATUSES = {"pending", "approved", "rejected", "cancelled"}
+DEMO_PROTECTED_SOURCE_MODULES = {"pilot_expansion"}
 
 
 def update_approval_request_status(conn, approval_id, new_status, justification=None):
@@ -63,12 +64,17 @@ def update_approval_request_status(conn, approval_id, new_status, justification=
 
 def get_first_pending_approval_request(conn):
     create_approval_requests_table(conn)
+    protected_placeholders = ", ".join("?" for _ in DEMO_PROTECTED_SOURCE_MODULES)
 
     return conn.execute(
-        """
+        f"""
         SELECT id, title
         FROM approval_requests
         WHERE status = 'pending'
+          AND (
+              source_module IS NULL
+              OR source_module NOT IN ({protected_placeholders})
+          )
         ORDER BY
             CASE priority
                 WHEN 'critical' THEN 1
@@ -79,7 +85,8 @@ def get_first_pending_approval_request(conn):
             END,
             created_at ASC
         LIMIT 1
-        """
+        """,
+        tuple(DEMO_PROTECTED_SOURCE_MODULES),
     ).fetchone()
 
 
