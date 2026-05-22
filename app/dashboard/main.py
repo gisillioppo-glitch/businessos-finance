@@ -387,6 +387,15 @@ DASHBOARD_BOUNDARY_INDEX = [
         "note": "Owner confirmation chain visibility is advisory and read-only.",
     },
     {
+        "page": "Approval Gate",
+        "primary_boundary": "BusinessOS-specific",
+        "secondary_boundary": "Shared approval-gated pilot expansion candidate",
+        "private_data": "sanitized only",
+        "public_surface": "no",
+        "core_candidate": "partial",
+        "note": "Controlled expansion approval gate prep is visible but not executable.",
+    },
+    {
         "page": "People",
         "primary_boundary": "OS Core candidate",
         "secondary_boundary": "BusinessOS internal roles",
@@ -3300,6 +3309,137 @@ def load_pilot_owner_confirmation_chain_status():
     }
 
 
+def load_pilot_expansion_approval_gate_prep_status():
+    report_path = get_latest_report_path("pilot_expansion_approval_gate_prep")
+
+    if not report_path:
+        return {
+            "exists": False,
+            "report_path": None,
+            "date": None,
+            "approval_gate_status": "missing",
+            "recommended_gate_decision": "missing",
+            "decision_status": "missing",
+            "recommended_expansion_decision": "missing",
+            "chain_status": "missing",
+            "artifacts_present": 0,
+            "artifacts_total": 0,
+            "blocked_artifacts": 0,
+            "conditional_confirmation_artifacts": 0,
+            "pending_conditions_count": 0,
+            "pilot_owner": "Not assigned",
+            "primary_workflow": "Not selected",
+            "continuation_scope": "unknown",
+            "expansion_status": "unknown",
+            "delivery_status": "unknown",
+            "missing_required_evidence": 0,
+            "next_action": "Run python cli.py pilot-expansion-approval-gate-prep.",
+            "conditions": [],
+            "pending_conditions": [],
+            "approval_requirements": [],
+            "commands": [],
+            "boundaries": [],
+            "operator_note": "No pilot expansion approval gate prep artifact generated yet.",
+        }
+
+    content = report_path.read_text(encoding="utf-8")
+    section = None
+    conditions = []
+    pending_conditions = []
+    approval_requirements = []
+    commands = []
+    boundaries = []
+    operator_note = []
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("## "):
+            section = stripped.replace("## ", "", 1)
+            continue
+
+        if section == "Approval Conditions":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Condition"):
+                continue
+
+            parts = [part.strip() for part in stripped.strip("|").split("|")]
+            if len(parts) == 3:
+                conditions.append(
+                    {
+                        "condition": parts[0],
+                        "status": parts[1],
+                        "detail": parts[2],
+                    }
+                )
+
+        elif section == "Pending Conditions" and stripped.startswith("- "):
+            pending_conditions.append(stripped[2:])
+
+        elif section == "Approval Requirements" and stripped.startswith("- "):
+            approval_requirements.append(stripped[2:])
+
+        elif section == "Gate Prep Commands":
+            if not stripped.startswith("|") or stripped.startswith("| ---") or stripped.startswith("| Purpose"):
+                continue
+
+            parts = [part.strip().strip("`") for part in stripped.strip("|").split("|")]
+            if len(parts) == 2:
+                commands.append({"purpose": parts[0], "command": parts[1]})
+
+        elif section == "Boundaries" and stripped.startswith("- "):
+            boundaries.append(stripped[2:])
+
+        elif section == "Operator Note" and stripped:
+            operator_note.append(stripped)
+
+    date_match = re.search(r"Date:\s*([0-9-]+)", content)
+    gate_status_match = re.search(r"Approval gate status:\s*([a-z_]+)", content)
+    gate_decision_match = re.search(r"Recommended gate decision:\s*([a-z_]+)", content)
+    decision_status_match = re.search(r"Decision status:\s*([a-z_]+)", content)
+    expansion_decision_match = re.search(r"Recommended expansion decision:\s*([a-z_]+)", content)
+    chain_status_match = re.search(r"Chain status:\s*([a-z_]+)", content)
+    artifacts_match = re.search(r"Artifacts present:\s*(\d+)/(\d+)", content)
+    blocked_artifacts_match = re.search(r"Blocked artifacts:\s*(\d+)", content)
+    conditional_match = re.search(r"Conditional confirmation artifacts:\s*(\d+)", content)
+    pending_count_match = re.search(r"Pending conditions:\s*(\d+)", content)
+    pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
+    primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
+    continuation_scope_match = re.search(r"Continuation scope:\s*([a-z_]+)", content)
+    expansion_status_match = re.search(r"Expansion status:\s*([a-z_]+)", content)
+    delivery_status_match = re.search(r"Delivery status:\s*([a-z_]+)", content)
+    missing_required_match = re.search(r"Missing required evidence:\s*(\d+)", content)
+    next_action_match = re.search(r"Next action:\s*(.+)", content)
+
+    return {
+        "exists": True,
+        "report_path": str(report_path.relative_to(ROOT_DIR)),
+        "date": date_match.group(1) if date_match else None,
+        "approval_gate_status": gate_status_match.group(1) if gate_status_match else "unknown",
+        "recommended_gate_decision": gate_decision_match.group(1) if gate_decision_match else "unknown",
+        "decision_status": decision_status_match.group(1) if decision_status_match else "unknown",
+        "recommended_expansion_decision": expansion_decision_match.group(1) if expansion_decision_match else "unknown",
+        "chain_status": chain_status_match.group(1) if chain_status_match else "unknown",
+        "artifacts_present": int(artifacts_match.group(1)) if artifacts_match else 0,
+        "artifacts_total": int(artifacts_match.group(2)) if artifacts_match else 0,
+        "blocked_artifacts": int(blocked_artifacts_match.group(1)) if blocked_artifacts_match else 0,
+        "conditional_confirmation_artifacts": int(conditional_match.group(1)) if conditional_match else 0,
+        "pending_conditions_count": int(pending_count_match.group(1)) if pending_count_match else len(pending_conditions),
+        "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
+        "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
+        "continuation_scope": continuation_scope_match.group(1) if continuation_scope_match else "unknown",
+        "expansion_status": expansion_status_match.group(1) if expansion_status_match else "unknown",
+        "delivery_status": delivery_status_match.group(1) if delivery_status_match else "unknown",
+        "missing_required_evidence": int(missing_required_match.group(1)) if missing_required_match else 0,
+        "next_action": next_action_match.group(1).strip() if next_action_match else "No next action recorded",
+        "conditions": conditions,
+        "pending_conditions": pending_conditions,
+        "approval_requirements": approval_requirements,
+        "commands": commands,
+        "boundaries": boundaries,
+        "operator_note": " ".join(operator_note) if operator_note else "No operator note recorded.",
+    }
+
+
 def load_scheduled_daily_close_status():
     today = date.today().isoformat()
     current_time_local = datetime.now().strftime("%H:%M")
@@ -3721,6 +3861,7 @@ def load_dashboard_data():
     pilot_expansion_review_prep_status = load_pilot_expansion_review_prep_status()
     pilot_expansion_review_decision_status = load_pilot_expansion_review_decision_status()
     pilot_owner_confirmation_chain_status = load_pilot_owner_confirmation_chain_status()
+    pilot_expansion_approval_gate_prep_status = load_pilot_expansion_approval_gate_prep_status()
     dashboard_boundary_index = load_dashboard_boundary_index()
 
     return {
@@ -3806,6 +3947,7 @@ def load_dashboard_data():
         "pilot_expansion_review_prep_status": pilot_expansion_review_prep_status,
         "pilot_expansion_review_decision_status": pilot_expansion_review_decision_status,
         "pilot_owner_confirmation_chain_status": pilot_owner_confirmation_chain_status,
+        "pilot_expansion_approval_gate_prep_status": pilot_expansion_approval_gate_prep_status,
     }
 
 
@@ -6663,6 +6805,119 @@ def render_module_page(page, data):
 
         render_panel_start("Operator Note")
         render_brief_item(chain["operator_note"], "Read-only guidance before controlled expansion review")
+        render_panel_end()
+    elif page == "Approval Gate":
+        gate = data["pilot_expansion_approval_gate_prep_status"]
+        gate_status = gate["approval_gate_status"]
+        gate_class = {
+            "approval_gate_ready": "green",
+            "approval_gate_ready_with_conditions": "gold",
+            "approval_gate_blocked": "red",
+            "missing": "red",
+        }.get(gate_status, "gold")
+        expansion_class = "green" if gate["expansion_status"] == "approved" else "gold"
+        delivery_class = "green" if gate["delivery_status"] == "approval_gated" else "red"
+
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            render_metric_card("Gate Status", gate_status.replace("_", " ").title(), "Latest approval gate prep", gate_class)
+        with c2:
+            render_metric_card("Gate Decision", gate["recommended_gate_decision"].replace("_", " ").title(), "Advisory only", gate_class)
+        with c3:
+            render_metric_card("Pending", gate["pending_conditions_count"], "Approval conditions", "gold" if gate["pending_conditions_count"] else "green")
+        with c4:
+            render_metric_card("Blocked", gate["blocked_artifacts"], "Chain artifacts", "red" if gate["blocked_artifacts"] else "green")
+        with c5:
+            render_metric_card("Missing Evidence", gate["missing_required_evidence"], "Required evidence", "red" if gate["missing_required_evidence"] else "green")
+
+        render_panel_start("Approval Boundary")
+        render_status_row(
+            gate_status.replace("_", " ").title(),
+            "Read-only gate prep; controlled expansion approval remains a separate future artifact.",
+            gate_class,
+        )
+        render_status_row(
+            gate["expansion_status"].replace("_", " ").title(),
+            f"Delivery status: {gate['delivery_status'].replace('_', ' ').title()}",
+            expansion_class if gate["delivery_status"] == "approval_gated" else delivery_class,
+        )
+        render_status_row(
+            gate["next_action"],
+            "No workflow, delivery, or expansion action is executed from this page",
+            "medium" if gate["pending_conditions_count"] else gate_class,
+        )
+        render_panel_end()
+
+        left, right = st.columns([1.6, 1])
+
+        with left:
+            render_panel_start("Approval Conditions")
+            if gate["conditions"]:
+                status_styles = {
+                    "met": "healthy",
+                    "pending": "medium",
+                    "missing": "high",
+                    "blocked": "high",
+                    "review_required": "medium",
+                }
+                for condition in gate["conditions"]:
+                    render_status_row(
+                        f"{condition['condition']} | {condition['status'].replace('_', ' ').title()}",
+                        condition["detail"],
+                        status_styles.get(condition["status"], "medium"),
+                    )
+            else:
+                render_status_row("No approval conditions found", "Run python cli.py pilot-expansion-approval-gate-prep", "medium")
+            render_panel_end()
+
+            render_panel_start("Approval Requirements")
+            if gate["approval_requirements"]:
+                for item in gate["approval_requirements"]:
+                    render_status_row(item, "Requirement before controlled expansion approval", "medium")
+            else:
+                render_status_row("No approval requirements found", "Generate the approval gate prep artifact", "medium")
+            render_panel_end()
+
+            render_panel_start("Gate Prep Commands")
+            if gate["commands"]:
+                for item in gate["commands"]:
+                    render_status_row(item["purpose"], item["command"], "healthy")
+            else:
+                render_status_row("No gate prep commands found", "Generate the approval gate prep artifact", "medium")
+            render_panel_end()
+
+        with right:
+            render_panel_start("Gate Evidence")
+            render_brief_item(
+                gate["report_path"] or "Pilot expansion approval gate prep not generated",
+                "Latest approval gate prep artifact",
+            )
+            render_brief_item(gate["pilot_owner"], "Pilot owner")
+            render_brief_item(gate["primary_workflow"], "Primary workflow")
+            render_brief_item(gate["decision_status"].replace("_", " ").title(), "Expansion decision status")
+            render_brief_item(gate["recommended_expansion_decision"].replace("_", " ").title(), "Recommended expansion decision")
+            render_brief_item(gate["chain_status"].replace("_", " ").title(), "Owner confirmation chain")
+            render_brief_item(f"{gate['artifacts_present']}/{gate['artifacts_total']}", "Chain artifacts present")
+            render_panel_end()
+
+            render_panel_start("Pending Conditions")
+            if gate["pending_conditions"]:
+                for item in gate["pending_conditions"]:
+                    render_status_row(item, "Must be resolved or acknowledged before approval", "medium")
+            else:
+                render_status_row("No pending conditions", "Gate is ready for separate approval artifact preparation", "healthy")
+            render_panel_end()
+
+            render_panel_start("Protected Boundaries")
+            if gate["boundaries"]:
+                for boundary in gate["boundaries"]:
+                    render_status_row(boundary, "Approval gate prep boundary", "medium")
+            else:
+                render_status_row("No boundaries found", "Generate the approval gate prep artifact", "medium")
+            render_panel_end()
+
+        render_panel_start("Operator Note")
+        render_brief_item(gate["operator_note"], "Read-only guidance; no controlled expansion approval")
         render_panel_end()
     elif page == "Demo Readiness":
         demo = data["private_demo_dry_run_status"]

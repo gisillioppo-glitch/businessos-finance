@@ -1954,6 +1954,37 @@ It shows:
 
 This artifact is preparation only. It does not approve controlled expansion, add workflows, enable delivery, create a formal approval record, or bypass governance.
 
+## Dashboard Pilot Expansion Approval Gate Page v0.1
+
+The private dashboard now includes a read-only `Approval Gate` page.
+
+It reads the latest `reports/pilot_expansion_approval_gate_prep_YYYY-MM-DD.md` artifact and shows:
+
+- approval gate status
+- recommended gate decision
+- pending conditions
+- blocked artifacts
+- missing required evidence
+- approval conditions
+- approval requirements
+- gate prep commands
+- protected boundaries
+- operator note
+
+Documentation:
+
+```text
+docs/dashboard-pilot-expansion-approval-gate-page-v0.1-status.md
+```
+
+Generate the backing artifact with:
+
+```bash
+python cli.py pilot-expansion-approval-gate-prep
+```
+
+The dashboard page is visual only. It does not approve controlled expansion, add workflows, enable delivery, create a formal approval record, regenerate gate artifacts, or bypass governance.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.
