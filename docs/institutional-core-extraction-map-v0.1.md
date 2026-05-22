@@ -495,6 +495,13 @@ Future EduOS analog:
 
 These areas should remain inside BusinessOS unless later generalized carefully.
 
+Domain adapter doctrine:
+
+- OS Core should provide reusable operating patterns.
+- BusinessOS should provide enterprise business domain meaning.
+- EduOS should later provide academic domain meaning.
+- Domain logic should adapt to core patterns, not become core by default.
+
 ### Finance
 
 Includes:
@@ -516,6 +523,8 @@ Potential shared pattern:
 - domain risk rules
 - action generation
 - brief generation
+- neutral rule result schema
+- branch-specific thresholds and wording
 
 ### Operations
 
@@ -529,6 +538,8 @@ Why partially reusable:
 
 - workflow/task concepts are universal
 - actual task types and escalation logic are vertical-specific
+- statuses, owners, and evidence links may become shared patterns
+- task categories and urgency rules must remain branch-specific
 
 Future EduOS analog:
 
@@ -550,6 +561,8 @@ Why partially reusable:
 
 - incident management is universal
 - incident categories and severity rules change by vertical
+- support status lifecycle may become a shared pattern
+- incident language and response criteria must remain branch-specific
 
 Future EduOS analog:
 
@@ -557,6 +570,37 @@ Future EduOS analog:
 - teacher support
 - academic incident
 - safety or conduct incident
+
+### Rules, Actions, and Domain Briefs
+
+Includes:
+
+- financial rule evaluation
+- recommended action lifecycle
+- domain brief generation
+- report export shape
+- command center domain summaries
+
+Why partially reusable:
+
+- rule registries, result schemas, actions, and briefs are reusable shapes
+- source data, thresholds, vocabulary, and risk meaning are vertical-specific
+
+Future EduOS analog:
+
+- academic risk rules
+- intervention recommendations
+- course or student brief generation
+- academic evidence summaries
+- director command center domain summaries
+
+Extraction condition:
+
+- rule inputs must be branch-specific adapters
+- rule outputs must use neutral severity/result structures
+- action statuses must remain generic
+- domain wording must be branch-owned
+- command center must consume neutral summaries rather than hard-coded BusinessOS modules
 
 ## EduOS Future Domain Map
 

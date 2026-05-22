@@ -96,6 +96,14 @@ docs/os-core-demo-pilot-boundary-readiness-v0.1-status.md
 
 This note classifies private demo readiness, demo package/script, pilot intake, pilot plan, owner confirmation, daily pilot rhythm, exit decisions, expansion gates, future EduOS adoption analogs, and extraction conditions before any shared OS Core package work.
 
+The first domain adapter OS Core readiness note is documented in:
+
+```text
+docs/os-core-domain-adapter-boundary-readiness-v0.1-status.md
+```
+
+This note classifies BusinessOS finance, operations, support, rules, actions, briefs, future EduOS domain analogs, and extraction conditions for keeping domain meaning branch-specific while preserving reusable OS patterns.
+
 The first reusable feature boundary template is documented in:
 
 ```text
