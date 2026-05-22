@@ -1889,6 +1889,18 @@ The expansion review decision artifact now links to the original pilot start con
 
 This keeps the advisory expansion decision tied to the same private pilot start packet before any future controlled expansion approval. The expansion decision report and dashboard page show the linked confirmation status, report path, and recommendation detail.
 
+## Pilot Owner Confirmation Chain Index v0.1
+
+BusinessOS can now generate a single confirmation-chain index for the private pilot path.
+
+Run:
+
+```bash
+python cli.py pilot-owner-confirmation-chain
+```
+
+The index reads the latest start confirmation, Day 1 through Day 5 artifacts, expansion prep, and expansion decision artifacts. It summarizes whether the chain is complete, blocked, or ready with conditions. It is evidence only; it does not approve expansion, add workflows, enable delivery, or expose private pilot artifacts.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.

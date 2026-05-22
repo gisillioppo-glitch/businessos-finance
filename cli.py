@@ -57,6 +57,7 @@ from app.demo.pilot_day_4_owner_confirmation import print_pilot_day_4_owner_conf
 from app.demo.pilot_day_5_narrow_continuation import print_pilot_day_5_narrow_continuation
 from app.demo.pilot_expansion_review_prep import print_pilot_expansion_review_prep
 from app.demo.pilot_expansion_review_decision import print_pilot_expansion_review_decision
+from app.demo.pilot_owner_confirmation_chain_index import print_pilot_owner_confirmation_chain_index
 from app.evidence.daily_close import export_daily_close_report
 from app.evidence.daily_close_distribution import export_daily_close_distribution
 from app.evidence.evidence_index import (
@@ -1034,6 +1035,19 @@ def run_scheduled_daily_close_command():
         conn.close()
 
 
+def run_pilot_owner_confirmation_chain_index():
+    conn = create_connection()
+
+    try:
+        print_pilot_owner_confirmation_chain_index(conn)
+
+    except sqlite3.Error as error:
+        print(f"Database error: {error}")
+
+    finally:
+        conn.close()
+
+
 def run_executive_alerts():
     conn = create_connection()
 
@@ -1148,6 +1162,7 @@ def main():
             "pilot-day-5-narrow-continuation",
             "pilot-expansion-review-prep",
             "pilot-expansion-review-decision",
+            "pilot-owner-confirmation-chain",
             "notifications",
             "notification-delivery-approval",
             "secure-email-delivery",
@@ -1258,6 +1273,8 @@ def main():
         run_pilot_expansion_review_prep()
     elif args.command == "pilot-expansion-review-decision":
         run_pilot_expansion_review_decision()
+    elif args.command == "pilot-owner-confirmation-chain":
+        run_pilot_owner_confirmation_chain_index()
     elif args.command == "notifications":
         run_notifications()
     elif args.command == "notification-delivery-approval":
