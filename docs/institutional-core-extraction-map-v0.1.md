@@ -186,6 +186,25 @@ Future OS Core role:
 - shared policy and sensitivity engine
 - branch-specific rule packs
 - escalation and protected mode triggers
+- audit-log based finding detection
+- domain-neutral severity and justification checks
+
+Extraction condition:
+
+- sensitivity rule packs must become branch-configurable
+- source modules and table mappings must become configurable per vertical
+- privileged access levels must become branch-configurable
+- finding types must be domain-neutral with branch-specific labels
+- report language must separate core governance status from vertical content
+
+Current readiness:
+
+- governance findings: high readiness
+- sensitivity rule shape: high readiness
+- rule-pack configurability: medium readiness
+- dashboard visibility: medium readiness
+- BusinessOS governance specialization: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
 
 BusinessOS rule pack examples:
 
@@ -198,6 +217,8 @@ EduOS rule pack examples:
 - grade modification
 - restricted assessment behavior
 - academic integrity event
+- restricted student record access
+- guardian communication policy check
 
 ### Evidence
 
