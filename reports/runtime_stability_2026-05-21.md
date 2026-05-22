@@ -4,15 +4,15 @@ Date: 2026-05-21
 
 ## Runtime Stability Summary
 
-Overall status: runtime_stable
+Overall status: stable_with_runtime_optimization_needed
 Total checks: 8
-Passed checks: 8
-Warning checks: 0
+Passed checks: 7
+Warning checks: 1
 Failed checks: 0
 Smoke command count: 57
 Heavy pilot command count: 0
-Full smoke command count: 70
-Full heavy pilot command count: 13
+Full smoke command count: 71
+Full heavy pilot command count: 14
 
 ## Checks
 
@@ -22,10 +22,10 @@ Full heavy pilot command count: 13
 | Release readiness | passed | reports\release_readiness_2026-05-21.md | status: ready | failed: 0 | warnings: 0 |
 | Daily close artifact | passed | reports\daily_close_2026-05-21.md |
 | Dashboard local response | passed | http://localhost:8501 returned 200 |
-| Git working tree | passed | clean except known local artifacts |
+| Git working tree | warning | M README.md; M app/system/runtime_stability.py; M cli.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/system_integrity_2026-05-21.md; M scripts/smoke_test.py; ?? app/demo/pilot_expansion_approval_request_draft.py; ?? docs/pilot-expansion-approval-request-draft-v0.1-status.md; ?? reports/pilot_expansion_approval_request_draft_2026-05-21.md |
 | Standard smoke profile size | passed | 57 command(s) in standard profile | limit: 60 |
 | Default heavy pilot command chain | passed | 0 heavy pilot command(s) in standard profile |
-| Full smoke profile reserve | passed | 13 heavy pilot command(s) reserved for full profile |
+| Full smoke profile reserve | passed | 14 heavy pilot command(s) reserved for full profile |
 
 ## Heavy Pilot Commands
 
@@ -48,6 +48,7 @@ No heavy pilot commands detected.
 | `python cli.py pilot-expansion-review-prep` | heavy |
 | `python cli.py pilot-expansion-review-decision` | heavy |
 | `python cli.py pilot-expansion-approval-gate-prep` | heavy |
+| `python cli.py pilot-expansion-approval-request-draft` | heavy |
 
 ## Recommendations
 

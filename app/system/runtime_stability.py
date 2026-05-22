@@ -32,6 +32,7 @@ HEAVY_RUNTIME_COMMANDS = {
     "python cli.py pilot-expansion-review-prep",
     "python cli.py pilot-expansion-review-decision",
     "python cli.py pilot-expansion-approval-gate-prep",
+    "python cli.py pilot-expansion-approval-request-draft",
 }
 
 RUNTIME_RECOMMENDATIONS = [

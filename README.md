@@ -1985,6 +1985,32 @@ python cli.py pilot-expansion-approval-gate-prep
 
 The dashboard page is visual only. It does not approve controlled expansion, add workflows, enable delivery, create a formal approval record, regenerate gate artifacts, or bypass governance.
 
+## Pilot Expansion Approval Request Draft v0.1
+
+BusinessOS can now prepare a formal approval request draft for controlled pilot expansion.
+
+Run:
+
+```bash
+python cli.py pilot-expansion-approval-request-draft
+```
+
+The draft reads the latest approval gate prep context and exports `reports/pilot_expansion_approval_request_draft_YYYY-MM-DD.md`.
+
+It includes:
+
+- draft status
+- request title and description
+- approval type and priority
+- requester and approver roles
+- approval gate status
+- pending conditions
+- approval conditions
+- draft commands
+- protected boundaries
+
+This artifact is draft-only. It does not create a database approval request, approve controlled expansion, add workflows, enable delivery, or bypass governance.
+
 ## Dashboard Pilot Expansion Prep Page v0.1
 
 The private dashboard now includes a read-only `Expansion Prep` page.
