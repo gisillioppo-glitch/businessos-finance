@@ -28,4 +28,4 @@ Failed checks: 0
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 122/122 status docs covered |
-| Git working tree | warning | warning | M README.md; M app/system/runtime_stability.py; M cli.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/runtime_stability_2026-05-21.md; M reports/system_integrity_2026-05-21.md; M scripts/smoke_test.py; ?? app/demo/pilot_expansion_approval_request_draft.py; ?? docs/pilot-expansion-approval-request-draft-v0.1-status.md; ?? reports/pilot_expansion_approval_request_draft_2026-05-21.md |
+| Git working tree | warning | warning | M reports/system_integrity_2026-05-21.md |
