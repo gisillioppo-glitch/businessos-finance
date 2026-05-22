@@ -141,16 +141,37 @@ Current role:
 - handles pending, approved, rejected, and cancelled approval requests
 - supports approval reports and briefings
 - integrates with notification delivery approval
+- protects controlled pilot expansion requests from generic demo approval commands
 
 Future OS Core role:
 
 - shared approval-gated execution model
 - sensitive action approval workflow
 - justification and rationale tracking
+- protected request source policies for demo-safe and automation-safe operation
 
 Extraction condition:
 
-- approval types must become configurable per branch.
+- approval types must become configurable per branch
+- protected source modules must become policy-driven rather than hard-coded
+- role labels must become branch-configurable
+- dashboard and report language must separate core approval status from vertical context
+
+Current readiness:
+
+- lifecycle primitive: high readiness
+- request creation and deduplication: high readiness
+- generic dashboard visibility: medium readiness
+- BusinessOS pilot expansion specialization: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
+
+Future EduOS analog:
+
+- academic policy exceptions
+- grade or assessment change approvals
+- restricted student record access
+- intervention plan approvals
+- guardian or director acknowledgement
 
 ### Governance
 
@@ -433,4 +454,3 @@ EduOS Concept Architecture v0.1
 ## Operator Note
 
 This map is architectural. It does not move code, create EduOS, or split repositories. It defines what BusinessOS is teaching us about the reusable OS pattern.
-

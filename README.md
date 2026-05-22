@@ -32,6 +32,14 @@ docs/os-core-boundary-checklist-v0.1.md
 
 This checklist should be used before adding new features or moving logic toward OS Core, BusinessOS-specific scope, future EduOS scope, or the Public AI boundary.
 
+The first approval-specific OS Core readiness note is documented in:
+
+```text
+docs/os-core-approval-boundary-readiness-v0.1-status.md
+```
+
+This note classifies the approval lifecycle into reusable OS Core candidates, BusinessOS-specific pilot expansion approval logic, future EduOS approval analogs, and extraction conditions before any shared OS Core package work.
+
 The first reusable feature boundary template is documented in:
 
 ```text
