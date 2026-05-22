@@ -40,6 +40,14 @@ docs/os-core-approval-boundary-readiness-v0.1-status.md
 
 This note classifies the approval lifecycle into reusable OS Core candidates, BusinessOS-specific pilot expansion approval logic, future EduOS approval analogs, and extraction conditions before any shared OS Core package work.
 
+The first notification-specific OS Core readiness note is documented in:
+
+```text
+docs/os-core-notification-boundary-readiness-v0.1-status.md
+```
+
+This note classifies notification outbox, delivery approval, and secure email delivery into reusable OS Core candidates, BusinessOS-specific daily close notification logic, future EduOS notification analogs, and extraction conditions before any shared OS Core package work.
+
 The first reusable feature boundary template is documented in:
 
 ```text

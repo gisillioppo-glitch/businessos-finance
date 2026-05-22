@@ -232,10 +232,33 @@ Future OS Core role:
 - shared internal notification queue
 - external delivery approval gate
 - delivery mode policy
+- dry-run and disabled delivery safety modes
+- branch-neutral delivery status reporting
 
 Extraction condition:
 
-- real delivery adapters must remain credential-protected and approval-gated.
+- real delivery adapters must remain credential-protected and approval-gated
+- recipient roles and departments must become branch-configurable
+- message templates must be separated from delivery mechanics
+- channel policy must be configurable per vertical
+- report language must separate core delivery status from vertical content
+
+Current readiness:
+
+- outbox lifecycle: high readiness
+- delivery approval gate: high readiness
+- secure email adapter: medium readiness
+- dashboard visibility: medium readiness
+- BusinessOS daily close specialization: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
+
+Future EduOS analog:
+
+- director daily school close distribution
+- teacher intervention notifications
+- guardian communication approvals
+- assessment or grade-change approval notices
+- academic risk escalation notifications
 
 ### Readiness and System
 
