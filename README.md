@@ -64,6 +64,14 @@ docs/os-core-governance-boundary-readiness-v0.1-status.md
 
 This note classifies governance findings, sensitivity rules, audit review, and policy-control behavior into reusable OS Core candidates, BusinessOS-specific governance logic, future EduOS governance analogs, and extraction conditions before any shared OS Core package work.
 
+The first people/security OS Core readiness note is documented in:
+
+```text
+docs/os-core-people-security-boundary-readiness-v0.1-status.md
+```
+
+This note classifies institutional identity, user status, access levels, dashboard access control, and private dashboard protection into reusable OS Core candidates, BusinessOS-specific people/security logic, future EduOS people/security analogs, and extraction conditions before any shared OS Core package work.
+
 The first reusable feature boundary template is documented in:
 
 ```text

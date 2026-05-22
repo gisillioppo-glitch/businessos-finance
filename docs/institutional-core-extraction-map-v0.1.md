@@ -108,10 +108,23 @@ Future OS Core role:
 - access boundaries per OS branch
 - protected mode foundation
 - public/private route separation
+- branch-specific dashboard page allowlists
+- environment-protected authentication settings
 
 Extraction condition:
 
-- roles must be generalized beyond BusinessOS labels.
+- roles must be generalized beyond BusinessOS labels
+- dashboard page access lists must become configuration-driven
+- authentication settings must remain environment-protected
+- public/private route rules must be branch-neutral
+
+Current readiness:
+
+- login boundary: medium readiness
+- dashboard allowlist shape: medium readiness
+- public/private separation: high readiness
+- BusinessOS page specialization: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
 
 ### People
 
@@ -125,6 +138,24 @@ Future OS Core role:
 - shared institutional identity layer
 - branch-specific role extensions
 - access-level enforcement
+- user status lifecycle
+- hierarchy or manager relationship support
+- duplicate identity protection
+
+Extraction condition:
+
+- role labels must become branch-configurable
+- department or group labels must become branch-configurable
+- access levels must map to branch-specific role policies
+- identity schema must separate core user fields from vertical profile fields
+
+Current readiness:
+
+- identity record: high readiness
+- user status lifecycle: high readiness
+- access level model: medium readiness
+- BusinessOS default users: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
 
 EduOS adaptation:
 
