@@ -11,7 +11,7 @@ Warning checks: 0
 Failed checks: 0
 Smoke command count: 57
 Heavy pilot command count: 0
-Full smoke command count: 71
+Full smoke command count: 72
 Full heavy pilot command count: 14
 
 ## Checks
