@@ -10,6 +10,7 @@ REPORTS_DIR = ROOT_DIR / "reports"
 
 DAY_5_CONTINUATION_COMMANDS = [
     ("Refresh owner confirmation", "python cli.py pilot-day-4-owner-confirmation"),
+    ("Review pilot start confirmation", "python cli.py private-pilot-start-confirmation"),
     ("Run daily close", "python cli.py daily-close"),
     ("Refresh evidence index", "python cli.py evidence-index"),
     ("Review notifications", "python cli.py notifications"),
@@ -19,6 +20,7 @@ DAY_5_CONTINUATION_COMMANDS = [
 
 DAY_5_OPERATING_RHYTHM = [
     "Continue with Executive Daily Close as the only active pilot workflow.",
+    "Confirm the linked start confirmation state before collecting Day 5 repeatability evidence.",
     "Review Day 4 warning acknowledgement before presenting any expansion option.",
     "Observe whether the same evidence package can be repeated without missing required evidence.",
     "Keep notification delivery approval-gated and external sending disabled unless explicitly approved.",
@@ -27,6 +29,7 @@ DAY_5_OPERATING_RHYTHM = [
 
 DAY_5_EVIDENCE_TO_OBSERVE = [
     "Daily Close generated successfully.",
+    "Start confirmation state remains visible in the continuation package.",
     "Evidence Index remains complete.",
     "Notification outbox remains valid.",
     "Release Readiness remains failed-check free.",
@@ -66,6 +69,9 @@ def _format_commands(commands):
 
 def _day_5_status(day_4):
     if day_4["day_4_status"] == "blocked" or day_4["missing_required_evidence"] > 0:
+        return "blocked"
+
+    if day_4.get("start_confirmation_status") == "blocked":
         return "blocked"
 
     if day_4["allowed_continuation"] == "continue_narrow_pilot_only":
@@ -108,6 +114,9 @@ def generate_pilot_day_5_narrow_continuation(conn=None):
         "pilot_owner": day_4["pilot_owner"],
         "primary_workflow": day_4["primary_workflow"],
         "day_4_status": day_4["day_4_status"],
+        "start_confirmation_status": day_4.get("start_confirmation_status", "missing"),
+        "start_confirmation_report": day_4.get("start_confirmation_report", "not_available"),
+        "start_confirmation_detail": day_4.get("start_confirmation_detail", "No start confirmation detail recorded."),
         "owner_confirmation_mode": day_4["owner_confirmation_mode"],
         "allowed_continuation": day_4["allowed_continuation"],
         "expansion_status": day_4["expansion_status"],
@@ -139,6 +148,9 @@ Continuation scope: {result['continuation_scope']}
 Pilot owner: {result['pilot_owner']}
 Primary workflow: {result['primary_workflow']}
 Day 4 status: {result['day_4_status']}
+Start confirmation status: {result['start_confirmation_status']}
+Start confirmation report: {result['start_confirmation_report']}
+Start confirmation detail: {result['start_confirmation_detail']}
 Owner confirmation mode: {result['owner_confirmation_mode']}
 Allowed continuation: {result['allowed_continuation']}
 Expansion status: {result['expansion_status']}
@@ -201,6 +213,7 @@ def print_pilot_day_5_narrow_continuation(conn=None):
     print(f"Pilot owner: {result['pilot_owner']}")
     print(f"Primary workflow: {result['primary_workflow']}")
     print(f"Day 4 status: {result['day_4_status']}")
+    print(f"Start confirmation status: {result['start_confirmation_status']}")
     print(f"Allowed continuation: {result['allowed_continuation']}")
     print(f"Expansion status: {result['expansion_status']}")
     print(f"Delivery status: {result['delivery_status']}")

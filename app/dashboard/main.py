@@ -2842,6 +2842,9 @@ def load_pilot_day_5_narrow_continuation_status():
             "pilot_owner": "Not assigned",
             "primary_workflow": "Not selected",
             "day_4_status": "missing",
+            "start_confirmation_status": "missing",
+            "start_confirmation_report": "not_available",
+            "start_confirmation_detail": "No start confirmation detail recorded.",
             "owner_confirmation_mode": "missing",
             "allowed_continuation": "missing",
             "expansion_status": "unknown",
@@ -2902,6 +2905,9 @@ def load_pilot_day_5_narrow_continuation_status():
     pilot_owner_match = re.search(r"Pilot owner:\s*(.+)", content)
     primary_workflow_match = re.search(r"Primary workflow:\s*(.+)", content)
     day_4_status_match = re.search(r"Day 4 status:\s*([a-z_]+)", content)
+    start_confirmation_status_match = re.search(r"Start confirmation status:\s*([a-z_]+)", content)
+    start_confirmation_report_match = re.search(r"Start confirmation report:\s*(.+)", content)
+    start_confirmation_detail_match = re.search(r"Start confirmation detail:\s*(.+)", content)
     owner_mode_match = re.search(r"Owner confirmation mode:\s*([a-z_]+)", content)
     allowed_continuation_match = re.search(r"Allowed continuation:\s*([a-z_]+)", content)
     expansion_status_match = re.search(r"Expansion status:\s*([a-z_]+)", content)
@@ -2919,6 +2925,9 @@ def load_pilot_day_5_narrow_continuation_status():
         "pilot_owner": pilot_owner_match.group(1).strip() if pilot_owner_match else "Not assigned",
         "primary_workflow": primary_workflow_match.group(1).strip() if primary_workflow_match else "Not selected",
         "day_4_status": day_4_status_match.group(1) if day_4_status_match else "unknown",
+        "start_confirmation_status": start_confirmation_status_match.group(1) if start_confirmation_status_match else "unknown",
+        "start_confirmation_report": start_confirmation_report_match.group(1).strip() if start_confirmation_report_match else "not_available",
+        "start_confirmation_detail": start_confirmation_detail_match.group(1).strip() if start_confirmation_detail_match else "No start confirmation detail recorded.",
         "owner_confirmation_mode": owner_mode_match.group(1) if owner_mode_match else "unknown",
         "allowed_continuation": allowed_continuation_match.group(1) if allowed_continuation_match else "unknown",
         "expansion_status": expansion_status_match.group(1) if expansion_status_match else "unknown",
@@ -6127,7 +6136,23 @@ def render_module_page(page, data):
             render_brief_item(day_5["pilot_owner"], "Pilot owner")
             render_brief_item(day_5["primary_workflow"], "Primary workflow")
             render_brief_item(day_5["day_4_status"].replace("_", " ").title(), "Source Day 4 status")
+            render_brief_item(day_5["start_confirmation_status"].replace("_", " ").title(), "Linked start confirmation")
+            render_brief_item(day_5["start_confirmation_report"], "Start confirmation artifact")
             render_brief_item(day_5["allowed_continuation"].replace("_", " ").title(), "Allowed continuation")
+            render_panel_end()
+
+            render_panel_start("Start Confirmation Link")
+            confirmation_class = {
+                "confirmed_ready_for_day_1": "green",
+                "requires_owner_confirmation": "gold",
+                "blocked": "red",
+                "missing": "red",
+            }.get(day_5["start_confirmation_status"], "gold")
+            render_status_row(
+                day_5["start_confirmation_status"].replace("_", " ").title(),
+                day_5["start_confirmation_detail"],
+                confirmation_class,
+            )
             render_panel_end()
 
             render_panel_start("Control Boundary")

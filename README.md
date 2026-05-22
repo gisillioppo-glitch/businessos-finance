@@ -1847,6 +1847,12 @@ python cli.py pilot-day-5-narrow-continuation
 
 The plan reads Day 4 owner confirmation, keeps the pilot constrained to one workflow, keeps expansion marked as `not_approved`, and defines the Day 5 rhythm and evidence to observe before any future expansion review.
 
+## Pilot Day 5 Owner Confirmation Link v0.1
+
+The Day 5 narrow continuation plan now links to the original pilot start confirmation state inherited through Day 4.
+
+This keeps Day 5 repeatability evidence tied to the same private pilot start packet before any later expansion-review preparation. The Day 5 report and dashboard page show the linked confirmation status, report path, and recommendation detail.
+
 ## Pilot Expansion Review Preparation MVP v0.1
 
 BusinessOS can now generate an expansion review preparation package without approving expansion.
