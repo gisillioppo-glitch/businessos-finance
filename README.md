@@ -88,6 +88,14 @@ docs/os-core-dashboard-command-boundary-readiness-v0.1-status.md
 
 This note classifies the private dashboard shell, read-only status page patterns, command center synthesis, role-aware navigation, future EduOS dashboard analogs, and extraction conditions before any shared OS Core package work.
 
+The first demo/pilot OS Core readiness note is documented in:
+
+```text
+docs/os-core-demo-pilot-boundary-readiness-v0.1-status.md
+```
+
+This note classifies private demo readiness, demo package/script, pilot intake, pilot plan, owner confirmation, daily pilot rhythm, exit decisions, expansion gates, future EduOS adoption analogs, and extraction conditions before any shared OS Core package work.
+
 The first reusable feature boundary template is documented in:
 
 ```text

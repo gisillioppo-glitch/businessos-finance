@@ -430,6 +430,67 @@ Future EduOS analog:
 - school daily close status
 - academic evidence packet status
 
+### Demo and Pilot Methodology
+
+Current role:
+
+- private demo readiness gate
+- private demo package and script
+- demo personalization by audience
+- private demo dry run and final review
+- private pilot intake and plan
+- pilot start gate and owner confirmation
+- daily pilot evidence rhythm
+- pilot exit, expansion preparation, expansion decision, and approval request handoff
+
+Future OS Core role:
+
+- shared readiness-to-demo methodology
+- shared demo package structure
+- shared demo script and audience emphasis pattern
+- shared pilot intake and plan structure
+- shared owner confirmation chain
+- shared pilot evidence rhythm
+- shared exit and expansion decision gates
+- branch-specific workflows, evidence, copy, and owner roles
+
+Extraction condition:
+
+- artifact generators must accept branch-specific configuration
+- audience modes must be branch-configurable
+- demo page lists must come from a branch page registry
+- command lists must come from branch capabilities
+- pilot workflows must be supplied by branch adapters
+- evidence requirements must be policy-driven
+- owner confirmation roles must be branch-specific
+- expansion decisions must remain advisory until approval-gated
+- protected approval requests must remain isolated from demo-safe approval commands
+
+Current readiness:
+
+- demo package pattern readiness: high
+- demo script pattern readiness: high
+- pilot intake and plan readiness: high
+- pilot daily rhythm readiness: medium
+- pilot expansion gate readiness: high
+- BusinessOS demo/pilot specialization: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
+
+Future EduOS analog:
+
+- school readiness-to-demo gate
+- academic demo package
+- director or administrator demo script
+- teacher operations demo script
+- school pilot intake
+- first academic workflow pilot plan
+- school owner confirmation
+- daily academic pilot tracker
+- student-risk evidence review
+- academic intervention pilot exit decision
+- school expansion preparation
+- district or department expansion approval request
+
 ## BusinessOS-Specific Domain Logic
 
 These areas should remain inside BusinessOS unless later generalized carefully.
