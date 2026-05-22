@@ -213,10 +213,34 @@ Future OS Core role:
 - review chain support
 - repeatability evidence
 - owner review artifacts
+- expected evidence item registry
+- date-based close and evidence packet generation
 
 Extraction condition:
 
-- evidence item definitions must become configurable by vertical.
+- evidence item definitions must become configurable by vertical
+- close steps must become configuration-driven
+- distribution recipients must become branch-configurable
+- report labels must be separated from evidence mechanics
+- report language must separate core evidence status from vertical content
+
+Current readiness:
+
+- evidence index: high readiness
+- daily close shape: high readiness
+- distribution packet: medium readiness
+- dashboard visibility: medium readiness
+- BusinessOS evidence specialization: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
+
+Future EduOS analog:
+
+- school daily close
+- student progress evidence packet
+- teacher intervention evidence
+- academic risk review packet
+- assessment change evidence
+- guardian communication evidence
 
 ### Notifications
 

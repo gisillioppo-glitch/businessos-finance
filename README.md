@@ -48,6 +48,14 @@ docs/os-core-notification-boundary-readiness-v0.1-status.md
 
 This note classifies notification outbox, delivery approval, and secure email delivery into reusable OS Core candidates, BusinessOS-specific daily close notification logic, future EduOS notification analogs, and extraction conditions before any shared OS Core package work.
 
+The first evidence-specific OS Core readiness note is documented in:
+
+```text
+docs/os-core-evidence-boundary-readiness-v0.1-status.md
+```
+
+This note classifies evidence index, daily close, and distribution packet behavior into reusable OS Core candidates, BusinessOS-specific evidence content, future EduOS evidence analogs, and extraction conditions before any shared OS Core package work.
+
 The first reusable feature boundary template is documented in:
 
 ```text
