@@ -28,4 +28,4 @@ Failed checks: 0
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 121/121 status docs covered |
-| Git working tree | warning | warning | M README.md; M app/dashboard/main.py; M app/security/access_control.py; M docs/boundary-classification-coverage-index-v0.1-status.md; M reports/system_integrity_2026-05-21.md; ?? docs/dashboard-pilot-expansion-approval-gate-page-v0.1-status.md |
+| Git working tree | warning | warning | M reports/system_integrity_2026-05-21.md |
