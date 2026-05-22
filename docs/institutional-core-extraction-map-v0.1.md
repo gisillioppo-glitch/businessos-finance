@@ -680,6 +680,52 @@ Boundary doctrine:
 Public AI routes interest inward; it does not operate the private OS core.
 ```
 
+Public AI may:
+
+- explain BusinessOS or future OS branches at a high level
+- answer public product questions
+- qualify interest using non-sensitive questions
+- collect demo request context
+- route qualified interest to private intake
+- explain public/private boundaries
+- summarize non-sensitive public form responses
+
+Public AI must not:
+
+- access private databases
+- read private reports
+- execute CLI commands
+- approve or reject approval requests
+- mutate workflows
+- trigger notification delivery
+- inspect secrets or credentials
+- impersonate users
+- expose internal evidence packets
+- present private runtime status as public live truth
+
+Future OS Core or OS Platform role:
+
+- public/private route separation
+- public intake schema
+- public lead qualification schema
+- public assistant refusal rules
+- public-to-private handoff packet
+- sensitive data denial policy
+- branch-aware product explanation
+- public artifact allowlist
+- private runtime denylist
+
+Extraction condition:
+
+- public routes must be separate from private runtime routes
+- public assistant permissions must be deny-by-default
+- private file, DB, report, and dashboard access must be impossible from public context
+- public copy must be branch-specific
+- intake schema must be branch-configurable
+- private handoff packets must be sanitized
+- public proof assets must be allowlisted
+- public status claims must be based on approved public artifacts, not live private state
+
 ## Extraction Readiness Levels
 
 | Level | Meaning | Action |

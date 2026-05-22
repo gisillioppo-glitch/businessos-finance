@@ -104,6 +104,14 @@ docs/os-core-domain-adapter-boundary-readiness-v0.1-status.md
 
 This note classifies BusinessOS finance, operations, support, rules, actions, briefs, future EduOS domain analogs, and extraction conditions for keeping domain meaning branch-specific while preserving reusable OS patterns.
 
+The first Public AI OS Core boundary readiness note is documented in:
+
+```text
+docs/os-core-public-ai-boundary-readiness-v0.1-status.md
+```
+
+This note classifies what future public AI surfaces may explain, collect, route, and summarize while keeping private runtime, reports, approvals, dashboard, secrets, and workflow mutation outside the public boundary.
+
 The first reusable feature boundary template is documented in:
 
 ```text
