@@ -379,6 +379,57 @@ Future EduOS analog:
 - academic evidence packet freshness
 - scheduled academic close or intervention review status
 
+### Dashboard and Command Center
+
+Current role:
+
+- protected private dashboard shell
+- role-aware navigation
+- read-only operating views
+- command center executive synthesis
+- dashboard visibility for readiness, integrity, notifications, approvals, evidence, pilot, and demo surfaces
+
+Future OS Core role:
+
+- shared protected dashboard shell
+- branch-configurable page registry
+- role-aware page visibility
+- reusable read-only status page patterns
+- shared executive synthesis layout
+- branch-specific command center adapters
+- public/private UI boundary enforcement
+
+Extraction condition:
+
+- page registry must become branch-configurable
+- role allowlists must be policy-driven or data-driven
+- labels, groups, and page copy must remain branch-specific
+- KPI and status components must accept neutral data objects
+- command center aggregation must accept branch-specific adapters
+- action buttons must remain governance-gated and disabled by default in read-only views
+- report loaders must avoid hard-coded BusinessOS report names in core code
+
+Current readiness:
+
+- dashboard shell readiness: medium
+- command center pattern readiness: medium
+- read-only status page pattern readiness: high
+- role-aware private access readiness: medium
+- BusinessOS page specialization: keep in BusinessOS
+- EduOS implementation: planning only, not inside BusinessOS
+
+Future EduOS analog:
+
+- school dashboard shell
+- academic command center
+- student risk status
+- course progress status
+- teacher workload status
+- guardian communication status
+- intervention approval status
+- school daily close status
+- academic evidence packet status
+
 ## BusinessOS-Specific Domain Logic
 
 These areas should remain inside BusinessOS unless later generalized carefully.

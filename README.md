@@ -80,6 +80,14 @@ docs/os-core-runtime-readiness-boundary-v0.1-status.md
 
 This note classifies system integrity, release readiness, runtime stability, scheduled job visibility, and smoke profile guardrails into reusable OS Core candidates, BusinessOS-specific runtime checks, future EduOS runtime analogs, and extraction conditions before any shared OS Core package work.
 
+The first dashboard/command OS Core readiness note is documented in:
+
+```text
+docs/os-core-dashboard-command-boundary-readiness-v0.1-status.md
+```
+
+This note classifies the private dashboard shell, read-only status page patterns, command center synthesis, role-aware navigation, future EduOS dashboard analogs, and extraction conditions before any shared OS Core package work.
+
 The first reusable feature boundary template is documented in:
 
 ```text
