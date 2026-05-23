@@ -72,4 +72,4 @@ Failed checks: 0
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-23.md | date: 2026-05-23 | stale areas: 0 | missing areas: 0 |
 | Boundary classification coverage | passed | 136/136 status docs covered |
-| Git working tree | warning | M README.md; M docs/eduos-command-center-adapter-sketch-v0.1.md; M docs/eduos-concept-architecture-v0.1.md; M docs/eduos-dashboard-surface-map-v0.1.md; M docs/eduos-governance-boundary-sketch-v0.1.md; M docs/eduos-opening-readiness-checklist-v0.1.md; M docs/institutional-core-extraction-map-v0.1.md; ?? docs/eduos-public-private-boundary-sketch-v0.1.md |
+| Git working tree | warning | M reports/release_readiness_2026-05-23.md; M reports/runtime_stability_2026-05-23.md; M reports/system_integrity_2026-05-23.md |
