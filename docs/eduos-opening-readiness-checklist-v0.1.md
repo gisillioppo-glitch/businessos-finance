@@ -43,6 +43,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS docs-only shell | opened | Separate docs-only shell exists outside BusinessOS with no private artifacts copied. |
 | EduOS academic evidence model | sketched | Academic evidence categories, sensitivity, role visibility, approval boundaries, and lifecycle are conceptually documented. |
 | EduOS implementation readiness gate | blocked_with_clear_path | Implementation remains blocked, but missing role access and contract work are explicit. |
+| EduOS academic role access matrix | sketched | Academic role visibility across sensitivity levels and domains is conceptually documented. |
 | EduOS implementation | not_ready | Implementation would risk copying BusinessOS too directly. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -159,8 +160,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Academic Role Access Matrix v0.1
 EduOS Module Boundary Draft v0.1
+EduOS Data Contract Sketch v0.1
 ```
 
 Purpose:

@@ -214,6 +214,14 @@ docs/eduos-implementation-readiness-gate-v0.1.md
 
 This gate confirms EduOS is ready for structured planning and docs-only shell work, but implementation remains blocked until academic role access and implementation contracts are documented.
 
+The first EduOS academic role access matrix is documented in:
+
+```text
+docs/eduos-academic-role-access-matrix-v0.1.md
+```
+
+This matrix defines conceptual role visibility across academic sensitivity levels and domains without creating enforcement code, permissions middleware, dashboards, database policies, or Public AI behavior.
+
 The first reusable feature boundary template is documented in:
 
 ```text

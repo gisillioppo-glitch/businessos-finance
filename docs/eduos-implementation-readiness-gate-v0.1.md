@@ -38,7 +38,7 @@ EduOS is not yet ready for runtime implementation.
 | EduOS public/private boundary | sketched | Public, private, Public AI, LMS/SIS, and handoff boundaries are documented. |
 | EduOS docs-only shell | opened | Separate shell exists without private artifacts or runtime code. |
 | EduOS academic evidence model | sketched | Evidence categories, packet shape, sensitivity, and lifecycle are documented. |
-| Academic role access matrix | missing | Role-level visibility and access rules are not detailed enough for implementation. |
+| Academic role access matrix | sketched | Role-level visibility and access rules are conceptually documented. |
 | Implementation contracts | missing | No final module, schema, adapter, API, or dashboard contracts exist. |
 | Shared OS Core package | blocked | Shared extraction remains premature until EduOS contracts are clearer. |
 | EduOS runtime | blocked | Runtime implementation must wait for role access and contracts. |
@@ -161,8 +161,8 @@ The project is closer to implementation because the blocker is now explicit: rol
 ## Recommended Next Blocks
 
 ```text
-EduOS Academic Role Access Matrix v0.1
 EduOS Module Boundary Draft v0.1
+EduOS Data Contract Sketch v0.1
 ```
 
 ## Validation

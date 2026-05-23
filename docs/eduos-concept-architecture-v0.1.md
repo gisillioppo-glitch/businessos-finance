@@ -233,14 +233,15 @@ Public/private boundary: sketched
 Docs-only shell: opened
 Academic evidence model: sketched
 Implementation readiness gate: blocked_with_clear_path
+Academic role access matrix: sketched
 Implementation: blocked
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Academic Role Access Matrix v0.1
 EduOS Module Boundary Draft v0.1
+EduOS Data Contract Sketch v0.1
 ```
 
 ## Validation
