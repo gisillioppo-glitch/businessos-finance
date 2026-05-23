@@ -176,6 +176,14 @@ docs/eduos-command-center-adapter-sketch-v0.1.md
 
 This sketch defines future academic command center inputs, health states, recommendation shape, LMS/SIS adapter boundaries, and governance limits without creating EduOS command center implementation.
 
+The first EduOS public/private boundary sketch is documented in:
+
+```text
+docs/eduos-public-private-boundary-sketch-v0.1.md
+```
+
+This sketch defines what future EduOS public surfaces may explain or collect, what must remain private, how Public AI must be constrained, and how public-to-private handoff should work without exposing academic records.
+
 The first reusable feature boundary template is documented in:
 
 ```text

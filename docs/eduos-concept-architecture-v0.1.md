@@ -229,13 +229,13 @@ Domain model: sketched
 Governance model: sketched
 Dashboard registry: mapped
 Command center adapter: sketched
+Public/private boundary: sketched
 Implementation: blocked
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Public Private Boundary Sketch v0.1
 EduOS Docs-Only Shell v0.1
 ```
 

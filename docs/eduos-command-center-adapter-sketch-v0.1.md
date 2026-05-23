@@ -212,7 +212,6 @@ This sketch does not:
 ## Recommended Next Blocks
 
 ```text
-EduOS Public Private Boundary Sketch v0.1
 EduOS Docs-Only Shell v0.1
 ```
 

@@ -39,6 +39,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS dashboard registry | mapped | Private dashboard surface, roles, pages, and read-only boundaries are conceptually mapped. |
 | EduOS governance model | sketched | Student privacy, assessment sensitivity, guardian communication, and approval boundaries are conceptually documented. |
 | EduOS command center adapter | sketched | Academic synthesis inputs, health states, recommendations, and adapter boundaries are conceptually documented. |
+| EduOS public/private boundary | sketched | Public surface, Public AI, private academic data, LMS/SIS, and handoff boundaries are conceptually documented. |
 | EduOS implementation | not_ready | Implementation would risk copying BusinessOS too directly. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -155,7 +156,6 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Public Private Boundary Sketch v0.1
 EduOS Docs-Only Shell v0.1
 ```
 
