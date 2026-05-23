@@ -40,6 +40,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS governance model | sketched | Student privacy, assessment sensitivity, guardian communication, and approval boundaries are conceptually documented. |
 | EduOS command center adapter | sketched | Academic synthesis inputs, health states, recommendations, and adapter boundaries are conceptually documented. |
 | EduOS public/private boundary | sketched | Public surface, Public AI, private academic data, LMS/SIS, and handoff boundaries are conceptually documented. |
+| EduOS docs-only shell | opened | Separate docs-only shell exists outside BusinessOS with no private artifacts copied. |
 | EduOS implementation | not_ready | Implementation would risk copying BusinessOS too directly. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -156,7 +157,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Docs-Only Shell v0.1
+EduOS Academic Evidence Model Sketch v0.1
+EduOS Implementation Readiness Gate v0.1
 ```
 
 Purpose:

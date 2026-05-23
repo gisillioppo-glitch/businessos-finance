@@ -230,13 +230,15 @@ Governance model: sketched
 Dashboard registry: mapped
 Command center adapter: sketched
 Public/private boundary: sketched
+Docs-only shell: opened
 Implementation: blocked
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Docs-Only Shell v0.1
+EduOS Academic Evidence Model Sketch v0.1
+EduOS Implementation Readiness Gate v0.1
 ```
 
 ## Validation

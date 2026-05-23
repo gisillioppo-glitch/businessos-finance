@@ -184,6 +184,14 @@ docs/eduos-public-private-boundary-sketch-v0.1.md
 
 This sketch defines what future EduOS public surfaces may explain or collect, what must remain private, how Public AI must be constrained, and how public-to-private handoff should work without exposing academic records.
 
+The first EduOS docs-only shell status is documented in:
+
+```text
+docs/eduos-docs-only-shell-v0.1-status.md
+```
+
+This status records the separate docs-only EduOS shell at `C:\Users\fabia\OneDrive\Escritorio\eduos-docs-shell`, confirms that no BusinessOS private artifacts were copied, and keeps EduOS implementation closed.
+
 The first reusable feature boundary template is documented in:
 
 ```text
