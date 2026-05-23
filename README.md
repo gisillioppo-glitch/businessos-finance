@@ -198,6 +198,14 @@ Current local shell location after folder organization:
 C:\Users\fabia\OneDrive\Escritorio\OS\eduos-docs-shell
 ```
 
+The first EduOS academic evidence model sketch is documented in:
+
+```text
+docs/eduos-academic-evidence-model-sketch-v0.1.md
+```
+
+This sketch defines future academic evidence categories, packet shape, sensitivity, role visibility, approval boundaries, lifecycle, academic close use, and public/private evidence limits without creating EduOS data or runtime.
+
 The first reusable feature boundary template is documented in:
 
 ```text

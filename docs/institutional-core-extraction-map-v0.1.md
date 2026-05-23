@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Academic Evidence Model Sketch v0.1
 EduOS Implementation Readiness Gate v0.1
+EduOS Academic Role Access Matrix v0.1
 ```
 
 ## Operator Note

@@ -231,14 +231,15 @@ Dashboard registry: mapped
 Command center adapter: sketched
 Public/private boundary: sketched
 Docs-only shell: opened
+Academic evidence model: sketched
 Implementation: blocked
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Academic Evidence Model Sketch v0.1
 EduOS Implementation Readiness Gate v0.1
+EduOS Academic Role Access Matrix v0.1
 ```
 
 ## Validation

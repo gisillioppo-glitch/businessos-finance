@@ -41,6 +41,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS command center adapter | sketched | Academic synthesis inputs, health states, recommendations, and adapter boundaries are conceptually documented. |
 | EduOS public/private boundary | sketched | Public surface, Public AI, private academic data, LMS/SIS, and handoff boundaries are conceptually documented. |
 | EduOS docs-only shell | opened | Separate docs-only shell exists outside BusinessOS with no private artifacts copied. |
+| EduOS academic evidence model | sketched | Academic evidence categories, sensitivity, role visibility, approval boundaries, and lifecycle are conceptually documented. |
 | EduOS implementation | not_ready | Implementation would risk copying BusinessOS too directly. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -50,7 +51,7 @@ Before implementing EduOS code:
 - EduOS concept architecture must be documented.
 - EduOS domain model must be documented separately from BusinessOS.
 - EduOS role model must be documented separately from BusinessOS.
-- Academic evidence requirements must be documented.
+- Academic evidence requirements must be documented separately from BusinessOS evidence.
 - Academic governance and assessment sensitivity rules must be mapped before implementation.
 - EduOS dashboard page registry must be sketched before implementation.
 - EduOS command center adapter shape must be sketched before implementation.
@@ -157,8 +158,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Academic Evidence Model Sketch v0.1
 EduOS Implementation Readiness Gate v0.1
+EduOS Academic Role Access Matrix v0.1
 ```
 
 Purpose:
