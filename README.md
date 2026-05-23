@@ -230,6 +230,14 @@ docs/eduos-module-boundary-draft-v0.1.md
 
 This draft defines proposed future EduOS module ownership, dependency direction, cross-cutting boundaries, adapters, and implementation limits without creating runtime modules, database schema, dashboards, APIs, LMS/SIS adapters, or Public AI behavior.
 
+The first EduOS data contract sketch is documented in:
+
+```text
+docs/eduos-data-contract-sketch-v0.1.md
+```
+
+This sketch defines future neutral contract shapes for EduOS modules, evidence, command center, adapters, and public handoff without creating database schema, APIs, runtime models, sample data, LMS/SIS adapters, or Public AI behavior.
+
 The first reusable feature boundary template is documented in:
 
 ```text

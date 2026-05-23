@@ -235,14 +235,15 @@ Academic evidence model: sketched
 Implementation readiness gate: blocked_with_clear_path
 Academic role access matrix: sketched
 Module boundaries: drafted
+Data contracts: sketched
 Implementation: blocked
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Data Contract Sketch v0.1
 EduOS Dashboard Read-Only Interaction Rules v0.1
+EduOS Non-Sensitive Skeleton Scope v0.1
 ```
 
 ## Validation

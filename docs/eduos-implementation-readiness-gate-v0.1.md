@@ -40,7 +40,8 @@ EduOS is not yet ready for runtime implementation.
 | EduOS academic evidence model | sketched | Evidence categories, packet shape, sensitivity, and lifecycle are documented. |
 | Academic role access matrix | sketched | Role-level visibility and access rules are conceptually documented. |
 | Module boundaries | drafted | Proposed future module ownership and dependency direction are documented. |
-| Implementation contracts | missing | No final schema, adapter, API, or dashboard contracts exist. |
+| Data contracts | sketched | Neutral conceptual contract shapes are documented. |
+| Implementation contracts | missing | No final schema, adapter, API, or dashboard implementation contracts exist. |
 | Shared OS Core package | blocked | Shared extraction remains premature until EduOS contracts are clearer. |
 | EduOS runtime | blocked | Runtime implementation must wait for role access and contracts. |
 
@@ -162,8 +163,8 @@ The project is closer to implementation because the blocker is now explicit: rol
 ## Recommended Next Blocks
 
 ```text
-EduOS Data Contract Sketch v0.1
 EduOS Dashboard Read-Only Interaction Rules v0.1
+EduOS Non-Sensitive Skeleton Scope v0.1
 ```
 
 ## Validation
