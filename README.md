@@ -168,6 +168,14 @@ docs/eduos-dashboard-surface-map-v0.1.md
 
 This map defines future private EduOS dashboard pages, role visibility, read-only boundaries, evidence visibility, and Classroom/LMS/SIS adapter posture without creating dashboard implementation.
 
+The first EduOS command center adapter sketch is documented in:
+
+```text
+docs/eduos-command-center-adapter-sketch-v0.1.md
+```
+
+This sketch defines future academic command center inputs, health states, recommendation shape, LMS/SIS adapter boundaries, and governance limits without creating EduOS command center implementation.
+
 The first reusable feature boundary template is documented in:
 
 ```text

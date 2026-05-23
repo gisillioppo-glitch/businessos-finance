@@ -38,7 +38,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS domain model | sketched | Student/course/teacher/assessment entities are conceptually documented. |
 | EduOS dashboard registry | mapped | Private dashboard surface, roles, pages, and read-only boundaries are conceptually mapped. |
 | EduOS governance model | sketched | Student privacy, assessment sensitivity, guardian communication, and approval boundaries are conceptually documented. |
-| EduOS command center adapter | not_ready | Academic synthesis adapter is not designed yet. |
+| EduOS command center adapter | sketched | Academic synthesis inputs, health states, recommendations, and adapter boundaries are conceptually documented. |
 | EduOS implementation | not_ready | Implementation would risk copying BusinessOS too directly. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -51,7 +51,7 @@ Before implementing EduOS code:
 - Academic evidence requirements must be documented.
 - Academic governance and assessment sensitivity rules must be mapped before implementation.
 - EduOS dashboard page registry must be sketched before implementation.
-- EduOS command center adapter shape must be sketched.
+- EduOS command center adapter shape must be sketched before implementation.
 - Public/private boundary must be restated for EduOS.
 - BusinessOS finance rules must not be copied into EduOS.
 - Shared OS Core extraction must remain deferred until a real shared contract exists.
@@ -155,7 +155,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Command Center Adapter Sketch v0.1
+EduOS Public Private Boundary Sketch v0.1
+EduOS Docs-Only Shell v0.1
 ```
 
 Purpose:
