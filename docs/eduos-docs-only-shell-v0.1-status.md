@@ -13,7 +13,7 @@ This block opens the first visible EduOS project shell as documentation-only wor
 The shell exists outside the BusinessOS private repo as:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\eduos-docs-shell
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-docs-shell
 ```
 
 The shell is not an EduOS implementation repo. It is a planning container that keeps EduOS separate from BusinessOS while avoiding runtime, database, dashboard, AI, or adapter work.
@@ -40,6 +40,8 @@ docs/index.md
 ```
 
 These are docs-only files.
+
+The shell was later organized under the local `OS` folder alongside other OS assets. BusinessOS remains in its active workspace and was not moved during this session.
 
 ## What Was Not Copied
 

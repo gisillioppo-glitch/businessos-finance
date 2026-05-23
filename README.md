@@ -192,6 +192,12 @@ docs/eduos-docs-only-shell-v0.1-status.md
 
 This status records the separate docs-only EduOS shell at `C:\Users\fabia\OneDrive\Escritorio\eduos-docs-shell`, confirms that no BusinessOS private artifacts were copied, and keeps EduOS implementation closed.
 
+Current local shell location after folder organization:
+
+```text
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-docs-shell
+```
+
 The first reusable feature boundary template is documented in:
 
 ```text
