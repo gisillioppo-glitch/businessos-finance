@@ -189,7 +189,6 @@ This sketch does not:
 ## Recommended Next Blocks
 
 ```text
-EduOS Dashboard Surface Map v0.1
 EduOS Command Center Adapter Sketch v0.1
 EduOS Public Private Boundary Sketch v0.1
 ```

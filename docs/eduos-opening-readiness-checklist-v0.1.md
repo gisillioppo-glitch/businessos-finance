@@ -36,7 +36,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | Domain adapter doctrine | ready | BusinessOS-specific logic is separated from reusable patterns. |
 | Shared code extraction | not_ready | No shared package should be created until EduOS contracts are clearer. |
 | EduOS domain model | sketched | Student/course/teacher/assessment entities are conceptually documented. |
-| EduOS dashboard registry | not_ready | Branch page registry pattern is not implemented. |
+| EduOS dashboard registry | mapped | Private dashboard surface, roles, pages, and read-only boundaries are conceptually mapped. |
 | EduOS governance model | sketched | Student privacy, assessment sensitivity, guardian communication, and approval boundaries are conceptually documented. |
 | EduOS command center adapter | not_ready | Academic synthesis adapter is not designed yet. |
 | EduOS implementation | not_ready | Implementation would risk copying BusinessOS too directly. |
@@ -50,7 +50,7 @@ Before implementing EduOS code:
 - EduOS role model must be documented separately from BusinessOS.
 - Academic evidence requirements must be documented.
 - Academic governance and assessment sensitivity rules must be mapped before implementation.
-- EduOS dashboard page registry must be sketched.
+- EduOS dashboard page registry must be sketched before implementation.
 - EduOS command center adapter shape must be sketched.
 - Public/private boundary must be restated for EduOS.
 - BusinessOS finance rules must not be copied into EduOS.
@@ -61,7 +61,6 @@ Before implementing EduOS code:
 The following EduOS-adjacent work is safe now:
 
 - EduOS Concept Architecture v0.1
-- EduOS Dashboard Surface Map v0.1
 - EduOS Public/Private Boundary Sketch v0.1
 - OS Core Contract Drafts v0.1
 
@@ -156,7 +155,7 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Dashboard Surface Map v0.1
+EduOS Command Center Adapter Sketch v0.1
 ```
 
 Purpose:

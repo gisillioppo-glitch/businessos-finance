@@ -771,7 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Dashboard Surface Map v0.1
+EduOS Command Center Adapter Sketch v0.1
+EduOS Public Private Boundary Sketch v0.1
 ```
 
 ## Operator Note

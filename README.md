@@ -160,6 +160,14 @@ docs/eduos-governance-boundary-sketch-v0.1.md
 
 This sketch defines student privacy, assessment sensitivity, guardian communication boundaries, approval candidates, role boundaries, and public/private limits without creating EduOS governance runtime or approval execution.
 
+The first EduOS dashboard surface map is documented in:
+
+```text
+docs/eduos-dashboard-surface-map-v0.1.md
+```
+
+This map defines future private EduOS dashboard pages, role visibility, read-only boundaries, evidence visibility, and Classroom/LMS/SIS adapter posture without creating dashboard implementation.
+
 The first reusable feature boundary template is documented in:
 
 ```text
