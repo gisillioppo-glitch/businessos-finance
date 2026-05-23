@@ -4,17 +4,17 @@ Date: 2026-05-23
 
 ## Demo Readiness Summary
 
-Overall status: blocked
+Overall status: ready_with_warnings
 Total checks: 15
-Passed checks: 13
+Passed checks: 14
 Warning checks: 1
-Failed checks: 1
+Failed checks: 0
 
 ## Checks
 
 | Check | Status | Severity | Detail |
 | --- | --- | --- | --- |
-| System check | failed | critical | reports\system_integrity_2026-05-23.md \| failed checks: 1 |
+| System check | passed | critical | reports\system_integrity_2026-05-23.md \| failed checks: 0 |
 | Deployment boundary check | passed | critical | Public/private boundary passed |
 | Dashboard local response | passed | warning | http://localhost:8501 returned 200 |
 | Landing public files | passed | critical | present |
@@ -28,4 +28,4 @@ Failed checks: 1
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 136/136 status docs covered |
-| Git working tree | warning | warning | ?? reports/approval_decisions_2026-05-23.md; ?? reports/area_review_bundle_2026-05-23.md; ?? reports/area_review_index_2026-05-23.md; ?? reports/command_center_2026-05-23.md; ?? reports/daily_brief_2026-05-23.md; ?? reports/daily_close_2026-05-23.md; ?? reports/daily_close_distribution_2026-05-23.md; ?? reports/executive_alerts_2026-05-23.md; ?? reports/executive_evidence_index_2026-05-23.md; ?? reports/finance_area_review_2026-05-23.md; ?? reports/governance_area_review_2026-05-23.md; ?? reports/governance_brief_2026-05-23.md; ?? reports/operations_area_review_2026-05-23.md; ?? reports/release_readiness_2026-05-23.md; ?? reports/runtime_stability_2026-05-23.md; ?? reports/support_area_review_2026-05-23.md; ?? reports/support_brief_2026-05-23.md; ?? reports/system_integrity_2026-05-23.md |
+| Git working tree | warning | warning | M reports/system_integrity_2026-05-23.md |
