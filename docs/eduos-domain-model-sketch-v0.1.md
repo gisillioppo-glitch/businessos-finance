@@ -165,7 +165,6 @@ This sketch does not:
 ## Recommended Next Blocks
 
 ```text
-EduOS Governance Boundary Sketch v0.1
 EduOS Dashboard Surface Map v0.1
 EduOS Command Center Adapter Sketch v0.1
 ```

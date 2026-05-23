@@ -226,7 +226,7 @@ Before implementation begins:
 ```text
 Concept architecture: ready
 Domain model: sketched
-Governance model: not started
+Governance model: sketched
 Dashboard registry: not started
 Command center adapter: not started
 Implementation: blocked
@@ -235,7 +235,6 @@ Implementation: blocked
 ## Recommended Next Blocks
 
 ```text
-EduOS Governance Boundary Sketch v0.1
 EduOS Dashboard Surface Map v0.1
 EduOS Command Center Adapter Sketch v0.1
 ```

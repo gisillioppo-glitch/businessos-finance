@@ -152,6 +152,14 @@ docs/eduos-domain-model-sketch-v0.1.md
 
 This sketch defines future academic entities, relationships, privacy levels, and BusinessOS analog guardrails without creating EduOS code, database schema, dashboard pages, or runtime behavior.
 
+The first EduOS governance boundary sketch is documented in:
+
+```text
+docs/eduos-governance-boundary-sketch-v0.1.md
+```
+
+This sketch defines student privacy, assessment sensitivity, guardian communication boundaries, approval candidates, role boundaries, and public/private limits without creating EduOS governance runtime or approval execution.
+
 The first reusable feature boundary template is documented in:
 
 ```text
