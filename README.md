@@ -144,6 +144,14 @@ docs/eduos-concept-architecture-v0.1.md
 
 This concept defines EduOS as a future education branch, maps academic modules and BusinessOS analogs, and keeps implementation, runtime, database, dashboard, and public AI surfaces deferred.
 
+The first EduOS domain model sketch is documented in:
+
+```text
+docs/eduos-domain-model-sketch-v0.1.md
+```
+
+This sketch defines future academic entities, relationships, privacy levels, and BusinessOS analog guardrails without creating EduOS code, database schema, dashboard pages, or runtime behavior.
+
 The first reusable feature boundary template is documented in:
 
 ```text

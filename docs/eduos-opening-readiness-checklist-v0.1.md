@@ -35,7 +35,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | Public/private boundary | ready | Public AI and public surface limits are documented. |
 | Domain adapter doctrine | ready | BusinessOS-specific logic is separated from reusable patterns. |
 | Shared code extraction | not_ready | No shared package should be created until EduOS contracts are clearer. |
-| EduOS domain model | not_ready | Student/course/teacher/assessment model is not documented yet. |
+| EduOS domain model | sketched | Student/course/teacher/assessment entities are conceptually documented. |
 | EduOS dashboard registry | not_ready | Branch page registry pattern is not implemented. |
 | EduOS command center adapter | not_ready | Academic synthesis adapter is not designed yet. |
 | EduOS implementation | not_ready | Implementation would risk copying BusinessOS too directly. |
@@ -60,7 +60,6 @@ Before implementing EduOS code:
 The following EduOS-adjacent work is safe now:
 
 - EduOS Concept Architecture v0.1
-- EduOS Domain Model Sketch v0.1
 - EduOS Governance Boundary Sketch v0.1
 - EduOS Dashboard Surface Map v0.1
 - EduOS Public/Private Boundary Sketch v0.1
@@ -157,7 +156,6 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Domain Model Sketch v0.1
 EduOS Governance Boundary Sketch v0.1
 EduOS Dashboard Surface Map v0.1
 ```

@@ -771,7 +771,6 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Domain Model Sketch v0.1
 EduOS Governance Boundary Sketch v0.1
 EduOS Dashboard Surface Map v0.1
 ```
