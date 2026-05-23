@@ -128,6 +128,14 @@ docs/businessos-module-stability-matrix-v0.1.md
 
 This matrix summarizes module stability, integration maturity, OS Core readiness, extraction risk, and EduOS opening implications before any EduOS implementation is opened.
 
+The first EduOS opening readiness checklist is documented in:
+
+```text
+docs/eduos-opening-readiness-checklist-v0.1.md
+```
+
+This checklist confirms that EduOS concept architecture is ready, EduOS implementation is not ready yet, and any future EduOS work must remain separate, guarded, and architecture-first.
+
 The first reusable feature boundary template is documented in:
 
 ```text
