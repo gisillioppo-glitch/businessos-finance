@@ -246,6 +246,14 @@ docs/eduos-dashboard-read-only-interaction-rules-v0.1.md
 
 This sketch defines allowed and blocked future dashboard interactions, evidence tiers, approvals, guardian communications, adapter status, exports, and public boundary rules without creating dashboard code or actions.
 
+The first EduOS non-sensitive skeleton scope is documented in:
+
+```text
+docs/eduos-non-sensitive-skeleton-scope-v0.1.md
+```
+
+This scope defines what the first future EduOS implementation may eventually include, and what remains prohibited, without creating runtime files, database schema, dashboard pages, adapters, Public AI, or data.
+
 The first reusable feature boundary template is documented in:
 
 ```text

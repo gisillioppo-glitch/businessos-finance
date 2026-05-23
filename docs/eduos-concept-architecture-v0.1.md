@@ -237,14 +237,15 @@ Academic role access matrix: sketched
 Module boundaries: drafted
 Data contracts: sketched
 Dashboard read-only interaction rules: sketched
+Non-sensitive skeleton scope: defined
 Implementation: blocked
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Non-Sensitive Skeleton Scope v0.1
 EduOS Implementation Gate Refresh v0.2
+EduOS Skeleton Repository Decision v0.1
 ```
 
 ## Validation

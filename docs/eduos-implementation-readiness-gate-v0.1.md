@@ -42,6 +42,7 @@ EduOS is not yet ready for runtime implementation.
 | Module boundaries | drafted | Proposed future module ownership and dependency direction are documented. |
 | Data contracts | sketched | Neutral conceptual contract shapes are documented. |
 | Dashboard read-only interaction rules | sketched | Future dashboard interactions are documented as read-only and non-mutating. |
+| Non-sensitive skeleton scope | defined | First future implementation scope is narrowed to docs/config/no-op skeleton only. |
 | Implementation contracts | missing | No final schema, adapter, API, or dashboard implementation contracts exist. |
 | Shared OS Core package | blocked | Shared extraction remains premature until EduOS contracts are clearer. |
 | EduOS runtime | blocked | Runtime implementation must wait for role access and contracts. |
@@ -93,10 +94,8 @@ The following remain blocked:
 
 Safe next work:
 
-- EduOS Academic Role Access Matrix v0.1
-- EduOS Module Boundary Draft v0.1
-- EduOS Data Contract Sketch v0.1
-- EduOS Dashboard Read-Only Interaction Rules v0.1
+- EduOS Implementation Gate Refresh v0.2
+- EduOS Skeleton Repository Decision v0.1
 
 These must remain documents only.
 
@@ -164,8 +163,8 @@ The project is closer to implementation because the blocker is now explicit: rol
 ## Recommended Next Blocks
 
 ```text
-EduOS Non-Sensitive Skeleton Scope v0.1
 EduOS Implementation Gate Refresh v0.2
+EduOS Skeleton Repository Decision v0.1
 ```
 
 ## Validation

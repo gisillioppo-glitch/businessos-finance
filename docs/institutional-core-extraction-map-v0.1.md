@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Non-Sensitive Skeleton Scope v0.1
 EduOS Implementation Gate Refresh v0.2
+EduOS Skeleton Repository Decision v0.1
 ```
 
 ## Operator Note
