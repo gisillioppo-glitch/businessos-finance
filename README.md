@@ -206,6 +206,14 @@ docs/eduos-academic-evidence-model-sketch-v0.1.md
 
 This sketch defines future academic evidence categories, packet shape, sensitivity, role visibility, approval boundaries, lifecycle, academic close use, and public/private evidence limits without creating EduOS data or runtime.
 
+The first EduOS implementation readiness gate is documented in:
+
+```text
+docs/eduos-implementation-readiness-gate-v0.1.md
+```
+
+This gate confirms EduOS is ready for structured planning and docs-only shell work, but implementation remains blocked until academic role access and implementation contracts are documented.
+
 The first reusable feature boundary template is documented in:
 
 ```text

@@ -232,14 +232,15 @@ Command center adapter: sketched
 Public/private boundary: sketched
 Docs-only shell: opened
 Academic evidence model: sketched
+Implementation readiness gate: blocked_with_clear_path
 Implementation: blocked
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Implementation Readiness Gate v0.1
 EduOS Academic Role Access Matrix v0.1
+EduOS Module Boundary Draft v0.1
 ```
 
 ## Validation
