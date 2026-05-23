@@ -154,19 +154,19 @@ During EduOS planning:
 - keep landing/public surfaces separate
 - validate BusinessOS after planning blocks
 
-## Recommended Next Block
+## Recommended Next Blocks
 
 ```text
-EduOS Concept Architecture v0.1
+EduOS Domain Model Sketch v0.1
+EduOS Governance Boundary Sketch v0.1
+EduOS Dashboard Surface Map v0.1
 ```
 
 Purpose:
 
-- define EduOS as a separate future branch
-- describe academic modules
-- map BusinessOS patterns to EduOS analogs
-- define what EduOS inherits and what it must own
-- keep implementation deferred
+- define EduOS domain entities before implementation
+- map academic governance separately from BusinessOS governance
+- sketch the EduOS private dashboard surface without building it yet
 
 ## Validation
 

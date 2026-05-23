@@ -136,6 +136,14 @@ docs/eduos-opening-readiness-checklist-v0.1.md
 
 This checklist confirms that EduOS concept architecture is ready, EduOS implementation is not ready yet, and any future EduOS work must remain separate, guarded, and architecture-first.
 
+The first EduOS concept architecture is documented in:
+
+```text
+docs/eduos-concept-architecture-v0.1.md
+```
+
+This concept defines EduOS as a future education branch, maps academic modules and BusinessOS analogs, and keeps implementation, runtime, database, dashboard, and public AI surfaces deferred.
+
 The first reusable feature boundary template is documented in:
 
 ```text
