@@ -222,6 +222,14 @@ docs/eduos-academic-role-access-matrix-v0.1.md
 
 This matrix defines conceptual role visibility across academic sensitivity levels and domains without creating enforcement code, permissions middleware, dashboards, database policies, or Public AI behavior.
 
+The first EduOS module boundary draft is documented in:
+
+```text
+docs/eduos-module-boundary-draft-v0.1.md
+```
+
+This draft defines proposed future EduOS module ownership, dependency direction, cross-cutting boundaries, adapters, and implementation limits without creating runtime modules, database schema, dashboards, APIs, LMS/SIS adapters, or Public AI behavior.
+
 The first reusable feature boundary template is documented in:
 
 ```text
