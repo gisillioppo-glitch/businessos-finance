@@ -4,10 +4,10 @@ Date: 2026-05-23
 
 ## Integrity Summary
 
-Overall status: passed
+Overall status: warning
 Total checks: 59
-Passed checks: 59
-Warning checks: 0
+Passed checks: 58
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -72,4 +72,4 @@ Failed checks: 0
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-23.md | date: 2026-05-23 | stale areas: 0 | missing areas: 0 |
 | Boundary classification coverage | passed | 136/136 status docs covered |
-| Git working tree | passed | clean except known local artifacts |
+| Git working tree | warning | M README.md; M docs/eduos-command-center-adapter-sketch-v0.1.md; M docs/eduos-concept-architecture-v0.1.md; M docs/eduos-dashboard-surface-map-v0.1.md; M docs/eduos-governance-boundary-sketch-v0.1.md; M docs/eduos-opening-readiness-checklist-v0.1.md; M docs/institutional-core-extraction-map-v0.1.md; ?? docs/eduos-public-private-boundary-sketch-v0.1.md |
