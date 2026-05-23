@@ -254,6 +254,14 @@ docs/eduos-non-sensitive-skeleton-scope-v0.1.md
 
 This scope defines what the first future EduOS implementation may eventually include, and what remains prohibited, without creating runtime files, database schema, dashboard pages, adapters, Public AI, or data.
 
+The EduOS implementation gate refresh is documented in:
+
+```text
+docs/eduos-implementation-gate-refresh-v0.2.md
+```
+
+This refresh moves EduOS to `ready_for_non_sensitive_skeleton` for a future separate skeleton decision, while keeping sensitive implementation, database, dashboard, adapters, Public AI, approvals, and academic records blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

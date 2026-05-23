@@ -48,7 +48,8 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS data contracts | sketched | Neutral conceptual contract shapes are documented without implementation. |
 | EduOS dashboard read-only interactions | sketched | Future dashboard interactions are documented as read-only and non-mutating. |
 | EduOS non-sensitive skeleton scope | defined | First future implementation scope is narrowed to non-sensitive docs/config/no-op skeleton only. |
-| EduOS implementation | not_ready | Implementation would risk copying BusinessOS too directly. |
+| EduOS implementation gate | ready_for_non_sensitive_skeleton | A future separate non-sensitive skeleton decision may now be considered. |
+| EduOS sensitive implementation | not_ready | Student data, database, dashboard actions, adapters, Public AI, and approvals remain blocked. |
 
 ## Required Preconditions Before EduOS Implementation
 
@@ -164,8 +165,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Implementation Gate Refresh v0.2
 EduOS Skeleton Repository Decision v0.1
+EduOS Skeleton Opening Checklist v0.1
 ```
 
 Purpose:

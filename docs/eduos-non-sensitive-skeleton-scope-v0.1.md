@@ -151,6 +151,14 @@ public ai: disabled
 
 EduOS is not at this state yet.
 
+The implementation gate refresh v0.2 later moved the gate to:
+
+```text
+implementation gate: ready_for_non_sensitive_skeleton
+```
+
+This still does not open implementation by itself.
+
 ## BusinessOS Separation
 
 BusinessOS remains the private reference implementation.
@@ -176,8 +184,8 @@ Implementation remains closed until the gate is refreshed.
 ## Recommended Next Blocks
 
 ```text
-EduOS Implementation Gate Refresh v0.2
 EduOS Skeleton Repository Decision v0.1
+EduOS Skeleton Opening Checklist v0.1
 ```
 
 ## Validation

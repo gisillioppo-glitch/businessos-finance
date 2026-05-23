@@ -238,14 +238,15 @@ Module boundaries: drafted
 Data contracts: sketched
 Dashboard read-only interaction rules: sketched
 Non-sensitive skeleton scope: defined
-Implementation: blocked
+Implementation gate: ready_for_non_sensitive_skeleton
+Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Implementation Gate Refresh v0.2
 EduOS Skeleton Repository Decision v0.1
+EduOS Skeleton Opening Checklist v0.1
 ```
 
 ## Validation

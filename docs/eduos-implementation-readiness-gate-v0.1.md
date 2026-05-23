@@ -17,13 +17,13 @@ The goal is not to start implementation. The goal is to define the gate clearly 
 ```text
 EduOS concept architecture: ready
 EduOS docs-only shell: opened
-EduOS implementation: not_ready_yet
-EduOS implementation gate: blocked_with_clear_path
+EduOS implementation: not opened
+EduOS implementation gate: superseded_by_v0.2
 ```
 
 EduOS is ready for structured planning and docs-only shell work.
 
-EduOS is not yet ready for runtime implementation.
+This v0.1 gate was refreshed by `docs/eduos-implementation-gate-refresh-v0.2.md`.
 
 ## Gate Summary
 
@@ -50,15 +50,14 @@ EduOS is not yet ready for runtime implementation.
 ## Gate Result
 
 ```text
-Implementation result: blocked_with_clear_path
+Implementation result: superseded_by_v0.2
 ```
 
 Meaning:
 
-- planning is healthy
-- docs-only shell is safe
-- implementation is still blocked
-- next missing piece is specific and actionable
+- v0.1 remains historical
+- v0.2 is the current implementation gate
+- sensitive implementation remains blocked
 
 ## Required Before Implementation
 
@@ -163,8 +162,8 @@ The project is closer to implementation because the blocker is now explicit: rol
 ## Recommended Next Blocks
 
 ```text
-EduOS Implementation Gate Refresh v0.2
 EduOS Skeleton Repository Decision v0.1
+EduOS Skeleton Opening Checklist v0.1
 ```
 
 ## Validation
