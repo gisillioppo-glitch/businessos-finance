@@ -236,14 +236,15 @@ Implementation readiness gate: blocked_with_clear_path
 Academic role access matrix: sketched
 Module boundaries: drafted
 Data contracts: sketched
+Dashboard read-only interaction rules: sketched
 Implementation: blocked
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Dashboard Read-Only Interaction Rules v0.1
 EduOS Non-Sensitive Skeleton Scope v0.1
+EduOS Implementation Gate Refresh v0.2
 ```
 
 ## Validation

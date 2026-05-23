@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Dashboard Read-Only Interaction Rules v0.1
 EduOS Non-Sensitive Skeleton Scope v0.1
+EduOS Implementation Gate Refresh v0.2
 ```
 
 ## Operator Note

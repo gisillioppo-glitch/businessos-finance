@@ -238,6 +238,14 @@ docs/eduos-data-contract-sketch-v0.1.md
 
 This sketch defines future neutral contract shapes for EduOS modules, evidence, command center, adapters, and public handoff without creating database schema, APIs, runtime models, sample data, LMS/SIS adapters, or Public AI behavior.
 
+The first EduOS dashboard read-only interaction rules are documented in:
+
+```text
+docs/eduos-dashboard-read-only-interaction-rules-v0.1.md
+```
+
+This sketch defines allowed and blocked future dashboard interactions, evidence tiers, approvals, guardian communications, adapter status, exports, and public boundary rules without creating dashboard code or actions.
+
 The first reusable feature boundary template is documented in:
 
 ```text
