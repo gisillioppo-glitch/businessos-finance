@@ -239,14 +239,15 @@ Data contracts: sketched
 Dashboard read-only interaction rules: sketched
 Non-sensitive skeleton scope: defined
 Implementation gate: ready_for_non_sensitive_skeleton
+Skeleton repository decision: approved_with_conditions
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Repository Decision v0.1
 EduOS Skeleton Opening Checklist v0.1
+EduOS Non-Sensitive Skeleton Open v0.1
 ```
 
 ## Validation

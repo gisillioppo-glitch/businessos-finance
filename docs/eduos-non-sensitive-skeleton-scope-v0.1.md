@@ -159,6 +159,14 @@ implementation gate: ready_for_non_sensitive_skeleton
 
 This still does not open implementation by itself.
 
+The skeleton repository decision later approved this future local-only posture:
+
+```text
+future skeleton folder: C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton
+initial git posture: local-only
+remote repository: not opened yet
+```
+
 ## BusinessOS Separation
 
 BusinessOS remains the private reference implementation.
@@ -184,8 +192,8 @@ Implementation remains closed until the gate is refreshed.
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Repository Decision v0.1
 EduOS Skeleton Opening Checklist v0.1
+EduOS Non-Sensitive Skeleton Open v0.1
 ```
 
 ## Validation

@@ -18,6 +18,7 @@ The goal is not to open implementation in this block. The goal is to determine w
 EduOS concept architecture: ready
 EduOS docs-only shell: opened
 EduOS implementation gate: ready_for_non_sensitive_skeleton
+EduOS skeleton repository decision: approved_with_conditions
 EduOS implementation: not opened in this block
 EduOS sensitive implementation: blocked
 ```
@@ -58,6 +59,16 @@ The next block may decide:
 
 ```text
 Should EduOS open a separate non-sensitive skeleton folder/repo?
+```
+
+This has now been answered by `docs/eduos-skeleton-repository-decision-v0.1.md`.
+
+Decision:
+
+```text
+future skeleton folder: C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton
+initial git posture: local-only
+remote repository: not opened yet
 ```
 
 Allowed decision work:
@@ -165,8 +176,8 @@ This does not open implementation by itself.
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Repository Decision v0.1
 EduOS Skeleton Opening Checklist v0.1
+EduOS Non-Sensitive Skeleton Open v0.1
 ```
 
 ## Validation

@@ -262,6 +262,14 @@ docs/eduos-implementation-gate-refresh-v0.2.md
 
 This refresh moves EduOS to `ready_for_non_sensitive_skeleton` for a future separate skeleton decision, while keeping sensitive implementation, database, dashboard, adapters, Public AI, approvals, and academic records blocked.
 
+The EduOS skeleton repository decision is documented in:
+
+```text
+docs/eduos-skeleton-repository-decision-v0.1.md
+```
+
+This decision approves a future local-only non-sensitive skeleton under `C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton`, with no remote repository, runtime, database, dashboard, adapters, Public AI, approvals, notification delivery, or academic records opened yet.
+
 The first reusable feature boundary template is documented in:
 
 ```text
