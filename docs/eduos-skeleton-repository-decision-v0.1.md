@@ -16,6 +16,7 @@ The goal is not to create the skeleton in this block. The goal is to decide wher
 
 ```text
 EduOS skeleton decision: approved_with_conditions
+EduOS skeleton opening checklist: passed_with_conditions
 EduOS skeleton creation: not opened in this block
 EduOS sensitive implementation: blocked
 ```
@@ -224,8 +225,8 @@ It does not open EduOS implementation.
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Opening Checklist v0.1
 EduOS Non-Sensitive Skeleton Open v0.1
+EduOS Skeleton Local Validation v0.1
 ```
 
 ## Validation

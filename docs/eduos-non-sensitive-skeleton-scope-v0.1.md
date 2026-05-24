@@ -167,6 +167,12 @@ initial git posture: local-only
 remote repository: not opened yet
 ```
 
+The skeleton opening checklist later moved the next step to:
+
+```text
+skeleton opening status: ready_to_open_non_sensitive_skeleton
+```
+
 ## BusinessOS Separation
 
 BusinessOS remains the private reference implementation.
@@ -192,8 +198,8 @@ Implementation remains closed until the gate is refreshed.
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Opening Checklist v0.1
 EduOS Non-Sensitive Skeleton Open v0.1
+EduOS Skeleton Local Validation v0.1
 ```
 
 ## Validation

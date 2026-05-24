@@ -50,6 +50,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS non-sensitive skeleton scope | defined | First future implementation scope is narrowed to non-sensitive docs/config/no-op skeleton only. |
 | EduOS implementation gate | ready_for_non_sensitive_skeleton | A future separate non-sensitive skeleton decision may now be considered. |
 | EduOS skeleton repository decision | approved_with_conditions | Future skeleton should start local-only at `C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton`, with no remote repository yet. |
+| EduOS skeleton opening checklist | passed_with_conditions | Future skeleton opening is allowed only as local-only, non-sensitive docs/config/no-op scope. |
 | EduOS sensitive implementation | not_ready | Student data, database, dashboard actions, adapters, Public AI, and approvals remain blocked. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -166,8 +167,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Opening Checklist v0.1
 EduOS Non-Sensitive Skeleton Open v0.1
+EduOS Skeleton Local Validation v0.1
 ```
 
 Purpose:

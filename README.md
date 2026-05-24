@@ -270,6 +270,14 @@ docs/eduos-skeleton-repository-decision-v0.1.md
 
 This decision approves a future local-only non-sensitive skeleton under `C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton`, with no remote repository, runtime, database, dashboard, adapters, Public AI, approvals, notification delivery, or academic records opened yet.
 
+The EduOS skeleton opening checklist is documented in:
+
+```text
+docs/eduos-skeleton-opening-checklist-v0.1.md
+```
+
+This checklist confirms the future skeleton can be opened only as a local-only, non-sensitive docs/config/no-op structure, while keeping sensitive implementation and remote repository creation blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

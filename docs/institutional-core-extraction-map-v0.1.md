@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Skeleton Opening Checklist v0.1
 EduOS Non-Sensitive Skeleton Open v0.1
+EduOS Skeleton Local Validation v0.1
 ```
 
 ## Operator Note
