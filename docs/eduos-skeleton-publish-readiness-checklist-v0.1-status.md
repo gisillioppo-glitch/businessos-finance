@@ -40,6 +40,7 @@ The skeleton remains local-only until repo naming, visibility, license, public c
 | License decision | proprietary_notice_required | Skeleton remains proprietary; no open source license is approved. |
 | Public claim review | approved_for_private_skeleton_only | Current wording is safe only for private skeleton planning, not public publish. |
 | Publish approval | required_not_granted | Explicit future approval is required before any repository creation or publish. |
+| Pre-publish local audit | passed_with_blockers | Technical scans pass, but publish approval and repository creation remain blocked. |
 
 ## Local Skeleton Update
 
@@ -69,6 +70,7 @@ Before any `git init`, remote creation, or push:
 - confirm no academic data
 - confirm no BusinessOS private artifacts
 - obtain explicit future publish approval
+- confirm pre-publish local audit remains clean
 
 ## Still Blocked
 

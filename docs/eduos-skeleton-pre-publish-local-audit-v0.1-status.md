@@ -1,4 +1,4 @@
-# EduOS Skeleton Publish Approval Gate v0.1
+# EduOS Skeleton Pre-Publish Local Audit v0.1
 
 Date: 2026-05-25
 
@@ -8,57 +8,51 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block formalizes the approval gate required before the local-only EduOS skeleton can become any repository.
+This block runs a local pre-publish audit over the EduOS skeleton posture without publishing, creating a repository, or opening implementation.
 
-The goal is not to grant approval, create a Git repository, create a remote repository, publish docs, or open implementation. The goal is to record that explicit future approval is required and currently missing.
+The goal is to confirm whether the local skeleton is technically clean while preserving the approval gate and keeping repository creation blocked.
 
 ## Decision
 
 ```text
-EduOS skeleton publish approval gate: required_not_granted
-recommended_repo_name: eduos-skeleton
-visibility_decision: private_when_created
-license_decision: proprietary_notice_required
-public_claim_review: approved_for_private_skeleton_only
-publish_approval: missing
-gate_result: blocked
+EduOS skeleton pre-publish local audit: passed_with_blockers
+technical_scan: passed
+publishable_now: no
+gate_result: not_publishable_yet
+publish_approval: required_not_granted
 git_repository: not opened
 remote_repository: blocked
 sensitive_implementation: blocked
 ```
 
-Publishing remains blocked.
+The local skeleton is technically clean for docs/config review.
 
-Creating a Git repository remains blocked.
+It is not publishable yet.
 
-Creating a remote repository remains blocked.
+Publication remains blocked because explicit publish approval is still missing and repository creation remains blocked.
 
-No private or public repository may be opened until an explicit future approval says so.
+## Audit Results
 
-## Gate Requirements
-
-Before any `git init`, remote creation, or push:
-
-- executive/operator approval must be explicit
-- target repository name must remain `eduos-skeleton`
-- visibility must remain `private_when_created`
-- proprietary notice must remain required
-- public claims must be rewritten for external audience if publication is considered
-- sensitive-file scan must pass
-- allowed-extension scan must pass
-- no runtime code may exist
-- no academic data may exist
-- no BusinessOS private artifact may exist
+| Check | Status | Result |
+| --- | --- | --- |
+| Sensitive-file scan | passed | No secrets, DB files, credentials, data exports, or private artifacts detected. |
+| Allowed-extension scan | passed | Only `.md` and `.json` files are allowed. |
+| ASCII check | passed | Local skeleton files are ASCII. |
+| Git repository check | passed | No `.git` folder exists. |
+| Runtime check | passed | No runtime code is present. |
+| Academic data check | passed | No student, teacher, guardian, grade, attendance, assessment, or evidence data is present. |
+| BusinessOS copy check | passed | No BusinessOS private runtime, report, DB, or dashboard artifact was copied. |
+| Publish approval gate | blocked | Explicit future approval is still missing. |
 
 ## Local Skeleton Update
 
-Added local publish approval gate:
+Added local pre-publish audit:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\publish-approval-gate.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\pre-publish-local-audit.md
 ```
 
-Updated the local skeleton README with a publish approval gate notice.
+Updated the local skeleton README with the audit result.
 
 No `.git` folder was created.
 
@@ -70,17 +64,17 @@ No runtime, database, dashboard, adapter, Public AI, approval, notification deli
 
 ## Readiness Checklist Update
 
-This resolves the missing publish approval condition into a formal gate:
+This resolves:
 
 ```text
-Publish approval: required_not_granted
+Pre-publish local audit: passed_with_blockers
 ```
 
 Still unresolved:
 
 ```text
-Pre-publish local audit: passed_with_blockers
 Explicit publish approval: missing
+Repository creation decision: not_made
 ```
 
 ## Still Blocked
@@ -135,14 +129,14 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-publish approval: missing
+pre-publish local audit: not_run
 ```
 
 to:
 
 ```text
-publish approval gate: required_not_granted
-gate_result: blocked
+pre-publish local audit: passed_with_blockers
+publishable_now: no
 ```
 
 Remote publish and sensitive implementation remain blocked.
@@ -166,7 +160,7 @@ Runtime behavior: none
 Approval behavior: gate_required_not_granted
 Notification delivery: none
 Remote publish: blocked
-Publish approval posture: required_not_granted
+Pre-publish audit posture: passed_with_blockers
 ```
 
 ## Validation

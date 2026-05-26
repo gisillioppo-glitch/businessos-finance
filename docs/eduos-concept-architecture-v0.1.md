@@ -252,14 +252,15 @@ Skeleton visibility decision: private_when_created
 Skeleton license notice decision: proprietary_notice_required
 Skeleton public claims review: approved_for_private_skeleton_only
 Skeleton publish approval gate: required_not_granted
+Skeleton pre-publish local audit: passed_with_blockers
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Pre-Publish Local Audit v0.1
 EduOS Skeleton Repository Creation Decision v0.1
+EduOS Skeleton Private Repo Approval Request v0.1
 ```
 
 ## Validation

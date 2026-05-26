@@ -366,6 +366,14 @@ docs/eduos-skeleton-publish-approval-gate-v0.1-status.md
 
 This status requires explicit future approval before any `git init`, repository creation, remote push, publication, or external distribution.
 
+The EduOS skeleton pre-publish local audit status is documented in:
+
+```text
+docs/eduos-skeleton-pre-publish-local-audit-v0.1-status.md
+```
+
+This status confirms the local skeleton technical scans pass, while keeping publication blocked because approval and repository creation remain unresolved.
+
 The first reusable feature boundary template is documented in:
 
 ```text
