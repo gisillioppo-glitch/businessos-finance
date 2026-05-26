@@ -286,6 +286,14 @@ docs/eduos-non-sensitive-skeleton-open-v0.1-status.md
 
 This status records the first local-only EduOS skeleton at `C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton`, limited to docs/config/no-op files with sensitive implementation and remote repository creation still blocked.
 
+The EduOS skeleton local validation status is documented in:
+
+```text
+docs/eduos-skeleton-local-validation-v0.1-status.md
+```
+
+This status confirms the local EduOS skeleton passed sensitive-file, allowed-extension, ASCII, Git repository, runtime-code, academic-data, and BusinessOS private-copy checks.
+
 The first reusable feature boundary template is documented in:
 
 ```text
