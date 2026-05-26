@@ -164,7 +164,8 @@ Only an approved approval record can authorize a gated action.
 
 ```text
 OS Core Approval Contract Draft v0.1 (drafted)
-Approval Config Boundary Prep v0.1
+Approval Config Boundary Prep v0.1 (closed)
+Approval Config Boundary Implementation v0.1
 OS Core Candidate Contract Review - Evidence v0.1
 ```
 

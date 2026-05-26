@@ -776,7 +776,8 @@ OS Core Extraction Contract Draft v0.1 (drafted)
 OS Core Contract Checklist v0.1 (drafted)
 OS Core Candidate Contract Review - Approvals v0.1 (closed)
 OS Core Approval Contract Draft v0.1 (drafted)
-Approval Config Boundary Prep v0.1
+Approval Config Boundary Prep v0.1 (closed)
+Approval Config Boundary Implementation v0.1
 ```
 
 ## Operator Note

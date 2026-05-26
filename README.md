@@ -454,6 +454,14 @@ docs/os-core-approval-contract-draft-v0.1.md
 
 This contract defines the branch-neutral approval lifecycle, authority rule, audit expectations, evidence requirements, adapter boundary, Public AI denial rule, validation path, and rollback rule before any approval extraction work.
 
+The first approval config boundary prep is documented in:
+
+```text
+docs/approval-config-boundary-prep-v0.1-status.md
+```
+
+This prep identifies which approval constants, role labels, source modules, evidence requirements, dashboard labels, and report copy must become branch-configurable before any approval extraction work.
+
 The first reusable feature boundary template is documented in:
 
 ```text
