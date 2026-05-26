@@ -422,6 +422,14 @@ docs/businessos-eduos-branch-readiness-summary-v0.1-status.md
 
 This status summarizes BusinessOS as the stable reference branch and EduOS as a local-only skeleton with repository creation and implementation still blocked.
 
+The first OS Core extraction contract draft is documented in:
+
+```text
+docs/os-core-extraction-contract-draft-v0.1.md
+```
+
+This contract defines the minimum branch-neutral rules, adapter boundaries, approval behavior, evidence behavior, Public AI limits, and extraction gates required before any BusinessOS capability can move toward shared OS Core.
+
 The first reusable feature boundary template is documented in:
 
 ```text

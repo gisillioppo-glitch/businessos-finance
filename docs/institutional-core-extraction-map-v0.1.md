@@ -772,7 +772,8 @@ Recommended sequence:
 
 ```text
 EduOS Skeleton Approval Decision Revisit v0.1
-OS Core Extraction Contract Draft v0.1
+OS Core Extraction Contract Draft v0.1 (drafted)
+OS Core Contract Checklist v0.1
 ```
 
 ## Operator Note

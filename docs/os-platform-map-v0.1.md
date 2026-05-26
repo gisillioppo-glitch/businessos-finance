@@ -200,6 +200,7 @@ The current BusinessOS extraction map suggests these contract families:
 
 Before code moves into shared OS Core:
 
+- extraction contract must be documented
 - at least one branch must have a clear consumer need
 - branch-specific copy must be removed from shared contracts
 - branch-specific data models must stay in branch adapters
@@ -216,6 +217,8 @@ Before code moves into shared OS Core:
 BusinessOS reference maturity: high
 
 OS Core candidate mapping: high
+
+OS Core extraction contract readiness: draft
 
 Shared code extraction readiness: medium-low
 
