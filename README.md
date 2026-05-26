@@ -446,6 +446,14 @@ docs/os-core-candidate-contract-review-approvals-v0.1-status.md
 
 This review applies the OS Core contract checklist to the approval layer and allows detailed approval contract design while keeping code extraction blocked.
 
+The first OS Core approval contract draft is documented in:
+
+```text
+docs/os-core-approval-contract-draft-v0.1.md
+```
+
+This contract defines the branch-neutral approval lifecycle, authority rule, audit expectations, evidence requirements, adapter boundary, Public AI denial rule, validation path, and rollback rule before any approval extraction work.
+
 The first reusable feature boundary template is documented in:
 
 ```text

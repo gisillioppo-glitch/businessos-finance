@@ -226,7 +226,8 @@ OS Core package creation: blocked
 ```text
 OS Core Contract Checklist v0.1 (drafted)
 OS Core Candidate Contract Review - Approvals v0.1 (closed)
-OS Core Approval Contract Draft v0.1
+OS Core Approval Contract Draft v0.1 (drafted)
+Approval Config Boundary Prep v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 OS Core Package Opening Decision v0.1
 ```
