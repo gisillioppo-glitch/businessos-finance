@@ -16,6 +16,7 @@ The goal is not to publish. The goal is to decide if publication is safe now, an
 
 ```text
 EduOS skeleton publish decision: keep_local_only
+EduOS skeleton branch boundary review: passed_with_conditions
 git_repository: not opened
 remote_repository: blocked
 mode: non_sensitive_skeleton
@@ -119,8 +120,8 @@ EduOS sensitive implementation and remote publishing remain blocked.
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Branch Boundary Review v0.1
 EduOS Skeleton Publish Readiness Checklist v0.1
+EduOS Skeleton Repo Naming Decision v0.1
 ```
 
 ## Boundary Classification

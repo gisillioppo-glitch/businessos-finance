@@ -310,6 +310,14 @@ docs/eduos-skeleton-publish-decision-v0.1-status.md
 
 This status keeps the EduOS skeleton local-only, with Git initialization, remote repository creation, runtime, database, dashboard, adapters, Public AI, approvals, delivery, and academic data still blocked.
 
+The EduOS skeleton branch boundary review status is documented in:
+
+```text
+docs/eduos-skeleton-branch-boundary-review-v0.1-status.md
+```
+
+This status confirms the local EduOS skeleton is separated from BusinessOS, OS Platform, Public AI, runtime, remote publishing, and sensitive academic implementation.
+
 The first reusable feature boundary template is documented in:
 
 ```text
