@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Skeleton Visibility Decision v0.1
 EduOS Skeleton License Notice Decision v0.1
+EduOS Skeleton Public Claims Review v0.1
 ```
 
 ## Operator Note

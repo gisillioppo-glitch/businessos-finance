@@ -334,6 +334,14 @@ docs/eduos-skeleton-repo-naming-decision-v0.1-status.md
 
 This status approves `eduos-skeleton` as the future repository name with conditions, while keeping Git initialization, remote creation, publishing, runtime, database, dashboard, adapters, Public AI, approvals, delivery, and academic data blocked.
 
+The EduOS skeleton visibility decision status is documented in:
+
+```text
+docs/eduos-skeleton-visibility-decision-v0.1-status.md
+```
+
+This status sets future repository visibility to `private_when_created`, while keeping public repository creation and publication blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

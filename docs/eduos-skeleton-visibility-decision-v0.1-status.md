@@ -1,4 +1,4 @@
-# EduOS Skeleton Repo Naming Decision v0.1
+# EduOS Skeleton Visibility Decision v0.1
 
 Date: 2026-05-25
 
@@ -8,58 +8,42 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block decides the recommended future repository name for the local-only EduOS skeleton.
+This block decides the future visibility posture for the EduOS skeleton if it later becomes a repository.
 
-The goal is not to create a repository. The goal is to approve a name that does not imply production readiness, live academic data, shared OS Core, platform maturity, or public availability.
+The goal is not to create a repository. The goal is to decide whether a future repo should start public or private, while keeping Git initialization, remote creation, publishing, runtime, database, dashboard, adapters, Public AI, approvals, delivery, and academic data blocked.
 
 ## Decision
 
 ```text
-EduOS skeleton repo naming decision: approved_with_conditions
+EduOS skeleton visibility decision: private_when_created
 recommended_repo_name: eduos-skeleton
-visibility_decision: private_when_created
 git_repository: not opened
 remote_repository: blocked
+public_repository: not approved
 sensitive_implementation: blocked
 ```
 
-Recommended future repository name:
+If the skeleton later becomes a repository, it should start private.
 
-```text
-eduos-skeleton
-```
+Public visibility is not approved.
 
 ## Reason
 
-This name is intentionally limited.
+Private-first visibility is required because:
 
-It communicates:
-
-- EduOS branch context
-- skeleton-only maturity
-- no production claim
-- no live academic data
-- no platform/core claim
-
-## Names Not Approved
-
-Do not use:
-
-- `eduos`
-- `eduos-platform`
-- `eduos-production`
-- `eduos-live`
-- `eduos-core`
-- `os-platform-eduos`
-
-These names imply runtime, production, shared core, or platform maturity that does not exist yet.
+- EduOS is still a skeleton
+- public claims are not reviewed
+- license/proprietary notice is not decided
+- publish approval is missing
+- Public AI boundaries remain blocked
+- sensitive implementation is still blocked
 
 ## Local Skeleton Update
 
-Added local repo naming decision:
+Added local visibility decision:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\repo-naming-decision.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\visibility-decision.md
 ```
 
 No `.git` folder was created.
@@ -73,17 +57,27 @@ No runtime, database, dashboard, adapter, Public AI, approval, notification deli
 This resolves:
 
 ```text
-Repo naming decision: approved_with_conditions
+Visibility decision: private_when_created
 ```
 
 Still unresolved:
 
 ```text
-Visibility decision: missing
 License decision: missing
 Public claim review: missing
 Publish approval: missing
 ```
+
+## Visibility Not Approved
+
+Do not create:
+
+- public GitHub repository
+- public package
+- public demo
+- public docs site
+- public AI surface
+- public live status
 
 ## Still Blocked
 
@@ -126,13 +120,13 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-repo naming decision: missing
+visibility decision: missing
 ```
 
 to:
 
 ```text
-repo naming decision: approved_with_conditions
+visibility decision: private_when_created
 ```
 
 Remote publish and sensitive implementation remain blocked.
