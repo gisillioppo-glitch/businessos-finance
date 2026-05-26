@@ -1,4 +1,4 @@
-# EduOS Skeleton Public Claims Review v0.1
+# EduOS Skeleton Publish Approval Gate v0.1
 
 Date: 2026-05-25
 
@@ -8,63 +8,57 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block reviews the public-facing language risk in the local-only EduOS skeleton.
+This block formalizes the approval gate required before the local-only EduOS skeleton can become any repository.
 
-The goal is not to publish EduOS, create a public repository, create a public docs site, approve marketing language, or claim product readiness. The goal is to confirm that the current skeleton wording is safe only for private planning and does not overclaim capabilities that remain blocked.
+The goal is not to grant approval, create a Git repository, create a remote repository, publish docs, or open implementation. The goal is to record that explicit future approval is required and currently missing.
 
 ## Decision
 
 ```text
-EduOS skeleton public claim review: approved_for_private_skeleton_only
+EduOS skeleton publish approval gate: required_not_granted
 recommended_repo_name: eduos-skeleton
 visibility_decision: private_when_created
 license_decision: proprietary_notice_required
-public_publish: blocked
-marketing_claims: blocked
-product_readiness_claims: blocked
+public_claim_review: approved_for_private_skeleton_only
+publish_approval: missing
+gate_result: blocked
 git_repository: not opened
 remote_repository: blocked
 sensitive_implementation: blocked
 ```
 
-The current skeleton language is acceptable for private skeleton planning only.
+Publishing remains blocked.
 
-It is not approved for public publication, sales use, marketing, investor materials, school-facing distribution, public AI explanation, or external demo.
+Creating a Git repository remains blocked.
 
-## Reviewed Claims
+Creating a remote repository remains blocked.
 
-Allowed private claims:
+No private or public repository may be opened until an explicit future approval says so.
 
-- EduOS is a non-sensitive skeleton
-- runtime is not opened
-- database is not opened
-- dashboard is not opened
-- adapters are not opened
-- Public AI is not opened
-- remote repository is not opened
-- BusinessOS remains separate and private
+## Gate Requirements
 
-Blocked public claims:
+Before any `git init`, remote creation, or push:
 
-- EduOS is live
-- EduOS is ready for schools
-- EduOS has active AI behavior
-- EduOS connects to Classroom, LMS, SIS, or student systems
-- EduOS stores or processes academic records
-- EduOS has a public demo
-- EduOS has a public repository
-- EduOS has approved open source licensing
-- EduOS is an installable or commercial product
+- executive/operator approval must be explicit
+- target repository name must remain `eduos-skeleton`
+- visibility must remain `private_when_created`
+- proprietary notice must remain required
+- public claims must be rewritten for external audience if publication is considered
+- sensitive-file scan must pass
+- allowed-extension scan must pass
+- no runtime code may exist
+- no academic data may exist
+- no BusinessOS private artifact may exist
 
 ## Local Skeleton Update
 
-Added local public claims review:
+Added local publish approval gate:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\public-claims-review.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\publish-approval-gate.md
 ```
 
-Updated the local skeleton README with a private-only public claims notice.
+Updated the local skeleton README with a publish approval gate notice.
 
 No `.git` folder was created.
 
@@ -76,16 +70,17 @@ No runtime, database, dashboard, adapter, Public AI, approval, notification deli
 
 ## Readiness Checklist Update
 
-This resolves:
+This resolves the missing publish approval condition into a formal gate:
 
 ```text
-Public claim review: approved_for_private_skeleton_only
+Publish approval: required_not_granted
 ```
 
 Still unresolved:
 
 ```text
-Publish approval gate: required_not_granted
+Pre-publish local audit: not_run
+Explicit publish approval: missing
 ```
 
 ## Still Blocked
@@ -96,6 +91,7 @@ Still blocked:
 - GitHub repository creation
 - remote push
 - public repository
+- private repository creation
 - public docs site
 - public demo
 - public AI explanation
@@ -139,13 +135,14 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-public claim review: missing
+publish approval: missing
 ```
 
 to:
 
 ```text
-public claim review: approved_for_private_skeleton_only
+publish approval gate: required_not_granted
+gate_result: blocked
 ```
 
 Remote publish and sensitive implementation remain blocked.
@@ -166,10 +163,10 @@ EduOS-specific: yes
 Public AI boundary: blocked
 Sensitive data exposure: none
 Runtime behavior: none
-Approval behavior: none
+Approval behavior: gate_required_not_granted
 Notification delivery: none
 Remote publish: blocked
-Public claims posture: approved_for_private_skeleton_only
+Publish approval posture: required_not_granted
 ```
 
 ## Validation

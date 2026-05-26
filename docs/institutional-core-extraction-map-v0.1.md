@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Skeleton Publish Approval Gate v0.1
 EduOS Skeleton Pre-Publish Local Audit v0.1
+EduOS Skeleton Repository Creation Decision v0.1
 ```
 
 ## Operator Note

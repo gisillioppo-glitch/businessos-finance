@@ -61,6 +61,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS skeleton visibility decision | private_when_created | If a repository is later created, it should start private; public visibility is not approved. |
 | EduOS skeleton license notice decision | proprietary_notice_required | Skeleton remains proprietary; no open source license or public distribution is approved. |
 | EduOS skeleton public claims review | approved_for_private_skeleton_only | Current wording is safe for private skeleton planning only, not public publication or product claims. |
+| EduOS skeleton publish approval gate | required_not_granted | Explicit future approval is required before repository creation or publish. |
 | EduOS sensitive implementation | not_ready | Student data, database, dashboard actions, adapters, Public AI, and approvals remain blocked. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -177,8 +178,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Publish Approval Gate v0.1
 EduOS Skeleton Pre-Publish Local Audit v0.1
+EduOS Skeleton Repository Creation Decision v0.1
 ```
 
 Purpose:

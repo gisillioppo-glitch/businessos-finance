@@ -358,6 +358,14 @@ docs/eduos-skeleton-public-claims-review-v0.1-status.md
 
 This status approves current skeleton wording only for private planning, while keeping public publication, marketing claims, product readiness claims, and public AI explanation blocked.
 
+The EduOS skeleton publish approval gate status is documented in:
+
+```text
+docs/eduos-skeleton-publish-approval-gate-v0.1-status.md
+```
+
+This status requires explicit future approval before any `git init`, repository creation, remote push, publication, or external distribution.
+
 The first reusable feature boundary template is documented in:
 
 ```text
