@@ -438,6 +438,14 @@ docs/os-core-contract-checklist-v0.1.md
 
 This checklist converts the extraction contract into pass, defer, and block criteria before any capability can move toward shared OS Core contract design.
 
+The first OS Core candidate contract review is documented in:
+
+```text
+docs/os-core-candidate-contract-review-approvals-v0.1-status.md
+```
+
+This review applies the OS Core contract checklist to the approval layer and allows detailed approval contract design while keeping code extraction blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text
