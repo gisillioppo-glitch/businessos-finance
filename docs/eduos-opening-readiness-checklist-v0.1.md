@@ -54,6 +54,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS non-sensitive skeleton | opened_local_non_sensitive | Local-only skeleton exists under `C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton` with docs/config/no-op files only. |
 | EduOS skeleton local validation | passed | Skeleton passed sensitive-file, allowed-extension, ASCII, Git repository, runtime-code, academic-data, and BusinessOS private-copy checks. |
 | EduOS skeleton expansion guardrails | defined | Safe skeleton growth is limited to docs/config/no-op work unless a future approval block opens more. |
+| EduOS skeleton publish decision | keep_local_only | Remote repository creation remains blocked until branch boundary review and publish readiness are complete. |
 | EduOS sensitive implementation | not_ready | Student data, database, dashboard actions, adapters, Public AI, and approvals remain blocked. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -170,8 +171,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Publish Decision v0.1
 EduOS Skeleton Branch Boundary Review v0.1
+EduOS Skeleton Publish Readiness Checklist v0.1
 ```
 
 Purpose:

@@ -302,6 +302,14 @@ docs/eduos-skeleton-expansion-guardrails-v0.1-status.md
 
 This status defines what may be added to the local-only skeleton without new approval, what requires explicit approval, and what remains blocked until a future sensitive implementation gate.
 
+The EduOS skeleton publish decision status is documented in:
+
+```text
+docs/eduos-skeleton-publish-decision-v0.1-status.md
+```
+
+This status keeps the EduOS skeleton local-only, with Git initialization, remote repository creation, runtime, database, dashboard, adapters, Public AI, approvals, delivery, and academic data still blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

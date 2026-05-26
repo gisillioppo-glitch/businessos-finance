@@ -244,14 +244,15 @@ Skeleton opening checklist: passed_with_conditions
 Non-sensitive skeleton: opened_local_non_sensitive
 Skeleton local validation: passed
 Skeleton expansion guardrails: defined
+Skeleton publish decision: keep_local_only
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Publish Decision v0.1
 EduOS Skeleton Branch Boundary Review v0.1
+EduOS Skeleton Publish Readiness Checklist v0.1
 ```
 
 ## Validation

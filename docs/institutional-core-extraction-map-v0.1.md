@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Skeleton Publish Decision v0.1
 EduOS Skeleton Branch Boundary Review v0.1
+EduOS Skeleton Publish Readiness Checklist v0.1
 ```
 
 ## Operator Note

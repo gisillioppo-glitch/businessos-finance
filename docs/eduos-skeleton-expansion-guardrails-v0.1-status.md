@@ -16,6 +16,7 @@ The goal is to allow safe documentation/config growth while keeping runtime code
 
 ```text
 EduOS skeleton expansion guardrails: defined
+EduOS skeleton publish decision: keep_local_only
 location: C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton
 mode: non_sensitive_skeleton
 remote_repository: not opened
@@ -123,8 +124,8 @@ EduOS sensitive implementation remains blocked.
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Publish Decision v0.1
 EduOS Skeleton Branch Boundary Review v0.1
+EduOS Skeleton Publish Readiness Checklist v0.1
 ```
 
 ## Boundary Classification
