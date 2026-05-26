@@ -250,14 +250,15 @@ Skeleton publish readiness: not_ready_yet
 Skeleton repo naming decision: approved_with_conditions
 Skeleton visibility decision: private_when_created
 Skeleton license notice decision: proprietary_notice_required
+Skeleton public claims review: approved_for_private_skeleton_only
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Public Claims Review v0.1
 EduOS Skeleton Publish Approval Gate v0.1
+EduOS Skeleton Pre-Publish Local Audit v0.1
 ```
 
 ## Validation

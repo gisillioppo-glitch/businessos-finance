@@ -1,4 +1,4 @@
-# EduOS Skeleton License Notice Decision v0.1
+# EduOS Skeleton Public Claims Review v0.1
 
 Date: 2026-05-25
 
@@ -8,49 +8,63 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block decides the license and ownership posture for the local-only EduOS skeleton before any future repository creation or publication.
+This block reviews the public-facing language risk in the local-only EduOS skeleton.
 
-The goal is not to create a `LICENSE` file, publish the skeleton, create a repository, or approve external distribution. The goal is to prevent the skeleton from being interpreted as public or open source while EduOS remains private, local-only, and non-sensitive.
+The goal is not to publish EduOS, create a public repository, create a public docs site, approve marketing language, or claim product readiness. The goal is to confirm that the current skeleton wording is safe only for private planning and does not overclaim capabilities that remain blocked.
 
 ## Decision
 
 ```text
-EduOS skeleton license decision: proprietary_notice_required
+EduOS skeleton public claim review: approved_for_private_skeleton_only
 recommended_repo_name: eduos-skeleton
 visibility_decision: private_when_created
-license_file: not created
-open_source_license: not approved
-public_distribution: blocked
+license_decision: proprietary_notice_required
+public_publish: blocked
+marketing_claims: blocked
+product_readiness_claims: blocked
 git_repository: not opened
 remote_repository: blocked
 sensitive_implementation: blocked
 ```
 
-If the skeleton later becomes a private repository, it should include a proprietary/confidential notice before any remote push.
+The current skeleton language is acceptable for private skeleton planning only.
 
-No open source license is approved.
+It is not approved for public publication, sales use, marketing, investor materials, school-facing distribution, public AI explanation, or external demo.
 
-## Reason
+## Reviewed Claims
 
-The skeleton must remain proprietary because:
+Allowed private claims:
 
-- EduOS is still local-only
-- public claims are not approved for external publication
-- publish approval is missing
-- OS Core ownership is not separated yet
-- Public AI boundaries remain blocked
-- sensitive implementation remains blocked
-- academic data and adapters are not opened
+- EduOS is a non-sensitive skeleton
+- runtime is not opened
+- database is not opened
+- dashboard is not opened
+- adapters are not opened
+- Public AI is not opened
+- remote repository is not opened
+- BusinessOS remains separate and private
+
+Blocked public claims:
+
+- EduOS is live
+- EduOS is ready for schools
+- EduOS has active AI behavior
+- EduOS connects to Classroom, LMS, SIS, or student systems
+- EduOS stores or processes academic records
+- EduOS has a public demo
+- EduOS has a public repository
+- EduOS has approved open source licensing
+- EduOS is an installable or commercial product
 
 ## Local Skeleton Update
 
-Added local license decision:
+Added local public claims review:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\license-decision.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\public-claims-review.md
 ```
 
-Updated the local skeleton README with a proprietary notice.
+Updated the local skeleton README with a private-only public claims notice.
 
 No `.git` folder was created.
 
@@ -65,7 +79,7 @@ No runtime, database, dashboard, adapter, Public AI, approval, notification deli
 This resolves:
 
 ```text
-License decision: proprietary_notice_required
+Public claim review: approved_for_private_skeleton_only
 ```
 
 Still unresolved:
@@ -83,6 +97,11 @@ Still blocked:
 - remote push
 - public repository
 - public docs site
+- public demo
+- public AI explanation
+- school-facing distribution
+- marketing claims
+- product readiness claims
 - `LICENSE` file creation
 - open source license selection
 - external distribution
@@ -120,13 +139,13 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-license decision: missing
+public claim review: missing
 ```
 
 to:
 
 ```text
-license decision: proprietary_notice_required
+public claim review: approved_for_private_skeleton_only
 ```
 
 Remote publish and sensitive implementation remain blocked.
@@ -150,7 +169,7 @@ Runtime behavior: none
 Approval behavior: none
 Notification delivery: none
 Remote publish: blocked
-License posture: proprietary_notice_required
+Public claims posture: approved_for_private_skeleton_only
 ```
 
 ## Validation

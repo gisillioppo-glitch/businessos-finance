@@ -350,6 +350,14 @@ docs/eduos-skeleton-license-notice-decision-v0.1-status.md
 
 This status sets the skeleton license posture to `proprietary_notice_required`, while keeping open source licensing, public distribution, and repository publication blocked.
 
+The EduOS skeleton public claims review status is documented in:
+
+```text
+docs/eduos-skeleton-public-claims-review-v0.1-status.md
+```
+
+This status approves current skeleton wording only for private planning, while keeping public publication, marketing claims, product readiness claims, and public AI explanation blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text
