@@ -294,6 +294,14 @@ docs/eduos-skeleton-local-validation-v0.1-status.md
 
 This status confirms the local EduOS skeleton passed sensitive-file, allowed-extension, ASCII, Git repository, runtime-code, academic-data, and BusinessOS private-copy checks.
 
+The EduOS skeleton expansion guardrails status is documented in:
+
+```text
+docs/eduos-skeleton-expansion-guardrails-v0.1-status.md
+```
+
+This status defines what may be added to the local-only skeleton without new approval, what requires explicit approval, and what remains blocked until a future sensitive implementation gate.
+
 The first reusable feature boundary template is documented in:
 
 ```text
