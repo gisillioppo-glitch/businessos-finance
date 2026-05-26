@@ -430,6 +430,14 @@ docs/os-core-extraction-contract-draft-v0.1.md
 
 This contract defines the minimum branch-neutral rules, adapter boundaries, approval behavior, evidence behavior, Public AI limits, and extraction gates required before any BusinessOS capability can move toward shared OS Core.
 
+The first OS Core contract checklist is documented in:
+
+```text
+docs/os-core-contract-checklist-v0.1.md
+```
+
+This checklist converts the extraction contract into pass, defer, and block criteria before any capability can move toward shared OS Core contract design.
+
 The first reusable feature boundary template is documented in:
 
 ```text

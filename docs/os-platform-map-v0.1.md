@@ -220,6 +220,8 @@ OS Core candidate mapping: high
 
 OS Core extraction contract readiness: draft
 
+OS Core contract checklist readiness: draft
+
 Shared code extraction readiness: medium-low
 
 Branch adapter doctrine: medium-high
