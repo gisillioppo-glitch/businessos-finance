@@ -256,14 +256,15 @@ Skeleton pre-publish local audit: passed_with_blockers
 Skeleton repository creation decision: deferred_with_clear_path
 Skeleton private repo approval request: drafted_not_granted
 Skeleton repo opening runbook: ready_when_approved
+Skeleton private repo approval decision: not_approved_yet
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Private Repo Approval Decision v0.1
 EduOS Skeleton Opening Pause / Handoff v0.1
+BusinessOS / EduOS Branch Readiness Summary v0.1
 ```
 
 ## Validation

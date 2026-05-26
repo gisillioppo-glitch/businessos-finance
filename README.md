@@ -398,6 +398,14 @@ docs/eduos-skeleton-repo-opening-runbook-v0.1-status.md
 
 This status documents future private repo opening steps for use only after approval, while keeping all repository commands blocked.
 
+The EduOS skeleton private repo approval decision status is documented in:
+
+```text
+docs/eduos-skeleton-private-repo-approval-decision-v0.1-status.md
+```
+
+This status records that private repository creation is not approved yet, while keeping `.git`, remote creation, GitHub push, and publication blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

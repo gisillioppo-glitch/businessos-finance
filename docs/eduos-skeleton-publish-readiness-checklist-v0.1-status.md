@@ -44,6 +44,7 @@ The skeleton remains local-only until repo naming, visibility, license, public c
 | Repository creation decision | deferred_with_clear_path | Repository creation remains deferred until explicit future approval. |
 | Private repo approval request | drafted_not_granted | Approval request is drafted, but no approval has been granted. |
 | Repo opening runbook | ready_when_approved | Future opening steps are documented, but execution remains blocked. |
+| Private repo approval decision | not_approved_yet | Repository creation is not approved yet. |
 
 ## Local Skeleton Update
 
@@ -77,6 +78,7 @@ Before any `git init`, remote creation, or push:
 - confirm repository creation decision is approved in a future block
 - convert private repo approval request from draft to approved in a future block
 - use repo opening runbook only after explicit approval
+- get explicit private repo approval decision before execution
 
 ## Still Blocked
 

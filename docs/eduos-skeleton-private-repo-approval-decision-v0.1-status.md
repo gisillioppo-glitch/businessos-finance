@@ -1,4 +1,4 @@
-# EduOS Skeleton Repo Opening Runbook v0.1
+# EduOS Skeleton Private Repo Approval Decision v0.1
 
 Date: 2026-05-25
 
@@ -8,16 +8,16 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block documents the future runbook for opening the EduOS skeleton as a private repository if explicit approval is granted later.
+This block reviews the drafted private repository approval request and decides whether to approve repository creation now.
 
-The goal is not to approve repository creation, run `git init`, create a remote repository, push to GitHub, publish docs, or open implementation. The goal is to make the future opening sequence controlled and auditable.
+The goal is not to create a Git repository, create a remote repository, push to GitHub, publish docs, or open implementation. The goal is to record the approval decision clearly.
 
 ## Decision
 
 ```text
-EduOS skeleton repo opening runbook: ready_when_approved
-approval_required: yes
-approval_decision: not_granted
+EduOS skeleton private repo approval decision: not_approved_yet
+approval_request_status: drafted
+repo_opening_runbook: ready_when_approved
 repository_name: eduos-skeleton
 visibility: private_when_created
 repository_creation: blocked
@@ -26,67 +26,48 @@ remote_repository: blocked
 sensitive_implementation: blocked
 ```
 
-The runbook is ready for future use only.
+Private repository creation is not approved yet.
 
-Approval is not granted in this block.
+Do not run `git init`.
 
-Do not execute repository commands yet.
+Do not create a GitHub repository.
 
-## Preconditions
+Do not add a remote.
 
-Before running any repository command:
+Do not push the skeleton.
 
-- approval decision must be `approved`
-- target repository name must be `eduos-skeleton`
-- visibility must be private
-- proprietary notice must remain required
+## Reason
+
+The opening runbook is ready, but approval is not granted because:
+
+- approval was not explicitly requested as an execution instruction
+- repository creation should remain a separate operator decision
+- EduOS remains local-only
+- implementation remains blocked
+- public distribution remains blocked
+
+## Future Approval Conditions
+
+To approve later:
+
+- operator must explicitly say to approve private repo creation
 - pre-publish local audit must be rerun
-- sensitive-file scan must pass
-- allowed-extension scan must pass
-- ASCII check must pass
-- no `.git` folder may exist before the opening block begins
+- no `.git` folder may exist before execution
 - no runtime code may exist
 - no academic data may exist
 - no BusinessOS private artifacts may exist
-
-## Future Runbook
-
-Only after explicit approval:
-
-1. Re-run local skeleton scans.
-2. Confirm no `.git` folder exists.
-3. Confirm only `.md` and `.json` files exist.
-4. Confirm no `LICENSE` file exists unless a license/proprietary notice block approves it.
-5. Create the private GitHub repository named `eduos-skeleton`.
-6. Run `git init` inside the skeleton folder.
-7. Add only approved skeleton files.
-8. Commit the initial skeleton.
-9. Add the private remote.
-10. Push to the private remote.
-11. Record remote URL and commit hash in a BusinessOS status document.
-12. Re-run BusinessOS system-check, release-readiness, runtime-stability, and quick smoke.
-
-## Commands Still Blocked
-
-Do not run these now:
-
-```text
-git init
-git add
-git commit
-git remote add
-git push
-```
+- repository name must remain `eduos-skeleton`
+- visibility must remain private
 
 ## Local Skeleton Update
 
-Added local repo opening runbook:
+Added local private repo approval decision:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\repo-opening-runbook.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\private-repo-approval-decision.md
 ```
 
-Updated the local skeleton README with the runbook status.
+Updated the local skeleton README with the decision status.
 
 No `.git` folder was created.
 
@@ -101,13 +82,12 @@ No runtime, database, dashboard, adapter, Public AI, approval, notification deli
 This resolves:
 
 ```text
-Repo opening runbook: ready_when_approved
+Private repo approval decision: not_approved_yet
 ```
 
 Still unresolved:
 
 ```text
-Private repo approval decision: not_approved_yet
 Repository creation execution: blocked
 ```
 
@@ -163,13 +143,13 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-repo opening runbook: missing
+private repo approval decision: missing
 ```
 
 to:
 
 ```text
-repo opening runbook: ready_when_approved
+private repo approval decision: not_approved_yet
 repository_creation: blocked
 ```
 
@@ -191,10 +171,10 @@ EduOS-specific: yes
 Public AI boundary: blocked
 Sensitive data exposure: none
 Runtime behavior: none
-Approval behavior: runbook_ready_approval_not_granted
+Approval behavior: decision_not_approved_yet
 Notification delivery: none
 Remote publish: blocked
-Repo opening posture: ready_when_approved
+Private repo approval decision: not_approved_yet
 ```
 
 ## Validation
