@@ -42,6 +42,7 @@ The skeleton remains local-only until repo naming, visibility, license, public c
 | Publish approval | required_not_granted | Explicit future approval is required before any repository creation or publish. |
 | Pre-publish local audit | passed_with_blockers | Technical scans pass, but publish approval and repository creation remain blocked. |
 | Repository creation decision | deferred_with_clear_path | Repository creation remains deferred until explicit future approval. |
+| Private repo approval request | drafted_not_granted | Approval request is drafted, but no approval has been granted. |
 
 ## Local Skeleton Update
 
@@ -73,6 +74,7 @@ Before any `git init`, remote creation, or push:
 - obtain explicit future publish approval
 - confirm pre-publish local audit remains clean
 - confirm repository creation decision is approved in a future block
+- convert private repo approval request from draft to approved in a future block
 
 ## Still Blocked
 

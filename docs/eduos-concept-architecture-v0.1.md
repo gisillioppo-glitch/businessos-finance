@@ -254,14 +254,15 @@ Skeleton public claims review: approved_for_private_skeleton_only
 Skeleton publish approval gate: required_not_granted
 Skeleton pre-publish local audit: passed_with_blockers
 Skeleton repository creation decision: deferred_with_clear_path
+Skeleton private repo approval request: drafted_not_granted
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Private Repo Approval Request v0.1
 EduOS Skeleton Repo Opening Runbook v0.1
+EduOS Skeleton Private Repo Approval Decision v0.1
 ```
 
 ## Validation

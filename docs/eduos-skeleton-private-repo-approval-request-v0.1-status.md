@@ -1,4 +1,4 @@
-# EduOS Skeleton Repository Creation Decision v0.1
+# EduOS Skeleton Private Repo Approval Request v0.1
 
 Date: 2026-05-25
 
@@ -8,28 +8,28 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block decides whether the local-only EduOS skeleton should become a repository now.
+This block drafts a future approval request for creating a private repository for the EduOS skeleton.
 
-The goal is not to create a Git repository, create a remote repository, push to GitHub, publish docs, or open implementation. The goal is to close the repository creation question based on the current gate state.
+The goal is not to approve repository creation, create a Git repository, create a remote repository, push to GitHub, publish docs, or open implementation. The goal is to prepare the request and keep the approval decision explicitly not granted.
 
-## Decision
+## Request
 
 ```text
-EduOS skeleton repository creation decision: deferred_with_clear_path
-recommended_repo_name: eduos-skeleton
-visibility_decision: private_when_created
-license_decision: proprietary_notice_required
-public_claim_review: approved_for_private_skeleton_only
-pre_publish_local_audit: passed_with_blockers
-publish_approval: required_not_granted
+EduOS skeleton private repo approval request: drafted_not_granted
+requested_action: create_private_repository_later
+repository_name: eduos-skeleton
+visibility: private
+license_posture: proprietary_notice_required
+initial_scope: docs_config_only
+approval_decision: not_granted
 git_repository: not opened
 remote_repository: blocked
-private_repository_creation: not approved
-public_repository_creation: blocked
 sensitive_implementation: blocked
 ```
 
-Do not create a repository yet.
+Approval is not granted in this block.
+
+Do not create the repository yet.
 
 Do not run `git init`.
 
@@ -37,40 +37,51 @@ Do not create a remote repository.
 
 Do not push the skeleton to GitHub.
 
-## Reason
+## Approval Conditions
 
-The skeleton is technically clean, but repository creation is deferred because:
+Before approval can be granted:
 
-- explicit publish approval is still missing
-- private repository creation is not approved
-- public repository creation is blocked
-- EduOS remains a non-sensitive local skeleton
-- implementation remains blocked
-- external distribution remains blocked
+- operator must explicitly approve repository creation
+- pre-publish local audit must be rerun
+- allowed-extension scan must pass
+- sensitive-file scan must pass
+- no runtime code may exist
+- no academic data may exist
+- no BusinessOS private artifacts may exist
+- README public claims must remain private-only or be rewritten for external visibility
+- proprietary notice must remain required
 
-## Future Approval Path
+## Requested Boundaries
 
-A future private repository may be reconsidered only if:
+If approved later, the private repository should allow only:
 
-- explicit operator approval is granted
-- target name remains `eduos-skeleton`
-- visibility remains private
-- proprietary notice remains required
-- pre-publish local audit is rerun and still clean
-- public claims are rewritten if external visibility changes
-- no runtime code exists
-- no academic data exists
-- no BusinessOS private artifacts exist
+- README documentation
+- docs
+- non-sensitive config examples
+- no-op metadata
+- validation checklist notes
+
+Still blocked after approval unless separately approved:
+
+- runtime code
+- database schema
+- dashboard implementation
+- LMS/SIS/Classroom adapters
+- Public AI behavior
+- approval execution
+- notification delivery
+- academic records
+- public distribution
 
 ## Local Skeleton Update
 
-Added local repository creation decision:
+Added local private repo approval request:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\repository-creation-decision.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\private-repo-approval-request.md
 ```
 
-Updated the local skeleton README with the repository creation decision.
+Updated the local skeleton README with the request status.
 
 No `.git` folder was created.
 
@@ -85,14 +96,14 @@ No runtime, database, dashboard, adapter, Public AI, approval, notification deli
 This resolves:
 
 ```text
-Repository creation decision: deferred_with_clear_path
+Private repo approval request: drafted_not_granted
 ```
 
 Still unresolved:
 
 ```text
-Private repo approval request: drafted_not_granted
 Explicit private repository approval: missing
+Repository creation execution: blocked
 ```
 
 ## Still Blocked
@@ -147,13 +158,13 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-repository creation decision: not_made
+private repo approval request: not_drafted
 ```
 
 to:
 
 ```text
-repository creation decision: deferred_with_clear_path
+private repo approval request: drafted_not_granted
 repository_creation: blocked
 ```
 
@@ -175,10 +186,10 @@ EduOS-specific: yes
 Public AI boundary: blocked
 Sensitive data exposure: none
 Runtime behavior: none
-Approval behavior: gate_required_not_granted
+Approval behavior: request_drafted_not_granted
 Notification delivery: none
 Remote publish: blocked
-Repository creation posture: deferred_with_clear_path
+Private repo approval posture: drafted_not_granted
 ```
 
 ## Validation

@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Skeleton Private Repo Approval Request v0.1
 EduOS Skeleton Repo Opening Runbook v0.1
+EduOS Skeleton Private Repo Approval Decision v0.1
 ```
 
 ## Operator Note

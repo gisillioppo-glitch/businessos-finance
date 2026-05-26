@@ -64,6 +64,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS skeleton publish approval gate | required_not_granted | Explicit future approval is required before repository creation or publish. |
 | EduOS skeleton pre-publish local audit | passed_with_blockers | Technical scans pass, but publish approval and repository creation remain blocked. |
 | EduOS skeleton repository creation decision | deferred_with_clear_path | Repository creation remains blocked until explicit future approval. |
+| EduOS skeleton private repo approval request | drafted_not_granted | Approval request is drafted, but repository creation is not approved. |
 | EduOS sensitive implementation | not_ready | Student data, database, dashboard actions, adapters, Public AI, and approvals remain blocked. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -180,8 +181,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Private Repo Approval Request v0.1
 EduOS Skeleton Repo Opening Runbook v0.1
+EduOS Skeleton Private Repo Approval Decision v0.1
 ```
 
 Purpose:

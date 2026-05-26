@@ -382,6 +382,14 @@ docs/eduos-skeleton-repository-creation-decision-v0.1-status.md
 
 This status defers repository creation with a clear future approval path, while keeping `.git`, remote creation, GitHub push, and publication blocked.
 
+The EduOS skeleton private repo approval request status is documented in:
+
+```text
+docs/eduos-skeleton-private-repo-approval-request-v0.1-status.md
+```
+
+This status drafts a future private repository approval request, while keeping approval not granted and repository creation blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text
