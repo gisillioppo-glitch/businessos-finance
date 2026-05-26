@@ -17,7 +17,7 @@ The goal is not to create the skeleton here. The goal is to confirm that the req
 ```text
 EduOS skeleton opening checklist: passed_with_conditions
 EduOS skeleton opening status: ready_to_open_non_sensitive_skeleton
-EduOS skeleton folder: not created in this block
+EduOS skeleton folder: opened_by_v0.1_status
 EduOS sensitive implementation: blocked
 ```
 
@@ -197,7 +197,7 @@ Sensitive implementation: blocked
 This opens only:
 
 ```text
-EduOS Non-Sensitive Skeleton Open v0.1
+EduOS Skeleton Local Validation v0.1
 ```
 
 It does not create the skeleton by itself.
@@ -205,8 +205,8 @@ It does not create the skeleton by itself.
 ## Recommended Next Blocks
 
 ```text
-EduOS Non-Sensitive Skeleton Open v0.1
 EduOS Skeleton Local Validation v0.1
+EduOS Skeleton Expansion Guardrails v0.1
 ```
 
 ## Validation

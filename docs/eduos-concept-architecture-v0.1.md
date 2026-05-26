@@ -241,14 +241,15 @@ Non-sensitive skeleton scope: defined
 Implementation gate: ready_for_non_sensitive_skeleton
 Skeleton repository decision: approved_with_conditions
 Skeleton opening checklist: passed_with_conditions
+Non-sensitive skeleton: opened_local_non_sensitive
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Non-Sensitive Skeleton Open v0.1
 EduOS Skeleton Local Validation v0.1
+EduOS Skeleton Expansion Guardrails v0.1
 ```
 
 ## Validation
