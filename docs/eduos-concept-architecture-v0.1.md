@@ -247,14 +247,15 @@ Skeleton expansion guardrails: defined
 Skeleton publish decision: keep_local_only
 Skeleton branch boundary review: passed_with_conditions
 Skeleton publish readiness: not_ready_yet
+Skeleton repo naming decision: approved_with_conditions
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Repo Naming Decision v0.1
 EduOS Skeleton Visibility Decision v0.1
+EduOS Skeleton License Notice Decision v0.1
 ```
 
 ## Validation

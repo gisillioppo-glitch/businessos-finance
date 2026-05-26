@@ -326,6 +326,14 @@ docs/eduos-skeleton-publish-readiness-checklist-v0.1-status.md
 
 This status keeps publishing blocked because repo naming, visibility, license, public claims, and explicit publish approval are not complete.
 
+The EduOS skeleton repo naming decision status is documented in:
+
+```text
+docs/eduos-skeleton-repo-naming-decision-v0.1-status.md
+```
+
+This status approves `eduos-skeleton` as the future repository name with conditions, while keeping Git initialization, remote creation, publishing, runtime, database, dashboard, adapters, Public AI, approvals, delivery, and academic data blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

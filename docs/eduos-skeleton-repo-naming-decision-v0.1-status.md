@@ -1,4 +1,4 @@
-# EduOS Skeleton Publish Readiness Checklist v0.1
+# EduOS Skeleton Repo Naming Decision v0.1
 
 Date: 2026-05-25
 
@@ -8,45 +8,57 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block evaluates whether the local-only EduOS skeleton is ready to become a separate repository.
+This block decides the recommended future repository name for the local-only EduOS skeleton.
 
-The goal is not to publish. The goal is to decide what is ready, what is missing, and what remains blocked before any `git init`, remote repository creation, or push.
+The goal is not to create a repository. The goal is to approve a name that does not imply production readiness, live academic data, shared OS Core, platform maturity, or public availability.
 
 ## Decision
 
 ```text
-EduOS skeleton publish readiness: not_ready_yet
-local_only: true
+EduOS skeleton repo naming decision: approved_with_conditions
+recommended_repo_name: eduos-skeleton
 git_repository: not opened
 remote_repository: blocked
 sensitive_implementation: blocked
 ```
 
-Do not publish yet.
+Recommended future repository name:
 
-The skeleton remains local-only until repo naming, visibility, license, public claims, and final pre-publish scans are complete.
+```text
+eduos-skeleton
+```
 
-## Readiness Checklist
+## Reason
 
-| Check | Status | Reason |
-| --- | --- | --- |
-| Local validation | passed | Skeleton scans are clean. |
-| Branch boundary review | passed_with_conditions | Boundaries are documented. |
-| Sensitive-file scan | passed | No sensitive files found. |
-| Allowed-extension scan | passed | Only `.md` and `.json` files are present. |
-| Git repository check | passed | No `.git` folder exists. |
-| Repo naming decision | approved_with_conditions | Recommended future repo name is `eduos-skeleton`. |
-| Visibility decision | missing | Public/private repo posture is not approved. |
-| License decision | missing | License or proprietary notice is not approved. |
-| Public claim review | missing | README public-facing language is not approved for publish. |
-| Publish approval | missing | No explicit publish approval exists. |
+This name is intentionally limited.
+
+It communicates:
+
+- EduOS branch context
+- skeleton-only maturity
+- no production claim
+- no live academic data
+- no platform/core claim
+
+## Names Not Approved
+
+Do not use:
+
+- `eduos`
+- `eduos-platform`
+- `eduos-production`
+- `eduos-live`
+- `eduos-core`
+- `os-platform-eduos`
+
+These names imply runtime, production, shared core, or platform maturity that does not exist yet.
 
 ## Local Skeleton Update
 
-Added local publish readiness checklist:
+Added local repo naming decision:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\publish-readiness-checklist.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\repo-naming-decision.md
 ```
 
 No `.git` folder was created.
@@ -55,20 +67,22 @@ No remote repository was created.
 
 No runtime, database, dashboard, adapter, Public AI, approval, notification delivery, or academic data files were created.
 
-## Required Before Publish
+## Readiness Checklist Update
 
-Before any `git init`, remote creation, or push:
+This resolves:
 
-- confirm repo name remains `eduos-skeleton`
-- choose repo visibility
-- decide license/proprietary notice
-- review README public claims
-- rerun sensitive scan
-- rerun allowed-extension scan
-- confirm no runtime code
-- confirm no academic data
-- confirm no BusinessOS private artifacts
-- get explicit publish approval
+```text
+Repo naming decision: approved_with_conditions
+```
+
+Still unresolved:
+
+```text
+Visibility decision: missing
+License decision: missing
+Public claim review: missing
+Publish approval: missing
+```
 
 ## Still Blocked
 
@@ -111,13 +125,13 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-skeleton branch boundary review: passed_with_conditions
+repo naming decision: missing
 ```
 
 to:
 
 ```text
-skeleton publish readiness: not_ready_yet
+repo naming decision: approved_with_conditions
 ```
 
 Remote publish and sensitive implementation remain blocked.

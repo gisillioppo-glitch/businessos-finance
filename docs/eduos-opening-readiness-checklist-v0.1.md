@@ -57,6 +57,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS skeleton publish decision | keep_local_only | Remote repository creation remains blocked until branch boundary review and publish readiness are complete. |
 | EduOS skeleton branch boundary review | passed_with_conditions | Skeleton is separated from BusinessOS, OS Platform, Public AI, remote publish, and sensitive implementation. |
 | EduOS skeleton publish readiness | not_ready_yet | Repo naming, visibility, license, public claims, and explicit publish approval are not complete. |
+| EduOS skeleton repo naming decision | approved_with_conditions | Future repository name should be `eduos-skeleton`, not production/platform/core language. |
 | EduOS sensitive implementation | not_ready | Student data, database, dashboard actions, adapters, Public AI, and approvals remain blocked. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -173,8 +174,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Repo Naming Decision v0.1
 EduOS Skeleton Visibility Decision v0.1
+EduOS Skeleton License Notice Decision v0.1
 ```
 
 Purpose:
