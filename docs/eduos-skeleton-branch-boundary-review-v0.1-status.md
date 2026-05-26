@@ -16,6 +16,7 @@ The goal is not to publish or implement EduOS. The goal is to confirm that branc
 
 ```text
 EduOS skeleton branch boundary review: passed_with_conditions
+EduOS skeleton publish readiness: not_ready_yet
 location: C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton
 mode: non_sensitive_skeleton
 businessos_boundary: separate
@@ -101,8 +102,8 @@ Remote publish and sensitive implementation remain blocked.
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Publish Readiness Checklist v0.1
 EduOS Skeleton Repo Naming Decision v0.1
+EduOS Skeleton Visibility Decision v0.1
 ```
 
 ## Boundary Classification

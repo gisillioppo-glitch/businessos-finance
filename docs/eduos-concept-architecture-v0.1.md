@@ -246,14 +246,15 @@ Skeleton local validation: passed
 Skeleton expansion guardrails: defined
 Skeleton publish decision: keep_local_only
 Skeleton branch boundary review: passed_with_conditions
+Skeleton publish readiness: not_ready_yet
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Publish Readiness Checklist v0.1
 EduOS Skeleton Repo Naming Decision v0.1
+EduOS Skeleton Visibility Decision v0.1
 ```
 
 ## Validation

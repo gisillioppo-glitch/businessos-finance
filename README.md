@@ -318,6 +318,14 @@ docs/eduos-skeleton-branch-boundary-review-v0.1-status.md
 
 This status confirms the local EduOS skeleton is separated from BusinessOS, OS Platform, Public AI, runtime, remote publishing, and sensitive academic implementation.
 
+The EduOS skeleton publish readiness checklist status is documented in:
+
+```text
+docs/eduos-skeleton-publish-readiness-checklist-v0.1-status.md
+```
+
+This status keeps publishing blocked because repo naming, visibility, license, public claims, and explicit publish approval are not complete.
+
 The first reusable feature boundary template is documented in:
 
 ```text
