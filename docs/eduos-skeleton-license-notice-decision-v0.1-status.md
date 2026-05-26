@@ -1,4 +1,4 @@
-# EduOS Skeleton Visibility Decision v0.1
+# EduOS Skeleton License Notice Decision v0.1
 
 Date: 2026-05-25
 
@@ -8,45 +8,53 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block decides the future visibility posture for the EduOS skeleton if it later becomes a repository.
+This block decides the license and ownership posture for the local-only EduOS skeleton before any future repository creation or publication.
 
-The goal is not to create a repository. The goal is to decide whether a future repo should start public or private, while keeping Git initialization, remote creation, publishing, runtime, database, dashboard, adapters, Public AI, approvals, delivery, and academic data blocked.
+The goal is not to create a `LICENSE` file, publish the skeleton, create a repository, or approve external distribution. The goal is to prevent the skeleton from being interpreted as public or open source while EduOS remains private, local-only, and non-sensitive.
 
 ## Decision
 
 ```text
-EduOS skeleton visibility decision: private_when_created
+EduOS skeleton license decision: proprietary_notice_required
 recommended_repo_name: eduos-skeleton
+visibility_decision: private_when_created
+license_file: not created
+open_source_license: not approved
+public_distribution: blocked
 git_repository: not opened
 remote_repository: blocked
-public_repository: not approved
 sensitive_implementation: blocked
 ```
 
-If the skeleton later becomes a repository, it should start private.
+If the skeleton later becomes a private repository, it should include a proprietary/confidential notice before any remote push.
 
-Public visibility is not approved.
+No open source license is approved.
 
 ## Reason
 
-Private-first visibility is required because:
+The skeleton must remain proprietary because:
 
-- EduOS is still a skeleton
+- EduOS is still local-only
 - public claims are not reviewed
-- license posture is not yet fully packaged for any repository
 - publish approval is missing
+- OS Core ownership is not separated yet
 - Public AI boundaries remain blocked
-- sensitive implementation is still blocked
+- sensitive implementation remains blocked
+- academic data and adapters are not opened
 
 ## Local Skeleton Update
 
-Added local visibility decision:
+Added local license decision:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\visibility-decision.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\license-decision.md
 ```
 
+Updated the local skeleton README with a proprietary notice.
+
 No `.git` folder was created.
+
+No `LICENSE` file was created.
 
 No remote repository was created.
 
@@ -57,7 +65,7 @@ No runtime, database, dashboard, adapter, Public AI, approval, notification deli
 This resolves:
 
 ```text
-Visibility decision: private_when_created
+License decision: proprietary_notice_required
 ```
 
 Still unresolved:
@@ -67,17 +75,6 @@ Public claim review: missing
 Publish approval: missing
 ```
 
-## Visibility Not Approved
-
-Do not create:
-
-- public GitHub repository
-- public package
-- public demo
-- public docs site
-- public AI surface
-- public live status
-
 ## Still Blocked
 
 Still blocked:
@@ -85,6 +82,11 @@ Still blocked:
 - `git init`
 - GitHub repository creation
 - remote push
+- public repository
+- public docs site
+- `LICENSE` file creation
+- open source license selection
+- external distribution
 - runtime code
 - CLI commands
 - dashboard pages
@@ -119,13 +121,13 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-visibility decision: missing
+license decision: missing
 ```
 
 to:
 
 ```text
-visibility decision: private_when_created
+license decision: proprietary_notice_required
 ```
 
 Remote publish and sensitive implementation remain blocked.
@@ -149,6 +151,7 @@ Runtime behavior: none
 Approval behavior: none
 Notification delivery: none
 Remote publish: blocked
+License posture: proprietary_notice_required
 ```
 
 ## Validation

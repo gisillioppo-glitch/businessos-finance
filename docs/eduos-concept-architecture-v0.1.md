@@ -249,14 +249,15 @@ Skeleton branch boundary review: passed_with_conditions
 Skeleton publish readiness: not_ready_yet
 Skeleton repo naming decision: approved_with_conditions
 Skeleton visibility decision: private_when_created
+Skeleton license notice decision: proprietary_notice_required
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton License Notice Decision v0.1
 EduOS Skeleton Public Claims Review v0.1
+EduOS Skeleton Publish Approval Gate v0.1
 ```
 
 ## Validation

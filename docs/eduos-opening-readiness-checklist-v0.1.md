@@ -59,6 +59,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS skeleton publish readiness | not_ready_yet | Repo naming, visibility, license, public claims, and explicit publish approval are not complete. |
 | EduOS skeleton repo naming decision | approved_with_conditions | Future repository name should be `eduos-skeleton`, not production/platform/core language. |
 | EduOS skeleton visibility decision | private_when_created | If a repository is later created, it should start private; public visibility is not approved. |
+| EduOS skeleton license notice decision | proprietary_notice_required | Skeleton remains proprietary; no open source license or public distribution is approved. |
 | EduOS sensitive implementation | not_ready | Student data, database, dashboard actions, adapters, Public AI, and approvals remain blocked. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -175,8 +176,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton License Notice Decision v0.1
 EduOS Skeleton Public Claims Review v0.1
+EduOS Skeleton Publish Approval Gate v0.1
 ```
 
 Purpose:

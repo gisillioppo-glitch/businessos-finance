@@ -342,6 +342,14 @@ docs/eduos-skeleton-visibility-decision-v0.1-status.md
 
 This status sets future repository visibility to `private_when_created`, while keeping public repository creation and publication blocked.
 
+The EduOS skeleton license notice decision status is documented in:
+
+```text
+docs/eduos-skeleton-license-notice-decision-v0.1-status.md
+```
+
+This status sets the skeleton license posture to `proprietary_notice_required`, while keeping open source licensing, public distribution, and repository publication blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

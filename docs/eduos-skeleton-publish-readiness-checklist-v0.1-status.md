@@ -37,7 +37,7 @@ The skeleton remains local-only until repo naming, visibility, license, public c
 | Git repository check | passed | No `.git` folder exists. |
 | Repo naming decision | approved_with_conditions | Recommended future repo name is `eduos-skeleton`. |
 | Visibility decision | private_when_created | Future repository should start private if created. |
-| License decision | missing | License or proprietary notice is not approved. |
+| License decision | proprietary_notice_required | Skeleton remains proprietary; no open source license is approved. |
 | Public claim review | missing | README public-facing language is not approved for publish. |
 | Publish approval | missing | No explicit publish approval exists. |
 
@@ -61,7 +61,7 @@ Before any `git init`, remote creation, or push:
 
 - confirm repo name remains `eduos-skeleton`
 - confirm repo visibility remains private_when_created
-- decide license/proprietary notice
+- confirm proprietary notice remains required
 - review README public claims
 - rerun sensitive scan
 - rerun allowed-extension scan
