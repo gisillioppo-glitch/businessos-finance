@@ -1,4 +1,4 @@
-# EduOS Skeleton Pre-Publish Local Audit v0.1
+# EduOS Skeleton Repository Creation Decision v0.1
 
 Date: 2026-05-25
 
@@ -8,51 +8,69 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block runs a local pre-publish audit over the EduOS skeleton posture without publishing, creating a repository, or opening implementation.
+This block decides whether the local-only EduOS skeleton should become a repository now.
 
-The goal is to confirm whether the local skeleton is technically clean while preserving the approval gate and keeping repository creation blocked.
+The goal is not to create a Git repository, create a remote repository, push to GitHub, publish docs, or open implementation. The goal is to close the repository creation question based on the current gate state.
 
 ## Decision
 
 ```text
-EduOS skeleton pre-publish local audit: passed_with_blockers
-technical_scan: passed
-publishable_now: no
-gate_result: not_publishable_yet
+EduOS skeleton repository creation decision: deferred_with_clear_path
+recommended_repo_name: eduos-skeleton
+visibility_decision: private_when_created
+license_decision: proprietary_notice_required
+public_claim_review: approved_for_private_skeleton_only
+pre_publish_local_audit: passed_with_blockers
 publish_approval: required_not_granted
 git_repository: not opened
 remote_repository: blocked
+private_repository_creation: not approved
+public_repository_creation: blocked
 sensitive_implementation: blocked
 ```
 
-The local skeleton is technically clean for docs/config review.
+Do not create a repository yet.
 
-It is not publishable yet.
+Do not run `git init`.
 
-Publication remains blocked because explicit publish approval is still missing and repository creation remains blocked.
+Do not create a remote repository.
 
-## Audit Results
+Do not push the skeleton to GitHub.
 
-| Check | Status | Result |
-| --- | --- | --- |
-| Sensitive-file scan | passed | No secrets, DB files, credentials, data exports, or private artifacts detected. |
-| Allowed-extension scan | passed | Only `.md` and `.json` files are allowed. |
-| ASCII check | passed | Local skeleton files are ASCII. |
-| Git repository check | passed | No `.git` folder exists. |
-| Runtime check | passed | No runtime code is present. |
-| Academic data check | passed | No student, teacher, guardian, grade, attendance, assessment, or evidence data is present. |
-| BusinessOS copy check | passed | No BusinessOS private runtime, report, DB, or dashboard artifact was copied. |
-| Publish approval gate | blocked | Explicit future approval is still missing. |
+## Reason
+
+The skeleton is technically clean, but repository creation is deferred because:
+
+- explicit publish approval is still missing
+- private repository creation is not approved
+- public repository creation is blocked
+- EduOS remains a non-sensitive local skeleton
+- implementation remains blocked
+- external distribution remains blocked
+
+## Future Approval Path
+
+A future private repository may be reconsidered only if:
+
+- explicit operator approval is granted
+- target name remains `eduos-skeleton`
+- visibility remains private
+- proprietary notice remains required
+- pre-publish local audit is rerun and still clean
+- public claims are rewritten if external visibility changes
+- no runtime code exists
+- no academic data exists
+- no BusinessOS private artifacts exist
 
 ## Local Skeleton Update
 
-Added local pre-publish audit:
+Added local repository creation decision:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\pre-publish-local-audit.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\repository-creation-decision.md
 ```
 
-Updated the local skeleton README with the audit result.
+Updated the local skeleton README with the repository creation decision.
 
 No `.git` folder was created.
 
@@ -67,14 +85,13 @@ No runtime, database, dashboard, adapter, Public AI, approval, notification deli
 This resolves:
 
 ```text
-Pre-publish local audit: passed_with_blockers
+Repository creation decision: deferred_with_clear_path
 ```
 
 Still unresolved:
 
 ```text
-Explicit publish approval: missing
-Repository creation decision: deferred_with_clear_path
+Explicit private repository approval: missing
 ```
 
 ## Still Blocked
@@ -129,14 +146,14 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-pre-publish local audit: not_run
+repository creation decision: not_made
 ```
 
 to:
 
 ```text
-pre-publish local audit: passed_with_blockers
-publishable_now: no
+repository creation decision: deferred_with_clear_path
+repository_creation: blocked
 ```
 
 Remote publish and sensitive implementation remain blocked.
@@ -160,7 +177,7 @@ Runtime behavior: none
 Approval behavior: gate_required_not_granted
 Notification delivery: none
 Remote publish: blocked
-Pre-publish audit posture: passed_with_blockers
+Repository creation posture: deferred_with_clear_path
 ```
 
 ## Validation

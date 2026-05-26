@@ -374,6 +374,14 @@ docs/eduos-skeleton-pre-publish-local-audit-v0.1-status.md
 
 This status confirms the local skeleton technical scans pass, while keeping publication blocked because approval and repository creation remain unresolved.
 
+The EduOS skeleton repository creation decision status is documented in:
+
+```text
+docs/eduos-skeleton-repository-creation-decision-v0.1-status.md
+```
+
+This status defers repository creation with a clear future approval path, while keeping `.git`, remote creation, GitHub push, and publication blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

@@ -41,6 +41,7 @@ The skeleton remains local-only until repo naming, visibility, license, public c
 | Public claim review | approved_for_private_skeleton_only | Current wording is safe only for private skeleton planning, not public publish. |
 | Publish approval | required_not_granted | Explicit future approval is required before any repository creation or publish. |
 | Pre-publish local audit | passed_with_blockers | Technical scans pass, but publish approval and repository creation remain blocked. |
+| Repository creation decision | deferred_with_clear_path | Repository creation remains deferred until explicit future approval. |
 
 ## Local Skeleton Update
 
@@ -71,6 +72,7 @@ Before any `git init`, remote creation, or push:
 - confirm no BusinessOS private artifacts
 - obtain explicit future publish approval
 - confirm pre-publish local audit remains clean
+- confirm repository creation decision is approved in a future block
 
 ## Still Blocked
 
