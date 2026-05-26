@@ -406,6 +406,14 @@ docs/eduos-skeleton-private-repo-approval-decision-v0.1-status.md
 
 This status records that private repository creation is not approved yet, while keeping `.git`, remote creation, GitHub push, and publication blocked.
 
+The EduOS skeleton opening pause handoff status is documented in:
+
+```text
+docs/eduos-skeleton-opening-pause-handoff-v0.1-status.md
+```
+
+This status records safe resume instructions for the local-only EduOS skeleton while keeping repository creation and implementation blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

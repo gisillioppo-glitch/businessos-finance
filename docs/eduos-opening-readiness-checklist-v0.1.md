@@ -67,6 +67,7 @@ BusinessOS is not yet ready for direct EduOS implementation or code cloning.
 | EduOS skeleton private repo approval request | drafted_not_granted | Approval request is drafted, but repository creation is not approved. |
 | EduOS skeleton repo opening runbook | ready_when_approved | Future opening steps are documented, but execution remains blocked until approval. |
 | EduOS skeleton private repo approval decision | not_approved_yet | Repository creation is not approved yet. |
+| EduOS skeleton opening pause handoff | ready | Safe resume instructions are documented while repo creation remains blocked. |
 | EduOS sensitive implementation | not_ready | Student data, database, dashboard actions, adapters, Public AI, and approvals remain blocked. |
 
 ## Required Preconditions Before EduOS Implementation
@@ -183,8 +184,8 @@ During EduOS planning:
 ## Recommended Next Blocks
 
 ```text
-EduOS Skeleton Opening Pause / Handoff v0.1
 BusinessOS / EduOS Branch Readiness Summary v0.1
+EduOS Skeleton Approval Decision Revisit v0.1
 ```
 
 Purpose:

@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Skeleton Opening Pause / Handoff v0.1
 BusinessOS / EduOS Branch Readiness Summary v0.1
+EduOS Skeleton Approval Decision Revisit v0.1
 ```
 
 ## Operator Note

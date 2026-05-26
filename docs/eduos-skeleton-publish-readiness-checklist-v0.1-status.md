@@ -45,6 +45,7 @@ The skeleton remains local-only until repo naming, visibility, license, public c
 | Private repo approval request | drafted_not_granted | Approval request is drafted, but no approval has been granted. |
 | Repo opening runbook | ready_when_approved | Future opening steps are documented, but execution remains blocked. |
 | Private repo approval decision | not_approved_yet | Repository creation is not approved yet. |
+| Opening pause handoff | ready | Safe resume instructions are documented. |
 
 ## Local Skeleton Update
 
@@ -79,6 +80,7 @@ Before any `git init`, remote creation, or push:
 - convert private repo approval request from draft to approved in a future block
 - use repo opening runbook only after explicit approval
 - get explicit private repo approval decision before execution
+- use opening pause handoff before resuming in another chat
 
 ## Still Blocked
 

@@ -1,4 +1,4 @@
-# EduOS Skeleton Private Repo Approval Decision v0.1
+# EduOS Skeleton Opening Pause Handoff v0.1
 
 Date: 2026-05-25
 
@@ -8,66 +8,53 @@ Closed for MVP validation.
 
 ## Purpose
 
-This block reviews the drafted private repository approval request and decides whether to approve repository creation now.
+This block creates a safe handoff for pausing or resuming the EduOS skeleton opening sequence.
 
-The goal is not to create a Git repository, create a remote repository, push to GitHub, publish docs, or open implementation. The goal is to record the approval decision clearly.
+The goal is not to approve repository creation, run `git init`, create a remote repository, push to GitHub, publish docs, or open implementation. The goal is to preserve the current state clearly for the next session or chat.
 
 ## Decision
 
 ```text
-EduOS skeleton private repo approval decision: not_approved_yet
-approval_request_status: drafted
-repo_opening_runbook: ready_when_approved
-repository_name: eduos-skeleton
-visibility: private_when_created
+EduOS skeleton opening pause handoff: ready
+branch: EduOS
+mode: local_only_skeleton
 repository_creation: blocked
+private_repo_approval_decision: not_approved_yet
 git_repository: not opened
 remote_repository: blocked
 sensitive_implementation: blocked
 ```
 
-Private repository creation is not approved yet.
+EduOS has a local-only, non-sensitive skeleton.
 
-Do not run `git init`.
+The skeleton is technically clean for docs/config review.
 
-Do not create a GitHub repository.
+It is not approved for repository creation, publication, implementation, or external distribution.
 
-Do not add a remote.
+## Current Decisions
 
-Do not push the skeleton.
-
-## Reason
-
-The opening runbook is ready, but approval is not granted because:
-
-- approval was not explicitly requested as an execution instruction
-- repository creation should remain a separate operator decision
-- EduOS remains local-only
-- implementation remains blocked
-- public distribution remains blocked
-
-## Future Approval Conditions
-
-To approve later:
-
-- operator must explicitly say to approve private repo creation
-- pre-publish local audit must be rerun
-- no `.git` folder may exist before execution
-- no runtime code may exist
-- no academic data may exist
-- no BusinessOS private artifacts may exist
-- repository name must remain `eduos-skeleton`
-- visibility must remain private
+```text
+repo_name: eduos-skeleton
+visibility: private_when_created
+license_posture: proprietary_notice_required
+public_claim_review: approved_for_private_skeleton_only
+publish_approval_gate: required_not_granted
+pre_publish_local_audit: passed_with_blockers
+repository_creation_decision: deferred_with_clear_path
+private_repo_approval_request: drafted_not_granted
+repo_opening_runbook: ready_when_approved
+private_repo_approval_decision: not_approved_yet
+```
 
 ## Local Skeleton Update
 
-Added local private repo approval decision:
+Added local opening pause handoff:
 
 ```text
-C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\private-repo-approval-decision.md
+C:\Users\fabia\OneDrive\Escritorio\OS\eduos-skeleton\docs\opening-pause-handoff.md
 ```
 
-Updated the local skeleton README with the decision status.
+Updated the local skeleton README with the handoff status.
 
 No `.git` folder was created.
 
@@ -77,20 +64,16 @@ No remote repository was created.
 
 No runtime, database, dashboard, adapter, Public AI, approval, notification delivery, or academic data files were created.
 
-## Readiness Checklist Update
+## Resume Instructions
 
-This resolves:
+When resuming:
 
-```text
-Private repo approval decision: not_approved_yet
-```
-
-Still unresolved:
-
-```text
-Opening pause handoff: ready
-Repository creation execution: blocked
-```
+1. Start in the BusinessOS repo.
+2. Confirm only `BussinessOS Avance.pdf` is untracked.
+3. Confirm EduOS skeleton still has no `.git` folder.
+4. Confirm EduOS skeleton still contains only `.md` and `.json` files.
+5. Do not open repo creation unless explicitly approved.
+6. Next recommended block: `BusinessOS / EduOS Branch Readiness Summary v0.1`.
 
 ## Still Blocked
 
@@ -144,13 +127,13 @@ No BusinessOS private files were copied into EduOS.
 This moves EduOS from:
 
 ```text
-private repo approval decision: missing
+opening pause handoff: missing
 ```
 
 to:
 
 ```text
-private repo approval decision: not_approved_yet
+opening pause handoff: ready
 repository_creation: blocked
 ```
 
@@ -172,10 +155,10 @@ EduOS-specific: yes
 Public AI boundary: blocked
 Sensitive data exposure: none
 Runtime behavior: none
-Approval behavior: decision_not_approved_yet
+Approval behavior: handoff_only
 Notification delivery: none
 Remote publish: blocked
-Private repo approval decision: not_approved_yet
+Opening handoff posture: ready
 ```
 
 ## Validation
