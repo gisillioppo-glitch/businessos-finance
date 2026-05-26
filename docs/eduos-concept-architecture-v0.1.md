@@ -258,14 +258,15 @@ Skeleton private repo approval request: drafted_not_granted
 Skeleton repo opening runbook: ready_when_approved
 Skeleton private repo approval decision: not_approved_yet
 Skeleton opening pause handoff: ready
+BusinessOS / EduOS branch readiness summary: summarized
 Implementation: not opened
 ```
 
 ## Recommended Next Blocks
 
 ```text
-BusinessOS / EduOS Branch Readiness Summary v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
+OS Core Extraction Contract Draft v0.1
 ```
 
 ## Validation

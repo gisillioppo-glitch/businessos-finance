@@ -771,8 +771,8 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-BusinessOS / EduOS Branch Readiness Summary v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
+OS Core Extraction Contract Draft v0.1
 ```
 
 ## Operator Note

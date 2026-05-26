@@ -414,6 +414,14 @@ docs/eduos-skeleton-opening-pause-handoff-v0.1-status.md
 
 This status records safe resume instructions for the local-only EduOS skeleton while keeping repository creation and implementation blocked.
 
+The BusinessOS / EduOS branch readiness summary is documented in:
+
+```text
+docs/businessos-eduos-branch-readiness-summary-v0.1-status.md
+```
+
+This status summarizes BusinessOS as the stable reference branch and EduOS as a local-only skeleton with repository creation and implementation still blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text
