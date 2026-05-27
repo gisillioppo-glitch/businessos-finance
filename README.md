@@ -478,6 +478,22 @@ docs/os-core-approval-contract-test-plan-v0.1.md
 
 This plan defines the required config, lifecycle, protected-source, report stability, authority-boundary, and Public AI denial tests before approvals move closer to extraction.
 
+The first approval config boundary tests are implemented in:
+
+```text
+tests/test_approval_config_boundary.py
+```
+
+These tests protect BusinessOS approval config defaults, read-only behavior, request creation, duplicate handling, status updates, protected source behavior, and audit event creation without touching the production database.
+
+The approval config boundary test block is documented in:
+
+```text
+docs/approval-config-boundary-tests-v0.1-status.md
+```
+
+This status records the first automated approval config boundary tests and confirms approvals now have both a config boundary and a test boundary before any extraction work.
+
 The first reusable feature boundary template is documented in:
 
 ```text

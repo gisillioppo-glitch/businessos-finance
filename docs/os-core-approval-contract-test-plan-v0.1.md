@@ -194,9 +194,10 @@ It does not approve extraction.
 ## Recommended Next Blocks
 
 ```text
-Approval Config Boundary Tests v0.1
+Approval Config Boundary Tests v0.1 (implemented)
 OS Core Candidate Contract Review - Evidence v0.1
 OS Core Approval Extraction Readiness Review v0.1
+Approval Lifecycle Contract Tests v0.1
 ```
 
 ## Boundary Classification
