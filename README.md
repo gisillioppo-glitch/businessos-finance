@@ -446,6 +446,14 @@ docs/os-core-candidate-contract-review-approvals-v0.1-status.md
 
 This review applies the OS Core contract checklist to the approval layer and allows detailed approval contract design while keeping code extraction blocked.
 
+The first OS Core candidate contract review for evidence is documented in:
+
+```text
+docs/os-core-candidate-contract-review-evidence-v0.1-status.md
+```
+
+This review applies the OS Core contract checklist to evidence index, daily close, and daily close distribution, allowing detailed evidence contract design while keeping code extraction blocked.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

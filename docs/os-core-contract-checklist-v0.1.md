@@ -201,8 +201,9 @@ OS Core Approval Contract Draft v0.1 (drafted)
 Approval Config Boundary Prep v0.1 (closed)
 Approval Config Boundary Implementation v0.1 (closed)
 OS Core Approval Contract Test Plan v0.1 (drafted)
-Approval Config Boundary Tests v0.1
-OS Core Candidate Contract Review - Evidence v0.1
+Approval Config Boundary Tests v0.1 (closed)
+OS Core Candidate Contract Review - Evidence v0.1 (closed)
+OS Core Evidence Contract Draft v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 ```
 
