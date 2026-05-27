@@ -47,16 +47,16 @@ Failed checks: 0
 | Database table: approval_requests | passed | present |
 | Database table: notification_outbox | passed | present |
 | Database table: scheduled_daily_close | passed | present |
-| Latest report: daily_brief | passed | reports\daily_brief_2026-05-25.md |
-| Latest report: governance_brief | passed | reports\governance_brief_2026-05-25.md |
-| Latest report: support_brief | passed | reports\support_brief_2026-05-25.md |
-| Latest report: command_center | passed | reports\command_center_2026-05-25.md |
-| Latest report: approval_decisions | passed | reports\approval_decisions_2026-05-25.md |
-| Latest report: executive_alerts | passed | reports\executive_alerts_2026-05-25.md |
-| Latest report: executive_evidence_index | passed | reports\executive_evidence_index_2026-05-25.md |
-| Latest report: daily_close | passed | reports\daily_close_2026-05-25.md |
-| Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-25.md |
-| Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-25.md |
+| Latest report: daily_brief | passed | reports\daily_brief_2026-05-27.md |
+| Latest report: governance_brief | passed | reports\governance_brief_2026-05-27.md |
+| Latest report: support_brief | passed | reports\support_brief_2026-05-27.md |
+| Latest report: command_center | passed | reports\command_center_2026-05-27.md |
+| Latest report: approval_decisions | passed | reports\approval_decisions_2026-05-27.md |
+| Latest report: executive_alerts | passed | reports\executive_alerts_2026-05-27.md |
+| Latest report: executive_evidence_index | passed | reports\executive_evidence_index_2026-05-27.md |
+| Latest report: daily_close | passed | reports\daily_close_2026-05-27.md |
+| Latest report: daily_close_distribution | passed | reports\daily_close_distribution_2026-05-27.md |
+| Latest report: runtime_stability | passed | reports\runtime_stability_2026-05-27.md |
 | Latest report: private_demo_package | passed | reports\private_demo_package_2026-05-22.md |
 | Latest report: public_surface_publish_checklist | passed | reports\public_surface_publish_checklist_2026-05-16.md |
 | Latest report: notification_delivery_approval | passed | reports\notification_delivery_approval_2026-05-13.md |
@@ -72,4 +72,4 @@ Failed checks: 0
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-27.md | date: 2026-05-27 | stale areas: 0 | missing areas: 0 |
 | Boundary classification coverage | passed | 157/157 status docs covered |
-| Git working tree | warning | ?? reports/area_review_bundle_2026-05-27.md; ?? reports/area_review_index_2026-05-27.md; ?? reports/finance_area_review_2026-05-27.md; ?? reports/governance_area_review_2026-05-27.md; ?? reports/operations_area_review_2026-05-27.md; ?? reports/support_area_review_2026-05-27.md; ?? reports/system_integrity_2026-05-27.md |
+| Git working tree | warning | ?? reports/runtime_stability_2026-05-27.md |
