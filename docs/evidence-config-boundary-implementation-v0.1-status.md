@@ -76,7 +76,7 @@ Still blocked:
 ## Recommended Next Blocks
 
 ```text
-Evidence Registry Contract Tests v0.1
+Evidence Registry Contract Tests v0.1 (closed)
 OS Core Approval Extraction Readiness Review v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 ```

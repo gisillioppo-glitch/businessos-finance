@@ -478,6 +478,20 @@ docs/evidence-config-boundary-implementation-v0.1-status.md
 
 This implementation adds a BusinessOS-only read-only evidence config accessor while preserving current evidence index, daily close distribution, notification queue handoff, and report behavior.
 
+The first evidence registry contract tests are implemented in:
+
+```text
+tests/test_evidence_config_boundary.py
+```
+
+The evidence registry contract test block is documented in:
+
+```text
+docs/evidence-registry-contract-tests-v0.1-status.md
+```
+
+This status records the first automated evidence config boundary tests and confirms evidence now has both a config boundary and a test boundary before any extraction work.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

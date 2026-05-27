@@ -206,7 +206,8 @@ OS Core Candidate Contract Review - Evidence v0.1 (closed)
 OS Core Evidence Contract Draft v0.1 (drafted)
 Evidence Config Boundary Prep v0.1 (closed)
 Evidence Config Boundary Implementation v0.1 (closed)
-Evidence Registry Contract Tests v0.1
+Evidence Registry Contract Tests v0.1 (closed)
+OS Core Approval Extraction Readiness Review v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 ```
 
