@@ -462,6 +462,14 @@ docs/approval-config-boundary-prep-v0.1-status.md
 
 This prep identifies which approval constants, role labels, source modules, evidence requirements, dashboard labels, and report copy must become branch-configurable before any approval extraction work.
 
+The first approval config boundary implementation is documented in:
+
+```text
+docs/approval-config-boundary-implementation-v0.1-status.md
+```
+
+This implementation adds a BusinessOS-only read-only approval config accessor while preserving current approval runtime behavior and keeping OS Core extraction blocked.
+
 The first reusable feature boundary template is documented in:
 
 ```text

@@ -2,11 +2,16 @@ import uuid
 from datetime import datetime
 
 from app.audit.audit_log import write_audit_log
+from app.approvals.config import (
+    get_active_statuses,
+    get_valid_approval_types,
+    get_valid_priorities,
+)
 
 
-VALID_APPROVAL_TYPES = {"decision", "access", "budget", "policy", "incident"}
-VALID_PRIORITIES = {"low", "medium", "high", "critical"}
-ACTIVE_STATUSES = {"pending"}
+VALID_APPROVAL_TYPES = get_valid_approval_types()
+VALID_PRIORITIES = get_valid_priorities()
+ACTIVE_STATUSES = get_active_statuses()
 
 
 def create_approval_request(
@@ -21,10 +26,10 @@ def create_approval_request(
     source_module=None,
     source_reference_id=None,
 ):
-    if approval_type not in VALID_APPROVAL_TYPES:
+    if approval_type not in get_valid_approval_types():
         raise ValueError(f"Invalid approval type: {approval_type}")
 
-    if priority not in VALID_PRIORITIES:
+    if priority not in get_valid_priorities():
         raise ValueError(f"Invalid approval priority: {priority}")
 
     normalized_email = requester_email.strip().lower() if requester_email else None

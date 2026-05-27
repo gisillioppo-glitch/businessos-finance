@@ -1,13 +1,17 @@
 from app.audit.audit_log import write_audit_log
+from app.approvals.config import (
+    get_demo_protected_source_modules,
+    get_valid_approval_statuses,
+)
 from app.approvals.schema import create_approval_requests_table
 
 
-VALID_APPROVAL_STATUSES = {"pending", "approved", "rejected", "cancelled"}
-DEMO_PROTECTED_SOURCE_MODULES = {"pilot_expansion"}
+VALID_APPROVAL_STATUSES = get_valid_approval_statuses()
+DEMO_PROTECTED_SOURCE_MODULES = get_demo_protected_source_modules()
 
 
 def update_approval_request_status(conn, approval_id, new_status, justification=None):
-    if new_status not in VALID_APPROVAL_STATUSES:
+    if new_status not in get_valid_approval_statuses():
         raise ValueError(f"Invalid approval request status: {new_status}")
 
     create_approval_requests_table(conn)
@@ -64,7 +68,8 @@ def update_approval_request_status(conn, approval_id, new_status, justification=
 
 def get_first_pending_approval_request(conn):
     create_approval_requests_table(conn)
-    protected_placeholders = ", ".join("?" for _ in DEMO_PROTECTED_SOURCE_MODULES)
+    protected_source_modules = sorted(get_demo_protected_source_modules())
+    protected_placeholders = ", ".join("?" for _ in protected_source_modules)
 
     return conn.execute(
         f"""
@@ -86,7 +91,7 @@ def get_first_pending_approval_request(conn):
             created_at ASC
         LIMIT 1
         """,
-        tuple(DEMO_PROTECTED_SOURCE_MODULES),
+        tuple(protected_source_modules),
     ).fetchone()
 
 
