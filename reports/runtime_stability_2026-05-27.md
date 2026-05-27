@@ -18,7 +18,7 @@ Full heavy pilot command count: 14
 
 | Check | Status | Detail |
 | --- | --- | --- |
-| System integrity | passed | reports\system_integrity_2026-05-27.md | failed: 0 | warnings: 1 |
+| System integrity | passed | reports\system_integrity_2026-05-27.md | failed: 0 | warnings: 0 |
 | Release readiness | passed | reports\release_readiness_2026-05-27.md | status: ready | failed: 0 | warnings: 0 |
 | Daily close artifact | passed | reports\daily_close_2026-05-27.md |
 | Dashboard local response | passed | http://localhost:8501 returned 200 |
