@@ -454,6 +454,14 @@ docs/os-core-candidate-contract-review-evidence-v0.1-status.md
 
 This review applies the OS Core contract checklist to evidence index, daily close, and daily close distribution, allowing detailed evidence contract design while keeping code extraction blocked.
 
+The first OS Core evidence contract draft is documented in:
+
+```text
+docs/os-core-evidence-contract-draft-v0.1.md
+```
+
+This contract defines the branch-neutral evidence packet, close packet, distribution packet, sensitivity, visibility, audit, Public AI denial, and rollback rules required before evidence can move closer to shared OS Core.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

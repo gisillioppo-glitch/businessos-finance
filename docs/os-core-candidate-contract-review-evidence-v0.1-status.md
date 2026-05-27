@@ -177,7 +177,7 @@ Only an approved, policy-allowed disclosure path can expose private evidence out
 ## Recommended Follow-Up
 
 ```text
-OS Core Evidence Contract Draft v0.1
+OS Core Evidence Contract Draft v0.1 (drafted)
 Evidence Config Boundary Prep v0.1
 Evidence Registry Contract Tests v0.1
 OS Core Approval Extraction Readiness Review v0.1
