@@ -462,6 +462,14 @@ docs/os-core-evidence-contract-draft-v0.1.md
 
 This contract defines the branch-neutral evidence packet, close packet, distribution packet, sensitivity, visibility, audit, Public AI denial, and rollback rules required before evidence can move closer to shared OS Core.
 
+The first evidence config boundary prep is documented in:
+
+```text
+docs/evidence-config-boundary-prep-v0.1-status.md
+```
+
+This prep identifies which BusinessOS evidence registry, close packet, distribution packet, recipient mapping, copy, sensitivity, and visibility values must become branch configuration before any shared OS Core evidence extraction.
+
 The first OS Core approval contract draft is documented in:
 
 ```text
