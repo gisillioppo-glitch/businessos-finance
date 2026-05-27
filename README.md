@@ -500,6 +500,14 @@ docs/os-core-approval-extraction-readiness-review-v0.1-status.md
 
 This review confirms approvals are ready for deeper platform contract design but keeps code extraction blocked until branch adapter, evidence enforcement, dashboard authority, Public AI denial, and EduOS approval gates are clearer.
 
+The first OS Core approval branch adapter contract is documented in:
+
+```text
+docs/os-core-approval-branch-adapter-contract-v0.1.md
+```
+
+This contract defines which approval meaning, roles, source modules, evidence requirements, action gates, dashboard authority rules, and Public AI denial rules must remain branch-owned before any shared OS Core approval extraction.
+
 The first OS Core approval contract draft is documented in:
 
 ```text
