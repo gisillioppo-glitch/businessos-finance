@@ -84,7 +84,7 @@ Still blocked:
 
 ```text
 OS Core Candidate Contract Review - Evidence v0.1
-OS Core Approval Extraction Readiness Review v0.1
+OS Core Approval Extraction Readiness Review v0.1 (closed)
 Approval Lifecycle Contract Tests v0.1
 ```
 

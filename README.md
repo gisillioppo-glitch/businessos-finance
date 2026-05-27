@@ -492,6 +492,14 @@ docs/evidence-registry-contract-tests-v0.1-status.md
 
 This status records the first automated evidence config boundary tests and confirms evidence now has both a config boundary and a test boundary before any extraction work.
 
+The first OS Core approval extraction readiness review is documented in:
+
+```text
+docs/os-core-approval-extraction-readiness-review-v0.1-status.md
+```
+
+This review confirms approvals are ready for deeper platform contract design but keeps code extraction blocked until branch adapter, evidence enforcement, dashboard authority, Public AI denial, and EduOS approval gates are clearer.
+
 The first OS Core approval contract draft is documented in:
 
 ```text
