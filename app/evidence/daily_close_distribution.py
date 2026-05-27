@@ -2,26 +2,19 @@ import os
 from datetime import date
 
 from app.audit.audit_log import write_audit_log
+from app.evidence.config import (
+    get_default_distribution_reports,
+    get_department_reports,
+    get_distribution_delivery_mode,
+    get_distribution_subject_prefix,
+)
 from app.evidence.evidence_index import get_executive_evidence_index
 from app.notifications.outbox import queue_notification
 from app.people.schema import create_business_users_table
 from app.people.users import ensure_default_business_users
 
 
-DEPARTMENT_REPORTS = {
-    "Executive": [
-        "Command Center",
-        "Executive Alerts",
-        "Approval Decisions",
-        "Governance Brief",
-        "Support Brief",
-        "Daily Finance Brief",
-    ],
-    "Finance": ["Daily Finance Brief", "Command Center", "Executive Alerts"],
-    "Operations": ["Command Center", "Executive Alerts", "Approval Decisions"],
-    "Governance": ["Governance Brief", "Approval Decisions", "Executive Alerts"],
-    "Support": ["Support Brief", "Executive Alerts", "Command Center"],
-}
+DEPARTMENT_REPORTS = get_department_reports()
 
 
 def ensure_reports_folder():
@@ -69,11 +62,11 @@ def _get_active_recipients(conn):
 
 def _select_reports_for_recipient(recipient, evidence_items):
     if recipient["access_level"] in {"admin", "executive"}:
-        allowed_labels = DEPARTMENT_REPORTS["Executive"]
+        allowed_labels = get_department_reports()["Executive"]
     else:
-        allowed_labels = DEPARTMENT_REPORTS.get(
+        allowed_labels = get_department_reports().get(
             recipient["department"],
-            ["Command Center", "Executive Alerts"],
+            get_default_distribution_reports(),
         )
 
     return [item for item in evidence_items if item["label"] in allowed_labels]
@@ -111,7 +104,7 @@ def _format_package_rows(packages):
 
 
 def _build_email_subject(evidence_index):
-    return f"BusinessOS Daily Close - {evidence_index['date']}"
+    return f"{get_distribution_subject_prefix()} - {evidence_index['date']}"
 
 
 def _build_email_body(recipient, reports, evidence_index):
@@ -169,7 +162,7 @@ def get_daily_close_distribution(conn, report_date=None):
 
     return {
         "date": resolved_date,
-        "delivery_mode": "email_ready_queue",
+        "delivery_mode": get_distribution_delivery_mode(),
         "recipients_count": len(recipients),
         "packages": packages,
         "evidence_index": evidence_index,

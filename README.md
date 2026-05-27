@@ -470,6 +470,14 @@ docs/evidence-config-boundary-prep-v0.1-status.md
 
 This prep identifies which BusinessOS evidence registry, close packet, distribution packet, recipient mapping, copy, sensitivity, and visibility values must become branch configuration before any shared OS Core evidence extraction.
 
+The first evidence config boundary implementation is documented in:
+
+```text
+docs/evidence-config-boundary-implementation-v0.1-status.md
+```
+
+This implementation adds a BusinessOS-only read-only evidence config accessor while preserving current evidence index, daily close distribution, notification queue handoff, and report behavior.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

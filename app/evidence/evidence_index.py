@@ -2,40 +2,10 @@ import os
 from datetime import date
 
 from app.audit.audit_log import write_audit_log
+from app.evidence.config import get_evidence_reports
 
 
-EVIDENCE_REPORTS = [
-    {
-        "label": "Command Center",
-        "file_prefix": "command_center",
-        "purpose": "Unified executive system summary.",
-    },
-    {
-        "label": "Executive Alerts",
-        "file_prefix": "executive_alerts",
-        "purpose": "Cross-module executive alert queue.",
-    },
-    {
-        "label": "Approval Decisions",
-        "file_prefix": "approval_decisions",
-        "purpose": "Approval outcomes, decisions, and justifications.",
-    },
-    {
-        "label": "Governance Brief",
-        "file_prefix": "governance_brief",
-        "purpose": "Governance posture and audit trail health.",
-    },
-    {
-        "label": "Support Brief",
-        "file_prefix": "support_brief",
-        "purpose": "Support incident status and next move.",
-    },
-    {
-        "label": "Daily Finance Brief",
-        "file_prefix": "daily_brief",
-        "purpose": "Finance health, risks, and recommended actions.",
-    },
-]
+EVIDENCE_REPORTS = get_evidence_reports()
 
 
 def ensure_reports_folder():
@@ -52,7 +22,7 @@ def get_executive_evidence_index(report_date=None):
     resolved_date = report_date or date.today().isoformat()
     evidence_items = []
 
-    for report in EVIDENCE_REPORTS:
+    for report in get_evidence_reports():
         file_name = f"{report['file_prefix']}_{resolved_date}.md"
         report_path = os.path.join(reports_path, file_name)
         exists = os.path.exists(report_path)
