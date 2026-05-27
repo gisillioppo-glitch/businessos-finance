@@ -388,7 +388,8 @@ Public AI approval authority: blocked
 ```text
 Approval Config Boundary Prep v0.1 (closed)
 Approval Config Boundary Implementation v0.1 (closed)
-OS Core Approval Contract Test Plan v0.1
+OS Core Approval Contract Test Plan v0.1 (drafted)
+Approval Config Boundary Tests v0.1
 OS Core Candidate Contract Review - Evidence v0.1
 ```
 

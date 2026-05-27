@@ -470,6 +470,14 @@ docs/approval-config-boundary-implementation-v0.1-status.md
 
 This implementation adds a BusinessOS-only read-only approval config accessor while preserving current approval runtime behavior and keeping OS Core extraction blocked.
 
+The first OS Core approval contract test plan is documented in:
+
+```text
+docs/os-core-approval-contract-test-plan-v0.1.md
+```
+
+This plan defines the required config, lifecycle, protected-source, report stability, authority-boundary, and Public AI denial tests before approvals move closer to extraction.
+
 The first reusable feature boundary template is documented in:
 
 ```text
