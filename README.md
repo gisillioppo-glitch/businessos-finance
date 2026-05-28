@@ -522,6 +522,14 @@ docs/approval-lifecycle-contract-tests-v0.1-status.md
 
 This status records lifecycle tests for priority selection, demo approve/reject, visibility authority boundaries, report export boundaries, status transitions, and no-op audit behavior.
 
+The first Public AI approval denial check is documented in:
+
+```text
+docs/public-ai-approval-denial-check-v0.1-status.md
+```
+
+This check adds an explicit public surface guard that blocks private approval runtime paths, commands, reports, tables, and audit events from appearing under `public/`, while allowing safe public copy about approval gates.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

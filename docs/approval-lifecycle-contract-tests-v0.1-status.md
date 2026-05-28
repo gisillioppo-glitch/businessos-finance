@@ -92,7 +92,7 @@ Still blocked:
 ## Recommended Next Blocks
 
 ```text
-Public AI Approval Denial Check v0.1
+Public AI Approval Denial Check v0.1 (closed)
 OS Core Package Opening Decision v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 ```

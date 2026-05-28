@@ -40,6 +40,18 @@ FORBIDDEN_PUBLIC_REFERENCES = [
     "secrets.toml",
 ]
 
+FORBIDDEN_PUBLIC_APPROVAL_REFERENCES = [
+    "approval_requests",
+    "app/approvals",
+    "app\\approvals",
+    "approval-report",
+    "approval-approve",
+    "approval-reject",
+    "approval_decisions_",
+    "approval_request_status_updated",
+    "approval_request_created",
+]
+
 REQUIRED_PUBLIC_MARKERS = [
     "demo-request-form",
     "lead-intake.js",
@@ -204,6 +216,32 @@ def _check_public_reference_boundary():
     )
 
 
+def _check_public_ai_approval_denial():
+    findings = []
+
+    for path in _public_files():
+        if path.suffix.lower() not in PUBLIC_TEXT_SUFFIXES:
+            continue
+
+        content = _read_text(path)
+        for reference in FORBIDDEN_PUBLIC_APPROVAL_REFERENCES:
+            if reference in content:
+                findings.append(f"{path.relative_to(ROOT_DIR)} contains {reference}")
+
+    if findings:
+        return _check(
+            "public_ai_approval_denial",
+            "failed",
+            "; ".join(findings),
+        )
+
+    return _check(
+        "public_ai_approval_denial",
+        "passed",
+        "Public text files do not expose approval runtime paths, commands, reports, tables, or audit events.",
+    )
+
+
 def _check_public_lead_intake_markers():
     public_text = "\n".join(
         _read_text(path)
@@ -237,6 +275,7 @@ def generate_public_private_surface_audit():
         _check_blocked_public_paths(),
         _check_gitignore_private_patterns(),
         _check_public_reference_boundary(),
+        _check_public_ai_approval_denial(),
         _check_public_lead_intake_markers(),
     ]
 
