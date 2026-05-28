@@ -346,7 +346,7 @@ Public AI approval authority: blocked
 ## Recommended Next Blocks
 
 ```text
-Approval Lifecycle Contract Tests v0.1
+Approval Lifecycle Contract Tests v0.1 (closed)
 Public AI Approval Denial Check v0.1
 OS Core Package Opening Decision v0.1
 EduOS Skeleton Approval Decision Revisit v0.1

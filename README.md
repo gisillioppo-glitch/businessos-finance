@@ -508,6 +508,20 @@ docs/os-core-approval-branch-adapter-contract-v0.1.md
 
 This contract defines which approval meaning, roles, source modules, evidence requirements, action gates, dashboard authority rules, and Public AI denial rules must remain branch-owned before any shared OS Core approval extraction.
 
+The first approval lifecycle contract tests are implemented in:
+
+```text
+tests/test_approval_lifecycle_contract.py
+```
+
+The approval lifecycle contract test block is documented in:
+
+```text
+docs/approval-lifecycle-contract-tests-v0.1-status.md
+```
+
+This status records lifecycle tests for priority selection, demo approve/reject, visibility authority boundaries, report export boundaries, status transitions, and no-op audit behavior.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

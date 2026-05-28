@@ -209,7 +209,8 @@ Evidence Config Boundary Implementation v0.1 (closed)
 Evidence Registry Contract Tests v0.1 (closed)
 OS Core Approval Extraction Readiness Review v0.1 (closed)
 OS Core Approval Branch Adapter Contract v0.1 (drafted)
-Approval Lifecycle Contract Tests v0.1
+Approval Lifecycle Contract Tests v0.1 (closed)
+Public AI Approval Denial Check v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 ```
 

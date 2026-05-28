@@ -393,7 +393,8 @@ Approval Config Boundary Tests v0.1 (closed)
 OS Core Candidate Contract Review - Evidence v0.1 (closed)
 OS Core Approval Extraction Readiness Review v0.1 (closed)
 OS Core Approval Branch Adapter Contract v0.1 (drafted)
-Approval Lifecycle Contract Tests v0.1
+Approval Lifecycle Contract Tests v0.1 (closed)
+Public AI Approval Denial Check v0.1
 ```
 
 ## Boundary Classification
