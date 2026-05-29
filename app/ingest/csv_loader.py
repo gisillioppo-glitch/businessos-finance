@@ -1,8 +1,7 @@
+import csv
 import hashlib
 import sqlite3
 from datetime import datetime
-
-import pandas as pd
 
 
 def create_transaction_hash(row):
@@ -17,31 +16,37 @@ def create_transaction_hash(row):
 
 
 def load_csv(path):
-    df = pd.read_csv(path)
-
     required_columns = {"date", "type", "category", "amount", "description"}
-    missing_columns = required_columns - set(df.columns)
 
-    if missing_columns:
-        raise ValueError(f"Missing required columns: {missing_columns}")
+    with open(path, newline="", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        missing_columns = required_columns - set(reader.fieldnames or [])
 
-    df["date"] = pd.to_datetime(df["date"])
-    df["type"] = df["type"].str.lower().str.strip()
-    df["category"] = df["category"].str.lower().str.strip()
-    df["amount"] = df["amount"].astype(float)
-    df["description"] = df["description"].fillna("").astype(str).str.strip()
+        if missing_columns:
+            raise ValueError(f"Missing required columns: {missing_columns}")
 
-    df["id"] = df.apply(create_transaction_hash, axis=1)
+        rows = []
 
-    return df
+        for row in reader:
+            normalized = {
+                "date": datetime.fromisoformat(row["date"].strip()),
+                "type": row["type"].lower().strip(),
+                "category": row["category"].lower().strip(),
+                "amount": float(row["amount"]),
+                "description": (row.get("description") or "").strip(),
+            }
+            normalized["id"] = create_transaction_hash(normalized)
+            rows.append(normalized)
+
+    return rows
 
 
-def insert_transactions(conn, df):
+def insert_transactions(conn, rows):
     inserted_count = 0
     skipped_count = 0
 
     try:
-        for _, row in df.iterrows():
+        for row in rows:
             cursor = conn.execute(
                 """
                 INSERT OR IGNORE INTO transactions (

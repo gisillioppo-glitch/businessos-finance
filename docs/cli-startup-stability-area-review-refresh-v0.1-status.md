@@ -19,6 +19,8 @@ The opening check found that `python cli.py health` and other non-finance comman
 - Make area review bundle import lazy inside `run_area_review_bundle()`.
 - Replace pandas usage in cash flow summary with direct SQLite aggregation.
 - Replace pandas usage in financial risk category aggregation with direct SQLite queries.
+- Replace pandas usage in CSV loading with standard library CSV parsing.
+- Replace pandas usage in anomaly detection with direct SQLite queries.
 - Refresh 2026-05-28 area review reports and index.
 
 ## Behavior Preserved
@@ -57,6 +59,7 @@ Validation for this block:
 python -m py_compile cli.py app/rules/cash_flow.py app/rules/financial_risk_rules.py
 python -c "import cli"
 python cli.py health
+python cli.py run
 python cli.py finance-area-review
 python cli.py area-review-bundle
 python cli.py system-check

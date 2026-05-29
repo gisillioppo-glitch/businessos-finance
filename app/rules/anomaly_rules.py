@@ -1,5 +1,3 @@
-import pandas as pd
-
 from app.audit.audit_log import write_audit_log
 
 
@@ -31,12 +29,15 @@ def detect_expense_anomalies(conn):
         {"rule": "expense_amount_greater_than_1_5x_average"},
     )
 
-    df = pd.read_sql_query(
-        "SELECT * FROM transactions WHERE type = 'expense'",
-        conn,
-    )
+    rows = conn.execute(
+        """
+        SELECT id, date, category, amount
+        FROM transactions
+        WHERE type = 'expense'
+        """
+    ).fetchall()
 
-    if df.empty:
+    if not rows:
         write_audit_log(
             conn,
             "rule_finished",
@@ -47,12 +48,21 @@ def detect_expense_anomalies(conn):
         print("No expenses found. No anomalies detected.")
         return []
 
-    average_expense = df["amount"].mean()
+    average_expense = sum(float(row[3]) for row in rows) / len(rows)
     threshold = average_expense * 1.5
 
-    anomalies = df[df["amount"] > threshold]
+    anomalies = [
+        {
+            "id": row[0],
+            "date": row[1],
+            "category": row[2],
+            "amount": float(row[3]),
+        }
+        for row in rows
+        if float(row[3]) > threshold
+    ]
 
-    if anomalies.empty:
+    if not anomalies:
         write_audit_log(
             conn,
             "rule_finished",
@@ -69,7 +79,7 @@ def detect_expense_anomalies(conn):
 
     alerts = []
 
-    for _, row in anomalies.iterrows():
+    for row in anomalies:
         severity = calculate_expense_anomaly_severity(
             row["amount"],
             average_expense,
