@@ -771,7 +771,6 @@ Extraction condition:
 Recommended sequence:
 
 ```text
-EduOS Skeleton Approval Decision Revisit v0.1
 OS Core Extraction Contract Draft v0.1 (drafted)
 OS Core Contract Checklist v0.1 (drafted)
 OS Core Candidate Contract Review - Approvals v0.1 (closed)
@@ -780,6 +779,9 @@ Approval Config Boundary Prep v0.1 (closed)
 Approval Config Boundary Implementation v0.1 (closed)
 OS Core Approval Contract Test Plan v0.1 (drafted)
 Approval Config Boundary Tests v0.1
+OS Core Package Opening Decision v0.1 (closed)
+OS Core Package Boundary Manifest v0.1
+EduOS Skeleton Approval Decision Revisit v0.1
 ```
 
 ## Operator Note

@@ -546,6 +546,14 @@ docs/dashboard-runtime-stability-v0.1-status.md
 
 This refresh removes the dashboard pandas startup dependency, keeps the private dashboard read-only, and restores local dashboard response for release readiness.
 
+The first OS Core package opening decision is documented in:
+
+```text
+docs/os-core-package-opening-decision-v0.1-status.md
+```
+
+This decision conditionally approves OS Core contract planning only, while keeping shared code extraction, package creation, repository creation, Public AI runtime access, and EduOS implementation blocked pending explicit approval.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

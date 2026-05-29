@@ -211,7 +211,8 @@ OS Core Approval Extraction Readiness Review v0.1 (closed)
 OS Core Approval Branch Adapter Contract v0.1 (drafted)
 Approval Lifecycle Contract Tests v0.1 (closed)
 Public AI Approval Denial Check v0.1 (closed)
-OS Core Package Opening Decision v0.1
+OS Core Package Opening Decision v0.1 (closed)
+OS Core Package Boundary Manifest v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 ```
 
