@@ -72,4 +72,4 @@ Failed checks: 0
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-28.md | date: 2026-05-28 | stale areas: 0 | missing areas: 0 |
 | Boundary classification coverage | passed | 170/170 status docs covered |
-| Git working tree | warning | M README.md; M docs/institutional-core-extraction-map-v0.1.md; M docs/os-core-contract-checklist-v0.1.md; M docs/os-core-package-opening-decision-v0.1-status.md; ?? docs/os-core-package-boundary-manifest-v0.1-status.md |
+| Git working tree | warning | M reports/runtime_stability_2026-05-28.md |
