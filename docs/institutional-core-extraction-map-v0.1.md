@@ -780,7 +780,8 @@ Approval Config Boundary Implementation v0.1 (closed)
 OS Core Approval Contract Test Plan v0.1 (drafted)
 Approval Config Boundary Tests v0.1
 OS Core Package Opening Decision v0.1 (closed)
-OS Core Package Boundary Manifest v0.1
+OS Core Package Boundary Manifest v0.1 (closed)
+OS Core Branch Adapter Contract Draft v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 ```
 

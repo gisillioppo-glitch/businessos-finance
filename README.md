@@ -554,6 +554,14 @@ docs/os-core-package-opening-decision-v0.1-status.md
 
 This decision conditionally approves OS Core contract planning only, while keeping shared code extraction, package creation, repository creation, Public AI runtime access, and EduOS implementation blocked pending explicit approval.
 
+The first OS Core package boundary manifest is documented in:
+
+```text
+docs/os-core-package-boundary-manifest-v0.1-status.md
+```
+
+This manifest defines the future `os-core` package boundary, allowed planning families, branch-owned areas, adapter requirements, and blockers while keeping package creation and code extraction blocked.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

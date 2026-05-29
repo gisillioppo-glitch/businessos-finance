@@ -103,10 +103,16 @@ Not eligible for package extraction:
 The next approved OS Core step is:
 
 ```text
-OS Core Package Boundary Manifest v0.1
+OS Core Package Boundary Manifest v0.1 (closed)
 ```
 
 That block should define the future package map without moving code.
+
+The next approved OS Core planning step is:
+
+```text
+OS Core Branch Adapter Contract Draft v0.1
+```
 
 The next EduOS step remains:
 
