@@ -28,4 +28,4 @@ Failed checks: 0
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 169/169 status docs covered |
-| Git working tree | warning | warning | M reports/runtime_stability_2026-05-28.md; M reports/system_integrity_2026-05-28.md |
+| Git working tree | warning | warning | M reports/release_readiness_2026-05-28.md; M reports/runtime_stability_2026-05-28.md; M reports/system_integrity_2026-05-28.md |
