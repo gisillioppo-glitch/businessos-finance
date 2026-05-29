@@ -538,6 +538,14 @@ docs/cli-startup-stability-area-review-refresh-v0.1-status.md
 
 This refresh keeps CLI opening checks responsive by lazy-loading finance-heavy runtime imports and replacing finance rule pandas usage with direct SQLite aggregation for daily area review freshness.
 
+The first dashboard runtime stability refresh is documented in:
+
+```text
+docs/dashboard-runtime-stability-v0.1-status.md
+```
+
+This refresh removes the dashboard pandas startup dependency, keeps the private dashboard read-only, and restores local dashboard response for release readiness.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

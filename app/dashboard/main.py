@@ -4,7 +4,6 @@ import sys
 from datetime import date, datetime
 from pathlib import Path
 
-import pandas as pd
 import streamlit as st
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -678,7 +677,8 @@ def get_rows(query, params=None):
 
 def load_cash_flow_series():
     with sqlite3.connect(DB_PATH) as conn:
-        frame = pd.read_sql_query(
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
             """
             SELECT
                 date,
@@ -687,14 +687,9 @@ def load_cash_flow_series():
             GROUP BY date
             ORDER BY date
             """,
-            conn,
-        )
+        ).fetchall()
 
-    if frame.empty:
-        return pd.DataFrame({"date": [], "net_cash_flow": []})
-
-    frame["date"] = pd.to_datetime(frame["date"])
-    return frame
+    return [dict(row) for row in rows]
 
 
 
@@ -4387,10 +4382,13 @@ def render_dashboard(data):
 
     with right:
         render_panel_start("Cash Flow Overview")
-        if data["cash_flow_series"].empty:
+        if not data["cash_flow_series"]:
             st.info("No cash flow data available yet.")
         else:
-            st.area_chart(data["cash_flow_series"], x="date", y="net_cash_flow", height=285)
+            st.line_chart(
+                {row["date"]: row["net_cash_flow"] for row in data["cash_flow_series"]},
+                height=285,
+            )
         render_panel_end()
 
     ops_col, incident_col, alert_col = st.columns(3)
@@ -5070,7 +5068,7 @@ def render_module_page(page, data):
 
             if filtered_checks:
                 st.dataframe(
-                    pd.DataFrame(filtered_checks),
+                    filtered_checks,
                     use_container_width=True,
                     hide_index=True,
                 )
@@ -5146,7 +5144,7 @@ def render_module_page(page, data):
 
             if runtime["full_heavy_commands"]:
                 st.dataframe(
-                    pd.DataFrame(runtime["full_heavy_commands"]),
+                    runtime["full_heavy_commands"],
                     use_container_width=True,
                     hide_index=True,
                 )
@@ -5263,7 +5261,7 @@ def render_module_page(page, data):
 
             if filtered_areas:
                 st.dataframe(
-                    pd.DataFrame(filtered_areas),
+                    filtered_areas,
                     use_container_width=True,
                     hide_index=True,
                 )
@@ -5348,7 +5346,7 @@ def render_module_page(page, data):
             render_panel_start("Public Surface Inventory")
             if surface["public_files"]:
                 st.dataframe(
-                    pd.DataFrame(surface["public_files"]),
+                    surface["public_files"],
                     use_container_width=True,
                     hide_index=True,
                 )
@@ -5443,7 +5441,7 @@ def render_module_page(page, data):
             render_panel_start("Evidence Artifacts")
             if checklist["artifacts"]:
                 st.dataframe(
-                    pd.DataFrame(checklist["artifacts"]),
+                    checklist["artifacts"],
                     use_container_width=True,
                     hide_index=True,
                 )
@@ -5534,17 +5532,17 @@ def render_module_page(page, data):
                 render_status_row("No pages found", "No dashboard pages match this boundary filter", "healthy")
             render_panel_end()
 
-            frame = pd.DataFrame(filtered_rows)
             st.dataframe(
-                frame[
-                    [
-                        "page",
-                        "primary_boundary",
-                        "secondary_boundary",
-                        "private_data",
-                        "public_surface",
-                        "core_candidate",
-                    ]
+                [
+                    {
+                        "page": row["page"],
+                        "primary_boundary": row["primary_boundary"],
+                        "secondary_boundary": row["secondary_boundary"],
+                        "private_data": row["private_data"],
+                        "public_surface": row["public_surface"],
+                        "core_candidate": row["core_candidate"],
+                    }
+                    for row in filtered_rows
                 ],
                 use_container_width=True,
                 hide_index=True,
@@ -5614,7 +5612,7 @@ def render_module_page(page, data):
 
             if handoff["reports"]:
                 st.dataframe(
-                    pd.DataFrame(handoff["reports"]),
+                    handoff["reports"],
                     use_container_width=True,
                     hide_index=True,
                 )
@@ -7578,7 +7576,7 @@ def render_module_page(page, data):
             render_panel_start("Supporting Artifacts")
             if review["artifacts"]:
                 st.dataframe(
-                    pd.DataFrame(review["artifacts"]),
+                    review["artifacts"],
                     use_container_width=True,
                     hide_index=True,
                 )
@@ -7669,7 +7667,7 @@ def render_module_page(page, data):
             render_panel_start("Latest Demo Artifacts")
             if package["latest_artifacts"]:
                 st.dataframe(
-                    pd.DataFrame(package["latest_artifacts"]),
+                    package["latest_artifacts"],
                     use_container_width=True,
                     hide_index=True,
                 )

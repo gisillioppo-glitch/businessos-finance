@@ -6,8 +6,8 @@ Date: 2026-05-28
 
 Overall status: ready_with_warnings
 Total checks: 15
-Passed checks: 13
-Warning checks: 2
+Passed checks: 14
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -16,7 +16,7 @@ Failed checks: 0
 | --- | --- | --- | --- |
 | System check | passed | critical | reports\system_integrity_2026-05-28.md \| failed checks: 0 |
 | Deployment boundary check | passed | critical | Public/private boundary passed |
-| Dashboard local response | warning | warning | http://localhost:8501 not reachable: [WinError 10061] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión |
+| Dashboard local response | passed | warning | http://localhost:8501 returned 200 |
 | Landing public files | passed | critical | present |
 | Lead intake surface | passed | critical | ready |
 | Sensitive file protections | passed | critical | protected |
@@ -27,5 +27,5 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 64 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Boundary classification coverage | passed | critical | 167/167 status docs covered |
-| Git working tree | warning | warning | M reports/system_integrity_2026-05-28.md |
+| Boundary classification coverage | passed | critical | 168/168 status docs covered |
+| Git working tree | warning | warning | M README.md; M app/dashboard/main.py; M reports/release_readiness_2026-05-28.md; M reports/system_integrity_2026-05-28.md; ?? docs/dashboard-runtime-stability-v0.1-status.md |
