@@ -5,7 +5,6 @@ from app.actions.action_views import (
     print_action_summary_kpis,
     print_recommended_actions_list,
 )
-from app.actions.area_review import print_finance_area_review
 from app.approvals.approval_brief import print_approval_brief
 from app.approvals.approval_report import export_approval_report
 from app.approvals.approval_views import (
@@ -104,7 +103,6 @@ from app.operations.task_views import (
     print_operations_tasks_list,
 )
 from app.reports.area_review_index import print_area_review_index
-from app.reports.area_review_bundle import print_area_review_bundle
 from app.reports.report_history import print_report_history
 from app.readiness.release_readiness import print_release_readiness
 from app.scheduler.scheduled_daily_close import (
@@ -123,8 +121,13 @@ from app.support.incident_views import (
 from app.support.area_review import print_support_area_review
 from app.support.support_brief import print_support_brief
 from app.support.support_report import export_support_report
-from main import main as run_main
 from scripts.health_check import main as run_health_check
+
+
+def run_main():
+    from main import main as businessos_main
+
+    businessos_main()
 
 
 def run_system_check():
@@ -154,6 +157,8 @@ def run_actions():
 
 
 def run_finance_area_review():
+    from app.actions.area_review import print_finance_area_review
+
     conn = create_connection()
 
     try:
@@ -193,6 +198,8 @@ def run_area_review_index():
 
 
 def run_area_review_bundle():
+    from app.reports.area_review_bundle import print_area_review_bundle
+
     conn = create_connection()
 
     try:

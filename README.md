@@ -530,6 +530,14 @@ docs/public-ai-approval-denial-check-v0.1-status.md
 
 This check adds an explicit public surface guard that blocks private approval runtime paths, commands, reports, tables, and audit events from appearing under `public/`, while allowing safe public copy about approval gates.
 
+The first CLI startup stability and area review refresh is documented in:
+
+```text
+docs/cli-startup-stability-area-review-refresh-v0.1-status.md
+```
+
+This refresh keeps CLI opening checks responsive by lazy-loading finance-heavy runtime imports and replacing finance rule pandas usage with direct SQLite aggregation for daily area review freshness.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

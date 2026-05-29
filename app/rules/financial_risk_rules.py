@@ -1,5 +1,3 @@
-import pandas as pd
-
 from app.audit.audit_log import write_audit_log
 
 
@@ -46,19 +44,18 @@ def evaluate_financial_risk_rules(conn, cash_flow_summary):
             }
         )
 
-    category_df = pd.read_sql_query(
+    category_rows = conn.execute(
         """
         SELECT category, SUM(amount) AS total
         FROM transactions
         WHERE type = 'expense'
         GROUP BY category
         """,
-        conn,
-    )
+    ).fetchall()
 
-    if total_expenses > 0 and not category_df.empty:
-        for _, row in category_df.iterrows():
-            category_share = float(row["total"]) / total_expenses
+    if total_expenses > 0 and category_rows:
+        for category, total in category_rows:
+            category_share = float(total or 0) / total_expenses
 
             if category_share >= 0.8:
                 severity = "high"
@@ -72,10 +69,10 @@ def evaluate_financial_risk_rules(conn, cash_flow_summary):
                     "risk_type": "expense_concentration",
                     "severity": severity,
                     "message": (
-                        f"Expense concentration risk: {row['category']} represents "
+                        f"Expense concentration risk: {category} represents "
                         f"{category_share * 100:.2f}% of expenses."
                     ),
-                    "category": row["category"],
+                    "category": category,
                     "category_share": category_share,
                 }
             )

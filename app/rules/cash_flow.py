@@ -1,12 +1,16 @@
-import pandas as pd
-
 from app.audit.audit_log import write_audit_log
 
 
 def generate_cash_flow_summary(conn):
-    df = pd.read_sql_query("SELECT * FROM transactions", conn)
+    rows = conn.execute(
+        """
+        SELECT type, COALESCE(SUM(amount), 0)
+        FROM transactions
+        GROUP BY type
+        """
+    ).fetchall()
 
-    if df.empty:
+    if not rows:
         summary = {
             "total_income": 0.0,
             "total_expenses": 0.0,
@@ -15,11 +19,9 @@ def generate_cash_flow_summary(conn):
             "financial_health": "warning",
         }
     else:
-        income_df = df[df["type"] == "income"]
-        expense_df = df[df["type"] == "expense"]
-
-        total_income = float(income_df["amount"].sum())
-        total_expenses = float(expense_df["amount"].sum())
+        totals = {row[0]: float(row[1] or 0) for row in rows}
+        total_income = totals.get("income", 0.0)
+        total_expenses = totals.get("expense", 0.0)
         net_cash_flow = total_income - total_expenses
 
         if total_income > 0:
