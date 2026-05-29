@@ -6,8 +6,8 @@ Date: 2026-05-28
 
 Overall status: stable_with_runtime_optimization_needed
 Total checks: 8
-Passed checks: 7
-Warning checks: 1
+Passed checks: 6
+Warning checks: 2
 Failed checks: 0
 Smoke command count: 57
 Heavy pilot command count: 0
@@ -22,7 +22,7 @@ Full heavy pilot command count: 14
 | Release readiness | passed | reports\release_readiness_2026-05-28.md | status: ready_with_warnings | failed: 0 | warnings: 2 |
 | Daily close artifact | passed | reports\daily_close_2026-05-28.md |
 | Dashboard local response | warning | http://localhost:8501 not reachable: [WinError 10061] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión |
-| Git working tree | passed | clean except known local artifacts |
+| Git working tree | warning | M reports/release_readiness_2026-05-28.md; M reports/system_integrity_2026-05-28.md |
 | Standard smoke profile size | passed | 57 command(s) in standard profile | limit: 60 |
 | Default heavy pilot command chain | passed | 0 heavy pilot command(s) in standard profile |
 | Full smoke profile reserve | passed | 14 heavy pilot command(s) reserved for full profile |
