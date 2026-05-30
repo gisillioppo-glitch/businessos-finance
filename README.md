@@ -578,6 +578,14 @@ docs/os-core-adapter-schema-checklist-v0.1-status.md
 
 This checklist converts the branch adapter contract into required root fields, registries, pass conditions, block conditions, and future validation expectations while keeping adapter implementation and schema validator code blocked.
 
+The first OS Core adapter schema validator plan is documented in:
+
+```text
+docs/os-core-adapter-schema-validator-plan-v0.1-status.md
+```
+
+This plan defines the future adapter schema validator phases, inputs, result model, safety limits, and integration with existing checks while keeping validator implementation, adapter implementation, package creation, code extraction, EduOS runtime, and Public AI runtime access blocked.
+
 The first OS Core approval contract draft is documented in:
 
 ```text

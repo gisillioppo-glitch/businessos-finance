@@ -338,9 +338,10 @@ Recommended sequence:
 
 ```text
 OS Core Adapter Schema Checklist v0.1 (closed)
-OS Core Adapter Schema Validator Plan v0.1
+OS Core Adapter Schema Validator Plan v0.1 (closed)
 OS Core Package Ownership and Repository Decision v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
+OS Core Adapter Schema Validator Implementation Decision v0.1
 ```
 
 ## Boundary Classification
