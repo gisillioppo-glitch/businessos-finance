@@ -28,4 +28,4 @@ Failed checks: 0
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 172/172 status docs covered |
-| Git working tree | warning | warning | M README.md; M docs/institutional-core-extraction-map-v0.1.md; M docs/os-core-branch-adapter-contract-draft-v0.1-status.md; M docs/os-core-contract-checklist-v0.1.md; M docs/os-core-package-boundary-manifest-v0.1-status.md; M reports/system_integrity_2026-05-29.md; ?? docs/os-core-adapter-schema-checklist-v0.1-status.md |
+| Git working tree | warning | warning | M reports/runtime_stability_2026-05-29.md; M reports/system_integrity_2026-05-29.md |
