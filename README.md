@@ -610,6 +610,14 @@ docs/businessos-reference-adapter-schema-planning-v0.1-status.md
 
 This status defines the future non-sensitive BusinessOS reference adapter schema shape, root fields, registries, public/private denial rules, rollback posture, and validation expectations while keeping schema file creation, validator implementation, adapter implementation, OS Core package creation, repository creation, code extraction, EduOS runtime, and Public AI private runtime access blocked.
 
+The EduOS non-sensitive adapter schema planning status is documented in:
+
+```text
+docs/eduos-non-sensitive-adapter-schema-planning-v0.1-status.md
+```
+
+This status defines the future non-sensitive EduOS adapter schema posture, conceptual root fields, placeholder registries, academic-data exclusions, Public AI denial rules, rollback posture, and validation expectations while keeping schema file creation, EduOS repository creation, EduOS runtime, database, dashboard, Classroom/LMS/SIS adapters, validator implementation, OS Core package creation, and code extraction blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

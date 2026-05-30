@@ -219,7 +219,7 @@ Recommended sequence:
 
 ```text
 BusinessOS Reference Adapter Schema Planning v0.1 (closed)
-EduOS Non-Sensitive Adapter Schema Planning v0.1
+EduOS Non-Sensitive Adapter Schema Planning v0.1 (closed)
 Adapter Schema Validator Fixture Policy v0.1
 Adapter Schema Validator Implementation Scope v0.1
 ```

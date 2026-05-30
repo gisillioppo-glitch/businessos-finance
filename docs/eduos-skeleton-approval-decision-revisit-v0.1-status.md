@@ -191,7 +191,7 @@ Recommended sequence:
 ```text
 OS Core Adapter Schema Validator Implementation Decision v0.1 (closed)
 BusinessOS Reference Adapter Schema Planning v0.1
-EduOS Non-Sensitive Adapter Schema Planning v0.1
+EduOS Non-Sensitive Adapter Schema Planning v0.1 (closed)
 EduOS Skeleton Private Repo Approval Execution Decision v0.1
 ```
 

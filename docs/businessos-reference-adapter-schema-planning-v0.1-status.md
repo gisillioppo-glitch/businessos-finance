@@ -268,7 +268,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-EduOS Non-Sensitive Adapter Schema Planning v0.1
+EduOS Non-Sensitive Adapter Schema Planning v0.1 (closed)
 Adapter Schema Validator Fixture Policy v0.1
 Adapter Schema Validator Report Format and Failure Semantics v0.1
 Adapter Schema Validator Implementation Scope v0.1
