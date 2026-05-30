@@ -570,6 +570,14 @@ docs/os-core-branch-adapter-contract-draft-v0.1-status.md
 
 This contract defines what BusinessOS, EduOS, or any future branch must provide before consuming shared OS Core behavior, while keeping adapter implementation, package creation, code extraction, and EduOS runtime blocked.
 
+The first OS Core adapter schema checklist is documented in:
+
+```text
+docs/os-core-adapter-schema-checklist-v0.1-status.md
+```
+
+This checklist converts the branch adapter contract into required root fields, registries, pass conditions, block conditions, and future validation expectations while keeping adapter implementation and schema validator code blocked.
+
 The first OS Core approval contract draft is documented in:
 
 ```text
