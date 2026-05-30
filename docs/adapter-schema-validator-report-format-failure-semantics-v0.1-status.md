@@ -318,7 +318,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-Adapter Schema Validator Implementation Scope v0.1
+Adapter Schema Validator Implementation Scope v0.1 (closed)
 Adapter Schema Validator Implementation Approval v0.1
 ```
 

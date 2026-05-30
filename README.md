@@ -634,6 +634,14 @@ docs/adapter-schema-validator-report-format-failure-semantics-v0.1-status.md
 
 This status defines the future validator Markdown report format, structured result model, overall status values, check statuses, blocking failure semantics, invalid-input behavior, warning behavior, safe-report rules, and boundary classification while keeping report creation, validator implementation, adapter implementation, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
 
+The adapter schema validator implementation scope is documented in:
+
+```text
+docs/adapter-schema-validator-implementation-scope-v0.1-status.md
+```
+
+This status defines the future validator implementation scope, allowed module/test paths, allowed pure validation functions, input/output limits, test scope, CLI scope, and explicit out-of-scope boundaries while keeping validator implementation, command creation, schema files, fixture files, adapter implementation, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
