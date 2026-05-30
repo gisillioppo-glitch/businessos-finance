@@ -268,7 +268,8 @@ Recommended sequence:
 ```text
 Adapter Schema Validator Report Format and Failure Semantics v0.1 (closed)
 Adapter Schema Validator Implementation Scope v0.1 (closed)
-Adapter Schema Validator Implementation Approval v0.1
+Adapter Schema Validator Implementation Approval v0.1 (closed)
+Adapter Schema Validator Module Implementation v0.1
 ```
 
 Executable validator implementation should remain blocked until report format, failure semantics, and implementation scope are closed.

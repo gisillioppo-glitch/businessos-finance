@@ -247,7 +247,8 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-Adapter Schema Validator Implementation Approval v0.1
+Adapter Schema Validator Implementation Approval v0.1 (closed)
+Adapter Schema Validator Module Implementation v0.1
 ```
 
 Implementation should begin only if that approval block explicitly authorizes the first code files.

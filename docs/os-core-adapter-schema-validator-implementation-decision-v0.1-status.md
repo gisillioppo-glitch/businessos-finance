@@ -223,7 +223,8 @@ EduOS Non-Sensitive Adapter Schema Planning v0.1 (closed)
 Adapter Schema Validator Fixture Policy v0.1 (closed)
 Adapter Schema Validator Report Format and Failure Semantics v0.1 (closed)
 Adapter Schema Validator Implementation Scope v0.1 (closed)
-Adapter Schema Validator Implementation Approval v0.1
+Adapter Schema Validator Implementation Approval v0.1 (closed)
+Adapter Schema Validator Module Implementation v0.1
 ```
 
 Executable implementation should happen only after those gates are closed.

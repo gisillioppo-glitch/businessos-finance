@@ -642,6 +642,14 @@ docs/adapter-schema-validator-implementation-scope-v0.1-status.md
 
 This status defines the future validator implementation scope, allowed module/test paths, allowed pure validation functions, input/output limits, test scope, CLI scope, and explicit out-of-scope boundaries while keeping validator implementation, command creation, schema files, fixture files, adapter implementation, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
 
+The adapter schema validator implementation approval is documented in:
+
+```text
+docs/adapter-schema-validator-implementation-approval-v0.1-status.md
+```
+
+This status approves only the next validator module and test files, while keeping CLI command creation, schema files, fixture files, report export, audit events, adapter implementation, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
