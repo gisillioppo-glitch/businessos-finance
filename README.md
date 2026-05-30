@@ -626,6 +626,14 @@ docs/adapter-schema-validator-fixture-policy-v0.1-status.md
 
 This status approves future synthetic, non-sensitive JSON fixtures for validator tests and defines allowed, blocked, negative, naming, location, and review rules while keeping fixture file creation, validator implementation, adapter implementation, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
 
+The adapter schema validator report format and failure semantics are documented in:
+
+```text
+docs/adapter-schema-validator-report-format-failure-semantics-v0.1-status.md
+```
+
+This status defines the future validator Markdown report format, structured result model, overall status values, check statuses, blocking failure semantics, invalid-input behavior, warning behavior, safe-report rules, and boundary classification while keeping report creation, validator implementation, adapter implementation, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

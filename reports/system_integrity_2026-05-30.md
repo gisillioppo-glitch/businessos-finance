@@ -71,5 +71,5 @@ Failed checks: 0
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-30.md | date: 2026-05-30 | stale areas: 0 | missing areas: 0 |
-| Boundary classification coverage | passed | 179/179 status docs covered |
+| Boundary classification coverage | passed | 180/180 status docs covered |
 | Git working tree | passed | clean except known local artifacts |
