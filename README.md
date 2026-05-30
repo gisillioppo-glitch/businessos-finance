@@ -422,6 +422,14 @@ docs/businessos-eduos-branch-readiness-summary-v0.1-status.md
 
 This status summarizes BusinessOS as the stable reference branch and EduOS as a local-only skeleton with repository creation and implementation still blocked.
 
+The EduOS skeleton approval decision revisit is documented in:
+
+```text
+docs/eduos-skeleton-approval-decision-revisit-v0.1-status.md
+```
+
+This status confirms that EduOS remains local-only and non-sensitive after the OS Core ownership decision, with repository creation, runtime, academic data, Classroom/LMS/SIS adapters, Public AI access, and BusinessOS private copying still blocked pending explicit approval.
+
 The first OS Core extraction contract draft is documented in:
 
 ```text
