@@ -586,6 +586,14 @@ docs/os-core-adapter-schema-validator-plan-v0.1-status.md
 
 This plan defines the future adapter schema validator phases, inputs, result model, safety limits, and integration with existing checks while keeping validator implementation, adapter implementation, package creation, code extraction, EduOS runtime, and Public AI runtime access blocked.
 
+The OS Core package ownership and repository decision is documented in:
+
+```text
+docs/os-core-package-ownership-repository-decision-v0.1-status.md
+```
+
+This decision sets future `os-core` ownership under the OS Platform layer and keeps package creation, repository creation, remote push, shared runtime, adapter implementation, code extraction, EduOS runtime, and Public AI private runtime access blocked pending explicit approval.
+
 The first OS Core approval contract draft is documented in:
 
 ```text
