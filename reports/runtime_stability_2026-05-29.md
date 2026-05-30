@@ -19,10 +19,10 @@ Full heavy pilot command count: 14
 | Check | Status | Detail |
 | --- | --- | --- |
 | System integrity | passed | reports\system_integrity_2026-05-29.md | failed: 0 | warnings: 0 |
-| Release readiness | passed | reports\release_readiness_2026-05-29.md | status: ready | failed: 0 | warnings: 0 |
+| Release readiness | passed | reports\release_readiness_2026-05-29.md | status: ready_with_warnings | failed: 0 | warnings: 1 |
 | Daily close artifact | passed | reports\daily_close_2026-05-29.md |
 | Dashboard local response | passed | http://localhost:8501 returned 200 |
-| Git working tree | warning | M README.md; M docs/institutional-core-extraction-map-v0.1.md; M docs/os-core-adapter-schema-checklist-v0.1-status.md; M docs/os-core-branch-adapter-contract-draft-v0.1-status.md; M docs/os-core-contract-checklist-v0.1.md; M docs/os-core-package-boundary-manifest-v0.1-status.md; ?? docs/os-core-adapter-schema-validator-plan-v0.1-status.md |
+| Git working tree | warning | M reports/release_readiness_2026-05-29.md; M reports/system_integrity_2026-05-29.md |
 | Standard smoke profile size | passed | 57 command(s) in standard profile | limit: 60 |
 | Default heavy pilot command chain | passed | 0 heavy pilot command(s) in standard profile |
 | Full smoke profile reserve | passed | 14 heavy pilot command(s) reserved for full profile |
