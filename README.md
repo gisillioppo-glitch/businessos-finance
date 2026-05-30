@@ -618,6 +618,14 @@ docs/eduos-non-sensitive-adapter-schema-planning-v0.1-status.md
 
 This status defines the future non-sensitive EduOS adapter schema posture, conceptual root fields, placeholder registries, academic-data exclusions, Public AI denial rules, rollback posture, and validation expectations while keeping schema file creation, EduOS repository creation, EduOS runtime, database, dashboard, Classroom/LMS/SIS adapters, validator implementation, OS Core package creation, and code extraction blocked.
 
+The adapter schema validator fixture policy is documented in:
+
+```text
+docs/adapter-schema-validator-fixture-policy-v0.1-status.md
+```
+
+This status approves future synthetic, non-sensitive JSON fixtures for validator tests and defines allowed, blocked, negative, naming, location, and review rules while keeping fixture file creation, validator implementation, adapter implementation, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

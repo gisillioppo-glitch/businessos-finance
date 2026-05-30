@@ -252,7 +252,7 @@ Still unresolved after this block:
 
 ```text
 EduOS_schema_file_created: no
-fixture_policy_approved: no
+fixture_policy_approved: yes_for_future_synthetic_only
 report_format_finalized: no
 failure_semantics_finalized: no
 adapter_schema_validator_implementation: no
@@ -295,7 +295,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-Adapter Schema Validator Fixture Policy v0.1
+Adapter Schema Validator Fixture Policy v0.1 (closed)
 Adapter Schema Validator Report Format and Failure Semantics v0.1
 Adapter Schema Validator Implementation Scope v0.1
 ```

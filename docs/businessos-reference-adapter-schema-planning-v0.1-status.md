@@ -229,10 +229,10 @@ Still unresolved after this block:
 
 ```text
 schema_file_created: no
-fixture_policy_approved: no
+fixture_policy_approved: yes_for_future_synthetic_only
 report_format_finalized: no
 failure_semantics_finalized: no
-EduOS_non_sensitive_schema_posture_planned: no
+EduOS_non_sensitive_schema_posture_planned: yes
 adapter_schema_validator_implementation: no
 adapter_implementation: no
 OS_Core_package_creation: no
@@ -269,7 +269,7 @@ Recommended sequence:
 
 ```text
 EduOS Non-Sensitive Adapter Schema Planning v0.1 (closed)
-Adapter Schema Validator Fixture Policy v0.1
+Adapter Schema Validator Fixture Policy v0.1 (closed)
 Adapter Schema Validator Report Format and Failure Semantics v0.1
 Adapter Schema Validator Implementation Scope v0.1
 ```
