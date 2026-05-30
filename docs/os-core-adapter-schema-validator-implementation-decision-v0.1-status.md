@@ -218,7 +218,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-BusinessOS Reference Adapter Schema Planning v0.1
+BusinessOS Reference Adapter Schema Planning v0.1 (closed)
 EduOS Non-Sensitive Adapter Schema Planning v0.1
 Adapter Schema Validator Fixture Policy v0.1
 Adapter Schema Validator Implementation Scope v0.1

@@ -602,6 +602,14 @@ docs/os-core-adapter-schema-validator-implementation-decision-v0.1-status.md
 
 This decision approves the validator as a future controlled gate, but keeps executable validator code, the CLI command, adapter schemas, fixtures, OS Core package creation, repository creation, code extraction, EduOS runtime, and Public AI private runtime access blocked until schema location, format, fixture policy, and branch schema planning are closed.
 
+The BusinessOS reference adapter schema planning status is documented in:
+
+```text
+docs/businessos-reference-adapter-schema-planning-v0.1-status.md
+```
+
+This status defines the future non-sensitive BusinessOS reference adapter schema shape, root fields, registries, public/private denial rules, rollback posture, and validation expectations while keeping schema file creation, validator implementation, adapter implementation, OS Core package creation, repository creation, code extraction, EduOS runtime, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
