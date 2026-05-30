@@ -658,6 +658,14 @@ docs/adapter-schema-validator-module-implementation-v0.1-status.md
 
 This status records the limited read-only validator module and inline synthetic tests while keeping CLI command creation, schema files, fixture files, report export, audit events, adapter runtime execution, OS Core package creation, repository creation, EduOS runtime, academic data, and Public AI private runtime access blocked.
 
+The adapter schema validator CLI decision is documented in:
+
+```text
+docs/adapter-schema-validator-cli-decision-v0.1-status.md
+```
+
+This status approves a future read-only `adapter-schema-check` CLI command for explicit schema paths only, while keeping schema files, fixture files, report export, audit events, adapter execution, OS Core package creation, repository creation, EduOS runtime, academic data, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
