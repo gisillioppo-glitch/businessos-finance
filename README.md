@@ -594,6 +594,14 @@ docs/os-core-adapter-schema-validator-plan-v0.1-status.md
 
 This plan defines the future adapter schema validator phases, inputs, result model, safety limits, and integration with existing checks while keeping validator implementation, adapter implementation, package creation, code extraction, EduOS runtime, and Public AI runtime access blocked.
 
+The OS Core adapter schema validator implementation decision is documented in:
+
+```text
+docs/os-core-adapter-schema-validator-implementation-decision-v0.1-status.md
+```
+
+This decision approves the validator as a future controlled gate, but keeps executable validator code, the CLI command, adapter schemas, fixtures, OS Core package creation, repository creation, code extraction, EduOS runtime, and Public AI private runtime access blocked until schema location, format, fixture policy, and branch schema planning are closed.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

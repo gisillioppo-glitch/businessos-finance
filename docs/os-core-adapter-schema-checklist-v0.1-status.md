@@ -224,7 +224,8 @@ Recommended sequence:
 OS Core Adapter Schema Validator Plan v0.1 (closed)
 OS Core Package Ownership and Repository Decision v0.1 (closed)
 EduOS Skeleton Approval Decision Revisit v0.1
-OS Core Adapter Schema Validator Implementation Decision v0.1
+OS Core Adapter Schema Validator Implementation Decision v0.1 (closed)
+BusinessOS Reference Adapter Schema Planning v0.1
 ```
 
 ## Boundary Classification

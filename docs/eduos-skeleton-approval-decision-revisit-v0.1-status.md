@@ -189,7 +189,7 @@ Default answer for runtime, database, dashboard, adapters, academic data, Public
 Recommended sequence:
 
 ```text
-OS Core Adapter Schema Validator Implementation Decision v0.1
+OS Core Adapter Schema Validator Implementation Decision v0.1 (closed)
 BusinessOS Reference Adapter Schema Planning v0.1
 EduOS Non-Sensitive Adapter Schema Planning v0.1
 EduOS Skeleton Private Repo Approval Execution Decision v0.1
