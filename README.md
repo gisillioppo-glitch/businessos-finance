@@ -650,6 +650,14 @@ docs/adapter-schema-validator-implementation-approval-v0.1-status.md
 
 This status approves only the next validator module and test files, while keeping CLI command creation, schema files, fixture files, report export, audit events, adapter implementation, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
 
+The adapter schema validator module implementation is documented in:
+
+```text
+docs/adapter-schema-validator-module-implementation-v0.1-status.md
+```
+
+This status records the limited read-only validator module and inline synthetic tests while keeping CLI command creation, schema files, fixture files, report export, audit events, adapter runtime execution, OS Core package creation, repository creation, EduOS runtime, academic data, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
