@@ -4,10 +4,10 @@ Date: 2026-05-29
 
 ## Demo Readiness Summary
 
-Overall status: ready
+Overall status: ready_with_warnings
 Total checks: 15
-Passed checks: 15
-Warning checks: 0
+Passed checks: 14
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -27,5 +27,5 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 68 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Boundary classification coverage | passed | critical | 170/170 status docs covered |
-| Git working tree | passed | critical | clean except known local artifacts |
+| Boundary classification coverage | passed | critical | 171/171 status docs covered |
+| Git working tree | warning | warning | M README.md; M docs/institutional-core-extraction-map-v0.1.md; M docs/os-core-contract-checklist-v0.1.md; M docs/os-core-package-boundary-manifest-v0.1-status.md; M reports/system_integrity_2026-05-29.md; ?? docs/os-core-branch-adapter-contract-draft-v0.1-status.md |

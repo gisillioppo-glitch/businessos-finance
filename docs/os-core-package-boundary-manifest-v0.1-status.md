@@ -225,7 +225,8 @@ EduOS may use this manifest later to understand which BusinessOS patterns should
 Recommended sequence:
 
 ```text
-OS Core Branch Adapter Contract Draft v0.1
+OS Core Branch Adapter Contract Draft v0.1 (drafted)
+OS Core Adapter Schema Checklist v0.1
 OS Core Package Ownership and Repository Decision v0.1
 EduOS Skeleton Approval Decision Revisit v0.1
 ```

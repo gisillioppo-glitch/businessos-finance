@@ -562,6 +562,14 @@ docs/os-core-package-boundary-manifest-v0.1-status.md
 
 This manifest defines the future `os-core` package boundary, allowed planning families, branch-owned areas, adapter requirements, and blockers while keeping package creation and code extraction blocked.
 
+The first OS Core branch adapter contract draft is documented in:
+
+```text
+docs/os-core-branch-adapter-contract-draft-v0.1-status.md
+```
+
+This contract defines what BusinessOS, EduOS, or any future branch must provide before consuming shared OS Core behavior, while keeping adapter implementation, package creation, code extraction, and EduOS runtime blocked.
+
 The first OS Core approval contract draft is documented in:
 
 ```text
