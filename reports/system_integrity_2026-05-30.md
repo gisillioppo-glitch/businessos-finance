@@ -4,10 +4,10 @@ Date: 2026-05-30
 
 ## Integrity Summary
 
-Overall status: warning
+Overall status: passed
 Total checks: 59
-Passed checks: 58
-Warning checks: 1
+Passed checks: 59
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -72,4 +72,4 @@ Failed checks: 0
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-05-30.md | date: 2026-05-30 | stale areas: 0 | missing areas: 0 |
 | Boundary classification coverage | passed | 174/174 status docs covered |
-| Git working tree | warning | M README.md; M docs/institutional-core-extraction-map-v0.1.md; M docs/os-core-adapter-schema-checklist-v0.1-status.md; M docs/os-core-adapter-schema-validator-plan-v0.1-status.md; M docs/os-core-branch-adapter-contract-draft-v0.1-status.md; M docs/os-core-contract-checklist-v0.1.md; M docs/os-core-package-boundary-manifest-v0.1-status.md; ?? docs/os-core-package-ownership-repository-decision-v0.1-status.md; ?? reports/approval_decisions_2026-05-30.md; ?? reports/area_review_bundle_2026-05-30.md; ?? reports/area_review_index_2026-05-30.md; ?? reports/command_center_2026-05-30.md; ?? reports/daily_brief_2026-05-30.md; ?? reports/daily_close_2026-05-30.md; ?? reports/daily_close_distribution_2026-05-30.md; ?? reports/executive_alerts_2026-05-30.md; ?? reports/executive_evidence_index_2026-05-30.md; ?? reports/finance_area_review_2026-05-30.md; ?? reports/governance_area_review_2026-05-30.md; ?? reports/governance_brief_2026-05-30.md; ?? reports/operations_area_review_2026-05-30.md; ?? reports/release_readiness_2026-05-30.md; ?? reports/runtime_stability_2026-05-30.md; ?? reports/support_area_review_2026-05-30.md; ?? reports/support_brief_2026-05-30.md; ?? reports/system_integrity_2026-05-30.md |
+| Git working tree | passed | clean except known local artifacts |
