@@ -1,4 +1,5 @@
 import json
+from datetime import date
 from pathlib import Path
 
 
@@ -629,6 +630,25 @@ def format_adapter_schema_report(result):
     )
 
     return "\n".join(lines) + "\n"
+
+
+def export_adapter_schema_report(result, reports_dir="reports", report_date=None):
+    if not result.get("safe_to_commit", False):
+        result["overall_status"] = BLOCKED_OVERALL_STATUS
+        result["blocking_failures"] = result.get("blocking_failures", 0) + 1
+        result.setdefault("blocking_reasons", []).append("report_not_safe_to_commit")
+        result["runtime_authority"] = RUNTIME_AUTHORITY
+        result["implementation_authority"] = IMPLEMENTATION_AUTHORITY
+        return result
+
+    export_date = report_date or date.today().isoformat()
+    report_path = Path(reports_dir) / f"adapter_schema_check_{export_date}.md"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+
+    result["date"] = export_date
+    result["report_path"] = str(report_path)
+    report_path.write_text(format_adapter_schema_report(result), encoding="utf-8")
+    return result
 
 
 def _check(name, status, severity, detail, reason=None):

@@ -1,5 +1,6 @@
 import argparse
 import sqlite3
+from pathlib import Path
 
 from app.actions.action_views import (
     print_action_summary_kpis,
@@ -116,6 +117,7 @@ from app.system.adapter_schema_validator import (
     BLOCKED_OVERALL_STATUS,
     INVALID_INPUT_STATUS,
     WARNING_OVERALL_STATUS,
+    export_adapter_schema_report,
     load_adapter_schema,
     validate_adapter_schema,
 )
@@ -150,9 +152,25 @@ def run_system_check():
         conn.close()
 
 
-def run_adapter_schema_check(schema_path, profile="planning"):
+def run_adapter_schema_check(
+    schema_path,
+    profile="planning",
+    export_report=False,
+    reports_dir="reports",
+    report_date=None,
+):
     schema = load_adapter_schema(schema_path)
     result = validate_adapter_schema(schema, profile=profile)
+    result["schema_path"] = schema_path and Path(schema_path).name
+    result["schema_format"] = "json"
+    result["schema_source"] = "explicit_path"
+
+    if export_report:
+        result = export_adapter_schema_report(
+            result,
+            reports_dir=reports_dir,
+            report_date=report_date,
+        )
 
     print("Adapter Schema Check")
     print(f"Overall status: {result['overall_status']}")
@@ -180,6 +198,8 @@ def run_adapter_schema_check(schema_path, profile="planning"):
 
     print(f"Runtime authority: {result['runtime_authority']}")
     print(f"Implementation authority: {result['implementation_authority']}")
+    if export_report:
+        print(f"Report exported: {result['report_path']}")
 
     exit_codes = {
         WARNING_OVERALL_STATUS: 1,
@@ -1321,6 +1341,11 @@ def main():
         default="planning",
         help="Validation profile for adapter-schema-check.",
     )
+    parser.add_argument(
+        "--export-report",
+        action="store_true",
+        help="Export a safe adapter schema Markdown report.",
+    )
 
     args = parser.parse_args()
 
@@ -1329,7 +1354,13 @@ def main():
     elif args.command == "adapter-schema-check":
         if not args.schema:
             parser.error("adapter-schema-check requires --schema <path>")
-        raise SystemExit(run_adapter_schema_check(args.schema, args.profile))
+        raise SystemExit(
+            run_adapter_schema_check(
+                args.schema,
+                args.profile,
+                export_report=args.export_report,
+            )
+        )
     elif args.command == "health":
         run_health_check()
     elif args.command == "system-check":

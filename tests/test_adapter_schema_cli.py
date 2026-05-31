@@ -51,19 +51,30 @@ def valid_schema():
 
 
 class AdapterSchemaCliTests(unittest.TestCase):
-    def run_with_schema(self, schema):
+    def run_with_schema(self, schema, export_report=False):
         with tempfile.TemporaryDirectory() as tmp:
             schema_path = Path(tmp) / "schema.json"
+            reports_dir = Path(tmp) / "reports"
             schema_path.write_text(json.dumps(schema), encoding="utf-8")
 
             output = StringIO()
             with redirect_stdout(output):
-                exit_code = run_adapter_schema_check(str(schema_path))
+                exit_code = run_adapter_schema_check(
+                    str(schema_path),
+                    export_report=export_report,
+                    reports_dir=str(reports_dir),
+                    report_date="2026-05-31",
+                )
 
-            return exit_code, output.getvalue()
+            report_path = reports_dir / "adapter_schema_check_2026-05-31.md"
+            report = ""
+            if report_path.exists():
+                report = report_path.read_text(encoding="utf-8")
+
+            return exit_code, output.getvalue(), report_path.name, report
 
     def test_valid_schema_returns_design_ready_exit_zero(self):
-        exit_code, output = self.run_with_schema(valid_schema())
+        exit_code, output, _report_name, _report = self.run_with_schema(valid_schema())
 
         self.assertEqual(exit_code, 0)
         self.assertIn("Adapter Schema Check", output)
@@ -76,7 +87,7 @@ class AdapterSchemaCliTests(unittest.TestCase):
         schema = valid_schema()
         schema["public_boundary_policy"]["public_db_access"] = "allowed"
 
-        exit_code, output = self.run_with_schema(schema)
+        exit_code, output, _report_name, _report = self.run_with_schema(schema)
 
         self.assertEqual(exit_code, 2)
         self.assertIn("Overall status: adapter_schema_blocked", output)
@@ -91,6 +102,21 @@ class AdapterSchemaCliTests(unittest.TestCase):
         self.assertEqual(exit_code, 3)
         self.assertIn("Overall status: adapter_schema_invalid_input", output.getvalue())
         self.assertIn("Runtime authority: none", output.getvalue())
+
+    def test_export_report_writes_safe_markdown_to_reports_dir(self):
+        exit_code, output, report_name, report = self.run_with_schema(
+            valid_schema(),
+            export_report=True,
+        )
+
+        self.assertEqual(exit_code, 0)
+        self.assertIn("Report exported:", output)
+        self.assertEqual(report_name, "adapter_schema_check_2026-05-31.md")
+        self.assertIn("# Adapter Schema Check", report)
+        self.assertIn("Overall status: adapter_schema_valid_for_design", report)
+        self.assertIn("Runtime behavior: none", report)
+        self.assertIn("Schema path: schema.json", report)
+        self.assertNotIn("Temp", report)
 
 
 if __name__ == "__main__":
