@@ -690,6 +690,14 @@ docs/adapter-schema-validator-report-export-implementation-v0.1-status.md
 
 BusinessOS now supports optional `python cli.py adapter-schema-check --schema <path> --export-report` for safe validator Markdown reports under `reports/adapter_schema_check_YYYY-MM-DD.md`. Schema files, fixture files, audit events, adapter execution, OS Core package creation, repository creation, EduOS runtime, academic data, and Public AI private runtime access remain blocked.
 
+The adapter schema validator schema file decision is documented in:
+
+```text
+docs/adapter-schema-validator-schema-file-decision-v0.1-status.md
+```
+
+This status approves a future controlled creation of `config/adapters/businessos.adapter.schema.json` and `config/adapters/eduos.adapter.schema.json` only, while keeping fixture files, adapters, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
