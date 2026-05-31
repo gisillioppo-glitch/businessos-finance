@@ -112,6 +112,13 @@ from app.scheduler.scheduled_daily_close import (
 from app.security.public_surface_publish_checklist import print_public_surface_publish_checklist
 from app.security.surface_audit import print_public_private_surface_audit
 from app.system.integrity_check import export_system_integrity_report
+from app.system.adapter_schema_validator import (
+    BLOCKED_OVERALL_STATUS,
+    INVALID_INPUT_STATUS,
+    WARNING_OVERALL_STATUS,
+    load_adapter_schema,
+    validate_adapter_schema,
+)
 from app.system.runtime_stability import print_runtime_stability_review
 from app.system.session_handoff import print_session_handoff_snapshot
 from app.support.incident_views import (
@@ -141,6 +148,46 @@ def run_system_check():
 
     finally:
         conn.close()
+
+
+def run_adapter_schema_check(schema_path, profile="planning"):
+    schema = load_adapter_schema(schema_path)
+    result = validate_adapter_schema(schema, profile=profile)
+
+    print("Adapter Schema Check")
+    print(f"Overall status: {result['overall_status']}")
+    print(f"Adapter name: {result['adapter_name']}")
+    print(f"Branch name: {result['branch_name']}")
+    print(f"Total checks: {result['total_checks']}")
+    print(f"Passed checks: {result['passed_checks']}")
+    print(f"Warning checks: {result['warning_checks']}")
+    print(f"Failed checks: {result['failed_checks']}")
+    print(f"Blocking failures: {result['blocking_failures']}")
+
+    if result["blocking_reasons"]:
+        print("Blocking reasons:")
+        for reason in result["blocking_reasons"]:
+            print(f"- {reason}")
+    else:
+        print("Blocking reasons: none")
+
+    if result["warnings"]:
+        print("Warnings:")
+        for warning in result["warnings"]:
+            print(f"- {warning}")
+    else:
+        print("Warnings: none")
+
+    print(f"Runtime authority: {result['runtime_authority']}")
+    print(f"Implementation authority: {result['implementation_authority']}")
+
+    exit_codes = {
+        WARNING_OVERALL_STATUS: 1,
+        BLOCKED_OVERALL_STATUS: 2,
+        INVALID_INPUT_STATUS: 3,
+    }
+    return exit_codes.get(result["overall_status"], 0)
+
 
 def run_actions():
     conn = create_connection()
@@ -1184,6 +1231,7 @@ def main():
         "command",
         choices=[
             "run",
+            "adapter-schema-check",
             "health",
             "system-check",
             "runtime-stability",
@@ -1264,11 +1312,24 @@ def main():
         ],
         help="Command to execute.",
     )
+    parser.add_argument(
+        "--schema",
+        help="Explicit adapter schema JSON path for adapter-schema-check.",
+    )
+    parser.add_argument(
+        "--profile",
+        default="planning",
+        help="Validation profile for adapter-schema-check.",
+    )
 
     args = parser.parse_args()
 
     if args.command == "run":
         run_main()
+    elif args.command == "adapter-schema-check":
+        if not args.schema:
+            parser.error("adapter-schema-check requires --schema <path>")
+        raise SystemExit(run_adapter_schema_check(args.schema, args.profile))
     elif args.command == "health":
         run_health_check()
     elif args.command == "system-check":

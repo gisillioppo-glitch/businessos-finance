@@ -666,6 +666,14 @@ docs/adapter-schema-validator-cli-decision-v0.1-status.md
 
 This status approves a future read-only `adapter-schema-check` CLI command for explicit schema paths only, while keeping schema files, fixture files, report export, audit events, adapter execution, OS Core package creation, repository creation, EduOS runtime, academic data, and Public AI private runtime access blocked.
 
+The adapter schema validator CLI implementation is documented in:
+
+```text
+docs/adapter-schema-validator-cli-implementation-v0.1-status.md
+```
+
+BusinessOS now includes a read-only `python cli.py adapter-schema-check --schema <path>` command for explicit non-sensitive schema paths. It prints design-readiness status only and keeps schema files, fixture files, report export, audit events, adapter execution, OS Core package creation, repository creation, EduOS runtime, academic data, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
