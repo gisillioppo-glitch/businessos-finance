@@ -1,0 +1,147 @@
+{
+  "adapter_name": "eduos_non_sensitive",
+  "adapter_version": "0.1",
+  "branch_name": "EduOS",
+  "branch_id": "eduos",
+  "branch_visibility": "private_future_branch",
+  "branch_owner": "operator",
+  "branch_mode": "local_only_skeleton",
+  "supported_core_families": [
+    "identity",
+    "dashboard",
+    "approvals",
+    "evidence",
+    "readiness",
+    "runtime",
+    "scheduler",
+    "notifications",
+    "governance",
+    "command_center",
+    "public_boundary"
+  ],
+  "validation_profile": "planning",
+  "rollback_rule": "local_only_skeleton_no_runtime",
+  "role_registry": {
+    "conceptual_roles": [
+      "administrator",
+      "teacher",
+      "guardian",
+      "student",
+      "counselor",
+      "support_specialist"
+    ],
+    "public_roles": "none",
+    "rule": "roles remain conceptual until access enforcement is approved"
+  },
+  "page_registry": {
+    "conceptual_pages": [
+      "Academic Command Center",
+      "Academic Close",
+      "Academic Evidence",
+      "Guardian Communications",
+      "Student Support",
+      "Readiness"
+    ],
+    "rule": "pages remain planning-only and must not create dashboard runtime"
+  },
+  "approval_policy": {
+    "conceptual_approval_domains": [
+      "assessment_release",
+      "guardian_communication",
+      "intervention_review",
+      "policy_exception"
+    ],
+    "gate_required": true,
+    "external_delivery_requires_approval": true,
+    "dashboard_mutation_requires_approval": true,
+    "rule": "approval execution remains blocked"
+  },
+  "protected_source_policy": {
+    "conceptual_sources": [
+      "academic_governance",
+      "guardian_communications",
+      "student_support",
+      "assessment_review"
+    ],
+    "rule": "sensitive source workflows require future approval gates"
+  },
+  "evidence_registry": {
+    "conceptual_evidence_domains": [
+      "academic_close",
+      "assessment_review",
+      "support_case",
+      "intervention_plan",
+      "guardian_communication",
+      "governance_finding"
+    ],
+    "visibility": "private_future_branch",
+    "rule": "evidence references are conceptual and must not include raw records"
+  },
+  "notification_policy": {
+    "conceptual_modes": [
+      "queue_only",
+      "approval_required"
+    ],
+    "rule": "delivery is blocked until implementation approval"
+  },
+  "readiness_check_registry": {
+    "conceptual_checks": [
+      "skeleton_scope",
+      "boundary_docs",
+      "non_sensitive_config",
+      "no_academic_data",
+      "no_adapters"
+    ],
+    "rule": "readiness checks must run without private academic data"
+  },
+  "runtime_check_registry": {
+    "conceptual_checks": [
+      "no_runtime",
+      "no_database",
+      "no_dashboard",
+      "no_adapters",
+      "no_public_ai_private_access"
+    ],
+    "rule": "runtime is blocked until explicit approval"
+  },
+  "scheduler_job_registry": {
+    "conceptual_jobs": [
+      "academic_close_future"
+    ],
+    "rule": "scheduler execution remains blocked"
+  },
+  "governance_rule_pack": {
+    "conceptual_rules": [
+      "sensitivity_required",
+      "role_visibility_required",
+      "public_private_deny_by_default"
+    ],
+    "rule": "governance remains planning-only"
+  },
+  "command_summary_adapter": {
+    "conceptual_sources": [
+      "academic_health",
+      "support_need",
+      "governance_risk",
+      "evidence_completeness"
+    ],
+    "rule": "command synthesis remains conceptual and cannot execute actions"
+  },
+  "public_boundary_policy": {
+    "source": "EduOS Public Private Boundary Sketch v0.1",
+    "public_ai_private_runtime_access": "denied",
+    "public_student_data_access": "denied",
+    "public_teacher_data_access": "denied",
+    "public_guardian_data_access": "denied",
+    "public_grade_access": "denied",
+    "public_attendance_access": "denied",
+    "public_assessment_content_access": "denied",
+    "public_private_report_access": "denied",
+    "public_cli_execution": "denied",
+    "public_workflow_mutation": "denied",
+    "public_guardian_delivery": "denied",
+    "public_live_private_status_claims": "denied",
+    "public_intake_handoff": "sanitized_only",
+    "rule": "deny student records, teacher records, guardian records, grades, attendance, assessment content, private reports, CLI execution, workflow mutation, and live private status claims"
+  }
+}

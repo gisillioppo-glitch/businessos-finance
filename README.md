@@ -698,6 +698,14 @@ docs/adapter-schema-validator-schema-file-decision-v0.1-status.md
 
 This status approves a future controlled creation of `config/adapters/businessos.adapter.schema.json` and `config/adapters/eduos.adapter.schema.json` only, while keeping fixture files, adapters, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access blocked.
 
+The controlled adapter schema files implementation is documented in:
+
+```text
+docs/adapter-schema-validator-controlled-schema-files-implementation-v0.1-status.md
+```
+
+BusinessOS now includes controlled non-sensitive adapter schemas at `config/adapters/businessos.adapter.schema.json` and `config/adapters/eduos.adapter.schema.json`. These are validation inputs only; fixture files, adapters, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access remain blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
