@@ -8,9 +8,11 @@ from app.system.adapter_schema_validator import (
     VALID_OVERALL_STATUS,
     build_adapter_schema_validation_run,
     format_adapter_schema_report,
+    format_adapter_schema_fixture_run_report,
     format_adapter_schema_validation_run_report,
     load_adapter_schema,
     validate_adapter_schema,
+    validate_adapter_schema_fixture_run,
 )
 
 
@@ -329,6 +331,21 @@ class AdapterSchemaValidatorTests(unittest.TestCase):
 
         self.assertEqual(result["overall_status"], INVALID_INPUT_STATUS)
         self.assertEqual(result["runtime_authority"], "none")
+
+    def test_fixture_run_passes_all_expected_outcomes(self):
+        run = validate_adapter_schema_fixture_run(fixtures_dir=FIXTURES_DIR)
+        report = format_adapter_schema_fixture_run_report(run)
+
+        self.assertEqual(run["overall_status"], "fixture_run_passed")
+        self.assertEqual(run["fixture_count"], 11)
+        self.assertEqual(run["passed_expectations"], 11)
+        self.assertEqual(run["failed_expectations"], 0)
+        self.assertEqual(run["valid_fixture_count"], 2)
+        self.assertEqual(run["blocked_fixture_count"], 8)
+        self.assertEqual(run["invalid_input_fixture_count"], 1)
+        self.assertEqual(run["runtime_authority"], "none")
+        self.assertIn("# Adapter Schema Fixture Run", report)
+        self.assertIn("Fixture execution: validation_only", report)
 
 
 if __name__ == "__main__":

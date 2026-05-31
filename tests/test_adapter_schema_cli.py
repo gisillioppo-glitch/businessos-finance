@@ -5,7 +5,11 @@ from contextlib import redirect_stdout
 from io import StringIO
 from pathlib import Path
 
-from cli import run_adapter_schema_check, run_adapter_schema_report_run
+from cli import (
+    run_adapter_schema_check,
+    run_adapter_schema_fixture_run,
+    run_adapter_schema_report_run,
+)
 
 
 def valid_schema():
@@ -155,6 +159,30 @@ class AdapterSchemaCliTests(unittest.TestCase):
             self.assertIn("businessos.adapter.schema.json", report)
             self.assertIn("eduos.adapter.schema.json", report)
             self.assertIn("Runtime authority: none", output.getvalue())
+
+    def test_fixture_run_exports_fixture_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            reports_dir = Path(tmp) / "reports"
+            fixtures_dir = Path(__file__).parent / "fixtures" / "adapter_schema"
+
+            output = StringIO()
+            with redirect_stdout(output):
+                exit_code = run_adapter_schema_fixture_run(
+                    fixtures_dir=str(fixtures_dir),
+                    reports_dir=str(reports_dir),
+                    report_date="2026-05-31",
+                )
+
+            report_path = reports_dir / "adapter_schema_fixture_run_2026-05-31.md"
+            report = report_path.read_text(encoding="utf-8")
+
+            self.assertEqual(exit_code, 0)
+            self.assertIn("Adapter Schema Fixture Run", output.getvalue())
+            self.assertIn("Fixture count: 11", output.getvalue())
+            self.assertIn("Passed expectations: 11", output.getvalue())
+            self.assertIn("Runtime authority: none", output.getvalue())
+            self.assertIn("# Adapter Schema Fixture Run", report)
+            self.assertIn("Fixture execution: validation_only", report)
 
 
 if __name__ == "__main__":

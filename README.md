@@ -730,6 +730,14 @@ docs/adapter-schema-validator-controlled-fixture-files-implementation-v0.1-statu
 
 BusinessOS now includes static synthetic adapter schema fixtures under `tests/fixtures/adapter_schema/` for validator tests only. They do not grant adapter execution, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, or Public AI private runtime access.
 
+The adapter schema validator fixture-backed test run is documented in:
+
+```text
+docs/adapter-schema-validator-fixture-backed-test-run-v0.1-status.md
+```
+
+BusinessOS now includes `python cli.py adapter-schema-fixture-run` to validate expected outcomes across the static synthetic fixtures and export evidence to `reports/adapter_schema_fixture_run_YYYY-MM-DD.md`. This is validation-only and does not grant adapter execution, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, or Public AI private runtime access.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

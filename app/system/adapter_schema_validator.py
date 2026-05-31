@@ -11,6 +11,44 @@ INVALID_INPUT_STATUS = "adapter_schema_invalid_input"
 RUNTIME_AUTHORITY = "none"
 IMPLEMENTATION_AUTHORITY = "none"
 
+DEFAULT_FIXTURE_EXPECTATIONS = {
+    "valid_businessos_reference.schema.json": (VALID_OVERALL_STATUS, None),
+    "valid_eduos_non_sensitive.schema.json": (VALID_OVERALL_STATUS, None),
+    "invalid_missing_root_field.schema.json": (
+        BLOCKED_OVERALL_STATUS,
+        "required_root_fields_missing",
+    ),
+    "invalid_missing_registry.schema.json": (
+        BLOCKED_OVERALL_STATUS,
+        "required_registry_missing",
+    ),
+    "invalid_public_private_violation.schema.json": (
+        BLOCKED_OVERALL_STATUS,
+        "public_ai_private_runtime_access_requested",
+    ),
+    "invalid_approval_gap.schema.json": (
+        BLOCKED_OVERALL_STATUS,
+        "approval_gate_missing_for_action_family",
+    ),
+    "invalid_domain_leakage.schema.json": (
+        BLOCKED_OVERALL_STATUS,
+        "businessos_domain_logic_marked_universal",
+    ),
+    "invalid_sensitive_data_required.schema.json": (
+        BLOCKED_OVERALL_STATUS,
+        "sensitive_data_required_for_validation",
+    ),
+    "invalid_repository_runtime_scope.schema.json": (
+        BLOCKED_OVERALL_STATUS,
+        "runtime_implementation_implied",
+    ),
+    "invalid_missing_rollback.schema.json": (
+        BLOCKED_OVERALL_STATUS,
+        "required_root_fields_missing",
+    ),
+    "invalid_json.schema.json": (INVALID_INPUT_STATUS, "JSONDecodeError"),
+}
+
 REQUIRED_ROOT_FIELDS = (
     "adapter_name",
     "adapter_version",
@@ -781,6 +819,160 @@ def export_adapter_schema_validation_run(run, reports_dir="reports", report_date
     run["report_path"] = str(report_path)
     report_path.write_text(
         format_adapter_schema_validation_run_report(run),
+        encoding="utf-8",
+    )
+    return run
+
+
+def validate_adapter_schema_fixture_run(fixtures_dir="tests/fixtures/adapter_schema"):
+    fixture_root = Path(fixtures_dir)
+    fixture_results = []
+
+    for fixture_name, (expected_status, expected_reason) in sorted(
+        DEFAULT_FIXTURE_EXPECTATIONS.items()
+    ):
+        fixture_path = fixture_root / fixture_name
+        schema = load_adapter_schema(fixture_path)
+        result = validate_adapter_schema(schema)
+        actual_status = result.get("overall_status")
+        actual_reasons = set(result.get("blocking_reasons") or [])
+        expectation_met = actual_status == expected_status
+        if expected_reason:
+            expectation_met = expectation_met and expected_reason in actual_reasons
+
+        fixture_results.append(
+            {
+                "fixture": fixture_name,
+                "expected_status": expected_status,
+                "actual_status": actual_status,
+                "expected_reason": expected_reason,
+                "blocking_reasons": result.get("blocking_reasons") or [],
+                "expectation_met": expectation_met,
+                "runtime_authority": result.get("runtime_authority", RUNTIME_AUTHORITY),
+                "implementation_authority": result.get(
+                    "implementation_authority",
+                    IMPLEMENTATION_AUTHORITY,
+                ),
+            }
+        )
+
+    failed_expectations = [
+        fixture for fixture in fixture_results if not fixture["expectation_met"]
+    ]
+    invalid_input_count = sum(
+        1
+        for fixture in fixture_results
+        if fixture["actual_status"] == INVALID_INPUT_STATUS
+    )
+    blocked_count = sum(
+        1
+        for fixture in fixture_results
+        if fixture["actual_status"] == BLOCKED_OVERALL_STATUS
+    )
+    valid_count = sum(
+        1
+        for fixture in fixture_results
+        if fixture["actual_status"] == VALID_OVERALL_STATUS
+    )
+
+    return {
+        "date": None,
+        "overall_status": (
+            "fixture_run_passed"
+            if not failed_expectations
+            else "fixture_run_failed"
+        ),
+        "fixture_count": len(fixture_results),
+        "passed_expectations": len(fixture_results) - len(failed_expectations),
+        "failed_expectations": len(failed_expectations),
+        "valid_fixture_count": valid_count,
+        "blocked_fixture_count": blocked_count,
+        "invalid_input_fixture_count": invalid_input_count,
+        "fixtures_dir": str(fixture_root),
+        "fixture_results": fixture_results,
+        "report_path": None,
+        "safe_to_commit": True,
+        "runtime_authority": RUNTIME_AUTHORITY,
+        "implementation_authority": IMPLEMENTATION_AUTHORITY,
+    }
+
+
+def format_adapter_schema_fixture_run_report(run):
+    lines = [
+        "# Adapter Schema Fixture Run",
+        "",
+        f"Date: {run.get('date') or 'not_exported'}",
+        f"Overall status: {run.get('overall_status', 'unknown')}",
+        f"Fixture count: {run.get('fixture_count', 0)}",
+        f"Passed expectations: {run.get('passed_expectations', 0)}",
+        f"Failed expectations: {run.get('failed_expectations', 0)}",
+        "",
+        "## Summary",
+        "",
+        f"Valid fixtures: {run.get('valid_fixture_count', 0)}",
+        f"Blocked fixtures: {run.get('blocked_fixture_count', 0)}",
+        f"Invalid input fixtures: {run.get('invalid_input_fixture_count', 0)}",
+        f"Runtime authority: {run.get('runtime_authority', RUNTIME_AUTHORITY)}",
+        f"Implementation authority: {run.get('implementation_authority', IMPLEMENTATION_AUTHORITY)}",
+        "",
+        "## Fixture Results",
+        "",
+        "| Fixture | Expected status | Actual status | Expected reason | Result |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+
+    for fixture in run.get("fixture_results", []):
+        lines.append(
+            "| {fixture} | {expected_status} | {actual_status} | {expected_reason} | {result} |".format(
+                fixture=_safe_cell(fixture.get("fixture", "")),
+                expected_status=_safe_cell(fixture.get("expected_status", "")),
+                actual_status=_safe_cell(fixture.get("actual_status", "")),
+                expected_reason=_safe_cell(fixture.get("expected_reason") or "none"),
+                result="passed" if fixture.get("expectation_met") else "failed",
+            )
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Boundary Classification",
+            "",
+            "```text",
+            "OS Core candidate: yes",
+            "BusinessOS-specific: adapter_owned_if_businessos",
+            "EduOS-specific: planning_only",
+            "Public AI boundary: deny_by_default",
+            "Sensitive data exposure: none",
+            "Runtime behavior: none",
+            "Approval behavior: validation_only",
+            "Notification delivery: none",
+            "Remote publish: blocked",
+            "Repository creation: blocked",
+            "Package creation: blocked",
+            "Code extraction: blocked",
+            "Fixture execution: validation_only",
+            "Adapter implementation: blocked",
+            "Fixture run authority: evidence_only",
+            "```",
+            "",
+            "## Operator Note",
+            "",
+            "This report summarizes synthetic fixture validation only. It does not grant runtime, implementation, repository, package, adapter execution, EduOS runtime, or Public AI private runtime authority.",
+        ]
+    )
+
+    return "\n".join(lines) + "\n"
+
+
+def export_adapter_schema_fixture_run(run, reports_dir="reports", report_date=None):
+    export_date = report_date or date.today().isoformat()
+    report_path = Path(reports_dir) / f"adapter_schema_fixture_run_{export_date}.md"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+
+    run["date"] = export_date
+    run["report_path"] = str(report_path)
+    report_path.write_text(
+        format_adapter_schema_fixture_run_report(run),
         encoding="utf-8",
     )
     return run

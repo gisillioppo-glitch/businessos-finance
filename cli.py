@@ -118,10 +118,12 @@ from app.system.adapter_schema_validator import (
     INVALID_INPUT_STATUS,
     WARNING_OVERALL_STATUS,
     build_adapter_schema_validation_run,
+    export_adapter_schema_fixture_run,
     export_adapter_schema_validation_run,
     export_adapter_schema_report,
     load_adapter_schema,
     validate_adapter_schema,
+    validate_adapter_schema_fixture_run,
 )
 from app.system.runtime_stability import print_runtime_stability_review
 from app.system.session_handoff import print_session_handoff_snapshot
@@ -263,6 +265,33 @@ def run_adapter_schema_report_run(
         INVALID_INPUT_STATUS: 3,
     }
     return exit_codes.get(run["overall_status"], 0)
+
+
+def run_adapter_schema_fixture_run(
+    fixtures_dir="tests/fixtures/adapter_schema",
+    reports_dir="reports",
+    report_date=None,
+):
+    run = validate_adapter_schema_fixture_run(fixtures_dir=fixtures_dir)
+    run = export_adapter_schema_fixture_run(
+        run,
+        reports_dir=reports_dir,
+        report_date=report_date,
+    )
+
+    print("Adapter Schema Fixture Run")
+    print(f"Overall status: {run['overall_status']}")
+    print(f"Fixture count: {run['fixture_count']}")
+    print(f"Passed expectations: {run['passed_expectations']}")
+    print(f"Failed expectations: {run['failed_expectations']}")
+    print(f"Valid fixtures: {run['valid_fixture_count']}")
+    print(f"Blocked fixtures: {run['blocked_fixture_count']}")
+    print(f"Invalid input fixtures: {run['invalid_input_fixture_count']}")
+    print(f"Runtime authority: {run['runtime_authority']}")
+    print(f"Implementation authority: {run['implementation_authority']}")
+    print(f"Report exported: {run['report_path']}")
+
+    return 0 if run["overall_status"] == "fixture_run_passed" else 2
 
 
 def run_actions():
@@ -1309,6 +1338,7 @@ def main():
             "run",
             "adapter-schema-check",
             "adapter-schema-report-run",
+            "adapter-schema-fixture-run",
             "health",
             "system-check",
             "runtime-stability",
@@ -1399,6 +1429,11 @@ def main():
         help="Controlled adapter schema JSON path for adapter-schema-report-run. Can be repeated.",
     )
     parser.add_argument(
+        "--fixtures-dir",
+        default="tests/fixtures/adapter_schema",
+        help="Controlled fixtures directory for adapter-schema-fixture-run.",
+    )
+    parser.add_argument(
         "--profile",
         default="planning",
         help="Validation profile for adapter-schema-check.",
@@ -1428,6 +1463,12 @@ def main():
             run_adapter_schema_report_run(
                 schema_paths=args.run_schema,
                 profile=args.profile,
+            )
+        )
+    elif args.command == "adapter-schema-fixture-run":
+        raise SystemExit(
+            run_adapter_schema_fixture_run(
+                fixtures_dir=args.fixtures_dir,
             )
         )
     elif args.command == "health":
