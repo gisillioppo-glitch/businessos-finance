@@ -714,6 +714,14 @@ docs/adapter-schema-validator-schema-validation-report-run-v0.1-status.md
 
 BusinessOS now includes `python cli.py adapter-schema-report-run` to validate the controlled BusinessOS and EduOS schema files together and export aggregate evidence to `reports/adapter_schema_validation_run_YYYY-MM-DD.md`. This is evidence-only; fixture files, adapters, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access remain blocked.
 
+The adapter schema validator fixture file decision is documented in:
+
+```text
+docs/adapter-schema-validator-fixture-file-decision-v0.1-status.md
+```
+
+This decision approves a future controlled creation of static synthetic JSON fixtures under `tests/fixtures/adapter_schema/` only. It does not create fixture files yet, and adapters, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access remain blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
