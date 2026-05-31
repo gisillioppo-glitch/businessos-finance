@@ -117,6 +117,8 @@ from app.system.adapter_schema_validator import (
     BLOCKED_OVERALL_STATUS,
     INVALID_INPUT_STATUS,
     WARNING_OVERALL_STATUS,
+    build_adapter_schema_validation_run,
+    export_adapter_schema_validation_run,
     export_adapter_schema_report,
     load_adapter_schema,
     validate_adapter_schema,
@@ -207,6 +209,60 @@ def run_adapter_schema_check(
         INVALID_INPUT_STATUS: 3,
     }
     return exit_codes.get(result["overall_status"], 0)
+
+
+def run_adapter_schema_report_run(
+    schema_paths=None,
+    profile="planning",
+    reports_dir="reports",
+    report_date=None,
+):
+    paths = schema_paths or [
+        "config/adapters/businessos.adapter.schema.json",
+        "config/adapters/eduos.adapter.schema.json",
+    ]
+    results = []
+
+    for schema_path in paths:
+        schema = load_adapter_schema(schema_path)
+        result = validate_adapter_schema(schema, profile=profile)
+        result["schema_path"] = Path(schema_path).name
+        result["schema_format"] = "json"
+        result["schema_source"] = "controlled_path"
+        results.append(result)
+
+    run = build_adapter_schema_validation_run(
+        results,
+        schema_paths=paths,
+        report_date=report_date,
+    )
+    run = export_adapter_schema_validation_run(
+        run,
+        reports_dir=reports_dir,
+        report_date=report_date,
+    )
+
+    print("Adapter Schema Validation Run")
+    print(f"Overall status: {run['overall_status']}")
+    print(f"Schema count: {run['schema_count']}")
+    print(f"Passed schemas: {run['passed_schema_count']}")
+    print(f"Warning schemas: {run['warning_schema_count']}")
+    print(f"Failed schemas: {run['failed_schema_count']}")
+    print(f"Total checks: {run['total_checks']}")
+    print(f"Passed checks: {run['passed_checks']}")
+    print(f"Warning checks: {run['warning_checks']}")
+    print(f"Failed checks: {run['failed_checks']}")
+    print(f"Blocking failures: {run['blocking_failures']}")
+    print(f"Runtime authority: {run['runtime_authority']}")
+    print(f"Implementation authority: {run['implementation_authority']}")
+    print(f"Report exported: {run['report_path']}")
+
+    exit_codes = {
+        WARNING_OVERALL_STATUS: 1,
+        BLOCKED_OVERALL_STATUS: 2,
+        INVALID_INPUT_STATUS: 3,
+    }
+    return exit_codes.get(run["overall_status"], 0)
 
 
 def run_actions():
@@ -1252,6 +1308,7 @@ def main():
         choices=[
             "run",
             "adapter-schema-check",
+            "adapter-schema-report-run",
             "health",
             "system-check",
             "runtime-stability",
@@ -1337,6 +1394,11 @@ def main():
         help="Explicit adapter schema JSON path for adapter-schema-check.",
     )
     parser.add_argument(
+        "--run-schema",
+        action="append",
+        help="Controlled adapter schema JSON path for adapter-schema-report-run. Can be repeated.",
+    )
+    parser.add_argument(
         "--profile",
         default="planning",
         help="Validation profile for adapter-schema-check.",
@@ -1359,6 +1421,13 @@ def main():
                 args.schema,
                 args.profile,
                 export_report=args.export_report,
+            )
+        )
+    elif args.command == "adapter-schema-report-run":
+        raise SystemExit(
+            run_adapter_schema_report_run(
+                schema_paths=args.run_schema,
+                profile=args.profile,
             )
         )
     elif args.command == "health":

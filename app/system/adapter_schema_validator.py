@@ -651,6 +651,141 @@ def export_adapter_schema_report(result, reports_dir="reports", report_date=None
     return result
 
 
+def build_adapter_schema_validation_run(results, schema_paths=None, report_date=None):
+    normalized_results = list(results)
+    failed = [
+        result
+        for result in normalized_results
+        if result.get("overall_status")
+        in {BLOCKED_OVERALL_STATUS, INVALID_INPUT_STATUS}
+        or result.get("blocking_failures", 0) > 0
+    ]
+    warnings = [
+        result
+        for result in normalized_results
+        if result.get("overall_status") == WARNING_OVERALL_STATUS
+        or result.get("warning_checks", 0) > 0
+    ]
+
+    if failed:
+        overall_status = BLOCKED_OVERALL_STATUS
+    elif warnings:
+        overall_status = WARNING_OVERALL_STATUS
+    else:
+        overall_status = VALID_OVERALL_STATUS
+
+    return {
+        "date": report_date,
+        "overall_status": overall_status,
+        "schema_count": len(normalized_results),
+        "passed_schema_count": len(normalized_results) - len(failed) - len(warnings),
+        "warning_schema_count": len(warnings),
+        "failed_schema_count": len(failed),
+        "total_checks": sum(result.get("total_checks", 0) for result in normalized_results),
+        "passed_checks": sum(result.get("passed_checks", 0) for result in normalized_results),
+        "warning_checks": sum(result.get("warning_checks", 0) for result in normalized_results),
+        "failed_checks": sum(result.get("failed_checks", 0) for result in normalized_results),
+        "blocking_failures": sum(result.get("blocking_failures", 0) for result in normalized_results),
+        "schema_paths": list(schema_paths or []),
+        "results": normalized_results,
+        "report_path": None,
+        "safe_to_commit": True,
+        "runtime_authority": RUNTIME_AUTHORITY,
+        "implementation_authority": IMPLEMENTATION_AUTHORITY,
+    }
+
+
+def format_adapter_schema_validation_run_report(run):
+    lines = [
+        "# Adapter Schema Validation Run",
+        "",
+        f"Date: {run.get('date') or 'not_exported'}",
+        f"Overall status: {run.get('overall_status', 'unknown')}",
+        f"Schema count: {run.get('schema_count', 0)}",
+        f"Passed schemas: {run.get('passed_schema_count', 0)}",
+        f"Warning schemas: {run.get('warning_schema_count', 0)}",
+        f"Failed schemas: {run.get('failed_schema_count', 0)}",
+        "",
+        "## Summary",
+        "",
+        f"Total checks: {run.get('total_checks', 0)}",
+        f"Passed checks: {run.get('passed_checks', 0)}",
+        f"Warning checks: {run.get('warning_checks', 0)}",
+        f"Failed checks: {run.get('failed_checks', 0)}",
+        f"Blocking failures: {run.get('blocking_failures', 0)}",
+        "",
+        "## Schema Results",
+        "",
+        "| Schema | Adapter | Branch | Status | Checks | Blocking failures |",
+        "| --- | --- | --- | --- | --- | --- |",
+    ]
+
+    schema_paths = run.get("schema_paths") or []
+    for index, result in enumerate(run.get("results", [])):
+        schema_path = (
+            schema_paths[index]
+            if index < len(schema_paths)
+            else result.get("schema_path", "provided_object")
+        )
+        lines.append(
+            "| {schema} | {adapter} | {branch} | {status} | {checks} | {blocking} |".format(
+                schema=_safe_cell(Path(schema_path).name),
+                adapter=_safe_cell(result.get("adapter_name", "unknown")),
+                branch=_safe_cell(result.get("branch_name", "unknown")),
+                status=_safe_cell(result.get("overall_status", "unknown")),
+                checks=_safe_cell(
+                    f"{result.get('passed_checks', 0)}/{result.get('total_checks', 0)}"
+                ),
+                blocking=_safe_cell(result.get("blocking_failures", 0)),
+            )
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Boundary Classification",
+            "",
+            "```text",
+            "OS Core candidate: yes",
+            "BusinessOS-specific: adapter_owned_if_businessos",
+            "EduOS-specific: adapter_owned_if_eduos",
+            "Public AI boundary: deny_by_default",
+            "Sensitive data exposure: none",
+            "Runtime behavior: none",
+            "Approval behavior: validation_only",
+            "Notification delivery: none",
+            "Remote publish: blocked",
+            "Repository creation: blocked",
+            "Package creation: blocked",
+            "Code extraction: blocked",
+            "Fixture creation: blocked",
+            "Adapter implementation: blocked",
+            "Schema validation run authority: evidence_only",
+            "```",
+            "",
+            "## Operator Note",
+            "",
+            "This run report summarizes controlled adapter schema validation evidence only. It does not grant runtime, implementation, repository, package, fixture, adapter execution, EduOS runtime, or Public AI private runtime authority.",
+        ]
+    )
+
+    return "\n".join(lines) + "\n"
+
+
+def export_adapter_schema_validation_run(run, reports_dir="reports", report_date=None):
+    export_date = report_date or date.today().isoformat()
+    report_path = Path(reports_dir) / f"adapter_schema_validation_run_{export_date}.md"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+
+    run["date"] = export_date
+    run["report_path"] = str(report_path)
+    report_path.write_text(
+        format_adapter_schema_validation_run_report(run),
+        encoding="utf-8",
+    )
+    return run
+
+
 def _check(name, status, severity, detail, reason=None):
     return {
         "name": name,

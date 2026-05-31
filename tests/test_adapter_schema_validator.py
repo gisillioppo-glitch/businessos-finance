@@ -4,7 +4,9 @@ from app.system.adapter_schema_validator import (
     BLOCKED_OVERALL_STATUS,
     INVALID_INPUT_STATUS,
     VALID_OVERALL_STATUS,
+    build_adapter_schema_validation_run,
     format_adapter_schema_report,
+    format_adapter_schema_validation_run_report,
     validate_adapter_schema,
 )
 
@@ -239,6 +241,30 @@ class AdapterSchemaValidatorTests(unittest.TestCase):
         self.assertIn("Runtime behavior: none", report)
         self.assertIsNone(result["report_path"])
         self.assertTrue(result["safe_to_commit"])
+
+    def test_validation_run_report_summarizes_multiple_controlled_schemas(self):
+        businessos_result = validate_adapter_schema(businessos_schema())
+        eduos_result = validate_adapter_schema(eduos_schema())
+
+        run = build_adapter_schema_validation_run(
+            [businessos_result, eduos_result],
+            schema_paths=[
+                "config/adapters/businessos.adapter.schema.json",
+                "config/adapters/eduos.adapter.schema.json",
+            ],
+            report_date="2026-05-31",
+        )
+        report = format_adapter_schema_validation_run_report(run)
+
+        self.assertEqual(run["overall_status"], VALID_OVERALL_STATUS)
+        self.assertEqual(run["schema_count"], 2)
+        self.assertEqual(run["passed_schema_count"], 2)
+        self.assertEqual(run["blocking_failures"], 0)
+        self.assertIn("# Adapter Schema Validation Run", report)
+        self.assertIn("businessos.adapter.schema.json", report)
+        self.assertIn("eduos.adapter.schema.json", report)
+        self.assertIn("Runtime behavior: none", report)
+        self.assertIn("Fixture creation: blocked", report)
 
 
 if __name__ == "__main__":

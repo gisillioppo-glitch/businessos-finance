@@ -5,7 +5,7 @@ from contextlib import redirect_stdout
 from io import StringIO
 from pathlib import Path
 
-from cli import run_adapter_schema_check
+from cli import run_adapter_schema_check, run_adapter_schema_report_run
 
 
 def valid_schema():
@@ -117,6 +117,44 @@ class AdapterSchemaCliTests(unittest.TestCase):
         self.assertIn("Runtime behavior: none", report)
         self.assertIn("Schema path: schema.json", report)
         self.assertNotIn("Temp", report)
+
+    def test_report_run_exports_aggregate_without_reusing_single_schema_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            first_schema = valid_schema()
+            second_schema = valid_schema()
+            second_schema["adapter_name"] = "eduos_non_sensitive"
+            second_schema["branch_name"] = "EduOS"
+            second_schema["branch_id"] = "eduos"
+            second_schema["branch_visibility"] = "private_future_branch"
+            second_schema["branch_mode"] = "local_only_skeleton"
+            second_schema["rollback_rule"] = "local_only_skeleton_no_runtime"
+
+            first_path = Path(tmp) / "businessos.adapter.schema.json"
+            second_path = Path(tmp) / "eduos.adapter.schema.json"
+            reports_dir = Path(tmp) / "reports"
+            first_path.write_text(json.dumps(first_schema), encoding="utf-8")
+            second_path.write_text(json.dumps(second_schema), encoding="utf-8")
+
+            output = StringIO()
+            with redirect_stdout(output):
+                exit_code = run_adapter_schema_report_run(
+                    schema_paths=[str(first_path), str(second_path)],
+                    reports_dir=str(reports_dir),
+                    report_date="2026-05-31",
+                )
+
+            run_report_path = reports_dir / "adapter_schema_validation_run_2026-05-31.md"
+            single_report_path = reports_dir / "adapter_schema_check_2026-05-31.md"
+            report = run_report_path.read_text(encoding="utf-8")
+
+            self.assertEqual(exit_code, 0)
+            self.assertIn("Adapter Schema Validation Run", output.getvalue())
+            self.assertIn("Schema count: 2", output.getvalue())
+            self.assertTrue(run_report_path.exists())
+            self.assertFalse(single_report_path.exists())
+            self.assertIn("businessos.adapter.schema.json", report)
+            self.assertIn("eduos.adapter.schema.json", report)
+            self.assertIn("Runtime authority: none", output.getvalue())
 
 
 if __name__ == "__main__":

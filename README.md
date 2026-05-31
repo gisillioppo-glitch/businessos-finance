@@ -706,6 +706,14 @@ docs/adapter-schema-validator-controlled-schema-files-implementation-v0.1-status
 
 BusinessOS now includes controlled non-sensitive adapter schemas at `config/adapters/businessos.adapter.schema.json` and `config/adapters/eduos.adapter.schema.json`. These are validation inputs only; fixture files, adapters, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access remain blocked.
 
+The controlled adapter schema validation report run is documented in:
+
+```text
+docs/adapter-schema-validator-schema-validation-report-run-v0.1-status.md
+```
+
+BusinessOS now includes `python cli.py adapter-schema-report-run` to validate the controlled BusinessOS and EduOS schema files together and export aggregate evidence to `reports/adapter_schema_validation_run_YYYY-MM-DD.md`. This is evidence-only; fixture files, adapters, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access remain blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
