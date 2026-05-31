@@ -1,4 +1,6 @@
+import json
 import unittest
+from pathlib import Path
 
 from app.system.adapter_schema_validator import (
     BLOCKED_OVERALL_STATUS,
@@ -7,8 +9,12 @@ from app.system.adapter_schema_validator import (
     build_adapter_schema_validation_run,
     format_adapter_schema_report,
     format_adapter_schema_validation_run_report,
+    load_adapter_schema,
     validate_adapter_schema,
 )
+
+
+FIXTURES_DIR = Path(__file__).parent / "fixtures" / "adapter_schema"
 
 
 COMMON_FAMILIES = [
@@ -265,6 +271,64 @@ class AdapterSchemaValidatorTests(unittest.TestCase):
         self.assertIn("eduos.adapter.schema.json", report)
         self.assertIn("Runtime behavior: none", report)
         self.assertIn("Fixture creation: blocked", report)
+
+    def test_fixture_files_are_synthetic_and_commit_safe(self):
+        fixture_paths = sorted(FIXTURES_DIR.glob("*.schema.json"))
+
+        self.assertEqual(len(fixture_paths), 11)
+        for fixture_path in fixture_paths:
+            content = fixture_path.read_text(encoding="utf-8")
+            lowered = content.lower()
+
+            self.assertNotIn("password", lowered)
+            self.assertNotIn("secret", lowered)
+            self.assertNotIn("token", lowered)
+            self.assertNotIn("@", lowered)
+            self.assertNotIn("finance.db", lowered)
+            self.assertNotIn("student name", lowered)
+            self.assertNotIn("guardian name", lowered)
+
+    def test_valid_fixture_files_pass(self):
+        for fixture_name in (
+            "valid_businessos_reference.schema.json",
+            "valid_eduos_non_sensitive.schema.json",
+        ):
+            with self.subTest(fixture_name=fixture_name):
+                schema = json.loads((FIXTURES_DIR / fixture_name).read_text(encoding="utf-8"))
+                result = validate_adapter_schema(schema)
+
+                self.assertEqual(result["overall_status"], VALID_OVERALL_STATUS)
+                self.assertEqual(result["blocking_failures"], 0)
+                self.assertEqual(result["runtime_authority"], "none")
+
+    def test_invalid_fixture_files_block_for_expected_reasons(self):
+        expected_reasons = {
+            "invalid_missing_root_field.schema.json": "required_root_fields_missing",
+            "invalid_missing_registry.schema.json": "required_registry_missing",
+            "invalid_public_private_violation.schema.json": "public_ai_private_runtime_access_requested",
+            "invalid_approval_gap.schema.json": "approval_gate_missing_for_action_family",
+            "invalid_domain_leakage.schema.json": "businessos_domain_logic_marked_universal",
+            "invalid_sensitive_data_required.schema.json": "sensitive_data_required_for_validation",
+            "invalid_repository_runtime_scope.schema.json": "runtime_implementation_implied",
+            "invalid_missing_rollback.schema.json": "required_root_fields_missing",
+        }
+
+        for fixture_name, reason in expected_reasons.items():
+            with self.subTest(fixture_name=fixture_name):
+                schema = json.loads((FIXTURES_DIR / fixture_name).read_text(encoding="utf-8"))
+                result = validate_adapter_schema(schema)
+
+                self.assertEqual(result["overall_status"], BLOCKED_OVERALL_STATUS)
+                self.assertIn(reason, result["blocking_reasons"])
+                self.assertEqual(result["runtime_authority"], "none")
+
+    def test_invalid_json_fixture_returns_invalid_input(self):
+        result = validate_adapter_schema(
+            load_adapter_schema(FIXTURES_DIR / "invalid_json.schema.json")
+        )
+
+        self.assertEqual(result["overall_status"], INVALID_INPUT_STATUS)
+        self.assertEqual(result["runtime_authority"], "none")
 
 
 if __name__ == "__main__":

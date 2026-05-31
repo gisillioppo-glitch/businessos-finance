@@ -1,0 +1,30 @@
+{
+  "adapter_name": "fixture_sensitive_data_required",
+  "adapter_version": "0.1",
+  "branch_name": "Sensitive Data Required Fixture",
+  "branch_id": "eduos",
+  "branch_visibility": "private_future_branch",
+  "branch_owner": "fixture_operator",
+  "branch_mode": "local_only_skeleton",
+  "supported_core_families": [
+    "identity",
+    "evidence",
+    "public_boundary"
+  ],
+  "validation_profile": "planning",
+  "rollback_rule": "fixture_local_only_skeleton_no_runtime",
+  "role_registry": {
+    "rule": "fixture roles remain conceptual"
+  },
+  "evidence_registry": {
+    "student_data_required": true,
+    "rule": "fixture unsafe sensitive data flag"
+  },
+  "protected_source_policy": {
+    "rule": "fixture protected sources only"
+  },
+  "public_boundary_policy": {
+    "public_ai_private_runtime_access": "denied",
+    "public_student_data_access": "denied"
+  }
+}

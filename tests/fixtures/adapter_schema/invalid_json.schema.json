@@ -1,0 +1,14 @@
+{
+  "adapter_name": "fixture_invalid_json",
+  "adapter_version": "0.1",
+  "branch_name": "Invalid JSON Fixture",
+  "branch_id": "businessos",
+  "branch_visibility": "private",
+  "branch_owner": "fixture_operator",
+  "supported_core_families": [
+    "identity",
+    "public_boundary"
+  ],
+  "validation_profile": "planning",
+  "rollback_rule": "fixture_branch_only",
+}

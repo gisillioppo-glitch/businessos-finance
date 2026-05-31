@@ -1,0 +1,32 @@
+{
+  "adapter_name": "fixture_approval_gap",
+  "adapter_version": "0.1",
+  "branch_name": "Approval Gap Fixture",
+  "branch_id": "businessos",
+  "branch_visibility": "private",
+  "branch_owner": "fixture_operator",
+  "supported_core_families": [
+    "identity",
+    "approvals",
+    "notifications",
+    "public_boundary"
+  ],
+  "validation_profile": "planning",
+  "rollback_rule": "fixture_branch_only",
+  "role_registry": {
+    "rule": "fixture roles remain private"
+  },
+  "approval_policy": {
+    "gate_required": false
+  },
+  "protected_source_policy": {
+    "rule": "fixture protected sources only"
+  },
+  "notification_policy": {
+    "external_delivery_enabled": true,
+    "rule": "fixture unsafe delivery flag"
+  },
+  "public_boundary_policy": {
+    "public_ai_private_runtime_access": "denied"
+  }
+}

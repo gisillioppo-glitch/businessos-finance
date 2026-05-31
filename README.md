@@ -722,6 +722,14 @@ docs/adapter-schema-validator-fixture-file-decision-v0.1-status.md
 
 This decision approves a future controlled creation of static synthetic JSON fixtures under `tests/fixtures/adapter_schema/` only. It does not create fixture files yet, and adapters, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access remain blocked.
 
+The controlled adapter schema fixture files implementation is documented in:
+
+```text
+docs/adapter-schema-validator-controlled-fixture-files-implementation-v0.1-status.md
+```
+
+BusinessOS now includes static synthetic adapter schema fixtures under `tests/fixtures/adapter_schema/` for validator tests only. They do not grant adapter execution, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, or Public AI private runtime access.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

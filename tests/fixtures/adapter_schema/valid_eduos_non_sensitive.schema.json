@@ -1,0 +1,86 @@
+{
+  "adapter_name": "fixture_eduos_non_sensitive",
+  "adapter_version": "0.1",
+  "branch_name": "EduOS Fixture",
+  "branch_id": "eduos",
+  "branch_visibility": "private_future_branch",
+  "branch_owner": "fixture_operator",
+  "branch_mode": "local_only_skeleton",
+  "supported_core_families": [
+    "identity",
+    "dashboard",
+    "approvals",
+    "evidence",
+    "readiness",
+    "runtime",
+    "scheduler",
+    "notifications",
+    "governance",
+    "command_center",
+    "public_boundary"
+  ],
+  "validation_profile": "planning",
+  "rollback_rule": "fixture_local_only_skeleton_no_runtime",
+  "role_registry": {
+    "conceptual_roles": [
+      "fixture_administrator",
+      "fixture_teacher",
+      "fixture_guardian",
+      "fixture_student"
+    ],
+    "public_roles": "none",
+    "rule": "fixture roles are conceptual only"
+  },
+  "page_registry": {
+    "conceptual_pages": [
+      "Fixture Academic Command Center",
+      "Fixture Academic Evidence"
+    ],
+    "rule": "fixture pages do not create dashboard runtime"
+  },
+  "approval_policy": {
+    "gate_required": true,
+    "external_delivery_requires_approval": true,
+    "dashboard_mutation_requires_approval": true
+  },
+  "protected_source_policy": {
+    "rule": "fixture academic sources require future gates"
+  },
+  "evidence_registry": {
+    "visibility": "private_future_branch",
+    "rule": "fixture evidence contains no academic records"
+  },
+  "notification_policy": {
+    "delivery_mode": "queue_only",
+    "rule": "fixture delivery remains blocked"
+  },
+  "readiness_check_registry": {
+    "rule": "fixture checks run without academic data"
+  },
+  "runtime_check_registry": {
+    "rule": "fixture runtime remains blocked"
+  },
+  "scheduler_job_registry": {
+    "rule": "fixture scheduler remains blocked"
+  },
+  "governance_rule_pack": {
+    "rule": "fixture public private boundary is deny by default"
+  },
+  "command_summary_adapter": {
+    "rule": "fixture command summary is conceptual only"
+  },
+  "public_boundary_policy": {
+    "public_ai_private_runtime_access": "denied",
+    "public_student_data_access": "denied",
+    "public_teacher_data_access": "denied",
+    "public_guardian_data_access": "denied",
+    "public_grade_access": "denied",
+    "public_attendance_access": "denied",
+    "public_assessment_content_access": "denied",
+    "public_private_report_access": "denied",
+    "public_cli_execution": "denied",
+    "public_workflow_mutation": "denied",
+    "public_guardian_delivery": "denied",
+    "public_live_private_status_claims": "denied"
+  }
+}

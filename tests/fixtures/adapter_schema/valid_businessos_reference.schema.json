@@ -1,0 +1,80 @@
+{
+  "adapter_name": "fixture_businessos_reference",
+  "adapter_version": "0.1",
+  "branch_name": "BusinessOS Fixture",
+  "branch_id": "businessos",
+  "branch_visibility": "private",
+  "branch_owner": "fixture_operator",
+  "supported_core_families": [
+    "identity",
+    "dashboard",
+    "approvals",
+    "evidence",
+    "readiness",
+    "runtime",
+    "scheduler",
+    "notifications",
+    "governance",
+    "command_center",
+    "demo_pilot",
+    "public_boundary"
+  ],
+  "validation_profile": "planning",
+  "rollback_rule": "fixture_branch_only_businessos_runtime",
+  "role_registry": {
+    "roles": [
+      "fixture_admin",
+      "fixture_executive",
+      "fixture_viewer"
+    ],
+    "public_roles": "none",
+    "rule": "fixture roles remain private"
+  },
+  "page_registry": {
+    "rule": "fixture pages remain private"
+  },
+  "approval_policy": {
+    "gate_required": true,
+    "external_delivery_requires_approval": true,
+    "dashboard_mutation_requires_approval": true
+  },
+  "protected_source_policy": {
+    "rule": "fixture sources require approval gates"
+  },
+  "evidence_registry": {
+    "visibility": "private",
+    "rule": "fixture evidence contains no private reports"
+  },
+  "notification_policy": {
+    "delivery_mode": "queue_only",
+    "rule": "fixture delivery remains blocked"
+  },
+  "readiness_check_registry": {
+    "rule": "fixture checks run without private data"
+  },
+  "runtime_check_registry": {
+    "rule": "fixture runtime does not execute"
+  },
+  "scheduler_job_registry": {
+    "rule": "fixture scheduler does not execute"
+  },
+  "governance_rule_pack": {
+    "rule": "fixture public private boundary is deny by default"
+  },
+  "command_summary_adapter": {
+    "rule": "fixture summary uses synthetic status only"
+  },
+  "demo_pilot_adapter": {
+    "rule": "fixture demo metadata only"
+  },
+  "public_boundary_policy": {
+    "public_ai_private_runtime_access": "denied",
+    "public_db_access": "denied",
+    "public_report_access": "denied",
+    "public_cli_execution": "denied",
+    "public_approval_mutation": "denied",
+    "public_notification_delivery": "denied",
+    "public_scheduler_execution": "denied",
+    "public_live_private_status_claims": "denied"
+  }
+}

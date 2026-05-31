@@ -1,0 +1,22 @@
+{
+  "adapter_version": "0.1",
+  "branch_name": "Missing Root Fixture",
+  "branch_id": "businessos",
+  "branch_visibility": "private",
+  "branch_owner": "fixture_operator",
+  "supported_core_families": [
+    "identity",
+    "public_boundary"
+  ],
+  "validation_profile": "planning",
+  "rollback_rule": "fixture_branch_only",
+  "role_registry": {
+    "rule": "fixture roles remain private"
+  },
+  "protected_source_policy": {
+    "rule": "fixture protected sources only"
+  },
+  "public_boundary_policy": {
+    "public_ai_private_runtime_access": "denied"
+  }
+}
