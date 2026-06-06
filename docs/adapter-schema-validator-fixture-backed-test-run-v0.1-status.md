@@ -126,7 +126,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-Adapter Schema Validator Fixture Report Evidence v0.1
+Adapter Schema Validator Fixture Report Evidence v0.1 (closed)
 Adapter Schema Validator Adapter Contract Decision v0.1
 ```
 
