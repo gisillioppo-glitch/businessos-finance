@@ -268,13 +268,13 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-EduOS Non-Sensitive Adapter Schema Planning v0.1 (closed)
-Adapter Schema Validator Fixture Policy v0.1 (closed)
-Adapter Schema Validator Report Format and Failure Semantics v0.1
-Adapter Schema Validator Implementation Scope v0.1
+Adapter Schema Validator Adapter Contract Decision v0.1 (closed)
+BusinessOS Reference Adapter Contract Draft v0.1 (drafted)
+EduOS Non-Sensitive Adapter Contract Draft v0.1
+Adapter Contract Cross-Branch Comparison v0.1
 ```
 
-Executable validator implementation should remain blocked until those planning gates are closed.
+Adapter implementation and runtime execution remain blocked until separate approval.
 
 ## Boundary Classification
 

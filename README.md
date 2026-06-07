@@ -754,6 +754,14 @@ docs/adapter-schema-validator-adapter-contract-decision-v0.1-status.md
 
 This decision allows BusinessOS and EduOS adapter contract drafting based on fixture-backed validator evidence, while keeping adapter implementation, runtime execution, OS Core package creation, repository creation, BusinessOS code extraction, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access blocked.
 
+The BusinessOS reference adapter contract draft is documented in:
+
+```text
+docs/businessos-reference-adapter-contract-draft-v0.1-status.md
+```
+
+This draft defines BusinessOS adapter identity, supported families, root fields, registries, public/private denial rules, validation and rollback expectations, while keeping schema file creation, adapter implementation, BusinessOS code extraction, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

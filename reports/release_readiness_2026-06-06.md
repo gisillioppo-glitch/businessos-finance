@@ -4,10 +4,10 @@ Date: 2026-06-06
 
 ## Demo Readiness Summary
 
-Overall status: ready
+Overall status: ready_with_warnings
 Total checks: 15
-Passed checks: 15
-Warning checks: 0
+Passed checks: 14
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -27,5 +27,5 @@ Failed checks: 0
 | Notification outbox readiness | passed | critical | 80 notification(s), invalid statuses: none |
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
-| Boundary classification coverage | passed | critical | 195/195 status docs covered |
-| Git working tree | passed | critical | clean except known local artifacts |
+| Boundary classification coverage | passed | critical | 196/196 status docs covered |
+| Git working tree | warning | warning | M README.md; M docs/adapter-schema-validator-adapter-contract-decision-v0.1-status.md; M docs/businessos-reference-adapter-schema-planning-v0.1-status.md; M reports/release_readiness_2026-06-06.md; M reports/runtime_stability_2026-06-06.md; M reports/system_integrity_2026-06-06.md; ?? docs/businessos-reference-adapter-contract-draft-v0.1-status.md |

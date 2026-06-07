@@ -262,7 +262,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-BusinessOS Reference Adapter Contract Draft v0.1
+BusinessOS Reference Adapter Contract Draft v0.1 (drafted)
 EduOS Non-Sensitive Adapter Contract Draft v0.1
 Adapter Contract Cross-Branch Comparison v0.1
 ```
