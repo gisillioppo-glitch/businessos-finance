@@ -127,7 +127,8 @@ Recommended sequence:
 
 ```text
 Adapter Schema Validator Fixture Report Evidence v0.1 (closed)
-Adapter Schema Validator Adapter Contract Decision v0.1
+Adapter Schema Validator Adapter Contract Decision v0.1 (closed)
+BusinessOS Reference Adapter Contract Draft v0.1
 ```
 
 Adapter execution, OS Core packaging, EduOS runtime, and Public AI private runtime access remain separate and blocked.

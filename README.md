@@ -746,6 +746,14 @@ docs/adapter-schema-validator-fixture-report-evidence-v0.1-status.md
 
 This status reviews the fixture-backed run report as decision evidence, confirms 11/11 fixture expectations passed, summarizes blocked schema risks, and keeps adapter implementation, OS Core package creation, repository creation, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access blocked.
 
+The adapter schema validator adapter contract decision is documented in:
+
+```text
+docs/adapter-schema-validator-adapter-contract-decision-v0.1-status.md
+```
+
+This decision allows BusinessOS and EduOS adapter contract drafting based on fixture-backed validator evidence, while keeping adapter implementation, runtime execution, OS Core package creation, repository creation, BusinessOS code extraction, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

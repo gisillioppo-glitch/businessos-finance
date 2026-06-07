@@ -211,7 +211,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-Adapter Schema Validator Adapter Contract Decision v0.1
+Adapter Schema Validator Adapter Contract Decision v0.1 (closed)
 BusinessOS Reference Adapter Contract Draft v0.1
 EduOS Non-Sensitive Adapter Contract Draft v0.1
 ```
