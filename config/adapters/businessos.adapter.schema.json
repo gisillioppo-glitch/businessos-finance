@@ -29,10 +29,18 @@
       "viewer"
     ],
     "public_roles": "none",
+    "default_private_role": "viewer",
+    "private_dashboard_access": "role_bound",
+    "public_dashboard_access": "denied",
     "rule": "dashboard access is private and role-bound"
   },
   "page_registry": {
     "source": "app/security/access_control.py",
+    "dashboard_surface": "private",
+    "page_labels": "branch_owned",
+    "mutation_default": "disabled",
+    "action_pages": "approval_gated_or_read_only",
+    "public_page_access": "denied",
     "rule": "pages remain BusinessOS-owned labels and private dashboard surfaces"
   },
   "approval_policy": {
@@ -50,15 +58,28 @@
       "critical"
     ],
     "protected_source_modules": [
-      "pilot_expansion"
+      "pilot_expansion",
+      "notification_delivery",
+      "sensitive_assistance",
+      "privileged_access"
     ],
     "gate_required": true,
     "external_delivery_requires_approval": true,
     "dashboard_mutation_requires_approval": true,
+    "public_approval_authority": "denied",
+    "action_authority_without_approval": "denied",
     "rule": "action-producing flows remain approval-aware"
   },
   "protected_source_policy": {
     "source": "app/approvals/config.py",
+    "protected_sources": [
+      "pilot_expansion",
+      "notification_delivery",
+      "secure_email_delivery",
+      "sensitive_assistance_request",
+      "privileged_access",
+      "overdue_sensitive_operation"
+    ],
     "rule": "pilot expansion sources cannot bypass approval gates"
   },
   "evidence_registry": {
@@ -73,11 +94,17 @@
     ],
     "distribution_mode": "email_ready_queue",
     "visibility": "private",
+    "public_evidence_access": "denied",
+    "private_report_embedding_in_schema": "denied",
     "rule": "evidence remains private and report-backed"
   },
   "notification_policy": {
     "source": "app/evidence/config.py and app/notifications",
     "delivery_mode": "queue_or_approval_gated",
+    "delivery_default": "queued",
+    "external_delivery_default": "disabled_or_approval_gated",
+    "credentials_in_schema": "denied",
+    "public_delivery_authority": "denied",
     "rule": "external delivery remains queued or approval-gated"
   },
   "readiness_check_registry": {
@@ -90,6 +117,10 @@
   },
   "scheduler_job_registry": {
     "source": "app/scheduler/scheduled_daily_close.py",
+    "scheduled_daily_close": "observable",
+    "scheduled_execution_visibility": "required",
+    "sensitive_scheduled_actions": "approval_aware",
+    "public_scheduler_execution": "denied",
     "rule": "scheduled close remains observable and non-public"
   },
   "governance_rule_pack": {
@@ -98,10 +129,18 @@
   },
   "command_summary_adapter": {
     "source": "app/command_center",
+    "next_action_authority": "advisory_only",
+    "workflow_mutation_from_summary": "denied",
+    "public_command_center_access": "denied",
     "rule": "executive summary inputs remain BusinessOS report and status artifacts"
   },
   "demo_pilot_adapter": {
     "source": "app/demo",
+    "demo_copy": "branch_owned",
+    "pilot_methodology": "branch_owned",
+    "pilot_expansion": "approval_gated",
+    "demo_command_authority": "read_only_or_evidence_only",
+    "public_pilot_evidence_access": "denied",
     "rule": "private demo and pilot copy remains BusinessOS-owned"
   },
   "public_boundary_policy": {

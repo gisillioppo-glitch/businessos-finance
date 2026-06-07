@@ -204,8 +204,8 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-BusinessOS Reference Adapter Schema File Decision v0.1
-EduOS Non-Sensitive Adapter Schema File Decision v0.1
+BusinessOS Reference Adapter Schema Contract Alignment v0.1 (closed)
+EduOS Non-Sensitive Adapter Schema Contract Alignment v0.1
 Adapter Schema File Cross-Validation Plan v0.1
 ```
 

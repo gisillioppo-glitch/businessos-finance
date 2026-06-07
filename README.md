@@ -778,6 +778,14 @@ docs/adapter-contract-cross-branch-comparison-v0.1-status.md
 
 This comparison identifies shared OS Core adapter patterns across BusinessOS and EduOS, separates branch-owned meaning from shared contract shape, and allows future schema file decisions while keeping schema file creation, adapter implementation, OS Core packaging, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access blocked.
 
+The BusinessOS reference adapter schema contract alignment is documented in:
+
+```text
+docs/businessos-reference-adapter-schema-contract-alignment-v0.1-status.md
+```
+
+This alignment updates the existing controlled BusinessOS adapter schema with contract-level metadata for role access, dashboard authority, protected sources, evidence visibility, delivery posture, scheduler visibility, command advisory limits, and demo/pilot boundaries while keeping adapter implementation, runtime execution, OS Core packaging, BusinessOS code extraction, EduOS runtime, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
