@@ -762,6 +762,14 @@ docs/businessos-reference-adapter-contract-draft-v0.1-status.md
 
 This draft defines BusinessOS adapter identity, supported families, root fields, registries, public/private denial rules, validation and rollback expectations, while keeping schema file creation, adapter implementation, BusinessOS code extraction, OS Core package creation, repository creation, EduOS runtime, and Public AI private runtime access blocked.
 
+The EduOS non-sensitive adapter contract draft is documented in:
+
+```text
+docs/eduos-non-sensitive-adapter-contract-draft-v0.1-status.md
+```
+
+This draft defines EduOS adapter identity, conceptual supported families, non-sensitive registries, academic-data denial rules, public/private denial rules, validation and rollback expectations, while keeping schema file creation, adapter implementation, EduOS runtime, repository creation, database, dashboard, academic data, Classroom/LMS/SIS integration, OS Core package creation, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

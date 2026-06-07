@@ -445,7 +445,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-EduOS Non-Sensitive Adapter Contract Draft v0.1
+EduOS Non-Sensitive Adapter Contract Draft v0.1 (drafted)
 Adapter Contract Cross-Branch Comparison v0.1
 BusinessOS Reference Adapter Schema File Decision v0.1
 ```

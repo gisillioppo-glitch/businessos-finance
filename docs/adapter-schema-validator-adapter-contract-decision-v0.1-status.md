@@ -263,7 +263,7 @@ Recommended sequence:
 
 ```text
 BusinessOS Reference Adapter Contract Draft v0.1 (drafted)
-EduOS Non-Sensitive Adapter Contract Draft v0.1
+EduOS Non-Sensitive Adapter Contract Draft v0.1 (drafted)
 Adapter Contract Cross-Branch Comparison v0.1
 ```
 
