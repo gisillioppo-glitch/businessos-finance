@@ -496,9 +496,10 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-Adapter Contract Cross-Branch Comparison v0.1
+Adapter Contract Cross-Branch Comparison v0.1 (closed)
 BusinessOS Reference Adapter Schema File Decision v0.1
 EduOS Non-Sensitive Adapter Schema File Decision v0.1
+Adapter Schema File Cross-Validation Plan v0.1
 ```
 
 Adapter execution, OS Core packaging, EduOS runtime, and Public AI private runtime access remain separate and blocked.

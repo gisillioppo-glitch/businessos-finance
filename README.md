@@ -770,6 +770,14 @@ docs/eduos-non-sensitive-adapter-contract-draft-v0.1-status.md
 
 This draft defines EduOS adapter identity, conceptual supported families, non-sensitive registries, academic-data denial rules, public/private denial rules, validation and rollback expectations, while keeping schema file creation, adapter implementation, EduOS runtime, repository creation, database, dashboard, academic data, Classroom/LMS/SIS integration, OS Core package creation, and Public AI private runtime access blocked.
 
+The adapter contract cross-branch comparison is documented in:
+
+```text
+docs/adapter-contract-cross-branch-comparison-v0.1-status.md
+```
+
+This comparison identifies shared OS Core adapter patterns across BusinessOS and EduOS, separates branch-owned meaning from shared contract shape, and allows future schema file decisions while keeping schema file creation, adapter implementation, OS Core packaging, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text

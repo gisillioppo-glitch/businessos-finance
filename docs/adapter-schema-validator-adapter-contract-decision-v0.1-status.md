@@ -264,7 +264,7 @@ Recommended sequence:
 ```text
 BusinessOS Reference Adapter Contract Draft v0.1 (drafted)
 EduOS Non-Sensitive Adapter Contract Draft v0.1 (drafted)
-Adapter Contract Cross-Branch Comparison v0.1
+Adapter Contract Cross-Branch Comparison v0.1 (closed)
 ```
 
 Adapter execution, OS Core packaging, EduOS runtime, and Public AI private runtime access remain separate and blocked.
