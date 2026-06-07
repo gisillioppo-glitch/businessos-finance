@@ -205,7 +205,7 @@ Recommended sequence:
 
 ```text
 BusinessOS Reference Adapter Schema Contract Alignment v0.1 (closed)
-EduOS Non-Sensitive Adapter Schema Contract Alignment v0.1
+EduOS Non-Sensitive Adapter Schema Contract Alignment v0.1 (closed)
 Adapter Schema File Cross-Validation Plan v0.1
 ```
 

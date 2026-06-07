@@ -1,9 +1,9 @@
 # Adapter Schema Check
 
 Date: 2026-06-06
-Adapter: businessos_reference
+Adapter: eduos_non_sensitive
 Adapter version: 0.1
-Branch: BusinessOS
+Branch: EduOS
 Validation profile: planning
 Overall status: adapter_schema_valid_for_design
 
@@ -17,7 +17,7 @@ Blocking failures: 0
 
 ## Schema Input
 
-Schema path: businessos.adapter.schema.json
+Schema path: eduos.adapter.schema.json
 Schema format: json
 Schema source: explicit_path
 Sensitive input required: false

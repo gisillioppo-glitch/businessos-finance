@@ -192,7 +192,7 @@ Public AI runtime approval: no
 Recommended sequence:
 
 ```text
-EduOS Non-Sensitive Adapter Schema Contract Alignment v0.1
+EduOS Non-Sensitive Adapter Schema Contract Alignment v0.1 (closed)
 Adapter Schema Cross-Branch Alignment Report v0.1
 Adapter Schema File Cross-Validation Plan v0.1
 ```

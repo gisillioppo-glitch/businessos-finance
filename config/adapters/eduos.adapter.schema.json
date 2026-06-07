@@ -31,6 +31,8 @@
       "support_specialist"
     ],
     "public_roles": "none",
+    "private_access_enforcement": "blocked_until_runtime_approval",
+    "public_dashboard_access": "denied",
     "rule": "roles remain conceptual until access enforcement is approved"
   },
   "page_registry": {
@@ -42,6 +44,10 @@
       "Student Support",
       "Readiness"
     ],
+    "dashboard_runtime": "blocked",
+    "page_labels": "eduos_owned",
+    "mutation_default": "disabled",
+    "public_page_access": "denied",
     "rule": "pages remain planning-only and must not create dashboard runtime"
   },
   "approval_policy": {
@@ -54,6 +60,9 @@
     "gate_required": true,
     "external_delivery_requires_approval": true,
     "dashboard_mutation_requires_approval": true,
+    "approval_execution": "blocked",
+    "approval_mutation": "blocked",
+    "public_approval_authority": "denied",
     "rule": "approval execution remains blocked"
   },
   "protected_source_policy": {
@@ -61,7 +70,9 @@
       "academic_governance",
       "guardian_communications",
       "student_support",
-      "assessment_review"
+      "assessment_review",
+      "intervention_review",
+      "policy_exception"
     ],
     "rule": "sensitive source workflows require future approval gates"
   },
@@ -74,7 +85,11 @@
       "guardian_communication",
       "governance_finding"
     ],
+    "evidence_contents": "blocked",
+    "raw_records": "denied",
     "visibility": "private_future_branch",
+    "public_evidence_access": "denied",
+    "private_report_embedding_in_schema": "denied",
     "rule": "evidence references are conceptual and must not include raw records"
   },
   "notification_policy": {
@@ -82,6 +97,10 @@
       "queue_only",
       "approval_required"
     ],
+    "delivery_execution": "blocked",
+    "guardian_delivery": "blocked",
+    "credentials_in_schema": "denied",
+    "public_delivery_authority": "denied",
     "rule": "delivery is blocked until implementation approval"
   },
   "readiness_check_registry": {
@@ -92,6 +111,13 @@
       "no_academic_data",
       "no_adapters"
     ],
+    "skeleton_scope_check": "required",
+    "boundary_docs_check": "required",
+    "non_sensitive_config_check": "required",
+    "no_academic_data_check": "required",
+    "no_adapters_check": "required",
+    "no_runtime_check": "required",
+    "no_repository_creation_check": "required",
     "rule": "readiness checks must run without private academic data"
   },
   "runtime_check_registry": {
@@ -102,12 +128,20 @@
       "no_adapters",
       "no_public_ai_private_access"
     ],
+    "runtime_status": "blocked",
+    "database_status": "blocked",
+    "dashboard_status": "blocked",
+    "adapter_status": "blocked",
+    "public_ai_private_access": "denied",
     "rule": "runtime is blocked until explicit approval"
   },
   "scheduler_job_registry": {
     "conceptual_jobs": [
       "academic_close_future"
     ],
+    "scheduler_execution": "blocked",
+    "sensitive_scheduled_actions": "approval_required_before_future_execution",
+    "public_scheduler_execution": "denied",
     "rule": "scheduler execution remains blocked"
   },
   "governance_rule_pack": {
@@ -116,6 +150,9 @@
       "role_visibility_required",
       "public_private_deny_by_default"
     ],
+    "student_privacy_policy": "planning_only",
+    "assessment_sensitivity_policy": "planning_only",
+    "guardian_communication_policy": "planning_only",
     "rule": "governance remains planning-only"
   },
   "command_summary_adapter": {
@@ -125,6 +162,9 @@
       "governance_risk",
       "evidence_completeness"
     ],
+    "next_action_authority": "advisory_only",
+    "workflow_mutation_from_summary": "denied",
+    "public_command_center_access": "denied",
     "rule": "command synthesis remains conceptual and cannot execute actions"
   },
   "public_boundary_policy": {
