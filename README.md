@@ -794,6 +794,14 @@ docs/eduos-non-sensitive-adapter-schema-contract-alignment-v0.1-status.md
 
 This alignment updates the existing controlled EduOS adapter schema with conceptual contract metadata for role access, dashboard authority, approval execution denial, protected academic source concepts, evidence denial rules, guardian delivery denial, readiness/runtime denial posture, scheduler execution denial, governance policy posture, and command advisory limits while keeping EduOS runtime, repository creation, database, dashboard, academic data, Classroom/LMS/SIS integration, adapter implementation, OS Core packaging, and Public AI private runtime access blocked.
 
+The adapter schema cross-branch alignment report is documented in:
+
+```text
+docs/adapter-schema-cross-branch-alignment-report-v0.1-status.md
+```
+
+This report confirms that the aligned BusinessOS and EduOS schemas pass joint validation, identifies their shared adapter shape and branch-owned meaning, and allows an OS Core adapter boundary readiness refresh while keeping adapter implementation, shared runtime, package/repository creation, BusinessOS extraction, EduOS runtime, academic data, Classroom/LMS/SIS integration, and Public AI private runtime access blocked.
+
 The OS Core package ownership and repository decision is documented in:
 
 ```text
