@@ -4,10 +4,10 @@ Date: 2026-06-24
 
 ## Demo Readiness Summary
 
-Overall status: ready_with_warnings
+Overall status: ready
 Total checks: 15
-Passed checks: 14
-Warning checks: 1
+Passed checks: 15
+Warning checks: 0
 Failed checks: 0
 
 ## Checks
@@ -28,4 +28,4 @@ Failed checks: 0
 | Scheduled close readiness | passed | critical | enabled at 18:00 \| last status: completed |
 | Dashboard readiness pages | passed | critical | visible in navigation |
 | Boundary classification coverage | passed | critical | 201/201 status docs covered |
-| Git working tree | warning | warning | M README.md; M docs/businessos-reference-adapter-schema-contract-alignment-v0.1-status.md; M docs/eduos-non-sensitive-adapter-schema-contract-alignment-v0.1-status.md; M reports/runtime_stability_2026-06-24.md; M reports/system_integrity_2026-06-24.md; ?? docs/adapter-schema-cross-branch-alignment-report-v0.1-status.md; ?? reports/adapter_schema_fixture_run_2026-06-24.md; ?? reports/adapter_schema_validation_run_2026-06-24.md |
+| Git working tree | passed | critical | clean except known local artifacts |
