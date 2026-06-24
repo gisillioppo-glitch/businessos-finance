@@ -4,10 +4,10 @@ Date: 2026-06-24
 
 ## Integrity Summary
 
-Overall status: passed
+Overall status: warning
 Total checks: 59
-Passed checks: 59
-Warning checks: 0
+Passed checks: 58
+Warning checks: 1
 Failed checks: 0
 
 ## Checks
@@ -71,5 +71,5 @@ Failed checks: 0
 | Public secret boundary: public/.streamlit/secrets.toml | passed | not present |
 | Notification statuses | passed | valid |
 | Area review freshness | passed | reports\area_review_index_2026-06-24.md | date: 2026-06-24 | stale areas: 0 | missing areas: 0 |
-| Boundary classification coverage | passed | 200/200 status docs covered |
-| Git working tree | passed | clean except known local artifacts |
+| Boundary classification coverage | passed | 201/201 status docs covered |
+| Git working tree | warning | M README.md; M docs/businessos-reference-adapter-schema-contract-alignment-v0.1-status.md; M docs/eduos-non-sensitive-adapter-schema-contract-alignment-v0.1-status.md; ?? docs/adapter-schema-cross-branch-alignment-report-v0.1-status.md; ?? reports/adapter_schema_fixture_run_2026-06-24.md; ?? reports/adapter_schema_validation_run_2026-06-24.md |
